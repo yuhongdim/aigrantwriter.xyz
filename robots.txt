@@ -1,0 +1,37 @@
+# AI Grant Writer - Robots.txt
+# 搜索引擎爬虫配置文件
+
+User-agent: *
+Allow: /
+
+# 优先抓取重要页面
+Allow: /index.html
+Allow: /*.css
+Allow: /*.js
+
+# 禁止抓取的文件和目录
+Disallow: /.htaccess
+Disallow: /README.md
+Disallow: /netlify.toml
+Disallow: /*.log
+Disallow: /tmp/
+Disallow: /backup/
+
+# 网站地图位置
+Sitemap: https://aigrantwriter.xyz/sitemap.xml
+
+# 爬取延迟（秒）
+Crawl-delay: 1
+
+# 针对特定搜索引擎的配置
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2

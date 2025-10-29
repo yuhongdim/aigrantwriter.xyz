@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI学术写作助手 - 智能论文生成器 | aigrantwriter.xyz</title>
+    <meta name="description" content="专业的AI学术写作工具，提供论文生成、文献综述、研究方法论生成等服务。支持博士论文、硕士论文、学术提案写作。">
+    <meta name="keywords" content="AI thesis writing assistant, automated literature review, academic proposal AI, research methodology generator, PhD dissertation helper">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.ico">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI学术写作</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#features">功能</a></li>
+                <li><a href="#tools">工具</a></li>
+                <li><a href="#pricing">定价</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主页横幅 -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    AI驱动的<span class="highlight">学术写作助手</span>
+                    <br>让论文写作更智能
+                </h1>
+                <p class="hero-subtitle">
+                    专业的AI论文生成器，支持博士论文、硕士论文、学术提案写作。
+                    <br>自动化文献综述、研究方法论生成，让学术写作事半功倍。
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="scrollToGenerator()">
+                        <i class="fas fa-magic"></i>
+                        开始写作
+                    </button>
+                    <button class="btn-secondary">
+                        <i class="fas fa-play"></i>
+                        观看演示
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">论文生成</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">通过率</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">在线服务</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="floating-card">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>智能论文生成</h3>
+                    <p>AI自动生成高质量学术内容</p>
+                </div>
+                <div class="floating-card">
+                    <i class="fas fa-search"></i>
+                    <h3>文献综述</h3>
+                    <p>自动搜索和整理相关文献</p>
+                </div>
+                <div class="floating-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>研究方法</h3>
+                    <p>生成专业的研究方法论</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心功能 -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>强大的AI学术写作功能</h2>
+                <p>基于最新AI技术，为学术研究者提供全方位写作支持</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI论文生成器</h3>
+                    <p>智能生成论文章节，包括引言、文献综述、方法论、结果分析等完整结构</p>
+                    <ul>
+                        <li>博士论文助手</li>
+                        <li>硕士论文生成</li>
+                        <li>学术提案写作</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-books"></i>
+                    </div>
+                    <h3>自动化文献综述</h3>
+                    <p>AI自动搜索、筛选和整理相关学术文献，生成专业的文献综述章节</p>
+                    <ul>
+                        <li>智能文献搜索</li>
+                        <li>自动引用格式</li>
+                        <li>文献关系分析</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3>研究方法论生成</h3>
+                    <p>根据研究主题自动生成合适的研究方法、实验设计和数据分析方案</p>
+                    <ul>
+                        <li>定量研究方法</li>
+                        <li>定性研究设计</li>
+                        <li>混合研究方法</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>研究问题生成</h3>
+                    <p>AI帮助生成有价值的研究问题和假设，确保研究的创新性和可行性</p>
+                    <ul>
+                        <li>问题创新性评估</li>
+                        <li>研究假设生成</li>
+                        <li>可行性分析</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3>学术写作优化</h3>
+                    <p>智能优化学术写作风格，提升论文的逻辑性、连贯性和学术规范性</p>
+                    <ul>
+                        <li>语言风格优化</li>
+                        <li>逻辑结构调整</li>
+                        <li>学术规范检查</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>数据分析助手</h3>
+                    <p>协助进行统计分析，生成图表和结果解释，提升研究的科学性</p>
+                    <ul>
+                        <li>统计分析建议</li>
+                        <li>图表自动生成</li>
+                        <li>结果解释优化</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI工具区域 -->
+    <section id="tools" class="tools-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>专业AI写作工具</h2>
+                <p>选择适合您需求的AI写作工具，开始您的学术写作之旅</p>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>博士论文助手</h3>
+                    </div>
+                    <p>专为博士研究生设计的AI写作工具，支持完整论文结构生成</p>
+                    <button class="tool-btn">立即使用</button>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <i class="fas fa-book-open"></i>
+                        <h3>文献综述生成器</h3>
+                    </div>
+                    <p>自动搜索和整理相关文献，生成专业的文献综述章节</p>
+                    <button class="tool-btn">立即使用</button>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <i class="fas fa-flask"></i>
+                        <h3>研究方法生成器</h3>
+                    </div>
+                    <p>根据研究主题生成合适的研究方法论和实验设计</p>
+                    <button class="tool-btn">立即使用</button>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>研究问题生成器</h3>
+                    </div>
+                    <p>AI帮助生成创新性的研究问题和研究假设</p>
+                    <button class="tool-btn">立即使用</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 论文生成器 -->
+    <section id="generator" class="generator-section">
+        <div class="container">
+            <div class="generator-container">
+                <div class="generator-left">
+                    <h2>AI学术论文生成器</h2>
+                    <p>输入您的研究主题和要求，AI将为您生成专业的学术内容</p>
+                    
+                    <form class="generator-form">
+                        <div class="form-group">
+                            <label for="research-topic">研究主题</label>
+                            <input type="text" id="research-topic" placeholder="例如：人工智能在教育中的应用研究">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="paper-type">论文类型</label>
+                            <select id="paper-type">
+                                <option value="phd">博士论文</option>
+                                <option value="master">硕士论文</option>
+                                <option value="proposal">研究提案</option>
+                                <option value="review">文献综述</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="research-field">研究领域</label>
+                            <select id="research-field">
+                                <option value="education">教育学</option>
+                                <option value="psychology">心理学</option>
+                                <option value="computer-science">计算机科学</option>
+                                <option value="medicine">医学</option>
+                                <option value="engineering">工程学</option>
+                                <option value="business">商学</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="requirements">具体要求</label>
+                            <textarea id="requirements" placeholder="请描述您的具体要求，如字数、重点章节、特殊格式等..."></textarea>
+                        </div>
+                        
+                        <button type="button" class="generate-btn" onclick="generatePaper()">
+                            <i class="fas fa-magic"></i>
+                            生成论文
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="generator-right">
+                    <div class="output-container">
+                        <div class="output-header">
+                            <h3>生成结果</h3>
+                            <div class="output-actions">
+                                <button class="action-btn"><i class="fas fa-copy"></i></button>
+                                <button class="action-btn"><i class="fas fa-download"></i></button>
+                                <button class="action-btn"><i class="fas fa-share"></i></button>
+                            </div>
+                        </div>
+                        <div class="output-content" id="output-content">
+                            <div class="placeholder">
+                                <i class="fas fa-file-alt"></i>
+                                <p>您生成的学术内容将在这里显示...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 定价方案 -->
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>选择适合您的方案</h2>
+                <p>灵活的定价选项，满足不同用户的需求</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>免费版</h3>
+                        <div class="price">¥0<span>/月</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i>每月3次生成</li>
+                        <li><i class="fas fa-check"></i>基础论文结构</li>
+                        <li><i class="fas fa-check"></i>简单文献搜索</li>
+                        <li><i class="fas fa-times"></i>高级AI模型</li>
+                        <li><i class="fas fa-times"></i>优先支持</li>
+                    </ul>
+                    <button class="pricing-btn">开始使用</button>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">推荐</div>
+                    <div class="pricing-header">
+                        <h3>专业版</h3>
+                        <div class="price">¥99<span>/月</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i>无限次生成</li>
+                        <li><i class="fas fa-check"></i>完整论文结构</li>
+                        <li><i class="fas fa-check"></i>高级文献综述</li>
+                        <li><i class="fas fa-check"></i>GPT-4模型</li>
+                        <li><i class="fas fa-check"></i>优先支持</li>
+                    </ul>
+                    <button class="pricing-btn">立即订阅</button>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>学术版</h3>
+                        <div class="price">¥199<span>/月</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i>无限次生成</li>
+                        <li><i class="fas fa-check"></i>定制化模板</li>
+                        <li><i class="fas fa-check"></i>专业导师指导</li>
+                        <li><i class="fas fa-check"></i>最新AI模型</li>
+                        <li><i class="fas fa-check"></i>24/7专属支持</li>
+                    </ul>
+                    <button class="pricing-btn">联系销售</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>AI学术写作</span>
+                    </div>
+                    <p>专业的AI学术写作助手，让学术研究更高效</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>产品</h4>
+                    <ul>
+                        <li><a href="#">论文生成器</a></li>
+                        <li><a href="#">文献综述</a></li>
+                        <li><a href="#">研究方法</a></li>
+                        <li><a href="#">数据分析</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>支持</h4>
+                    <ul>
+                        <li><a href="#">帮助中心</a></li>
+                        <li><a href="#">使用教程</a></li>
+                        <li><a href="#">API文档</a></li>
+                        <li><a href="#">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>公司</h4>
+                    <ul>
+                        <li><a href="#">关于我们</a></li>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">服务条款</a></li>
+                        <li><a href="#">加入我们</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 aigrantwriter.xyz. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
