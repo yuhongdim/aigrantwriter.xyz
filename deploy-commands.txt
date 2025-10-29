@@ -1,0 +1,25 @@
+# GitHub部署命令
+# 请将 YOUR_USERNAME 替换为你的GitHub用户名
+
+# 1. 添加远程仓库
+git remote add origin https://github.com/YOUR_USERNAME/aigrantwriter.xyz.git
+
+# 2. 设置主分支名称
+git branch -M main
+
+# 3. 推送到GitHub
+git push -u origin main
+
+# 或者使用SSH（如果已配置SSH密钥）
+# git remote add origin git@github.com:YOUR_USERNAME/aigrantwriter.xyz.git
+# git branch -M main
+# git push -u origin main
+
+# 验证推送成功
+git status
+git log --oneline
+
+# 后续更新命令
+# git add .
+# git commit -m "Update website"
+# git push
