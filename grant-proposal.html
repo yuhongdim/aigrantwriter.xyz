@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grant Proposal AI - Professional Grant Writing Assistant</title>
+    <meta name="description" content="Generate winning grant proposals with AI assistance. Professional grant writing tool for researchers and institutions.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 100px;
+        }
+        .tool-form {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .generate-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 100%;
+        }
+        .generate-btn:hover {
+            transform: translateY(-2px);
+        }
+        .output-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+        .output-content {
+            line-height: 1.8;
+            color: #333;
+        }
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> 返回首页
+    </a>
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-money-bill-wave"></i> Grant Proposal AI</h1>
+            <p>Generate professional grant proposals with AI assistance</p>
+        </div>
+
+        <div class="tool-form">
+            <form id="grantForm">
+                <div class="form-group">
+                    <label for="projectTitle">Project Title</label>
+                    <input type="text" id="projectTitle" name="projectTitle" placeholder="Enter your project title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fundingAgency">Funding Agency</label>
+                    <select id="fundingAgency" name="fundingAgency" required>
+                        <option value="">Select funding agency</option>
+                        <option value="nsf">National Science Foundation (NSF)</option>
+                        <option value="nih">National Institutes of Health (NIH)</option>
+                        <option value="doe">Department of Energy (DOE)</option>
+                        <option value="nasa">NASA</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="researchArea">Research Area</label>
+                    <input type="text" id="researchArea" name="researchArea" placeholder="e.g., Artificial Intelligence, Climate Science" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectDescription">Project Description</label>
+                    <textarea id="projectDescription" name="projectDescription" placeholder="Provide a brief description of your research project, objectives, and methodology" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="budgetRange">Budget Range</label>
+                    <select id="budgetRange" name="budgetRange" required>
+                        <option value="">Select budget range</option>
+                        <option value="small">$1,000 - $10,000</option>
+                        <option value="medium">$10,000 - $50,000</option>
+                        <option value="large">$50,000 - $200,000</option>
+                        <option value="xlarge">$200,000+</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="duration">Project Duration</label>
+                    <select id="duration" name="duration" required>
+                        <option value="">Select duration</option>
+                        <option value="6months">6 months</option>
+                        <option value="1year">1 year</option>
+                        <option value="2years">2 years</option>
+                        <option value="3years">3 years</option>
+                        <option value="5years">5 years</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="generate-btn">
+                    <i class="fas fa-magic"></i> Generate Grant Proposal
+                </button>
+            </form>
+        </div>
+
+        <div id="outputSection" class="output-section">
+            <h3><i class="fas fa-file-alt"></i> Generated Grant Proposal</h3>
+            <div id="outputContent" class="output-content"></div>
+            <button onclick="downloadProposal()" class="generate-btn" style="margin-top: 1rem;">
+                <i class="fas fa-download"></i> Download Proposal
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('grantForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading
+            const outputSection = document.getElementById('outputSection');
+            const outputContent = document.getElementById('outputContent');
+            
+            outputSection.style.display = 'block';
+            outputContent.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>AI is generating your grant proposal...</p>
+                </div>
+            `;
+            
+            try {
+                // Generate AI proposal
+                const proposal = await generateAIProposal(data);
+                outputContent.innerHTML = proposal;
+            } catch (error) {
+                console.error('AI generation failed:', error);
+                
+                // 显示详细错误信息
+                showNotification(`AI生成失败: ${error.message}`, 'error');
+                
+                // 使用备用生成器
+                console.log('Using fallback generator...');
+                const fallbackProposal = generateProposal(data);
+                outputContent.innerHTML = `
+                    <div class="notice" style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; margin-bottom: 20px; border-radius: 8px;">
+                        <p><strong>注意：</strong>AI服务暂时不可用，已为您生成基础提案模板。您可以基于此模板进行修改和完善。</p>
+                        <p><strong>错误信息：</strong>${error.message}</p>
+                    </div>
+                    ${formatProposalContent(fallbackProposal, data)}
+                `;
+                
+                showNotification('已使用备用生成器创建提案模板', 'info');
+            }
+        });
+
+        // 通知系统
+        function showNotification(message, type = 'info') {
+            // 移除现有通知
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+
+            // 创建新通知
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" style="background: none; border: none; color: inherit; font-size: 18px; cursor: pointer; margin-left: 10px;">&times;</button>
+            `;
+
+            // 添加样式
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 5px;
+                color: white;
+                font-weight: bold;
+                z-index: 1000;
+                max-width: 400px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            `;
+
+            // 根据类型设置颜色
+            if (type === 'error') {
+                notification.style.backgroundColor = '#e74c3c';
+            } else if (type === 'success') {
+                notification.style.backgroundColor = '#27ae60';
+            } else {
+                notification.style.backgroundColor = '#3498db';
+            }
+
+            document.body.appendChild(notification);
+
+            // 5秒后自动移除
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+        const API_CONFIG = {
+            baseURL: 'https://breakout.wenwen-ai.com/v1/chat/completions',
+            apiKey: 'sk-6ogS4COJPVLfLclruLQ6h59IxyvcN61nGuvgpr71VNL3ARsN'
+        };
+
+        async function generateAIProposal(data) {
+            const prompt = `Generate a comprehensive grant proposal for the following project:
+
+Project Title: ${data.projectTitle}
+Funding Agency: ${data.fundingAgency}
+Research Area: ${data.researchArea}
+Project Description: ${data.projectDescription}
+Budget Range: ${getBudgetText(data.budgetRange)}
+Duration: ${data.duration}
+
+Please create a detailed, professional grant proposal that includes:
+1. Executive Summary
+2. Project Description and Significance
+3. Literature Review and Background
+4. Research Objectives and Hypotheses
+5. Methodology and Approach
+6. Timeline and Milestones
+7. Budget Justification
+8. Expected Outcomes and Impact
+9. Evaluation and Dissemination Plan
+10. Conclusion
+
+Make it compelling, well-structured, and tailored to the specific funding agency requirements. Use professional academic language and ensure all sections are comprehensive and detailed.`;
+
+            try {
+                const response = await fetch(API_CONFIG.baseURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_CONFIG.apiKey}`,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-3.5-turbo',
+                        messages: [
+                            {
+                                role: 'system',
+                                content: 'You are a professional grant writing expert with extensive experience in securing research funding. Generate comprehensive, compelling grant proposals that meet funding agency requirements.'
+                            },
+                            {
+                                role: 'user',
+                                content: prompt
+                            }
+                        ],
+                        max_tokens: 4000,
+                        temperature: 0.7
+                    })
+                });
+
+                console.log('API Response Status:', response.status);
+                console.log('API Response Headers:', response.headers);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('API Error Response:', errorText);
+                    throw new Error(`API request failed: ${response.status} ${response.statusText}. Details: ${errorText}`);
+                }
+
+                const result = await response.json();
+                console.log('API Response:', result);
+                
+                if (result.choices && result.choices[0] && result.choices[0].message) {
+                    return formatProposalContent(result.choices[0].message.content, data);
+                } else {
+                    console.error('Invalid API response structure:', result);
+                    throw new Error('Invalid API response format');
+                }
+            } catch (error) {
+                console.error('API Call Error:', error);
+                throw error;
+            }
+        }
+
+        function formatProposalContent(content, data) {
+            return `
+                <div class="proposal-header">
+                    <h3>${data.projectTitle}</h3>
+                    <p><strong>Funding Agency:</strong> ${data.fundingAgency}</p>
+                    <p><strong>Research Area:</strong> ${data.researchArea}</p>
+                    <p><strong>Requested Amount:</strong> ${getBudgetText(data.budgetRange)}</p>
+                    <p><strong>Duration:</strong> ${data.duration}</p>
+                </div>
+                <div class="proposal-content">
+                    ${content.replace(/\n/g, '<br>')}
+                </div>
+                <div class="proposal-footer">
+                    <p><em>This proposal was generated using AI assistance. Please review and customize according to your specific requirements and funding agency guidelines.</em></p>
+                </div>
+            `;
+        }
+
+        function generateProposal(data) {
+            return `
+                <h4>Executive Summary</h4>
+                <p><strong>Project Title:</strong> ${data.projectTitle}</p>
+                <p><strong>Principal Investigator:</strong> [Your Name]</p>
+                <p><strong>Institution:</strong> [Your Institution]</p>
+                <p><strong>Funding Agency:</strong> ${data.fundingAgency.toUpperCase()}</p>
+                <p><strong>Requested Amount:</strong> ${getBudgetText(data.budgetRange)}</p>
+                <p><strong>Project Duration:</strong> ${data.duration}</p>
+
+                <h4>Project Description</h4>
+                <p>${data.projectDescription}</p>
+
+                <h4>Research Objectives</h4>
+                <ul>
+                    <li>Advance the state-of-the-art in ${data.researchArea}</li>
+                    <li>Develop innovative methodologies and approaches</li>
+                    <li>Contribute to scientific knowledge and societal impact</li>
+                    <li>Train the next generation of researchers</li>
+                </ul>
+
+                <h4>Methodology</h4>
+                <p>Our research approach will employ cutting-edge techniques in ${data.researchArea}, utilizing both theoretical and experimental methods. The project will be conducted in phases, with clear milestones and deliverables.</p>
+
+                <h4>Expected Outcomes</h4>
+                <p>This research will result in significant contributions to ${data.researchArea}, including peer-reviewed publications, conference presentations, and potential patent applications. The findings will have broad implications for the field and society.</p>
+
+                <h4>Budget Justification</h4>
+                <p>The requested funding will support personnel, equipment, travel, and other direct costs necessary for successful completion of the research objectives.</p>
+
+                <p><em>Note: This is an AI-generated draft. Please review and customize according to your specific requirements and funding agency guidelines.</em></p>
+            `;
+        }
+
+        function getBudgetText(range) {
+            const budgets = {
+                'small': '$1,000 - $10,000',
+                'medium': '$10,000 - $50,000',
+                'large': '$50,000 - $200,000',
+                'xlarge': '$200,000+'
+            };
+            return budgets[range] || 'Not specified';
+        }
+
+        function downloadProposal() {
+            const content = document.getElementById('outputContent').innerText;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'grant-proposal.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

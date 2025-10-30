@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-link {
+            display: block;
+            padding: 15px 20px;
+            margin: 10px 0;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .test-link:hover {
+            background: #5a67d8;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔗 导航功能测试</h1>
+        <div class="status">
+            <strong>测试说明：</strong>点击下面的链接，应该能够正常跳转到对应的页面
+        </div>
+        
+        <h2>工具页面链接测试：</h2>
+        <a href="grant-proposal.html" class="test-link">📝 Grant Proposal Generator</a>
+        <a href="dissertation-writer.html" class="test-link">📚 Dissertation Writer</a>
+        <a href="research-paper.html" class="test-link">📄 Research Paper AI</a>
+        <a href="literature-review.html" class="test-link">🔍 Literature Review Assistant</a>
+        <a href="academic-proofreading.html" class="test-link">✏️ Academic Proofreading AI</a>
+        <a href="manuscript-editor.html" class="test-link">📋 Manuscript Editor</a>
+        
+        <h2>返回主页：</h2>
+        <a href="index.html" class="test-link">🏠 返回主页</a>
+        
+        <div class="status">
+            <strong>测试结果：</strong>
+            <div id="test-results">等待测试...</div>
+        </div>
+    </div>
+
+    <script>
+        // 记录点击事件
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.test-link');
+            const resultsDiv = document.getElementById('test-results');
+            
+            resultsDiv.innerHTML = `找到 ${links.length} 个测试链接，准备就绪！`;
+            
+            links.forEach((link, index) => {
+                link.addEventListener('click', function(e) {
+                    console.log(`点击了链接 ${index + 1}: ${this.href}`);
+                    // 不阻止默认行为，让浏览器正常导航
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Proofreading AI - Professional Academic Text Editor</title>
+    <meta name="description" content="Professional-grade proofreading and editing for academic papers with AI assistance. Improve grammar, style, and academic formatting.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 100px;
+        }
+        .proofreading-form {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .text-input-area {
+            width: 100%;
+            min-height: 300px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        .proofreading-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .option-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .option-card:hover {
+            border-color: #6366f1;
+            background: #f1f5f9;
+        }
+        .option-card.selected {
+            border-color: #6366f1;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+        }
+        .results-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+            display: none;
+        }
+        .correction-item {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .correction-type {
+            font-weight: 600;
+            color: #92400e;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+        }
+        .original-text {
+            background: #fee2e2;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            text-decoration: line-through;
+        }
+        .corrected-text {
+            background: #dcfce7;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI Grant Writer</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">首页</a>
+                <a href="#features" class="nav-link">特性</a>
+                <a href="#tools" class="nav-link">AI工具</a>
+                <a href="#pricing" class="nav-link">定价</a>
+                <a href="#contact" class="nav-link">联系</a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-spell-check"></i> Academic Proofreading AI</h1>
+            <p>专业级学术文本校对和编辑，AI智能检测语法、风格和格式问题</p>
+        </div>
+
+        <div class="proofreading-form">
+            <h3><i class="fas fa-edit"></i> 文本校对</h3>
+            <div class="form-group">
+                <label for="textInput">请输入需要校对的学术文本：</label>
+                <textarea id="textInput" class="text-input-area" placeholder="在此粘贴您的学术文本，AI将为您检查语法、拼写、标点、学术写作风格等问题..."></textarea>
+            </div>
+
+            <div class="proofreading-options">
+                <div class="option-card" data-type="grammar">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>语法检查</h4>
+                    <p>检测语法错误和句法问题</p>
+                </div>
+                <div class="option-card" data-type="style">
+                    <i class="fas fa-palette"></i>
+                    <h4>学术风格</h4>
+                    <p>优化学术写作风格和表达</p>
+                </div>
+                <div class="option-card" data-type="clarity">
+                    <i class="fas fa-eye"></i>
+                    <h4>清晰度</h4>
+                    <p>提高文本清晰度和可读性</p>
+                </div>
+                <div class="option-card" data-type="formatting">
+                    <i class="fas fa-align-left"></i>
+                    <h4>格式规范</h4>
+                    <p>检查学术格式和引用规范</p>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn-primary" onclick="startProofreading()">
+                    <i class="fas fa-magic"></i> 开始校对
+                </button>
+                <button type="button" class="btn-secondary" onclick="clearText()">
+                    <i class="fas fa-eraser"></i> 清空文本
+                </button>
+            </div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h3><i class="fas fa-list-check"></i> 校对结果</h3>
+            <div id="correctionsContainer">
+                <!-- Corrections will be displayed here -->
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn-primary" onclick="downloadCorrected()">
+                    <i class="fas fa-download"></i> 下载校对后文本
+                </button>
+                <button type="button" class="btn-secondary" onclick="copyToClipboard()">
+                    <i class="fas fa-copy"></i> 复制到剪贴板
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>AI Grant Writer</h3>
+                <p>专业的AI学术写作助手，助力您的学术研究和申请成功。</p>
+            </div>
+            <div class="footer-section">
+                <h4>工具</h4>
+                <ul>
+                    <li><a href="grant-proposal.html">申请书生成器</a></li>
+                    <li><a href="dissertation-writer.html">论文写作助手</a></li>
+                    <li><a href="research-paper.html">研究论文生成器</a></li>
+                    <li><a href="literature-review.html">文献综述助手</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>联系我们</h4>
+                <p>Email: support@aigrantwriter.xyz</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AI Grant Writer. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="navigation.js"></script>
+    <script>
+        let selectedOptions = new Set();
+
+        // Option selection
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const type = this.dataset.type;
+                if (selectedOptions.has(type)) {
+                    selectedOptions.delete(type);
+                    this.classList.remove('selected');
+                } else {
+                    selectedOptions.add(type);
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        function startProofreading() {
+            const text = document.getElementById('textInput').value.trim();
+            if (!text) {
+                alert('请输入需要校对的文本');
+                return;
+            }
+
+            if (selectedOptions.size === 0) {
+                alert('请选择至少一种校对类型');
+                return;
+            }
+
+            // Show loading state
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 校对中...';
+            button.disabled = true;
+
+            // Simulate AI proofreading
+            setTimeout(() => {
+                displayResults(text);
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }, 2000);
+        }
+
+        function displayResults(originalText) {
+            const resultsSection = document.getElementById('resultsSection');
+            const container = document.getElementById('correctionsContainer');
+            
+            // Sample corrections for demonstration
+            const corrections = [
+                {
+                    type: 'Grammar',
+                    original: 'The research are conducted',
+                    corrected: 'The research was conducted',
+                    explanation: '主谓一致错误：单数主语应使用单数动词'
+                },
+                {
+                    type: 'Academic Style',
+                    original: 'We think that',
+                    corrected: 'It is suggested that',
+                    explanation: '学术写作应避免使用第一人称，使用更正式的表达'
+                },
+                {
+                    type: 'Clarity',
+                    original: 'The thing is important',
+                    corrected: 'This factor is significant',
+                    explanation: '使用更具体和学术化的词汇提高表达清晰度'
+                }
+            ];
+
+            container.innerHTML = corrections.map(correction => `
+                <div class="correction-item">
+                    <div class="correction-type">${correction.type}</div>
+                    <div class="original-text">原文: ${correction.original}</div>
+                    <div class="corrected-text">修改: ${correction.corrected}</div>
+                    <p><strong>说明:</strong> ${correction.explanation}</p>
+                </div>
+            `).join('');
+
+            resultsSection.style.display = 'block';
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function clearText() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('resultsSection').style.display = 'none';
+            selectedOptions.clear();
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+        }
+
+        function downloadCorrected() {
+            const text = document.getElementById('textInput').value;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'proofreaded_text.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('textInput').value;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('文本已复制到剪贴板');
+            });
+        }
+    </script>
+</body>
+</html>

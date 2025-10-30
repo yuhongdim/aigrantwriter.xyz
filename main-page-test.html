@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页卡片测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #1a202c;
+            margin-bottom: 10px;
+        }
+        
+        .section-header p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .tool-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .tool-card-link:hover {
+            text-decoration: none;
+            color: inherit;
+            transform: translateY(-5px);
+        }
+        
+        .tool-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tool-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+        
+        .tool-header i {
+            font-size: 2rem;
+            color: #667eea;
+        }
+        
+        .tool-header h3 {
+            font-size: 1.4rem;
+            color: #1a202c;
+            margin: 0;
+            flex: 1;
+        }
+        
+        .tool-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .tool-card p {
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .tool-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .tool-link i {
+            transition: transform 0.3s ease;
+        }
+        
+        .tool-card:hover .tool-link i {
+            transform: translateX(5px);
+        }
+        
+        .log-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        
+        .log-item {
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .log-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .log-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .log-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="section-header">
+            <h2>🧪 主页卡片测试（简化版）</h2>
+            <p>使用与主页相同的HTML结构，但不引用styles.css</p>
+        </div>
+        
+        <div class="tools-grid">
+            <a href="grant-proposal.html" class="tool-card-link">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <h3>Grant Proposal AI</h3>
+                        <span class="tool-badge">Most Popular</span>
+                    </div>
+                    <p>Generate winning grant proposals with AI assistance</p>
+                    <div class="tool-link">
+                        Launch Tool <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="dissertation-writer.html" class="tool-card-link">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <i class="fas fa-book-open"></i>
+                        <h3>Dissertation Writer</h3>
+                        <span class="tool-badge">PhD Students</span>
+                    </div>
+                    <p>Complete dissertation writing support and guidance</p>
+                    <div class="tool-link">
+                        Launch Tool <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="research-paper.html" class="tool-card-link">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Research Paper AI</h3>
+                        <span class="tool-badge">Researchers</span>
+                    </div>
+                    <p>Generate research papers with proper methodology</p>
+                    <div class="tool-link">
+                        Launch Tool <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="literature-review.html" class="tool-card-link">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <i class="fas fa-search"></i>
+                        <h3>Literature Review AI</h3>
+                        <span class="tool-badge">New</span>
+                    </div>
+                    <p>Comprehensive literature analysis and synthesis</p>
+                    <div class="tool-link">
+                        Launch Tool <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="academic-proofreading.html" class="tool-card-link">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <i class="fas fa-spell-check"></i>
+                        <h3>Academic Proofreading AI</h3>
+                        <span class="tool-badge">Professional</span>
+                    </div>
+                    <p>Professional-grade proofreading and editing for academic papers</p>
+                    <div class="tool-link">
+                        Launch Tool <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="manuscript-editor.html" class="tool-card-link">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Manuscript Editor</h3>
+                        <span class="tool-badge">Publication</span>
+                    </div>
+                    <p>Prepare your manuscripts for publication with journal-specific formatting</p>
+                    <div class="tool-link">
+                        Launch Tool <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="ai-text-reducer.html" class="tool-card-link">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <i class="fas fa-magic"></i>
+                        <h3>AI Text Reducer</h3>
+                        <span class="tool-badge">Hot</span>
+                    </div>
+                    <p>Reduce AI detection and improve text naturalness</p>
+                    <div class="tool-link">
+                        Launch Tool <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <div class="log-section">
+            <h3>测试日志</h3>
+            <div id="log-container"></div>
+        </div>
+    </div>
+    
+    <script>
+        // 监听所有点击事件用于调试
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('.tool-card-link');
+            if (link) {
+                const cardTitle = link.querySelector('h3').textContent;
+                logMessage(`🎯 点击卡片: ${cardTitle}`, 'info');
+                logMessage(`📍 目标URL: ${link.href}`, 'info');
+                logMessage(`✅ 即将跳转...`, 'success');
+            }
+        });
+        
+        function logMessage(message, type = 'info') {
+            const container = document.getElementById('log-container');
+            const logItem = document.createElement('div');
+            logItem.className = `log-item log-${type}`;
+            logItem.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            container.appendChild(logItem);
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            logMessage('🚀 主页测试版本加载完成', 'success');
+            logMessage('👆 请点击任意卡片测试跳转功能', 'info');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调试测试页面</title>
+    <style>
+        .test-card {
+            width: 300px;
+            height: 200px;
+            border: 2px solid #ccc;
+            margin: 20px;
+            padding: 20px;
+            cursor: pointer;
+            background: white;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: #3b82f6;
+        }
+        .debug-info {
+            margin: 20px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-info">
+        <h2>调试信息</h2>
+        <p>点击下面的卡片应该跳转到对应页面</p>
+        <div id="log"></div>
+    </div>
+
+    <div class="test-card" data-url="grant-proposal.html">
+        <h3>Grant Proposal AI</h3>
+        <p>点击跳转到 grant-proposal.html</p>
+    </div>
+
+    <div class="test-card" data-url="dissertation-writer.html">
+        <h3>Dissertation Writer</h3>
+        <p>点击跳转到 dissertation-writer.html</p>
+    </div>
+
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += '<div>' + new Date().toLocaleTimeString() + ': ' + message + '</div>';
+            console.log(message);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            log('页面加载完成');
+            
+            const cards = document.querySelectorAll('.test-card');
+            log('找到 ' + cards.length + ' 个卡片');
+            
+            cards.forEach((card, index) => {
+                const url = card.getAttribute('data-url');
+                log('设置卡片 ' + (index + 1) + ' 跳转到: ' + url);
+                
+                // 多种方式绑定点击事件
+                card.onclick = function(e) {
+                    log('onclick 触发，跳转到: ' + url);
+                    window.location.href = url;
+                    return false;
+                };
+                
+                card.addEventListener('click', function(e) {
+                    log('addEventListener 触发，跳转到: ' + url);
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.location.href = url;
+                }, true);
+                
+                // 测试鼠标事件
+                card.addEventListener('mouseenter', function() {
+                    log('鼠标进入卡片 ' + (index + 1));
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    log('鼠标离开卡片 ' + (index + 1));
+                });
+            });
+            
+            log('所有事件绑定完成');
+        });
+    </script>
+</body>
+</html>

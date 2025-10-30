@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Paper AI - Academic Paper Generator</title>
+    <meta name="description" content="Generate high-quality research papers with proper methodology, citations, and academic formatting standards.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 100px;
+        }
+        .tool-form {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .generate-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 100%;
+        }
+        .generate-btn:hover {
+            transform: translateY(-2px);
+        }
+        .output-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+        .output-content {
+            line-height: 1.8;
+            color: #333;
+            font-family: 'Times New Roman', serif;
+        }
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            z-index: 1000;
+        }
+        .paper-format {
+            background: #f8f9fa;
+            border-left: 4px solid #6366f1;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
+        .citation-style {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .citation-option {
+            padding: 0.5rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .citation-option:hover,
+        .citation-option.selected {
+            border-color: #6366f1;
+            background: #f0f0ff;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> 返回首页
+    </a>
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-file-alt"></i> Research Paper AI</h1>
+            <p>Generate high-quality research papers with proper methodology and citations</p>
+        </div>
+
+        <div class="tool-form">
+            <form id="paperForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="paperTitle">Paper Title</label>
+                        <input type="text" id="paperTitle" name="paperTitle" placeholder="Enter your research paper title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="researchField">Research Field</label>
+                        <select id="researchField" name="researchField" required>
+                            <option value="">Select field</option>
+                            <option value="computer-science">Computer Science</option>
+                            <option value="psychology">Psychology</option>
+                            <option value="biology">Biology</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="physics">Physics</option>
+                            <option value="medicine">Medicine</option>
+                            <option value="engineering">Engineering</option>
+                            <option value="social-science">Social Science</option>
+                            <option value="economics">Economics</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="paperType">Paper Type</label>
+                        <select id="paperType" name="paperType" required>
+                            <option value="">Select type</option>
+                            <option value="empirical">Empirical Research</option>
+                            <option value="theoretical">Theoretical Paper</option>
+                            <option value="review">Literature Review</option>
+                            <option value="case-study">Case Study</option>
+                            <option value="experimental">Experimental Study</option>
+                            <option value="survey">Survey Research</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="targetJournal">Target Journal</label>
+                        <input type="text" id="targetJournal" name="targetJournal" placeholder="e.g., Nature, Science, IEEE Transactions">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="researchQuestion">Research Question/Hypothesis</label>
+                    <textarea id="researchQuestion" name="researchQuestion" placeholder="State your main research question or hypothesis" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="methodology">Methodology</label>
+                    <textarea id="methodology" name="methodology" placeholder="Describe your research methodology, data collection, and analysis methods" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="keyFindings">Key Findings/Results</label>
+                    <textarea id="keyFindings" name="keyFindings" placeholder="Summarize your main findings or expected results" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="keywords">Keywords</label>
+                    <input type="text" id="keywords" name="keywords" placeholder="Enter 5-8 keywords separated by commas" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Citation Style</label>
+                    <div class="citation-style">
+                        <div class="citation-option" onclick="selectCitation('apa')" data-style="apa">APA</div>
+                        <div class="citation-option" onclick="selectCitation('mla')" data-style="mla">MLA</div>
+                        <div class="citation-option" onclick="selectCitation('chicago')" data-style="chicago">Chicago</div>
+                        <div class="citation-option" onclick="selectCitation('ieee')" data-style="ieee">IEEE</div>
+                        <div class="citation-option" onclick="selectCitation('harvard')" data-style="harvard">Harvard</div>
+                    </div>
+                    <input type="hidden" id="citationStyle" name="citationStyle" required>
+                </div>
+
+                <div class="paper-format">
+                    <h4><i class="fas fa-info-circle"></i> Paper Format</h4>
+                    <p>Your research paper will include:</p>
+                    <ul>
+                        <li>Abstract with keywords</li>
+                        <li>Introduction with literature review</li>
+                        <li>Methodology section</li>
+                        <li>Results and analysis</li>
+                        <li>Discussion and implications</li>
+                        <li>Conclusion and future work</li>
+                        <li>References in selected citation style</li>
+                    </ul>
+                </div>
+
+                <button type="submit" class="generate-btn">
+                    <i class="fas fa-magic"></i> Generate Research Paper
+                </button>
+            </form>
+        </div>
+
+        <div id="outputSection" class="output-section">
+            <h3><i class="fas fa-file-alt"></i> Generated Research Paper</h3>
+            <div id="outputContent" class="output-content"></div>
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <button onclick="downloadPaper('txt')" class="generate-btn" style="flex: 1;">
+                    <i class="fas fa-download"></i> Download as TXT
+                </button>
+                <button onclick="downloadPaper('docx')" class="generate-btn" style="flex: 1;">
+                    <i class="fas fa-file-word"></i> Download as DOCX
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedCitation = '';
+
+        function selectCitation(style) {
+            document.querySelectorAll('.citation-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelector(`[data-style="${style}"]`).classList.add('selected');
+            document.getElementById('citationStyle').value = style;
+            selectedCitation = style;
+        }
+
+        document.getElementById('paperForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!selectedCitation) {
+                alert('Please select a citation style');
+                return;
+            }
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading
+            const outputSection = document.getElementById('outputSection');
+            const outputContent = document.getElementById('outputContent');
+            
+            outputSection.style.display = 'block';
+            outputContent.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>AI is generating your research paper...</p>
+                    <p><small>This may take a few moments to ensure quality and proper formatting.</small></p>
+                </div>
+            `;
+            
+            // Simulate AI generation
+            setTimeout(() => {
+                const paper = generatePaper(data);
+                outputContent.innerHTML = paper;
+            }, 4000);
+        });
+
+        function generatePaper(data) {
+            const keywords = data.keywords.split(',').map(k => k.trim()).join(', ');
+            
+            return `
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h2>${data.paperTitle}</h2>
+                    <p><strong>Author:</strong> [Your Name]<br>
+                    <strong>Affiliation:</strong> [Your Institution]<br>
+                    <strong>Email:</strong> [your.email@institution.edu]</p>
+                </div>
+
+                <h3>Abstract</h3>
+                <p><strong>Background:</strong> This study addresses ${data.researchQuestion.toLowerCase()}. The research is significant in the field of ${data.researchField} due to its potential implications for both theoretical understanding and practical applications.</p>
+                
+                <p><strong>Methods:</strong> ${data.methodology}</p>
+                
+                <p><strong>Results:</strong> ${data.keyFindings}</p>
+                
+                <p><strong>Conclusions:</strong> The findings contribute to the existing body of knowledge in ${data.researchField} and provide valuable insights for future research directions.</p>
+                
+                <p><strong>Keywords:</strong> ${keywords}</p>
+
+                <h3>1. Introduction</h3>
+                <p>The field of ${data.researchField} has witnessed significant developments in recent years. This research addresses a critical gap in understanding ${data.researchQuestion.toLowerCase()}. The significance of this study lies in its potential to advance both theoretical knowledge and practical applications in the field.</p>
+                
+                <p>Previous research has established foundational knowledge in this area (Smith et al., 2023; Johnson & Brown, 2022). However, there remains a need for further investigation into ${data.researchQuestion.toLowerCase()}. This study aims to fill this gap by employing ${data.paperType.toLowerCase()} methodology.</p>
+
+                <h3>2. Literature Review</h3>
+                <p>Extensive research has been conducted in ${data.researchField}. Notable contributions include the work of Anderson (2023) who demonstrated the importance of methodological rigor in ${data.researchField} research. Similarly, Chen et al. (2022) provided valuable insights into the theoretical frameworks that underpin current understanding.</p>
+                
+                <p>The theoretical foundation of this research builds upon established theories in ${data.researchField}. Key theoretical perspectives that inform this study include [Theory 1], [Theory 2], and [Theory 3], which collectively provide a comprehensive framework for understanding the research problem.</p>
+
+                <h3>3. Methodology</h3>
+                <p><strong>Research Design:</strong> This study employs a ${data.paperType.toLowerCase()} approach to investigate ${data.researchQuestion.toLowerCase()}. The research design was selected based on its appropriateness for addressing the research questions and its alignment with established methodological standards in ${data.researchField}.</p>
+                
+                <p><strong>Data Collection:</strong> ${data.methodology}</p>
+                
+                <p><strong>Data Analysis:</strong> The collected data was analyzed using appropriate statistical methods. All analyses were conducted using [Statistical Software] to ensure accuracy and reproducibility of results.</p>
+
+                <h3>4. Results</h3>
+                <p>The analysis revealed significant findings that address the research questions. ${data.keyFindings}</p>
+                
+                <p>The results demonstrate clear patterns that support the research hypothesis. Statistical analysis confirmed the significance of the findings (p < 0.05), indicating that the observed effects are unlikely to be due to chance.</p>
+                
+                <p>Additional analyses revealed secondary findings that provide further insights into the research problem. These supplementary results enhance the overall understanding of the phenomenon under investigation.</p>
+
+                <h3>5. Discussion</h3>
+                <p>The findings of this research provide significant insights into ${data.researchField}. The results support the hypothesis that ${data.researchQuestion.toLowerCase()}. These findings have important implications for both theoretical understanding and practical applications.</p>
+                
+                <p><strong>Theoretical Implications:</strong> The results contribute to the theoretical framework of ${data.researchField} by providing empirical evidence for [theoretical contribution]. This advances our understanding of the underlying mechanisms and processes.</p>
+                
+                <p><strong>Practical Implications:</strong> From a practical perspective, these findings have important implications for [practical applications]. The results suggest that [practical recommendations].</p>
+                
+                <p><strong>Limitations:</strong> This study has several limitations that should be acknowledged. [Limitation 1], [Limitation 2], and [Limitation 3] may have influenced the results and should be considered when interpreting the findings.</p>
+
+                <h3>6. Conclusion</h3>
+                <p>This research successfully addressed the research questions and achieved the stated objectives. The findings provide valuable insights into ${data.researchField} and contribute to the existing body of knowledge.</p>
+                
+                <p>The main contributions of this research include: (1) empirical evidence for ${data.researchQuestion.toLowerCase()}, (2) methodological insights for future research, and (3) practical implications for [field applications].</p>
+                
+                <p><strong>Future Research:</strong> Future studies should focus on [future directions] to further advance understanding in this field. Longitudinal studies and cross-cultural investigations would provide additional insights into the generalizability of these findings.</p>
+
+                <h3>References</h3>
+                <div style="margin-left: 2rem; text-indent: -2rem;">
+                    <p>Anderson, J. M. (2023). Methodological considerations in ${data.researchField} research. <em>Journal of ${data.researchField}</em>, 45(3), 123-145.</p>
+                    <p>Chen, L., Wang, S., & Liu, M. (2022). Theoretical frameworks in modern ${data.researchField}. <em>Annual Review of ${data.researchField}</em>, 12, 67-89.</p>
+                    <p>Johnson, R., & Brown, K. (2022). Advances in ${data.researchField}: A comprehensive review. <em>Nature ${data.researchField}</em>, 8, 234-251.</p>
+                    <p>Smith, A., Davis, P., & Wilson, T. (2023). Contemporary issues in ${data.researchField} research. <em>Science</em>, 380(6645), 456-461.</p>
+                </div>
+
+                <p style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; font-style: italic;">
+                    <strong>Note:</strong> This is an AI-generated research paper draft. Please review, fact-check, and customize according to your specific research, data, and institutional requirements. Ensure all citations are accurate and properly formatted according to ${data.citationStyle.toUpperCase()} style guidelines.
+                </p>
+            `;
+        }
+
+        function downloadPaper(format) {
+            const content = document.getElementById('outputContent').innerText;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `research-paper.${format}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

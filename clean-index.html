@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Grant Writer - 学术写作AI助手</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>AI Grant Writer</h2>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">首页</a>
+                <a href="#tools" class="nav-link">工具</a>
+                <a href="#pricing" class="nav-link">定价</a>
+                <a href="#contact" class="nav-link">联系</a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>AI驱动的学术写作助手</h1>
+                <p>使用先进的人工智能技术，帮助您创建高质量的学术论文、研究提案和学术文档</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToGenerator()">开始使用</button>
+                    <a href="#tools" class="btn btn-secondary">了解更多</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Tools Section -->
+    <section id="tools" class="tools">
+        <div class="container">
+            <div class="section-header">
+                <h2>专业AI写作工具</h2>
+                <p>选择适合您学术写作需求的完美工具</p>
+            </div>
+            <div class="tools-grid">
+                <a href="grant-proposal.html" class="tool-card-link">
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <h3>Grant Proposal AI</h3>
+                            <span class="tool-badge">最受欢迎</span>
+                        </div>
+                        <p>使用AI助手生成获胜的研究资助提案</p>
+                        <div class="tool-link">
+                            启动工具 <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+                <a href="dissertation-writer.html" class="tool-card-link">
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <i class="fas fa-book-open"></i>
+                            <h3>Dissertation Writer</h3>
+                            <span class="tool-badge">博士生专用</span>
+                        </div>
+                        <p>完整的论文写作支持和指导</p>
+                        <div class="tool-link">
+                            启动工具 <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+                <a href="research-paper.html" class="tool-card-link">
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>Research Paper AI</h3>
+                            <span class="tool-badge">研究者</span>
+                        </div>
+                        <p>使用正确方法论生成研究论文</p>
+                        <div class="tool-link">
+                            启动工具 <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+                <a href="literature-review.html" class="tool-card-link">
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <i class="fas fa-search"></i>
+                            <h3>Literature Review AI</h3>
+                            <span class="tool-badge">新功能</span>
+                        </div>
+                        <p>全面的文献分析和综述</p>
+                        <div class="tool-link">
+                            启动工具 <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+                <a href="academic-proofreading.html" class="tool-card-link">
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <i class="fas fa-spell-check"></i>
+                            <h3>Academic Proofreading AI</h3>
+                            <span class="tool-badge">专业版</span>
+                        </div>
+                        <p>学术论文的专业级校对和编辑</p>
+                        <div class="tool-link">
+                            启动工具 <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+                <a href="manuscript-editor.html" class="tool-card-link">
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>Manuscript Editor</h3>
+                            <span class="tool-badge">发表专用</span>
+                        </div>
+                        <p>为发表准备您的手稿，包含期刊特定格式</p>
+                        <div class="tool-link">
+                            启动工具 <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 最简单的JavaScript - 只处理必要的导航功能
+        function scrollToGenerator() {
+            document.getElementById('tools').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // 移动端导航切换
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    navToggle.classList.toggle('active');
+                });
+            }
+
+            // 记录工具卡片链接
+            const toolCardLinks = document.querySelectorAll('.tool-card-link');
+            console.log('找到工具卡片链接数量:', toolCardLinks.length);
+            
+            toolCardLinks.forEach((link, index) => {
+                console.log(`链接 ${index + 1}: ${link.href}`);
+            });
+        });
+    </script>
+</body>
+</html>

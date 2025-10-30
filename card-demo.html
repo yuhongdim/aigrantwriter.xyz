@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卡片交互演示</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .demo-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .demo-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .demo-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .demo-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .demo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        
+        .demo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-icon i {
+            font-size: 24px;
+            color: white;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .card-description {
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .card-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .card-features li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #4a5568;
+        }
+        
+        .card-features li i {
+            color: #48bb78;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        
+        .status-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #48bb78;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .click-hint {
+            text-align: center;
+            color: white;
+            margin-top: 30px;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🎯 卡片交互演示</h1>
+            <p>鼠标悬停查看效果，点击卡片进行跳转</p>
+        </div>
+        
+        <div class="cards-grid">
+            <div class="demo-card" data-url="/grant-proposal-tool">
+                <div class="status-indicator">热门</div>
+                <div class="card-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <h3 class="card-title">Grant Proposal Generator</h3>
+                <p class="card-description">Create compelling grant proposals with AI-powered research and writing assistance. Increase your funding success rate.</p>
+                <ul class="card-features">
+                    <li><i class="fas fa-check"></i> NSF/NIH Format Compliance</li>
+                    <li><i class="fas fa-check"></i> Budget Planning Tools</li>
+                    <li><i class="fas fa-check"></i> Impact Statement Generator</li>
+                </ul>
+            </div>
+            
+            <div class="demo-card" data-url="/dissertation-writing-tool">
+                <div class="status-indicator">PhD学生</div>
+                <div class="card-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="card-title">Dissertation Writing AI</h3>
+                <p class="card-description">Complete dissertation support from proposal to defense. Structure, write, and refine your doctoral thesis with AI guidance.</p>
+                <ul class="card-features">
+                    <li><i class="fas fa-check"></i> Chapter-by-Chapter Guidance</li>
+                    <li><i class="fas fa-check"></i> Literature Review Assistant</li>
+                    <li><i class="fas fa-check"></i> Methodology Framework</li>
+                </ul>
+            </div>
+            
+            <div class="demo-card" data-url="/research-paper-tool">
+                <div class="status-indicator">研究者</div>
+                <div class="card-icon">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <h3 class="card-title">Research Paper Generator</h3>
+                <p class="card-description">Generate high-quality research papers with proper citations, methodology, and academic formatting standards.</p>
+                <ul class="card-features">
+                    <li><i class="fas fa-check"></i> Auto-Citation Generation</li>
+                    <li><i class="fas fa-check"></i> Peer Review Preparation</li>
+                    <li><i class="fas fa-check"></i> Journal Formatting</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="click-hint">
+            💡 提示：将鼠标悬停在卡片上查看手型指针，点击卡片体验跳转功能
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.demo-card');
+            
+            cards.forEach(card => {
+                const targetUrl = card.getAttribute('data-url');
+                
+                card.addEventListener('click', function() {
+                    console.log('点击卡片，跳转到:', targetUrl);
+                    
+                    // 显示跳转提示
+                    const originalContent = this.innerHTML;
+                    this.innerHTML = `
+                        <div style="text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #667eea; margin-bottom: 20px;"></i>
+                            <p style="color: #4a5568; margin: 0;">正在跳转到: ${targetUrl}</p>
+                        </div>
+                    `;
+                    
+                    // 模拟跳转延迟
+                    setTimeout(() => {
+                        alert(`模拟跳转到: ${targetUrl}\n\n在实际应用中，这里会跳转到对应的页面。`);
+                        this.innerHTML = originalContent;
+                    }, 1500);
+                });
+                
+                // 添加悬停效果
+                card.addEventListener('mouseenter', function() {
+                    this.style.cursor = 'pointer';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

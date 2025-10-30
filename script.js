@@ -1,4 +1,4 @@
-// 导航栏滚动效果
+// Navigation bar scroll effect
 window.addEventListener('scroll', function() {
     const navbar = document.querySelector('.navbar');
     if (window.scrollY > 100) {
@@ -10,7 +10,7 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// 移动端导航菜单切换
+// Mobile navigation menu toggle
 const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -19,14 +19,14 @@ navToggle.addEventListener('click', function() {
     navToggle.classList.toggle('active');
 });
 
-// 平滑滚动到指定区域
+// Smooth scroll to specified area
 function scrollToGenerator() {
     document.getElementById('generator').scrollIntoView({
         behavior: 'smooth'
     });
 }
 
-// 平滑滚动导航链接
+// Smooth scroll navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -40,13 +40,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// API 配置
+// API Configuration
 const API_CONFIG = {
     baseURL: 'https://breakout.wenwen-ai.com/v1/chat/completions',
     apiKey: 'sk-6ogS4COJPVLfLclruLQ6h59IxyvcN61nGuvgpr71VNL3ARsN'
 };
 
-// 论文生成功能
+// Paper generation function
 async function generatePaper() {
     const generateBtn = document.querySelector('.generate-btn');
     const outputContent = document.getElementById('output-content');
@@ -55,21 +55,21 @@ async function generatePaper() {
     const researchField = document.getElementById('research-field').value;
     const requirements = document.getElementById('requirements').value;
 
-    // 验证输入
+    // Input validation
     if (!researchTopic.trim()) {
-        alert('请输入研究主题');
+        alert('Please enter a research topic');
         return;
     }
 
-    // 显示加载状态
-    generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 生成中...';
+    // Show loading state
+    generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
     generateBtn.disabled = true;
 
     try {
-        // 构建提示词
+        // Build prompt
         const prompt = buildPrompt(researchTopic, paperType, researchField, requirements);
         
-        // 调用 AI API
+        // Call AI API
         const response = await fetch(API_CONFIG.baseURL, {
             method: 'POST',
             headers: {
@@ -81,7 +81,7 @@ async function generatePaper() {
                 messages: [
                     {
                         role: 'system',
-                        content: '你是一个专业的学术论文写作助手，擅长生成高质量的学术论文内容。'
+                        content: 'You are a professional academic writing assistant, skilled at generating high-quality academic content.'
                     },
                     {
                         role: 'user',
@@ -94,175 +94,169 @@ async function generatePaper() {
         });
 
         if (!response.ok) {
-            throw new Error(`API 请求失败: ${response.status}`);
+            throw new Error(`API request failed: ${response.status}`);
         }
 
         const data = await response.json();
         const generatedContent = data.choices[0].message.content;
         
-        // 格式化并显示生成的内容
-        outputContent.innerHTML = formatGeneratedContent(generatedContent, researchTopic, paperType, researchField);
+        // Format and display generated content
+        outputContent.innerHTML = formatGeneratedContent(data.choices[0].message.content, researchTopic, paperType, researchField);
         
     } catch (error) {
-        console.error('生成论文时出错:', error);
-        // 如果 API 调用失败，使用备用的模拟内容
-        const generatedContent = generateMockContent(researchTopic, paperType, researchField, requirements);
-        outputContent.innerHTML = generatedContent;
-        showNotification('API 调用失败，显示示例内容');
+        console.error('Error generating paper:', error);
+        // If API call fails, use backup mock content
+        outputContent.innerHTML = generateMockContent(researchTopic, paperType, researchField, requirements);
+        showNotification('API call failed, showing example content');
     } finally {
-        // 恢复按钮状态
-        generateBtn.innerHTML = '<i class="fas fa-magic"></i> 生成论文';
+        // Restore button state
+        generateBtn.innerHTML = '<i class="fas fa-magic"></i> Generate Paper';
         generateBtn.disabled = false;
     }
 }
 
-// 构建提示词
+// Build prompt
 function buildPrompt(topic, type, field, requirements) {
     const typeNames = {
-        'phd': '博士论文',
-        'master': '硕士论文',
-        'proposal': '研究提案',
-        'review': '文献综述'
+        'phd': 'PhD Dissertation',
+        'master': 'Master\'s Thesis',
+        'proposal': 'Research Proposal',
+        'review': 'Literature Review'
     };
 
-    let prompt = `请为以下研究主题生成一份${typeNames[type] || '学术论文'}的详细大纲和内容：
+    let prompt = `Please generate detailed outline and content for the following research topic:
 
-研究主题：${topic}
-研究领域：${field}
-论文类型：${typeNames[type] || type}`;
+Research Topic: ${topic}
+Research Field: ${field}
+Paper Type: ${typeNames[type] || type}`;
 
     if (requirements) {
-        prompt += `\n特殊要求：${requirements}`;
+        prompt += `\nSpecial Requirements: ${requirements}`;
     }
 
     prompt += `
 
-请按照以下结构生成内容：
-1. 研究背景与意义
-2. 文献综述
-3. 研究方法
-4. 预期结果
-5. 创新点
-6. 参考文献建议
+Please generate content according to the following structure:
+1. Research Background and Significance
+2. Literature Review
+3. Research Methodology
+4. Expected Results
+5. Innovation Points
+6. Reference Suggestions
 
-请确保内容专业、详细且具有学术价值。`;
+Please ensure the content is professional, detailed, and academically valuable.`;
 
     return prompt;
 }
 
-// 格式化生成的内容
+// Format generated content
 function formatGeneratedContent(content, topic, type, field) {
     const typeNames = {
-        'phd': '博士论文',
-        'master': '硕士论文',
-        'proposal': '研究提案',
-        'review': '文献综述'
+        'phd': 'PhD Dissertation',
+        'master': 'Master\'s Thesis',
+        'proposal': 'Research Proposal',
+        'review': 'Literature Review'
     };
 
     return `
-        <div class="generated-paper">
-            <h3>${typeNames[type] || '学术论文'}: ${topic}</h3>
-            <div class="paper-content">
-                ${content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}
+        <div class="generated-content">
+            <h3>${typeNames[type] || 'Academic Paper'}: ${topic}</h3>
+            <div class="content-body">
+                ${content.replace(/\n/g, '<br>')}
             </div>
-            <div class="generation-info">
+            <div class="content-meta">
                 <small>
-                    <i class="fas fa-info-circle"></i>
-                    生成时间: ${new Date().toLocaleString()} | 
-                    研究领域: ${field} | 
-                    论文类型: ${typeNames[type] || type}
+                    <i class="fas fa-clock"></i> 
+                    Generated: ${new Date().toLocaleString()} |
+                    Field: ${field} |
+                    Type: ${typeNames[type] || type}
                 </small>
             </div>
         </div>
     `;
 }
 
-// 生成模拟内容
+// Generate mock content
 function generateMockContent(topic, type, field, requirements) {
     const typeNames = {
-        'phd': '博士论文',
-        'master': '硕士论文',
-        'proposal': '研究提案',
-        'review': '文献综述'
+        'phd': 'PhD Dissertation',
+        'master': 'Master\'s Thesis',
+        'proposal': 'Research Proposal',
+        'review': 'Literature Review'
     };
 
     const fieldNames = {
-        'education': '教育学',
-        'psychology': '心理学',
-        'computer-science': '计算机科学',
-        'medicine': '医学',
-        'engineering': '工程学',
-        'business': '商学',
-        'other': '其他'
+        'education': 'Education',
+        'psychology': 'Psychology',
+        'computer-science': 'Computer Science',
+        'medicine': 'Medicine',
+        'engineering': 'Engineering',
+        'business': 'Business',
+        'other': 'Other'
     };
 
     return `
-        <div class="generated-paper">
-            <h3>${typeNames[type]}大纲</h3>
-            <h4>研究主题：${topic}</h4>
-            <p><strong>研究领域：</strong>${fieldNames[field]}</p>
+        <div class="generated-content">
+            <h3>${typeNames[type]} Outline</h3>
+            <h4>Research Topic: ${topic}</h4>
+            <p><strong>Research Field:</strong> ${fieldNames[field]}</p>
             
-            <div class="paper-section">
-                <h5>1. 引言</h5>
-                <p>本研究旨在探讨${topic}的相关问题。随着${fieldNames[field]}领域的快速发展，该研究具有重要的理论意义和实践价值。</p>
-            </div>
-
-            <div class="paper-section">
-                <h5>2. 文献综述</h5>
-                <p>通过对相关文献的系统梳理，发现当前研究在以下几个方面存在不足：</p>
+            <div class="content-body">
+                <h5>1. Introduction</h5>
+                <p>This research aims to explore issues related to ${topic}. With the rapid development in the field of ${fieldNames[field]}, this research has important theoretical value and practical significance.</p>
+                
+                <h5>2. Literature Review</h5>
+                <p>Through systematic review of relevant literature, current research has gaps in the following areas:</p>
                 <ul>
-                    <li>理论框架需要进一步完善</li>
-                    <li>实证研究相对缺乏</li>
-                    <li>研究方法有待创新</li>
+                    <li>Theoretical framework needs further improvement</li>
+                    <li>Empirical research is relatively lacking</li>
+                    <li>Research methods need innovation</li>
                 </ul>
-            </div>
-
-            <div class="paper-section">
-                <h5>3. 研究方法</h5>
-                <p>本研究采用混合研究方法，结合定量和定性分析：</p>
+                
+                <h5>3. Research Methodology</h5>
+                <p>This research adopts mixed research methods, combining quantitative and qualitative analysis:</p>
                 <ul>
-                    <li>问卷调查法：收集大样本数据</li>
-                    <li>深度访谈法：获取深层次信息</li>
-                    <li>案例分析法：提供具体实例</li>
+                    <li>Survey method: Collect large sample data</li>
+                    <li>In-depth interview method: Obtain deep insights</li>
+                    <li>Case study method: Provide specific examples</li>
                 </ul>
-            </div>
-
-            <div class="paper-section">
-                <h5>4. 预期结果</h5>
-                <p>本研究预期将在以下方面取得突破：</p>
+                
+                <h5>4. Expected Results</h5>
+                <p>This research is expected to achieve breakthroughs in the following areas:</p>
                 <ul>
-                    <li>构建新的理论模型</li>
-                    <li>提出实践指导建议</li>
-                    <li>为后续研究提供基础</li>
+                    <li>Construct new theoretical models</li>
+                    <li>Propose practical guidance suggestions</li>
+                    <li>Lay foundation for subsequent research</li>
                 </ul>
+                
+                <h5>5. Research Significance</h5>
+                <p>The theoretical significance of this research lies in enriching the theoretical system of ${fieldNames[field]}, and the practical significance lies in providing scientific basis for the development of related fields.</p>
             </div>
-
-            <div class="paper-section">
-                <h5>5. 研究意义</h5>
-                <p>本研究的理论意义在于丰富${fieldNames[field]}的理论体系，实践意义在于为相关领域的发展提供科学依据。</p>
-            </div>
-
-            <div class="generation-info">
-                <p><small><i class="fas fa-info-circle"></i> 这是AI生成的示例内容，实际使用时将根据您的具体需求生成更详细和专业的内容。</small></p>
-            </div>
+            
+            <p><small><i class="fas fa-info-circle"></i> This is AI-generated sample content. In actual use, more detailed and professional content will be generated according to your specific needs.</small></p>
         </div>
     `;
 }
 
-// 复制内容到剪贴板
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(function() {
-        showNotification('内容已复制到剪贴板');
-    }, function(err) {
-        console.error('复制失败: ', err);
-    });
+// Copy content to clipboard
+async function copyToClipboard() {
+    try {
+        const content = document.getElementById('output-content').innerText;
+        await navigator.clipboard.writeText(content);
+        showNotification('Content copied to clipboard');
+    } catch (err) {
+        console.error('Copy failed: ', err);
+    }
 }
 
-// 显示通知
-function showNotification(message) {
+// Show notification
+function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.textContent = message;
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+        ${message}
+    `;
     notification.style.cssText = `
         position: fixed;
         top: 20px;
@@ -277,6 +271,7 @@ function showNotification(message) {
     
     document.body.appendChild(notification);
     
+    // 3秒后自动移除
     setTimeout(() => {
         notification.remove();
     }, 3000);
@@ -382,31 +377,7 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// 工具卡片点击事件
-document.querySelectorAll('.tool-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const toolCard = this.closest('.tool-card');
-        const toolTitle = toolCard.querySelector('h3').textContent;
-        
-        // 根据工具类型设置表单默认值
-        if (toolTitle.includes('博士论文')) {
-            document.getElementById('paper-type').value = 'phd';
-        } else if (toolTitle.includes('文献综述')) {
-            document.getElementById('paper-type').value = 'review';
-        } else if (toolTitle.includes('研究方法')) {
-            document.getElementById('requirements').value = '请重点生成研究方法论部分';
-        } else if (toolTitle.includes('研究问题')) {
-            document.getElementById('requirements').value = '请帮助生成创新性的研究问题和假设';
-        }
-        
-        // 滚动到生成器区域
-        scrollToGenerator();
-        
-        // 高亮显示生成器区域
-        const generator = document.getElementById('generator');
-        generator.style.animation = 'highlight 2s ease';
-    });
-});
+// 工具卡片点击事件已移除，现在使用onclick属性直接调用openTool函数
 
 // 添加高亮动画
 const highlightStyle = document.createElement('style');
@@ -421,6 +392,11 @@ document.head.appendChild(highlightStyle);
 
 // 输出区域按钮功能
 document.addEventListener('click', function(e) {
+    // 如果点击的是工具卡片链接，不做任何处理，让浏览器正常跳转
+    if (e.target.closest('.tool-card-link')) {
+        return; // 不阻止，让链接正常工作
+    }
+    
     if (e.target.closest('.action-btn')) {
         const btn = e.target.closest('.action-btn');
         const icon = btn.querySelector('i');
@@ -428,10 +404,10 @@ document.addEventListener('click', function(e) {
         
         if (icon.classList.contains('fa-copy')) {
             const text = outputContent.textContent;
-            if (text && !text.includes('您生成的学术内容将在这里显示')) {
+            if (text && !text.includes('Your generated academic content will be displayed here')) {
                 copyToClipboard(text);
             } else {
-                showNotification('暂无内容可复制');
+                showNotification('No content to copy');
             }
         } else if (icon.classList.contains('fa-download')) {
             downloadContent();
@@ -446,7 +422,7 @@ function downloadContent() {
     const outputContent = document.getElementById('output-content');
     const text = outputContent.textContent;
     
-    if (text && !text.includes('您生成的学术内容将在这里显示')) {
+    if (text && !text.includes('Your generated academic content will be displayed here')) {
         const blob = new Blob([text], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -456,9 +432,9 @@ function downloadContent() {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        showNotification('文件下载已开始');
+        showNotification('File download started');
     } else {
-        showNotification('暂无内容可下载');
+        showNotification('No content to download');
     }
 }
 
@@ -466,28 +442,73 @@ function downloadContent() {
 function shareContent() {
     if (navigator.share) {
         navigator.share({
-            title: 'AI生成的学术内容',
-            text: 'AI学术写作助手生成的内容',
+            title: 'AI Generated Academic Content',
+        text: 'Content generated by AI Academic Writing Assistant',
             url: window.location.href
         });
     } else {
         copyToClipboard(window.location.href);
-        showNotification('链接已复制到剪贴板');
+        showNotification('Link copied to clipboard');
     }
 }
 
 // 页面加载完成后的初始化
 document.addEventListener('DOMContentLoaded', function() {
-    // 添加页面加载动画
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
-    
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-    }, 100);
+    console.log('DOM loaded, initializing...');
     
     // 初始化工具提示
     initTooltips();
+    
+    // 处理所有带有onclick属性的按钮
+    const buttonsWithOnclick = document.querySelectorAll('[onclick]');
+    console.log('Found buttons with onclick:', buttonsWithOnclick.length);
+    
+    buttonsWithOnclick.forEach((btn, index) => {
+        console.log(`Button ${index + 1}:`, btn.onclick);
+        
+        // 为每个按钮添加点击事件监听器
+        btn.addEventListener('click', function(e) {
+            console.log('Button clicked:', btn);
+            
+            // 如果按钮有onclick属性，执行它
+            if (btn.onclick) {
+                try {
+                    btn.onclick.call(btn, e);
+                } catch (error) {
+                    console.error('Error executing onclick:', error);
+                }
+            }
+        });
+    });
+    
+    // 工具卡片链接处理 - 完全移除JavaScript干扰
+    console.log('Tool card links will use native browser navigation');
+    
+    // 检查navigateToPage函数是否存在
+    console.log('navigateToPage function exists:', typeof navigateToPage);
+    
+    // 测试函数调用
+    window.testNavigation = function() {
+        navigateToPage('phd-assistant.html');
+    };
+    
+    console.log('Navigation setup complete. You can test with: testNavigation()');
+    
+    // 原有的调试代码
+    const toolBtns = document.querySelectorAll('.tool-btn');
+    console.log('Found', toolBtns.length, 'tool buttons');
+    
+    toolBtns.forEach((btn, index) => {
+        console.log(`Button ${index + 1}:`, btn.onclick);
+    });
+    
+    console.log('openTool function exists:', typeof openTool);
+    
+    const modals = document.querySelectorAll('.tool-modal');
+    console.log('Found modals:', modals.length);
+    modals.forEach((modal, index) => {
+        console.log(`Modal ${index} ID:`, modal.id);
+    });
 });
 
 // 初始化工具提示
@@ -534,4 +555,479 @@ function hideTooltip(e) {
         e.target._tooltip.remove();
         delete e.target._tooltip;
     }
+}
+
+// 工具模态框管理和页面导航
+function openTool(toolName) {
+    console.log('openTool called with:', toolName);
+    
+    // 首先尝试打开模态框
+    const modalId = toolName + '-modal';
+    console.log('Looking for modal with ID:', modalId);
+    const modal = document.getElementById(modalId);
+    console.log('Modal element found:', modal);
+    
+    if (modal) {
+        console.log('Opening modal...');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        console.log('Modal opened successfully');
+        
+        // 滚动到生成器区域
+        setTimeout(() => {
+            const generatorSection = document.getElementById('generator');
+            if (generatorSection) {
+                generatorSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 300);
+    } else {
+        console.error('Modal not found with ID:', modalId);
+        
+        // 如果没有找到模态框，尝试页面导航
+        navigateToTool(toolName);
+    }
+}
+
+// 页面导航功能
+function navigateToPage(pageName) {
+    console.log('navigateToPage called with:', pageName);
+    try {
+        // 显示一个临时提示
+        alert('Navigating to: ' + pageName);
+        
+        // 尝试跳转
+        window.location.href = pageName;
+        
+        console.log('Navigation initiated to:', pageName);
+    } catch (error) {
+        console.error('Navigation error:', error);
+        alert('Navigation failed: ' + error.message);
+    }
+}
+
+function navigateToTool(toolName) {
+    console.log('Navigating to tool:', toolName);
+    
+    // 隐藏所有工具区域
+    hideAllToolSections();
+    
+    // 显示对应的工具区域
+    const toolSection = document.getElementById(toolName + '-section');
+    if (toolSection) {
+        toolSection.style.display = 'block';
+        toolSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        // 如果没有专门的区域，滚动到生成器区域并设置工具类型
+        const generatorSection = document.getElementById('generator');
+        if (generatorSection) {
+            generatorSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // 设置工具类型
+            const toolTypeSelect = document.getElementById('paper-type');
+            if (toolTypeSelect) {
+                const toolTypeMap = {
+                    'phd-assistant': 'phd-thesis',
+                    'literature-review': 'literature-review',
+                    'research-method': 'research-method',
+                    'research-question': 'research-question',
+                    'ai-reducer': 'ai-reducer'
+                };
+                
+                const mappedType = toolTypeMap[toolName];
+                if (mappedType) {
+                    toolTypeSelect.value = mappedType;
+                    // 触发change事件
+                    toolTypeSelect.dispatchEvent(new Event('change'));
+                }
+            }
+            
+            // 添加高亮效果
+            generatorSection.style.animation = 'highlight 2s ease-in-out';
+            setTimeout(() => {
+                generatorSection.style.animation = '';
+            }, 2000);
+        }
+    }
+}
+
+// 隐藏所有工具区域
+function hideAllToolSections() {
+    const toolSections = document.querySelectorAll('[id$="-section"]');
+    toolSections.forEach(section => {
+        section.style.display = 'none';
+    });
+}
+
+function closeTool() {
+    const modals = document.querySelectorAll('.tool-modal');
+    modals.forEach(modal => {
+        modal.style.display = 'none';
+    });
+    document.body.style.overflow = 'auto';
+}
+
+// 点击模态框外部关闭
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('tool-modal')) {
+        closeTool();
+    }
+});
+
+// ESC键关闭模态框
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeTool();
+    }
+});
+
+// 博士论文助手功能
+async function generatePhdContent() {
+    const topic = document.getElementById('phd-topic').value;
+    const field = document.getElementById('phd-field').value;
+    const chapter = document.getElementById('phd-chapter').value;
+    const requirements = document.getElementById('phd-requirements').value;
+
+    if (!topic.trim() || !field || !chapter) {
+        alert('请填写所有必填字段');
+        return;
+    }
+
+    const btn = document.querySelector('#phd-assistant-modal .generate-btn');
+    const output = document.getElementById('phd-output');
+    
+    toggleLoading(btn, true);
+
+    try {
+        const prompt = `作为博士论文写作专家，请为以下研究主题生成${chapter}章节内容：
+
+研究主题：${topic}
+研究领域：${field}
+具体要求：${requirements}
+
+请生成专业详细的${chapter}内容，包括：
+1. 清晰的章节结构
+2. 学术语言规范
+3. 严谨的逻辑性
+4. 符合博士论文标准
+
+字数要求：2000-3000字`;
+
+        const result = await callAI(prompt);
+        displayResult(output, result);
+    } catch (error) {
+        alert('生成失败，请重试');
+        console.error(error);
+    } finally {
+        toggleLoading(btn, false);
+    }
+}
+
+// 文献综述生成器功能
+async function generateLiteratureReview() {
+    const topic = document.getElementById('lit-topic').value;
+    const keywords = document.getElementById('lit-keywords').value;
+    const timeframe = document.getElementById('lit-timeframe').value;
+    const focus = document.getElementById('lit-focus').value;
+
+    if (!topic.trim() || !keywords.trim()) {
+        alert('请填写研究主题和关键词');
+        return;
+    }
+
+    const btn = document.querySelector('#literature-review-modal .generate-btn');
+    const output = document.getElementById('literature-output');
+    
+    toggleLoading(btn, true);
+
+    try {
+        const timeframeText = {
+            'recent5': '近5年',
+        'recent10': '近10年',
+        'recent15': '近15年',
+        'all': '不限时间'
+        }[timeframe];
+
+        const prompt = `作为学术研究专家，请为以下主题生成文献综述：
+
+研究主题：${topic}
+关键词：${keywords}
+时间范围：${timeframeText}
+综述重点：${focus}
+
+请生成包含以下内容的文献综述：
+1. 研究背景与意义
+2. 国内外研究现状
+3. 主要理论观点
+4. 研究方法总结
+5. 研究趋势分析
+6. 研究空白与展望
+
+要求：
+- 结构清晰，逻辑严谨
+- 引用权威文献
+- 客观分析评价
+- 字数：2500-3500字`;
+
+        const result = await callAI(prompt);
+        displayResult(output, result);
+    } catch (error) {
+        alert('生成失败，请重试');
+        console.error(error);
+    } finally {
+        toggleLoading(btn, false);
+    }
+}
+
+// 研究方法生成器功能
+async function generateResearchMethod() {
+    const topic = document.getElementById('method-topic').value;
+    const type = document.getElementById('method-type').value;
+    const objectives = document.getElementById('method-objectives').value;
+
+    if (!topic.trim() || !type || !objectives.trim()) {
+        alert('请填写所有必填字段');
+        return;
+    }
+
+    const btn = document.querySelector('#research-method-modal .generate-btn');
+    const output = document.getElementById('method-output');
+    
+    toggleLoading(btn, true);
+
+    try {
+        const prompt = `作为研究方法专家，请为以下研究设计详细的研究方法：
+
+研究主题：${topic}
+研究类型：${type}
+研究目标：${objectives}
+
+请生成包含以下内容的研究方法：
+1. 研究设计
+2. 研究对象与样本
+3. 数据收集方法
+4. 数据分析方法
+5. 研究工具与技术
+6. 研究流程
+7. 质量控制措施
+8. 伦理考虑
+
+要求：
+- 方法科学可行
+- 步骤详细具体
+- 符合学术规范
+- 字数：2000-2800字`;
+
+        const result = await callAI(prompt);
+        displayResult(output, result);
+    } catch (error) {
+        alert('生成失败，请重试');
+        console.error(error);
+    } finally {
+        toggleLoading(btn, false);
+    }
+}
+
+// 研究问题生成器功能
+async function generateResearchQuestion() {
+    const field = document.getElementById('question-field').value;
+    const interest = document.getElementById('question-interest').value;
+    const gap = document.getElementById('question-gap').value;
+
+    if (!field || !interest.trim()) {
+        alert('请填写研究领域和研究兴趣');
+        return;
+    }
+
+    const btn = document.querySelector('#research-question-modal .generate-btn');
+    const output = document.getElementById('question-output');
+    
+    toggleLoading(btn, true);
+
+    try {
+        const prompt = `作为学术研究专家，请根据以下信息生成创新性的研究问题：
+
+研究领域：${field}
+研究兴趣：${interest}
+研究空白：${gap}
+
+请生成：
+1. 3-5个具体的研究问题
+2. 每个问题的研究价值分析
+3. 可行性评估
+4. 预期贡献
+5. 相关研究假设
+6. 研究意义说明
+
+要求：
+- 问题具有创新性
+- 研究价值明确
+- 可操作性强
+- 符合学术规范`;
+
+        const result = await callAI(prompt);
+        displayResult(output, result);
+    } catch (error) {
+        alert('生成失败，请重试');
+        console.error(error);
+    } finally {
+        toggleLoading(btn, false);
+    }
+}
+
+// AI降重工具功能
+async function generateReducedText() {
+    const text = document.getElementById('reducer-text').value;
+    const level = document.getElementById('reducer-level').value;
+    const style = document.getElementById('reducer-style').value;
+
+    if (!text.trim()) {
+        alert('请输入需要降重的文本');
+        return;
+    }
+
+    const btn = document.querySelector('#ai-reducer-modal .generate-btn');
+    const output = document.getElementById('reducer-output');
+    
+    toggleLoading(btn, true);
+
+    try {
+        const levelText = {
+            'light': '轻度降重：保持原意，微调表达',
+        'medium': '中度降重：改写句式，同义词替换',
+        'heavy': '深度降重：重组结构，全面改写'
+        }[level];
+
+        const styleText = {
+            'academic': '学术风格',
+        'formal': '正式风格',
+        'natural': '自然风格'
+        }[style];
+
+        const prompt = `作为专业的文本改写专家，请对以下文本进行降重处理：
+
+原文：
+${text}
+
+降重要求：${levelText}
+写作风格：${styleText}
+
+请遵循以下原则：
+1. 保持原文核心含义
+2. 改变句式结构和表达方式
+3. 使用同义词替换
+4. 调整段落组织
+5. 保持逻辑连贯性
+6. 符合${styleText}要求
+
+请直接输出改写后的文本，无需额外说明。`;
+
+        const result = await callAI(prompt);
+        
+        // 显示结果和统计信息
+        displayResult(output, result);
+        updateReductionStats(text, result);
+        
+    } catch (error) {
+        alert('文本降重失败，请重试');
+        console.error(error);
+    } finally {
+        toggleLoading(btn, false);
+    }
+}
+
+// 更新降重统计信息
+function updateReductionStats(originalText, reducedText) {
+    document.getElementById('original-count').textContent = originalText.length;
+    document.getElementById('reduced-count').textContent = reducedText.length;
+    
+    // 简单的相似度估算（实际应用中可以使用更复杂的算法）
+    const similarity = calculateSimilarity(originalText, reducedText);
+    const reduction = Math.max(0, Math.round((1 - similarity) * 100));
+    document.getElementById('similarity-reduction').textContent = `约 ${reduction}%`;
+}
+
+// 简单的文本相似度计算
+function calculateSimilarity(text1, text2) {
+    const words1 = text1.toLowerCase().split(/\s+/);
+    const words2 = text2.toLowerCase().split(/\s+/);
+    
+    const commonWords = words1.filter(word => words2.includes(word));
+    const totalWords = Math.max(words1.length, words2.length);
+    
+    return commonWords.length / totalWords;
+}
+
+// 通用AI调用函数
+async function callAI(prompt) {
+    const response = await fetch(API_CONFIG.baseURL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${API_CONFIG.apiKey}`
+        },
+        body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: [
+                {
+                    role: 'system',
+                    content: '你是一个专业的学术写作助手，擅长生成高质量的学术内容。'
+                },
+                {
+                    role: 'user',
+                    content: prompt
+                }
+            ],
+            max_tokens: 4000,
+            temperature: 0.7
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error(`API request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content;
+}
+
+// 显示结果
+function displayResult(outputElement, content) {
+    outputElement.style.display = 'block';
+    const contentDiv = outputElement.querySelector('.output-content');
+    contentDiv.textContent = content;
+}
+
+// 切换加载状态
+function toggleLoading(button, isLoading) {
+    const btnText = button.querySelector('.btn-text');
+    const spinner = button.querySelector('.loading-spinner');
+    
+    if (isLoading) {
+        btnText.style.display = 'none';
+        spinner.style.display = 'inline-block';
+        button.disabled = true;
+    } else {
+        btnText.style.display = 'inline-block';
+        spinner.style.display = 'none';
+        button.disabled = false;
+    }
+}
+
+// 复制到剪贴板功能（更新版本）
+function copyToClipboard(outputId) {
+    const outputElement = document.getElementById(outputId);
+    const content = outputElement.querySelector('.output-content').textContent;
+    
+    navigator.clipboard.writeText(content).then(() => {
+        showNotification('内容已复制到剪贴板');
+    }).catch(() => {
+        // 降级方案
+        const textArea = document.createElement('textarea');
+        textArea.value = content;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showNotification('内容已复制到剪贴板');
+    });
 }

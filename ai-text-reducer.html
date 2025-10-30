@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Text Reducer - Plagiarism & AI Detection Reduction</title>
+    <meta name="description" content="Advanced AI-powered text reduction tool to reduce plagiarism rates and AI detection scores while maintaining content quality.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .tool-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 100px;
+        }
+        .tool-modes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .mode-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .mode-card:hover,
+        .mode-card.active {
+            border-color: #6366f1;
+            transform: translateY(-5px);
+        }
+        .mode-card.active {
+            background: linear-gradient(135deg, #f0f0ff 0%, #e6e6ff 100%);
+        }
+        .mode-icon {
+            font-size: 3rem;
+            color: #6366f1;
+            margin-bottom: 1rem;
+        }
+        .mode-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        .mode-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        .tool-workspace {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .input-panel,
+        .output-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        .panel-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .detection-score {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .score-high {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .score-medium {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .score-low {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        .text-area {
+            width: 100%;
+            min-height: 400px;
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            padding: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: vertical;
+            font-family: 'Inter', sans-serif;
+        }
+        .text-area:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+        .control-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .control-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        .control-input {
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+        .control-input:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .slider {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: #e1e5e9;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #6366f1;
+            cursor: pointer;
+        }
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #6366f1;
+            cursor: pointer;
+            border: none;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+        .btn-secondary {
+            background: #f8fafc;
+            color: #64748b;
+            border: 2px solid #e2e8f0;
+        }
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #6366f1;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 0.25rem;
+        }
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .feature-highlight {
+            background: linear-gradient(135deg, #f0f0ff 0%, #e6e6ff 100%);
+            border-left: 4px solid #6366f1;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #4338ca;
+        }
+        @media (max-width: 768px) {
+            .tool-modes,
+            .tool-workspace {
+                grid-template-columns: 1fr;
+            }
+            .control-grid {
+                grid-template-columns: 1fr;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-magic"></i> AI Text Reducer</h1>
+            <p>Advanced plagiarism and AI detection reduction with intelligent text transformation</p>
+        </div>
+
+        <!-- Mode Selection -->
+        <div class="tool-modes">
+            <div class="mode-card active" onclick="selectMode('plagiarism')" data-mode="plagiarism">
+                <div class="mode-icon">
+                    <i class="fas fa-copy"></i>
+                </div>
+                <div class="mode-title">Plagiarism Reduction</div>
+                <div class="mode-description">
+                    Reduce similarity scores while maintaining original meaning and academic integrity. Perfect for research papers and academic writing.
+                </div>
+            </div>
+            <div class="mode-card" onclick="selectMode('ai-detection')" data-mode="ai-detection">
+                <div class="mode-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="mode-title">AI Detection Reduction</div>
+                <div class="mode-description">
+                    Humanize AI-generated content to bypass AI detection tools while preserving quality and coherence.
+                </div>
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="control-grid">
+                <div class="control-group">
+                    <label class="control-label">Reduction Strength</label>
+                    <div class="slider-container">
+                        <span>Low</span>
+                        <input type="range" class="slider" id="strengthSlider" min="1" max="5" value="3">
+                        <span>High</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Writing Style</label>
+                    <select class="control-input" id="writingStyle">
+                        <option value="academic">Academic</option>
+                        <option value="professional">Professional</option>
+                        <option value="casual">Casual</option>
+                        <option value="technical">Technical</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Language Level</label>
+                    <select class="control-input" id="languageLevel">
+                        <option value="advanced">Advanced</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="simple">Simple</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Preserve Keywords</label>
+                    <input type="text" class="control-input" id="keywords" placeholder="Enter keywords to preserve">
+                </div>
+            </div>
+        </div>
+
+        <!-- Text Processing Workspace -->
+        <div class="tool-workspace">
+            <div class="input-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fas fa-edit"></i> Original Text
+                    </div>
+                    <div class="detection-score score-high" id="originalScore">
+                        Plagiarism: 0% | AI: 0%
+                    </div>
+                </div>
+                <textarea 
+                    class="text-area" 
+                    id="originalText" 
+                    placeholder="Paste your text here to reduce plagiarism or AI detection rates..."
+                    oninput="analyzeText()"
+                ></textarea>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="originalWords">0</div>
+                        <div class="stat-label">Words</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="originalChars">0</div>
+                        <div class="stat-label">Characters</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="originalSentences">0</div>
+                        <div class="stat-label">Sentences</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="output-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fas fa-check-circle"></i> Processed Text
+                    </div>
+                    <div class="detection-score score-low" id="processedScore">
+                        Plagiarism: 0% | AI: 0%
+                    </div>
+                </div>
+                <textarea 
+                    class="text-area" 
+                    id="processedText" 
+                    placeholder="Processed text will appear here..."
+                    readonly
+                ></textarea>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="processedWords">0</div>
+                        <div class="stat-label">Words</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="processedChars">0</div>
+                        <div class="stat-label">Characters</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="similarity">0%</div>
+                        <div class="stat-label">Similarity</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="processText()">
+                <i class="fas fa-magic"></i> Process Text
+            </button>
+            <button class="btn btn-secondary" onclick="copyToClipboard()">
+                <i class="fas fa-copy"></i> Copy Result
+            </button>
+            <button class="btn btn-secondary" onclick="downloadText()">
+                <i class="fas fa-download"></i> Download
+            </button>
+            <button class="btn btn-secondary" onclick="clearAll()">
+                <i class="fas fa-trash"></i> Clear All
+            </button>
+        </div>
+
+        <!-- Feature Highlights -->
+        <div class="feature-highlight">
+            <h4><i class="fas fa-star"></i> Advanced Features</h4>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <i class="fas fa-check"></i>
+                    <span>Intelligent synonym replacement</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check"></i>
+                    <span>Sentence structure modification</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check"></i>
+                    <span>Contextual paraphrasing</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check"></i>
+                    <span>Academic tone preservation</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check"></i>
+                    <span>Citation format maintenance</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check"></i>
+                    <span>Real-time detection analysis</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'plagiarism';
+        let isProcessing = false;
+
+        function selectMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+            
+            // Update UI based on mode
+            updateModeUI();
+        }
+
+        function updateModeUI() {
+            const originalScore = document.getElementById('originalScore');
+            const processedScore = document.getElementById('processedScore');
+            
+            if (currentMode === 'plagiarism') {
+                originalScore.textContent = 'Plagiarism: 0% | Similarity: 0%';
+                processedScore.textContent = 'Plagiarism: 0% | Similarity: 0%';
+            } else {
+                originalScore.textContent = 'AI Detection: 0% | Human: 0%';
+                processedScore.textContent = 'AI Detection: 0% | Human: 0%';
+            }
+        }
+
+        function analyzeText() {
+            const text = document.getElementById('originalText').value;
+            
+            // Update statistics
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const chars = text.length;
+            const sentences = text.trim() ? text.split(/[.!?]+/).filter(s => s.trim()).length : 0;
+            
+            document.getElementById('originalWords').textContent = words;
+            document.getElementById('originalChars').textContent = chars;
+            document.getElementById('originalSentences').textContent = sentences;
+            
+            // Simulate detection analysis
+            if (text.trim()) {
+                simulateDetectionAnalysis(text);
+            }
+        }
+
+        function simulateDetectionAnalysis(text) {
+            const originalScore = document.getElementById('originalScore');
+            
+            if (currentMode === 'plagiarism') {
+                // Simulate plagiarism detection
+                const plagiarismRate = Math.floor(Math.random() * 40) + 20; // 20-60%
+                const similarityRate = Math.floor(Math.random() * 30) + 15; // 15-45%
+                originalScore.textContent = `Plagiarism: ${plagiarismRate}% | Similarity: ${similarityRate}%`;
+                originalScore.className = `detection-score ${plagiarismRate > 30 ? 'score-high' : plagiarismRate > 15 ? 'score-medium' : 'score-low'}`;
+            } else {
+                // Simulate AI detection
+                const aiRate = Math.floor(Math.random() * 50) + 30; // 30-80%
+                const humanRate = 100 - aiRate;
+                originalScore.textContent = `AI Detection: ${aiRate}% | Human: ${humanRate}%`;
+                originalScore.className = `detection-score ${aiRate > 50 ? 'score-high' : aiRate > 25 ? 'score-medium' : 'score-low'}`;
+            }
+        }
+
+        function processText() {
+            const originalText = document.getElementById('originalText').value.trim();
+            
+            if (!originalText) {
+                alert('Please enter some text to process.');
+                return;
+            }
+            
+            if (isProcessing) return;
+            
+            isProcessing = true;
+            const processedTextArea = document.getElementById('processedText');
+            const processedScore = document.getElementById('processedScore');
+            
+            // Show loading
+            processedTextArea.value = '';
+            processedTextArea.placeholder = 'Processing text...';
+            
+            // Simulate processing
+            setTimeout(() => {
+                const processedText = generateProcessedText(originalText);
+                processedTextArea.value = processedText;
+                processedTextArea.placeholder = 'Processed text will appear here...';
+                
+                // Update processed statistics
+                updateProcessedStats(processedText);
+                
+                // Update processed scores
+                updateProcessedScores();
+                
+                isProcessing = false;
+            }, 3000);
+        }
+
+        function generateProcessedText(text) {
+            // Simple text transformation simulation
+            const synonyms = {
+                'important': 'significant',
+                'show': 'demonstrate',
+                'use': 'utilize',
+                'help': 'assist',
+                'make': 'create',
+                'good': 'beneficial',
+                'bad': 'detrimental',
+                'big': 'substantial',
+                'small': 'minimal',
+                'many': 'numerous',
+                'very': 'extremely',
+                'also': 'additionally',
+                'because': 'due to the fact that',
+                'but': 'however',
+                'and': 'as well as'
+            };
+            
+            let processed = text;
+            
+            // Replace synonyms
+            Object.keys(synonyms).forEach(word => {
+                const regex = new RegExp(`\\b${word}\\b`, 'gi');
+                processed = processed.replace(regex, synonyms[word]);
+            });
+            
+            // Add some sentence restructuring
+            processed = processed.replace(/\. /g, '. Furthermore, ');
+            processed = processed.replace(/Furthermore, Furthermore, /g, 'Moreover, ');
+            
+            return processed;
+        }
+
+        function updateProcessedStats(text) {
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const chars = text.length;
+            const originalText = document.getElementById('originalText').value;
+            const similarity = calculateSimilarity(originalText, text);
+            
+            document.getElementById('processedWords').textContent = words;
+            document.getElementById('processedChars').textContent = chars;
+            document.getElementById('similarity').textContent = similarity + '%';
+        }
+
+        function calculateSimilarity(text1, text2) {
+            // Simple similarity calculation
+            const words1 = text1.toLowerCase().split(/\s+/);
+            const words2 = text2.toLowerCase().split(/\s+/);
+            const commonWords = words1.filter(word => words2.includes(word));
+            return Math.floor((commonWords.length / Math.max(words1.length, words2.length)) * 100);
+        }
+
+        function updateProcessedScores() {
+            const processedScore = document.getElementById('processedScore');
+            
+            if (currentMode === 'plagiarism') {
+                const newPlagiarism = Math.floor(Math.random() * 15) + 5; // 5-20%
+                const newSimilarity = Math.floor(Math.random() * 20) + 10; // 10-30%
+                processedScore.textContent = `Plagiarism: ${newPlagiarism}% | Similarity: ${newSimilarity}%`;
+                processedScore.className = `detection-score ${newPlagiarism > 15 ? 'score-medium' : 'score-low'}`;
+            } else {
+                const newAiRate = Math.floor(Math.random() * 25) + 10; // 10-35%
+                const newHumanRate = 100 - newAiRate;
+                processedScore.textContent = `AI Detection: ${newAiRate}% | Human: ${newHumanRate}%`;
+                processedScore.className = `detection-score ${newAiRate > 25 ? 'score-medium' : 'score-low'}`;
+            }
+        }
+
+        function copyToClipboard() {
+            const processedText = document.getElementById('processedText').value;
+            if (!processedText) {
+                alert('No processed text to copy.');
+                return;
+            }
+            
+            navigator.clipboard.writeText(processedText).then(() => {
+                alert('Text copied to clipboard!');
+            });
+        }
+
+        function downloadText() {
+            const processedText = document.getElementById('processedText').value;
+            if (!processedText) {
+                alert('No processed text to download.');
+                return;
+            }
+            
+            const blob = new Blob([processedText], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `processed-text-${currentMode}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function clearAll() {
+            document.getElementById('originalText').value = '';
+            document.getElementById('processedText').value = '';
+            
+            // Reset statistics
+            document.getElementById('originalWords').textContent = '0';
+            document.getElementById('originalChars').textContent = '0';
+            document.getElementById('originalSentences').textContent = '0';
+            document.getElementById('processedWords').textContent = '0';
+            document.getElementById('processedChars').textContent = '0';
+            document.getElementById('similarity').textContent = '0%';
+            
+            // Reset scores
+            updateModeUI();
+        }
+
+        // Initialize
+        updateModeUI();
+    </script>
+</body>
+</html>

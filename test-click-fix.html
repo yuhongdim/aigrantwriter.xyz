@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卡片点击测试 - 修复验证</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .test-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+        }
+        .test-button:hover {
+            background: #2563eb;
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fee2e2; color: #991b1b; }
+        .info { background: #dbeafe; color: #1e40af; }
+        .card-list {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 6px;
+        }
+        .card-item {
+            padding: 8px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 4px;
+            border-left: 4px solid #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔧 卡片点击功能修复验证</h1>
+        <p>这个页面用来测试首页的7个工具卡片是否都能正常点击跳转。</p>
+        
+        <div class="test-controls">
+            <button class="test-button" onclick="loadMainPage()">📄 加载首页内容</button>
+            <button class="test-button" onclick="testAllCards()">🧪 测试所有卡片</button>
+            <button class="test-button" onclick="clearResults()">🗑️ 清除结果</button>
+        </div>
+        
+        <div id="status" class="status info">
+            点击"加载首页内容"开始测试
+        </div>
+        
+        <div id="cardList" class="card-list" style="display: none;">
+            <h3>检测到的卡片：</h3>
+            <div id="cards"></div>
+        </div>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        let mainPageLoaded = false;
+        
+        function updateStatus(message, type = 'info') {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+        
+        function loadMainPage() {
+            updateStatus('正在加载首页内容...', 'info');
+            
+            fetch('/index.html')
+                .then(response => response.text())
+                .then(html => {
+                    // 解析HTML并提取工具卡片部分
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const toolsSection = doc.querySelector('.tools-grid');
+                    
+                    if (toolsSection) {
+                        // 创建容器并插入卡片
+                        let container = document.getElementById('mainPageContent');
+                        if (!container) {
+                            container = document.createElement('div');
+                            container.id = 'mainPageContent';
+                            container.style.display = 'none'; // 隐藏，只用于测试
+                            document.body.appendChild(container);
+                        }
+                        container.innerHTML = toolsSection.outerHTML;
+                        
+                        // 加载并执行navigation.js
+                        return fetch('/navigation.js');
+                    } else {
+                        throw new Error('未找到工具卡片区域');
+                    }
+                })
+                .then(response => response.text())
+                .then(jsCode => {
+                    // 执行navigation.js代码
+                    eval(jsCode);
+                    mainPageLoaded = true;
+                    updateStatus('首页内容加载完成！现在可以测试卡片了。', 'success');
+                    
+                    // 等待一下让JavaScript初始化完成
+                    setTimeout(detectCards, 500);
+                })
+                .catch(error => {
+                    updateStatus(`加载失败: ${error.message}`, 'error');
+                    console.error('Load error:', error);
+                });
+        }
+        
+        function detectCards() {
+            const cards = document.querySelectorAll('.tool-card');
+            const cardList = document.getElementById('cardList');
+            const cardsDiv = document.getElementById('cards');
+            
+            if (cards.length > 0) {
+                cardList.style.display = 'block';
+                cardsDiv.innerHTML = '';
+                
+                cards.forEach((card, index) => {
+                    const titleElement = card.querySelector('.tool-header h3');
+                    const title = titleElement ? titleElement.textContent.trim() : `卡片 ${index + 1}`;
+                    
+                    const cardItem = document.createElement('div');
+                    cardItem.className = 'card-item';
+                    cardItem.innerHTML = `
+                        <strong>${index + 1}.</strong> ${title}
+                        <button onclick="testSingleCard(${index})" style="float: right; padding: 4px 8px; font-size: 12px;">测试点击</button>
+                    `;
+                    cardsDiv.appendChild(cardItem);
+                });
+                
+                updateStatus(`检测到 ${cards.length} 个卡片，可以开始测试了！`, 'success');
+            } else {
+                updateStatus('未检测到卡片，请先加载首页内容', 'error');
+            }
+        }
+        
+        function testSingleCard(index) {
+            const cards = document.querySelectorAll('.tool-card');
+            if (cards[index]) {
+                const card = cards[index];
+                const titleElement = card.querySelector('.tool-header h3');
+                const title = titleElement ? titleElement.textContent.trim() : `卡片 ${index + 1}`;
+                
+                updateStatus(`正在测试卡片: ${title}`, 'info');
+                
+                // 模拟点击
+                try {
+                    const clickEvent = new MouseEvent('click', {
+                        bubbles: true,
+                        cancelable: true,
+                        view: window
+                    });
+                    
+                    card.dispatchEvent(clickEvent);
+                    
+                    // 检查是否有onclick处理器
+                    if (card.onclick) {
+                        addResult(`✅ 卡片 "${title}" 有onclick处理器`, 'success');
+                    } else {
+                        addResult(`❌ 卡片 "${title}" 没有onclick处理器`, 'error');
+                    }
+                } catch (error) {
+                    addResult(`❌ 测试卡片 "${title}" 时出错: ${error.message}`, 'error');
+                }
+            }
+        }
+        
+        function testAllCards() {
+            if (!mainPageLoaded) {
+                updateStatus('请先加载首页内容！', 'error');
+                return;
+            }
+            
+            const cards = document.querySelectorAll('.tool-card');
+            if (cards.length === 0) {
+                updateStatus('未找到卡片！', 'error');
+                return;
+            }
+            
+            updateStatus(`开始测试所有 ${cards.length} 个卡片...`, 'info');
+            clearResults();
+            
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    testSingleCard(index);
+                    if (index === cards.length - 1) {
+                        updateStatus('所有卡片测试完成！', 'success');
+                    }
+                }, index * 200);
+            });
+        }
+        
+        function addResult(message, type) {
+            const results = document.getElementById('results');
+            const result = document.createElement('div');
+            result.className = `status ${type}`;
+            result.textContent = message;
+            results.appendChild(result);
+        }
+        
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

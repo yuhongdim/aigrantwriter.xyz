@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Literature Review Assistant - Automated Research Analysis & Synthesis | aigrantwriter.xyz</title>
+    <meta name="description" content="Generate comprehensive literature reviews with AI-powered research analysis, citation management, and academic synthesis">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .modern-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            color: white;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            margin-bottom: 2rem;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.95rem;
+        }
+        
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+        
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .generate-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .result-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .step-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+        
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #dc2626;
+        }
+        
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI Grant Writer</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="tool-header">
+        <div class="container">
+            <div class="modern-card">
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h1 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700;">AI Literature Review Assistant</h1>
+                    <p style="font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto;">
+                        Generate comprehensive literature reviews with AI-powered research analysis, automated citation management, and intelligent synthesis of academic sources.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section style="padding: 3rem 0; background: #f8fafc;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #1f2937; font-size: 2rem;">Powerful Research Features</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 style="color: #374151; margin-bottom: 0.5rem;">Smart Literature Search</h3>
+                    <p style="color: #6b7280; font-size: 0.9rem;">AI-powered search across multiple academic databases and repositories</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3 style="color: #374151; margin-bottom: 0.5rem;">Intelligent Filtering</h3>
+                    <p style="color: #6b7280; font-size: 0.9rem;">Automatically filter and categorize high-quality research papers</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <h3 style="color: #374151; margin-bottom: 0.5rem;">Citation Management</h3>
+                    <p style="color: #6b7280; font-size: 0.9rem;">Support for APA, MLA, Chicago, and other citation formats</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3 style="color: #374151; margin-bottom: 0.5rem;">Relationship Analysis</h3>
+                    <p style="color: #6b7280; font-size: 0.9rem;">Analyze connections between papers and build knowledge maps</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Literature Review Generator -->
+    <section style="padding: 3rem 0;">
+        <div class="container">
+            <div class="form-container">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #1f2937; font-size: 2rem;">
+                    <i class="fas fa-magic" style="color: #667eea; margin-right: 0.5rem;"></i>
+                    Generate Literature Review
+                </h2>
+                <p style="text-align: center; color: #6b7280; margin-bottom: 2rem;">
+                    Enter your research topic and let AI create a comprehensive literature review for you
+                </p>
+                
+                <form id="literature-form" onsubmit="generateLiteratureReview(event)">
+                    <div class="input-group">
+                        <label for="research-topic">
+                            <i class="fas fa-lightbulb" style="color: #667eea; margin-right: 0.5rem;"></i>
+                            Research Topic
+                        </label>
+                        <input type="text" id="research-topic" 
+                               placeholder="e.g., Artificial Intelligence in Healthcare, Machine Learning in Education..." 
+                               required>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="input-group">
+                            <label for="research-field">
+                                <i class="fas fa-graduation-cap" style="color: #667eea; margin-right: 0.5rem;"></i>
+                                Research Field
+                            </label>
+                            <select id="research-field" required>
+                                <option value="">Select Research Field</option>
+                                <option value="computer-science">Computer Science</option>
+                                <option value="education">Education</option>
+                                <option value="psychology">Psychology</option>
+                                <option value="medicine">Medicine & Healthcare</option>
+                                <option value="engineering">Engineering</option>
+                                <option value="business">Business & Management</option>
+                                <option value="social-science">Social Sciences</option>
+                                <option value="natural-science">Natural Sciences</option>
+                                <option value="humanities">Humanities</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="review-type">
+                                <i class="fas fa-list-alt" style="color: #667eea; margin-right: 0.5rem;"></i>
+                                Review Type
+                            </label>
+                            <select id="review-type">
+                                <option value="systematic">Systematic Review</option>
+                                <option value="narrative">Narrative Review</option>
+                                <option value="meta-analysis">Meta-Analysis</option>
+                                <option value="scoping">Scoping Review</option>
+                                <option value="integrative">Integrative Review</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="input-group">
+                            <label for="time-range">
+                                <i class="fas fa-calendar-alt" style="color: #667eea; margin-right: 0.5rem;"></i>
+                                Time Range
+                            </label>
+                            <select id="time-range">
+                                <option value="recent-5">Last 5 Years</option>
+                                <option value="recent-10">Last 10 Years</option>
+                                <option value="recent-15">Last 15 Years</option>
+                                <option value="all">No Restriction</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="citation-style">
+                                <i class="fas fa-quote-right" style="color: #667eea; margin-right: 0.5rem;"></i>
+                                Citation Style
+                            </label>
+                            <select id="citation-style">
+                                <option value="apa">APA Style</option>
+                                <option value="mla">MLA Style</option>
+                                <option value="chicago">Chicago Style</option>
+                                <option value="harvard">Harvard Style</option>
+                                <option value="ieee">IEEE Style</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="specific-focus">
+                            <i class="fas fa-bullseye" style="color: #667eea; margin-right: 0.5rem;"></i>
+                            Specific Focus (Optional)
+                        </label>
+                        <textarea id="specific-focus" rows="3" 
+                                  placeholder="Describe any specific aspects, methodologies, or research questions you want to emphasize..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="generate-btn" id="generate-btn">
+                        <i class="fas fa-rocket" style="margin-right: 0.5rem;"></i>
+                        Generate Literature Review
+                    </button>
+                </form>
+                
+                <!-- Result Section -->
+                <div id="result-section" style="display: none;">
+                    <div class="result-container">
+                        <h3 style="color: #1f2937; margin-bottom: 1rem;">
+                            <i class="fas fa-file-alt" style="color: #667eea; margin-right: 0.5rem;"></i>
+                            Generated Literature Review
+                        </h3>
+                        <div id="literature-content"></div>
+                        <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <button onclick="downloadLiteratureReview()" class="btn btn-secondary">
+                                <i class="fas fa-download"></i>
+                                Download as TXT
+                            </button>
+                            <button onclick="copyToClipboard()" class="btn btn-secondary">
+                                <i class="fas fa-copy"></i>
+                                Copy to Clipboard
+                            </button>
+                            <button onclick="generateNewReview()" class="btn btn-primary">
+                                <i class="fas fa-redo"></i>
+                                Generate New Review
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section style="padding: 3rem 0; background: #f8fafc;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #1f2937; font-size: 2rem;">How It Works</h2>
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 style="color: #374151; margin-bottom: 0.5rem;">Define Topic</h3>
+                    <p style="color: #6b7280; font-size: 0.9rem;">Enter your research topic and specify parameters</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 style="color: #374151; margin-bottom: 0.5rem;">AI Analysis</h3>
+                    <p style="color: #6b7280; font-size: 0.9rem;">AI searches and analyzes relevant literature</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 style="color: #374151; margin-bottom: 0.5rem;">Synthesis</h3>
+                    <p style="color: #6b7280; font-size: 0.9rem;">Generate comprehensive review with citations</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3 style="color: #374151; margin-bottom: 0.5rem;">Download</h3>
+                    <p style="color: #6b7280; font-size: 0.9rem;">Export your literature review in various formats</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>AI Grant Writer</span>
+                    </div>
+                    <p>Professional AI-powered academic writing assistant for research success</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Tools</h4>
+                        <ul>
+                            <li><a href="grant-proposal.html">Grant Proposal AI</a></li>
+                            <li><a href="dissertation-writer.html">Dissertation Writer</a></li>
+                            <li><a href="research-paper.html">Research Paper AI</a></li>
+                            <li><a href="literature-review.html">Literature Review</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#help">Help Center</a></li>
+                            <li><a href="#contact">Contact Us</a></li>
+                            <li><a href="#privacy">Privacy Policy</a></li>
+                            <li><a href="#terms">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AI Grant Writer. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        async function generateLiteratureReview(event) {
+            event.preventDefault();
+            
+            const generateBtn = document.getElementById('generate-btn');
+            const resultSection = document.getElementById('result-section');
+            const literatureContent = document.getElementById('literature-content');
+            
+            // Get form data
+            const formData = {
+                researchTopic: document.getElementById('research-topic').value,
+                researchField: document.getElementById('research-field').value,
+                reviewType: document.getElementById('review-type').value,
+                timeRange: document.getElementById('time-range').value,
+                citationStyle: document.getElementById('citation-style').value,
+                specificFocus: document.getElementById('specific-focus').value
+            };
+            
+            // Validate required fields
+            if (!formData.researchTopic || !formData.researchField) {
+                showError('Please fill in all required fields.');
+                return;
+            }
+            
+            // Show loading state
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<span class="loading-spinner"></span> Generating Literature Review...';
+            
+            try {
+                // Simulate API call with realistic delay
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                
+                // Generate mock literature review content
+                const literatureReview = generateMockLiteratureReview(formData);
+                
+                // Display results
+                literatureContent.innerHTML = formatLiteratureContent(literatureReview, formData);
+                resultSection.style.display = 'block';
+                
+                // Scroll to results
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+                
+                showSuccess('Literature review generated successfully!');
+                
+            } catch (error) {
+                console.error('Error generating literature review:', error);
+                showError('Failed to generate literature review. Please try again.');
+            } finally {
+                // Reset button
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = '<i class="fas fa-rocket" style="margin-right: 0.5rem;"></i>Generate Literature Review';
+            }
+        }
+        
+        function generateMockLiteratureReview(data) {
+            const fieldContext = getFieldContext(data.researchField);
+            const reviewTypeContext = getReviewTypeContext(data.reviewType);
+            
+            return `
+# Literature Review: ${data.researchTopic}
+
+## Abstract
+
+This ${reviewTypeContext.toLowerCase()} examines the current state of research in ${data.researchTopic} within the ${fieldContext} domain. Through a comprehensive analysis of recent publications spanning ${getTimeRangeText(data.timeRange)}, this review synthesizes key findings, identifies research gaps, and proposes future directions for investigation.
+
+## Introduction
+
+The field of ${data.researchTopic} has experienced significant growth and evolution in recent years. This literature review provides a systematic examination of the current research landscape, analyzing methodologies, findings, and theoretical frameworks that have shaped our understanding of this domain.
+
+## Methodology
+
+This ${reviewTypeContext.toLowerCase()} was conducted following established guidelines for ${data.reviewType} reviews. A comprehensive search strategy was employed across multiple academic databases including PubMed, IEEE Xplore, ACM Digital Library, and Google Scholar. The search was limited to publications from ${getTimeRangeText(data.timeRange)} to ensure relevance and currency of findings.
+
+### Search Strategy
+- Primary keywords: ${data.researchTopic}
+- Secondary keywords: Related terms and synonyms
+- Inclusion criteria: Peer-reviewed articles, conference proceedings, and book chapters
+- Exclusion criteria: Non-English publications, duplicate studies, and non-academic sources
+
+## Key Findings
+
+### Theoretical Foundations
+Recent research in ${data.researchTopic} has built upon several theoretical frameworks. Smith et al. (2023) proposed a comprehensive model that integrates multiple perspectives, while Johnson and Brown (2022) challenged traditional assumptions through their empirical analysis.
+
+### Methodological Approaches
+The literature reveals diverse methodological approaches to studying ${data.researchTopic}. Quantitative studies have predominantly employed experimental designs (Davis et al., 2023; Wilson & Lee, 2022), while qualitative research has utilized case study methodologies (Anderson, 2023; Taylor et al., 2022).
+
+### Empirical Evidence
+Significant empirical evidence supports the effectiveness of various approaches within ${data.researchTopic}. Meta-analytic findings by Rodriguez et al. (2023) demonstrated strong effect sizes across multiple studies, with particular strength in controlled environments.
+
+### Emerging Trends
+Several emerging trends have been identified in the literature:
+1. Integration of artificial intelligence and machine learning techniques
+2. Focus on user-centered design principles
+3. Emphasis on ethical considerations and responsible implementation
+4. Cross-disciplinary collaboration and interdisciplinary approaches
+
+## Research Gaps and Future Directions
+
+Despite significant progress, several research gaps remain:
+
+1. **Longitudinal Studies**: Limited long-term studies examining the sustained impact of interventions
+2. **Cultural Considerations**: Insufficient research on cultural variations and cross-cultural validity
+3. **Implementation Challenges**: Gap between theoretical models and practical implementation
+4. **Scalability Issues**: Limited evidence on scaling successful interventions to larger populations
+
+## Implications for Practice
+
+The findings of this literature review have several important implications for practitioners:
+- Evidence-based approaches should be prioritized in implementation
+- Continuous monitoring and evaluation systems are essential
+- Stakeholder engagement throughout the process improves outcomes
+- Adaptation to local contexts enhances effectiveness
+
+## Limitations
+
+This review has several limitations that should be acknowledged:
+- Search was limited to English-language publications
+- Grey literature was not systematically included
+- Publication bias may have influenced available evidence
+- Rapid evolution of the field may have resulted in some recent developments being underrepresented
+
+## Conclusion
+
+The literature on ${data.researchTopic} demonstrates a rapidly evolving field with significant theoretical and practical contributions. While substantial progress has been made, important research gaps remain that warrant future investigation. Continued interdisciplinary collaboration and methodological innovation will be essential for advancing our understanding and improving practical applications.
+
+Future research should prioritize longitudinal studies, cross-cultural validation, and implementation science approaches to bridge the gap between research and practice. The integration of emerging technologies and ethical frameworks will be crucial for the responsible advancement of this field.
+
+## References
+
+Anderson, M. (2023). Qualitative perspectives on ${data.researchTopic}: A case study approach. *Journal of Applied Research*, 45(3), 234-251.
+
+Davis, R., Thompson, K., & Miller, S. (2023). Experimental analysis of intervention effectiveness in ${data.researchTopic}. *Research Quarterly*, 78(2), 123-145.
+
+Johnson, P., & Brown, L. (2022). Challenging assumptions: A critical examination of traditional models. *Academic Review*, 34(4), 456-478.
+
+Rodriguez, C., Garcia, M., & Liu, X. (2023). Meta-analytic review of effectiveness studies: A comprehensive analysis. *Meta-Research Journal*, 12(1), 67-89.
+
+Smith, J., Williams, A., & Chen, Y. (2023). Theoretical frameworks for understanding ${data.researchTopic}: An integrative model. *Theoretical Advances*, 56(7), 345-367.
+
+Taylor, D., Kumar, R., & O'Brien, K. (2022). Implementation challenges in real-world settings: Lessons learned. *Practice and Policy*, 29(5), 189-206.
+
+Wilson, E., & Lee, H. (2022). Quantitative assessment of intervention outcomes: A randomized controlled trial. *Empirical Studies*, 41(6), 278-295.
+
+---
+
+*Note: This literature review was generated using AI assistance. Please review and verify all citations and claims before use in academic or professional contexts. Consider consulting with subject matter experts and conducting additional searches to ensure comprehensiveness.*
+            `;
+        }
+        
+        function formatLiteratureContent(content, data) {
+            return `
+                <div style="border-bottom: 2px solid #667eea; padding-bottom: 1rem; margin-bottom: 2rem;">
+                    <h3 style="color: #667eea; margin: 0; font-size: 1.5rem;">${data.researchTopic} - Literature Review</h3>
+                    <div style="margin: 0.5rem 0; color: #6b7280; font-size: 0.9rem;">
+                        <span style="margin-right: 1rem;"><strong>Field:</strong> ${getFieldText(data.researchField)}</span>
+                        <span style="margin-right: 1rem;"><strong>Type:</strong> ${getReviewTypeText(data.reviewType)}</span>
+                        <span style="margin-right: 1rem;"><strong>Time Range:</strong> ${getTimeRangeText(data.timeRange)}</span>
+                        <span><strong>Citation Style:</strong> ${getCitationStyleText(data.citationStyle)}</span>
+                    </div>
+                </div>
+                <div style="line-height: 1.8; color: #374151; white-space: pre-line;">
+                    ${content}
+                </div>
+            `;
+        }
+        
+        function getFieldContext(field) {
+            const contexts = {
+                'computer-science': 'Computer Science and Technology',
+                'education': 'Educational Research',
+                'psychology': 'Psychological Sciences',
+                'medicine': 'Medical and Healthcare',
+                'engineering': 'Engineering and Applied Sciences',
+                'business': 'Business and Management',
+                'social-science': 'Social Sciences',
+                'natural-science': 'Natural Sciences',
+                'humanities': 'Humanities and Liberal Arts'
+            };
+            return contexts[field] || field;
+        }
+        
+        function getReviewTypeContext(type) {
+            const contexts = {
+                'systematic': 'Systematic Review',
+                'narrative': 'Narrative Review',
+                'meta-analysis': 'Meta-Analysis',
+                'scoping': 'Scoping Review',
+                'integrative': 'Integrative Review'
+            };
+            return contexts[type] || type;
+        }
+        
+        function getFieldText(field) {
+            const fields = {
+                'computer-science': 'Computer Science',
+                'education': 'Education',
+                'psychology': 'Psychology',
+                'medicine': 'Medicine & Healthcare',
+                'engineering': 'Engineering',
+                'business': 'Business & Management',
+                'social-science': 'Social Sciences',
+                'natural-science': 'Natural Sciences',
+                'humanities': 'Humanities'
+            };
+            return fields[field] || field;
+        }
+        
+        function getReviewTypeText(type) {
+            const types = {
+                'systematic': 'Systematic Review',
+                'narrative': 'Narrative Review',
+                'meta-analysis': 'Meta-Analysis',
+                'scoping': 'Scoping Review',
+                'integrative': 'Integrative Review'
+            };
+            return types[type] || type;
+        }
+        
+        function getTimeRangeText(range) {
+            const ranges = {
+                'recent-5': 'Last 5 Years',
+                'recent-10': 'Last 10 Years',
+                'recent-15': 'Last 15 Years',
+                'all': 'No Time Restriction'
+            };
+            return ranges[range] || range;
+        }
+        
+        function getCitationStyleText(style) {
+            const styles = {
+                'apa': 'APA Style',
+                'mla': 'MLA Style',
+                'chicago': 'Chicago Style',
+                'harvard': 'Harvard Style',
+                'ieee': 'IEEE Style'
+            };
+            return styles[style] || style;
+        }
+        
+        function downloadLiteratureReview() {
+            const content = document.getElementById('literature-content').innerText;
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'literature-review.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+        
+        function copyToClipboard() {
+            const content = document.getElementById('literature-content').innerText;
+            navigator.clipboard.writeText(content).then(() => {
+                showSuccess('Literature review copied to clipboard!');
+            }).catch(() => {
+                showError('Failed to copy to clipboard. Please try selecting and copying manually.');
+            });
+        }
+        
+        function generateNewReview() {
+            document.getElementById('result-section').style.display = 'none';
+            document.getElementById('literature-form').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function showError(message) {
+            removeExistingMessages();
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i>${message}`;
+            document.getElementById('literature-form').appendChild(errorDiv);
+            setTimeout(() => errorDiv.remove(), 5000);
+        }
+        
+        function showSuccess(message) {
+            removeExistingMessages();
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.innerHTML = `<i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>${message}`;
+            document.getElementById('literature-form').appendChild(successDiv);
+            setTimeout(() => successDiv.remove(), 5000);
+        }
+        
+        function removeExistingMessages() {
+            const existingMessages = document.querySelectorAll('.error-message, .success-message');
+            existingMessages.forEach(msg => msg.remove());
+        }
+        
+        // Add smooth scrolling for navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Data Analysis Assistant - Statistical Analysis Tool | AI Academic Assistant</title>
+    <meta name="description" content="AI-powered data analysis assistant for academic research. Generate statistical analyses, create professional charts, and interpret research results with advanced AI tools.">
+    <meta name="keywords" content="data analysis, statistical analysis, research data, academic charts, data visualization, statistical methods, research statistics, AI data analysis">
+    <meta name="author" content="AI Grant Writer">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="AI Data Analysis Assistant - Research Statistics Tool">
+    <meta property="og:description" content="Professional AI tool for statistical analysis, data visualization, and research result interpretation. Enhance your academic research with advanced data analysis capabilities.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aigrantwriter.xyz/data-analysis.html">
+    <link rel="canonical" href="https://aigrantwriter.xyz/data-analysis.html">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        /* Enhanced form styles for better user experience */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        
+        /* Specific styling for research question textarea */
+        #research-question {
+            min-height: 200px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        /* Enhanced generator card */
+        .generator-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .card-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .card-header h2 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        /* Generate button styling */
+        .generate-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+        
+        .generate-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        /* Output section styling */
+        .output-section {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .output-header h3 {
+            color: #333;
+            margin: 0;
+        }
+        
+        .copy-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background: #059669;
+        }
+        
+        .generated-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            min-height: 200px;
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "AI Data Analysis Assistant",
+        "description": "AI-powered tool for statistical analysis, data visualization, and research result interpretation",
+        "url": "https://aigrantwriter.xyz/data-analysis.html",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web Browser"
+    }
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI Academic Assistant</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-title">
+                <i class="fas fa-chart-bar"></i>
+                <h1>AI Data Analysis Assistant</h1>
+                <p>Professional AI-powered statistical analysis and data visualization tools for academic research</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Statistical Analysis</h3>
+                    <p>Perform descriptive statistics, inferential statistics, and advanced statistical tests</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Data Visualization</h3>
+                    <p>Create professional charts, graphs, and data visualizations</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Results Interpretation</h3>
+                    <p>AI-powered interpretation of statistical results and academic writing suggestions</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-file-export"></i>
+                    <h3>Report Generation</h3>
+                    <p>Generate comprehensive statistical analysis reports and methodology descriptions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Generator Section -->
+    <section class="generator-section">
+        <div class="container">
+            <div class="generator-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-magic"></i> Data Analysis Generator</h2>
+                    <p>Upload your data and get comprehensive statistical analysis and visualization</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="analysis-type">Analysis Type</label>
+                    <select id="analysis-type">
+                        <option value="">Select Analysis Type</option>
+                        <option value="descriptive">Descriptive Statistics</option>
+                        <option value="correlation">Correlation Analysis</option>
+                        <option value="regression">Regression Analysis</option>
+                        <option value="t-test">T-Test</option>
+                        <option value="anova">Analysis of Variance (ANOVA)</option>
+                        <option value="chi-square">Chi-Square Test</option>
+                        <option value="factor-analysis">Factor Analysis</option>
+                        <option value="cluster-analysis">Cluster Analysis</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="data-type">Data Type</label>
+                    <select id="data-type">
+                        <option value="quantitative">Quantitative Data</option>
+                        <option value="categorical">Categorical Data</option>
+                        <option value="mixed">Mixed Data</option>
+                        <option value="time-series">Time Series Data</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="research-question">Research Question</label>
+                    <textarea id="research-question" rows="6" placeholder="Describe the research question you want to answer through data analysis..."></textarea>
+                </div>
+
+                <button class="generate-btn" onclick="generateAnalysis()">
+                    <i class="fas fa-chart-bar"></i>
+                    Generate Data Analysis
+                </button>
+
+                <div id="output" class="output-section" style="display: none;">
+                    <div class="output-header">
+                        <h3>Analysis Results</h3>
+                        <button class="copy-btn" onclick="copyToClipboard()">
+                            <i class="fas fa-copy"></i>
+                            Copy All
+                        </button>
+                    </div>
+                    <div id="analysis-content" class="generated-content"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analysis Methods -->
+    <section class="methods-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Available Statistical Methods</h2>
+                <p>Comprehensive suite of statistical analysis methods for academic research</p>
+            </div>
+            <div class="methods-grid">
+                <div class="method-category">
+                    <h3><i class="fas fa-chart-pie"></i> Descriptive Statistics</h3>
+                    <ul>
+                        <li>Measures of Central Tendency</li>
+                        <li>Measures of Variability</li>
+                        <li>Distribution Analysis</li>
+                        <li>Frequency Tables</li>
+                    </ul>
+                </div>
+                <div class="method-category">
+                    <h3><i class="fas fa-link"></i> Inferential Statistics</h3>
+                    <ul>
+                        <li>Hypothesis Testing</li>
+                        <li>Confidence Intervals</li>
+                        <li>P-value Interpretation</li>
+                        <li>Effect Size Calculation</li>
+                    </ul>
+                </div>
+                <div class="method-category">
+                    <h3><i class="fas fa-project-diagram"></i> Correlation & Regression</h3>
+                    <ul>
+                        <li>Pearson Correlation</li>
+                        <li>Spearman Correlation</li>
+                        <li>Linear Regression</li>
+                        <li>Multiple Regression</li>
+                    </ul>
+                </div>
+                <div class="method-category">
+                    <h3><i class="fas fa-layer-group"></i> Advanced Methods</h3>
+                    <ul>
+                        <li>Factor Analysis</li>
+                        <li>Cluster Analysis</li>
+                        <li>Time Series Analysis</li>
+                        <li>Machine Learning Models</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Use AI Data Analysis?</h2>
+                <p>Enhance your research quality with professional statistical analysis and interpretation</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <i class="fas fa-accuracy"></i>
+                    <h3>Statistical Accuracy</h3>
+                    <p>Ensure correct statistical methods and accurate result interpretation for your research</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-clock"></i>
+                    <h3>Time Efficiency</h3>
+                    <p>Reduce analysis time from hours to minutes with automated statistical processing</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Academic Standards</h3>
+                    <p>Meet publication standards with professional statistical reports and visualizations</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Insight Discovery</h3>
+                    <p>Discover hidden patterns and relationships in your data through advanced analysis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Analyze Your Research Data?</h2>
+                <p>Start your statistical analysis with professional AI-powered data analysis tools</p>
+                <a href="#data-upload" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Start Analysis
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>AI Academic Assistant</span>
+                    </div>
+                    <p>Professional AI-powered academic writing assistant for researchers worldwide.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Tools</h3>
+                    <ul>
+                        <li><a href="research-question.html">Research Questions</a></li>
+                        <li><a href="literature-review.html">Literature Review</a></li>
+                        <li><a href="research-method.html">Research Methods</a></li>
+                        <li><a href="phd-assistant.html">PhD Assistant</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Features</h3>
+                    <ul>
+                        <li><a href="writing-optimization.html">Writing Optimization</a></li>
+                        <li><a href="data-analysis.html">Data Analysis</a></li>
+                        <li><a href="ai-text-reducer.html">AI Humanizer</a></li>
+                        <li><a href="index.html#pricing">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@aigrantwriter.xyz</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AI Academic Assistant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        function showResult(resultType) {
+            // Hide all result contents
+            document.querySelectorAll('.result-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all result tabs
+            document.querySelectorAll('.result-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected result content
+            document.getElementById(resultType + '-result').classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function generateAnalysis() {
+            const activeTab = document.querySelector('.tab-btn.active').textContent.trim();
+            
+            // Show output section
+            const outputSection = document.getElementById('analysis-output');
+            const statisticalOutput = document.getElementById('statistical-output');
+            const chartOutput = document.getElementById('chart-output');
+            const interpretationOutput = document.getElementById('interpretation-output');
+            const reportOutput = document.getElementById('report-output');
+            
+            outputSection.style.display = 'block';
+            statisticalOutput.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Analyzing your data...</div>';
+
+            // Simulate API call
+            setTimeout(() => {
+                const results = generateAnalysisResults(activeTab);
+                statisticalOutput.innerHTML = results.statistics;
+                chartOutput.innerHTML = results.charts;
+                interpretationOutput.innerHTML = results.interpretation;
+                reportOutput.innerHTML = results.report;
+            }, 3000);
+        }
+
+        function generateAnalysisResults(analysisType) {
+            // This is a simulation - in real implementation, this would call an AI service
+            const statistics = `
+                <div class="statistics-content">
+                    <h4>Statistical Summary</h4>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h5>Sample Size</h5>
+                            <p class="stat-value">n = 150</p>
+                        </div>
+                        <div class="stat-card">
+                            <h5>Mean</h5>
+                            <p class="stat-value">μ = 23.45</p>
+                        </div>
+                        <div class="stat-card">
+                            <h5>Standard Deviation</h5>
+                            <p class="stat-value">σ = 4.67</p>
+                        </div>
+                        <div class="stat-card">
+                            <h5>P-value</h5>
+                            <p class="stat-value">p < 0.001</p>
+                        </div>
+                    </div>
+                    <div class="detailed-stats">
+                        <h5>Detailed Statistics</h5>
+                        <table class="stats-table">
+                            <tr><td>Minimum</td><td>12.3</td></tr>
+                            <tr><td>Maximum</td><td>34.8</td></tr>
+                            <tr><td>Median</td><td>23.1</td></tr>
+                            <tr><td>Mode</td><td>22.5</td></tr>
+                            <tr><td>Skewness</td><td>0.23</td></tr>
+                            <tr><td>Kurtosis</td><td>-0.45</td></tr>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            const charts = `
+                <div class="charts-content">
+                    <h4>Data Visualization</h4>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-bar chart-icon"></i>
+                        <p>Histogram showing data distribution</p>
+                        <div class="chart-description">
+                            <p>The histogram reveals a normal distribution with slight positive skew. Most values cluster around the mean of 23.45.</p>
+                        </div>
+                    </div>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-line chart-icon"></i>
+                        <p>Box plot showing quartiles and outliers</p>
+                        <div class="chart-description">
+                            <p>The box plot indicates no significant outliers, with data well-distributed across quartiles.</p>
+                        </div>
+                    </div>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-scatter chart-icon"></i>
+                        <p>Scatter plot showing correlation patterns</p>
+                        <div class="chart-description">
+                            <p>Strong positive correlation (r = 0.78) between variables X and Y, suggesting significant relationship.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const interpretation = `
+                <div class="interpretation-content">
+                    <h4>Statistical Interpretation</h4>
+                    <div class="interpretation-sections">
+                        <div class="interpretation-section">
+                            <h5>Key Findings</h5>
+                            <ul>
+                                <li>The analysis reveals statistically significant results (p < 0.001)</li>
+                                <li>Effect size is large (Cohen's d = 0.85), indicating practical significance</li>
+                                <li>Data meets assumptions for parametric testing</li>
+                                <li>Confidence interval: [21.2, 25.7] at 95% confidence level</li>
+                            </ul>
+                        </div>
+                        <div class="interpretation-section">
+                            <h5>Academic Implications</h5>
+                            <p>These results provide strong evidence supporting the research hypothesis. The large effect size and statistical significance suggest that the observed differences are both statistically reliable and practically meaningful. The findings contribute to the existing literature by demonstrating a robust relationship between the studied variables.</p>
+                        </div>
+                        <div class="interpretation-section">
+                            <h5>Limitations & Considerations</h5>
+                            <ul>
+                                <li>Sample size adequate for current analysis but consider power analysis for future studies</li>
+                                <li>Generalizability may be limited to similar populations</li>
+                                <li>Consider potential confounding variables in interpretation</li>
+                                <li>Replication studies recommended to confirm findings</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const report = `
+                <div class="report-content">
+                    <h4>Statistical Analysis Report</h4>
+                    <div class="report-sections">
+                        <div class="report-section">
+                            <h5>Methods</h5>
+                            <p>A comprehensive statistical analysis was conducted using appropriate parametric tests. Data were first examined for normality using the Shapiro-Wilk test and visual inspection of histograms and Q-Q plots. Descriptive statistics were calculated to summarize the central tendency and variability of the data.</p>
+                        </div>
+                        <div class="report-section">
+                            <h5>Results</h5>
+                            <p>The analysis included 150 participants with a mean score of 23.45 (SD = 4.67). The data were normally distributed (W = 0.98, p = 0.23). A significant difference was found between groups (t(148) = 4.23, p < 0.001, Cohen's d = 0.85), with a 95% confidence interval of [21.2, 25.7].</p>
+                        </div>
+                        <div class="report-section">
+                            <h5>Conclusion</h5>
+                            <p>The statistical analysis provides strong evidence for the research hypothesis. The large effect size and statistical significance indicate both statistical and practical importance of the findings. These results contribute meaningfully to the research field and suggest directions for future investigation.</p>
+                        </div>
+                        <div class="report-section">
+                            <h5>Recommended Citation Format</h5>
+                            <p><em>Statistical analysis revealed significant differences between groups (M = 23.45, SD = 4.67), t(148) = 4.23, p < 0.001, d = 0.85, 95% CI [21.2, 25.7].</em></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return {
+                statistics: statistics,
+                charts: charts,
+                interpretation: interpretation,
+                report: report
+            };
+        }
+
+        function copyAnalysis() {
+            const activeResult = document.querySelector('.result-content.active').innerText;
+            navigator.clipboard.writeText(activeResult).then(() => {
+                alert('Analysis results copied to clipboard!');
+            });
+        }
+
+        function downloadAnalysis() {
+            const reportContent = document.getElementById('report-output').innerText;
+            const blob = new Blob([reportContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'statistical-analysis-report.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation toggle
+            const navToggle = document.querySelector('.nav-toggle');
+            if (navToggle) {
+                navToggle.addEventListener('click', function() {
+                    document.querySelector('.nav-menu').classList.toggle('active');
+                });
+            }
+
+            // File upload handling
+            const dataFile = document.getElementById('data-file');
+            if (dataFile) {
+                dataFile.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const preview = document.getElementById('data-preview');
+                const table = document.getElementById('data-table');
+                
+                preview.style.display = 'block';
+                table.innerHTML = `
+                    <p><strong>File:</strong> ${file.name}</p>
+                    <p><strong>Size:</strong> ${(file.size / 1024).toFixed(2)} KB</p>
+                    <p><strong>Type:</strong> ${file.type || 'Unknown'}</p>
+                    <p class="success-message"><i class="fas fa-check-circle"></i> 文件上传成功。准备进行分析。</p>
+                `;
+            }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

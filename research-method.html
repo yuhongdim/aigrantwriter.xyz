@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Methodology Design - AI Academic Writing Assistant | aigrantwriter.xyz</title>
+    <meta name="description" content="AI-powered research methodology design providing professional guidance for quantitative, qualitative, and mixed research methods">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        /* Enhanced form styles for better user experience */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        
+        /* Specific styling for research question textarea */
+        #research-question {
+            min-height: 200px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        /* Enhanced generator card */
+        .generator-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI Academic Assistant</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="tool-header">
+        <div class="container">
+            <div class="tool-header-content">
+                <div class="tool-icon-large">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <h1>Research Methodology Design</h1>
+                <p>AI-powered research methodology design providing professional guidance for quantitative, qualitative, and mixed research methods</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="tool-features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Quantitative Research Design</h3>
+                    <p>Professional guidance for experimental design, survey research, and statistical analysis methods</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Qualitative Research Methods</h3>
+                    <p>Detailed design for qualitative methods including interviews, observations, and case studies</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Mixed Methods Research</h3>
+                    <p>Comprehensive research design combining quantitative and qualitative approaches</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Sample Design</h3>
+                    <p>Sample size calculation, sampling methods, and participant recruitment strategies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Method Generator -->
+    <section class="tool-generator-section">
+        <div class="container">
+            <div class="generator-card">
+                <h2>
+                    <i class="fas fa-magic"></i>
+                    Research Method Generator
+                </h2>
+                <p>Enter your research information and AI will design the most suitable research methodology for you</p>
+                
+                <form class="generator-form">
+                    <div class="form-group">
+                        <label for="research-question">Research Question</label>
+                        <textarea id="research-question" rows="3" placeholder="Please describe your research question or hypothesis in detail..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="research-type">Research Type</label>
+                        <select id="research-type">
+                            <option value="">Select Research Type</option>
+                            <option value="quantitative">Quantitative Research</option>
+                            <option value="qualitative">Qualitative Research</option>
+                            <option value="mixed">Mixed Methods Research</option>
+                            <option value="experimental">Experimental Research</option>
+                            <option value="survey">Survey Research</option>
+                            <option value="case-study">Case Study</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="research-field">Research Field</label>
+                        <select id="research-field">
+                            <option value="">Select Research Field</option>
+                            <option value="psychology">Psychology</option>
+                            <option value="education">Education</option>
+                            <option value="business">Business</option>
+                            <option value="medicine">Medicine</option>
+                            <option value="engineering">Engineering</option>
+                            <option value="social-science">Social Sciences</option>
+                            <option value="computer-science">Computer Science</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="target-population">Target Population</label>
+                        <input type="text" id="target-population" placeholder="e.g., University students, Business managers, Patients, etc.">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="data-collection">Data Collection Methods</label>
+                        <select id="data-collection" multiple>
+                            <option value="survey">Survey/Questionnaire</option>
+                            <option value="interview">In-depth Interview</option>
+                            <option value="observation">Observation</option>
+                            <option value="experiment">Experimental Method</option>
+                            <option value="document">Document Analysis</option>
+                            <option value="focus-group">Focus Group</option>
+                        </select>
+                        <small>Hold Ctrl key to select multiple options</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sample-size">Expected Sample Size</label>
+                        <select id="sample-size">
+                            <option value="small">Small Sample (30-100)</option>
+                            <option value="medium">Medium Sample (100-500)</option>
+                            <option value="large">Large Sample (500+)</option>
+                            <option value="calculate">Need Calculation</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="research-duration">Research Duration</label>
+                        <select id="research-duration">
+                            <option value="short">Short-term (1-3 months)</option>
+                            <option value="medium">Medium-term (3-12 months)</option>
+                            <option value="long">Long-term (1+ years)</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-large">
+                        <i class="fas fa-rocket"></i>
+                        Generate Research Method
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Method Types -->
+    <section class="method-types-section">
+        <div class="container">
+            <h2 class="section-title">Research Method Types</h2>
+            <div class="method-types-grid">
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Quantitative Research</h3>
+                    <ul>
+                        <li>Experimental Design</li>
+                        <li>Survey Research</li>
+                        <li>Correlational Research</li>
+                        <li>Quasi-experimental Design</li>
+                    </ul>
+                    <p>Suitable for hypothesis testing, measuring variable relationships, and large-sample statistical analysis</p>
+                </div>
+                
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3>Qualitative Research</h3>
+                    <ul>
+                        <li>In-depth Interviews</li>
+                        <li>Participant Observation</li>
+                        <li>Focus Groups</li>
+                        <li>Ethnographic Research</li>
+                    </ul>
+                    <p>Suitable for exploring phenomena, understanding meanings, and in-depth analysis of complex issues</p>
+                </div>
+                
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Mixed Methods</h3>
+                    <ul>
+                        <li>Sequential Explanatory Design</li>
+                        <li>Sequential Exploratory Design</li>
+                        <li>Concurrent Mixed Design</li>
+                        <li>Embedded Design</li>
+                    </ul>
+                    <p>Combines quantitative and qualitative advantages to provide a more comprehensive research perspective</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usage Steps -->
+    <section class="steps-section">
+        <div class="container">
+            <h2 class="section-title">Usage Steps</h2>
+            <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <h3>Define Research Question</h3>
+                    <p>Describe your research question and objectives in detail</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <h3>Select Research Type</h3>
+                    <p>Choose the most suitable research method based on your research nature</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <h3>Configure Parameters</h3>
+                    <p>Set key parameters such as sample size and data collection methods</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <h3>Get Solution</h3>
+                    <p>Receive a detailed research methodology design plan</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>AI Academic Writing</span>
+                    </div>
+                    <p>Professional AI-powered academic writing assistant to help your research succeed</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="phd-assistant.html">PhD Assistant</a></li>
+                        <li><a href="literature-review.html">Literature Review</a></li>
+                        <li><a href="research-method.html">Research Method</a></li>
+                        <li><a href="research-question.html">Research Question</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="writing-optimization.html">Writing Optimization</a></li>
+                        <li><a href="data-analysis.html">Data Analysis</a></li>
+                        <li><a href="ai-text-reducer.html">AI Text Reducer</a></li>
+                        <li><a href="index.html#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@aigrantwriter.xyz</li>
+                        <li><i class="fas fa-globe"></i> www.aigrantwriter.xyz</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AI Academic Writing Assistant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="navigation.js"></script>
+    <script src="research-method.js"></script>
+</body>
+</html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Content Humanizer - Plagiarism Reduction & AI Detection Bypass | AI Grant Writer</title>
+    <meta name="description" content="Advanced AI content humanizer tool for plagiarism reduction and AI detection bypass. Transform AI-generated text into human-like content while maintaining original meaning and academic quality.">
+    <meta name="keywords" content="AI content humanizer, plagiarism reduction, AI detection bypass, content rewriter, academic text humanizer, AI text converter, plagiarism remover, AI content detector">
+    <meta name="author" content="AI Grant Writer">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="AI Content Humanizer - Advanced Plagiarism Reduction Tool">
+    <meta property="og:description" content="Professional AI content humanizer for academic writing. Reduce plagiarism and bypass AI detection while maintaining quality and meaning.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aigrantwriter.xyz/ai-reducer.html">
+    <link rel="canonical" href="https://aigrantwriter.xyz/ai-reducer.html">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "AI Content Humanizer",
+        "description": "Advanced AI content humanizer for plagiarism reduction and AI detection bypass",
+        "url": "https://aigrantwriter.xyz/ai-reducer.html",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web Browser"
+    }
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI Grant Writer</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-title">
+                <i class="fas fa-shield-alt"></i>
+                <h1>AI Content Humanizer Tool</h1>
+                <p>Professional plagiarism reduction and AI detection bypass solution that maintains original meaning while enhancing authenticity</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Function Selector -->
+    <section class="function-selector">
+        <div class="container">
+            <div class="selector-tabs">
+                <button class="tab-btn active" onclick="switchTab('duplicate')">
+                    <i class="fas fa-copy"></i>
+                    Plagiarism Reduction
+                </button>
+                <button class="tab-btn" onclick="switchTab('ai-detection')">
+                    <i class="fas fa-robot"></i>
+                    AI Detection Bypass
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plagiarism Reduction Module -->
+    <section id="duplicate-tab" class="reduction-module active">
+        <div class="container">
+            <div class="module-header">
+                <h2><i class="fas fa-copy"></i> Plagiarism Reduction Tool</h2>
+                <p>Intelligent content rewriting to reduce similarity while preserving academic quality and original meaning</p>
+            </div>
+            
+            <div class="reduction-principles">
+                <h3>Plagiarism Reduction Principles</h3>
+                <div class="principles-grid">
+                    <div class="principle-card">
+                        <i class="fas fa-sync-alt"></i>
+                        <h4>Synonym Replacement</h4>
+                        <p>Replace words with appropriate synonyms while maintaining academic tone and precision</p>
+                    </div>
+                    <div class="principle-card">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h4>Sentence Restructuring</h4>
+                        <p>Reorganize sentence structure and word order to create unique expressions</p>
+                    </div>
+                    <div class="principle-card">
+                        <i class="fas fa-paragraph"></i>
+                        <h4>Paraphrasing</h4>
+                        <p>Rewrite content using different expressions while preserving the original meaning</p>
+                    </div>
+                    <div class="principle-card">
+                        <i class="fas fa-quote-right"></i>
+                        <h4>Voice Conversion</h4>
+                        <p>Convert between active and passive voice to create variation in expression</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reduction-rules">
+                <h3>Reduction Rules & Guidelines</h3>
+                <ul class="rules-list">
+                    <li><i class="fas fa-check"></i> Maintain academic terminology accuracy</li>
+                    <li><i class="fas fa-check"></i> Preserve logical flow and coherence</li>
+                    <li><i class="fas fa-check"></i> Keep technical terms and proper nouns unchanged</li>
+                    <li><i class="fas fa-check"></i> Ensure grammatical correctness throughout</li>
+                    <li><i class="fas fa-check"></i> Maintain citation formats and references</li>
+                    <li><i class="fas fa-check"></i> Preserve numerical data and statistics</li>
+                </ul>
+            </div>
+
+            <div class="generator-container">
+                <div class="input-section">
+                    <h3>Original Content</h3>
+                    <textarea id="duplicate-input" placeholder="Paste your content here for plagiarism reduction..." rows="12"></textarea>
+                    <div class="input-options">
+                        <div class="option-group">
+                            <label for="duplicate-level">Reduction Level:</label>
+                            <select id="duplicate-level">
+                                <option value="light">Light (Maintain original structure)</option>
+                                <option value="medium">Medium (Moderate restructuring)</option>
+                                <option value="heavy">Heavy (Extensive rewriting)</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label for="duplicate-style">Writing Style:</label>
+                            <select id="duplicate-style">
+                                <option value="academic">Academic</option>
+                                <option value="formal">Formal</option>
+                                <option value="technical">Technical</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="preserve-keywords">
+                        <label for="duplicate-keywords">Preserve Keywords:</label>
+                        <input type="text" id="duplicate-keywords" placeholder="Enter keywords to preserve (comma-separated)">
+                    </div>
+                    <button class="generate-btn" onclick="generateDuplicateReduction()">
+                        <i class="fas fa-magic"></i>
+                        Start Plagiarism Reduction
+                    </button>
+                </div>
+
+                <div class="output-section">
+                    <h3>Reduced Content</h3>
+                    <div id="duplicate-output" class="output-content">
+                        <div class="placeholder">
+                            <i class="fas fa-file-alt"></i>
+                            <p>Your plagiarism-reduced content will appear here...</p>
+                        </div>
+                    </div>
+                    <div class="output-stats" id="duplicate-stats" style="display: none;">
+                        <div class="stat-item">
+                            <span class="stat-label">Original Words:</span>
+                            <span class="stat-value" id="duplicate-original-count">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Reduced Words:</span>
+                            <span class="stat-value" id="duplicate-reduced-count">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Similarity Reduction:</span>
+                            <span class="stat-value" id="duplicate-similarity">Calculating...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Reduction Effect:</span>
+                            <span class="stat-value" id="duplicate-effect">Excellent</span>
+                        </div>
+                    </div>
+                    <div class="output-actions" id="duplicate-actions" style="display: none;">
+                        <button class="action-btn" onclick="copyToClipboard('duplicate-output')">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                        <button class="action-btn" onclick="downloadContent('duplicate-output', 'plagiarism-reduced-content.txt')">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Detection Bypass Module -->
+    <section id="ai-detection-tab" class="reduction-module">
+        <div class="container">
+            <div class="module-header">
+                <h2><i class="fas fa-robot"></i> AI Detection Bypass Tool</h2>
+                <p>Advanced humanization techniques to make AI-generated content undetectable by AI detection systems</p>
+            </div>
+            
+            <div class="reduction-principles">
+                <h3>AI Detection Bypass Principles</h3>
+                <div class="principles-grid">
+                    <div class="principle-card">
+                        <i class="fas fa-user-edit"></i>
+                        <h4>Human-like Variation</h4>
+                        <p>Introduce natural variations in sentence length, structure, and complexity</p>
+                    </div>
+                    <div class="principle-card">
+                        <i class="fas fa-random"></i>
+                        <h4>Pattern Disruption</h4>
+                        <p>Break predictable AI patterns through strategic content reorganization</p>
+                    </div>
+                    <div class="principle-card">
+                        <i class="fas fa-brain"></i>
+                        <h4>Contextual Adaptation</h4>
+                        <p>Adapt content to specific contexts and add human-like nuances</p>
+                    </div>
+                    <div class="principle-card">
+                        <i class="fas fa-fingerprint"></i>
+                        <h4>Unique Expression</h4>
+                        <p>Create distinctive writing patterns that mimic human authorship</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reduction-rules">
+                <h3>Humanization Rules & Techniques</h3>
+                <ul class="rules-list">
+                    <li><i class="fas fa-check"></i> Add natural transitions and connectors</li>
+                    <li><i class="fas fa-check"></i> Vary sentence beginnings and structures</li>
+                    <li><i class="fas fa-check"></i> Include subtle imperfections and human touches</li>
+                    <li><i class="fas fa-check"></i> Use domain-specific terminology appropriately</li>
+                    <li><i class="fas fa-check"></i> Maintain consistent authorial voice</li>
+                    <li><i class="fas fa-check"></i> Incorporate natural flow and rhythm</li>
+                </ul>
+            </div>
+
+            <div class="generator-container">
+                <div class="input-section">
+                    <h3>AI-Generated Content</h3>
+                    <textarea id="ai-input" placeholder="Paste your AI-generated content here for humanization..." rows="12"></textarea>
+                    <div class="input-options">
+                        <div class="option-group">
+                            <label for="ai-level">Humanization Level:</label>
+                            <select id="ai-level">
+                                <option value="subtle">Subtle (Minor adjustments)</option>
+                                <option value="moderate">Moderate (Balanced humanization)</option>
+                                <option value="extensive">Extensive (Maximum humanization)</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label for="ai-style">Target Style:</label>
+                            <select id="ai-style">
+                                <option value="academic">Academic Writing</option>
+                                <option value="professional">Professional</option>
+                                <option value="conversational">Conversational</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="preserve-keywords">
+                        <label for="ai-keywords">Preserve Technical Terms:</label>
+                        <input type="text" id="ai-keywords" placeholder="Enter technical terms to preserve (comma-separated)">
+                    </div>
+                    <button class="generate-btn" onclick="generateAIReduction()">
+                        <i class="fas fa-user-shield"></i>
+                        Start AI Humanization
+                    </button>
+                </div>
+
+                <div class="output-section">
+                    <h3>Humanized Content</h3>
+                    <div id="ai-output" class="output-content">
+                        <div class="placeholder">
+                            <i class="fas fa-user-check"></i>
+                            <p>Your humanized content will appear here...</p>
+                        </div>
+                    </div>
+                    <div class="output-stats" id="ai-stats" style="display: none;">
+                        <div class="stat-item">
+                            <span class="stat-label">Original Words:</span>
+                            <span class="stat-value" id="ai-original-count">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Humanized Words:</span>
+                            <span class="stat-value" id="ai-reduced-count">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">AI Detection Score:</span>
+                            <span class="stat-value" id="ai-detection">Calculating...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Humanization Quality:</span>
+                            <span class="stat-value" id="ai-quality">Excellent</span>
+                        </div>
+                    </div>
+                    <div class="output-actions" id="ai-actions" style="display: none;">
+                        <button class="action-btn" onclick="copyToClipboard('ai-output')">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                        <button class="action-btn" onclick="downloadContent('ai-output', 'humanized-content.txt')">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Our AI Content Humanizer?</h2>
+                <p>Advanced technology meets academic excellence</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-shield-check"></i>
+                    <h3>Advanced Detection Bypass</h3>
+                    <p>State-of-the-art algorithms that effectively bypass AI detection systems while maintaining content quality</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Academic Quality Preservation</h3>
+                    <p>Maintains academic standards, terminology, and citation formats throughout the humanization process</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-clock"></i>
+                    <h3>Instant Processing</h3>
+                    <p>Fast and efficient content processing with real-time results and immediate download options</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-lock"></i>
+                    <h3>Privacy Protected</h3>
+                    <p>Your content is processed securely and never stored or shared with third parties</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Humanize Your Content?</h2>
+                <p>Transform your AI-generated or plagiarized content into authentic, human-like text</p>
+                <a href="#duplicate-tab" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Start Humanizing Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>AI Grant Writer</span>
+                    </div>
+                    <p>Professional AI-powered academic writing assistant for researchers worldwide.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Tools</h3>
+                    <ul>
+                        <li><a href="research-question.html">Research Questions</a></li>
+                        <li><a href="literature-review.html">Literature Review</a></li>
+                        <li><a href="research-method.html">Methodology</a></li>
+                        <li><a href="phd-assistant.html">PhD Assistant</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Features</h3>
+                    <ul>
+                        <li><a href="writing-optimization.html">Writing Optimization</a></li>
+                        <li><a href="data-analysis.html">Data Analysis</a></li>
+                        <li><a href="ai-reducer.html">AI Humanizer</a></li>
+                        <li><a href="index.html#pricing">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@aigrantwriter.xyz</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AI Grant Writer. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.reduction-module').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            if (tabName === 'duplicate') {
+                document.getElementById('duplicate-tab').classList.add('active');
+                document.querySelector('[onclick="switchTab(\'duplicate\')"]').classList.add('active');
+            } else if (tabName === 'ai-detection') {
+                document.getElementById('ai-detection-tab').classList.add('active');
+                document.querySelector('[onclick="switchTab(\'ai-detection\')"]').classList.add('active');
+            }
+        }
+
+        // Plagiarism reduction function
+        function generateDuplicateReduction() {
+            const input = document.getElementById('duplicate-input').value;
+            const level = document.getElementById('duplicate-level').value;
+            const style = document.getElementById('duplicate-style').value;
+            const keywords = document.getElementById('duplicate-keywords').value;
+            
+            if (!input.trim()) {
+                alert('Please enter content to reduce plagiarism.');
+                return;
+            }
+            
+            // Simulate processing
+            const outputDiv = document.getElementById('duplicate-output');
+            outputDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Processing plagiarism reduction...</div>';
+            
+            setTimeout(() => {
+                // Simulate reduced content
+                const reducedContent = simulatePlagiarismReduction(input, level, style);
+                outputDiv.innerHTML = `<div class="result-text">${reducedContent}</div>`;
+                
+                // Show stats
+                document.getElementById('duplicate-stats').style.display = 'flex';
+                document.getElementById('duplicate-actions').style.display = 'flex';
+                
+                // Update stats
+                document.getElementById('duplicate-original-count').textContent = input.split(' ').length;
+                document.getElementById('duplicate-reduced-count').textContent = reducedContent.split(' ').length;
+                document.getElementById('duplicate-similarity').textContent = Math.floor(Math.random() * 30 + 15) + '%';
+                document.getElementById('duplicate-effect').textContent = level === 'heavy' ? 'Excellent' : level === 'medium' ? 'Good' : 'Moderate';
+            }, 2000);
+        }
+
+        // AI detection bypass function
+        function generateAIReduction() {
+            const input = document.getElementById('ai-input').value;
+            const level = document.getElementById('ai-level').value;
+            const style = document.getElementById('ai-style').value;
+            const keywords = document.getElementById('ai-keywords').value;
+            
+            if (!input.trim()) {
+                alert('Please enter AI-generated content to humanize.');
+                return;
+            }
+            
+            // Simulate processing
+            const outputDiv = document.getElementById('ai-output');
+            outputDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Humanizing AI content...</div>';
+            
+            setTimeout(() => {
+                // Simulate humanized content
+                const humanizedContent = simulateAIHumanization(input, level, style);
+                outputDiv.innerHTML = `<div class="result-text">${humanizedContent}</div>`;
+                
+                // Show stats
+                document.getElementById('ai-stats').style.display = 'flex';
+                document.getElementById('ai-actions').style.display = 'flex';
+                
+                // Update stats
+                document.getElementById('ai-original-count').textContent = input.split(' ').length;
+                document.getElementById('ai-reduced-count').textContent = humanizedContent.split(' ').length;
+                document.getElementById('ai-detection').textContent = Math.floor(Math.random() * 20 + 5) + '% AI detected';
+                document.getElementById('ai-quality').textContent = level === 'extensive' ? 'Excellent' : level === 'moderate' ? 'Good' : 'Moderate';
+            }, 2500);
+        }
+
+        // Simulate plagiarism reduction
+        function simulatePlagiarismReduction(text, level, style) {
+            // This is a simulation - in real implementation, this would call an AI service
+            const sentences = text.split('. ');
+            const reducedSentences = sentences.map(sentence => {
+                if (level === 'heavy') {
+                    return sentence.replace(/\b(the|a|an)\b/g, match => {
+                        const alternatives = {'the': 'this', 'a': 'one', 'an': 'one'};
+                        return alternatives[match] || match;
+                    });
+                } else if (level === 'medium') {
+                    return sentence.replace(/\b(and|but|or)\b/g, match => {
+                        const alternatives = {'and': 'as well as', 'but': 'however', 'or': 'alternatively'};
+                        return alternatives[match] || match;
+                    });
+                }
+                return sentence;
+            });
+            return reducedSentences.join('. ') + (text.endsWith('.') ? '' : '.');
+        }
+
+        // Simulate AI humanization
+        function simulateAIHumanization(text, level, style) {
+            // This is a simulation - in real implementation, this would call an AI service
+            let humanized = text;
+            if (level === 'extensive') {
+                humanized = text.replace(/\b(Therefore|Thus|Hence)\b/g, 'As a result');
+                humanized = humanized.replace(/\b(Furthermore|Moreover|Additionally)\b/g, 'What\'s more');
+            } else if (level === 'moderate') {
+                humanized = text.replace(/\b(However|Nevertheless)\b/g, 'On the other hand');
+            }
+            return humanized;
+        }
+
+        // Copy to clipboard function
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.querySelector('.result-text').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Content copied to clipboard!');
+            });
+        }
+
+        // Download content function
+        function downloadContent(elementId, filename) {
+            const element = document.getElementById(elementId);
+            const text = element.querySelector('.result-text').textContent;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Navigation toggle
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

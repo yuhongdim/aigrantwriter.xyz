@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Templates - AI Academic Assistant</title>
+    <meta name="description" content="Professional academic templates for research papers, thesis proposals, and presentations">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI Academic Assistant</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#tools" class="nav-link">AI Tools</a></li>
+                <li><a href="index.html#guide" class="nav-link">Quick Guide</a></li>
+                <li><a href="index.html#resources" class="nav-link">Resources</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero academic-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Academic <span class="gradient-text">Templates</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Professional templates for research papers, thesis proposals, and academic presentations. 
+                    Save time and ensure proper formatting with our comprehensive template library.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Templates Section -->
+    <section class="templates-section">
+        <div class="container">
+            <div class="templates-grid">
+                <div class="template-category">
+                    <h2><i class="fas fa-file-alt"></i> Research Papers</h2>
+                    <div class="template-list">
+                        <div class="template-item">
+                            <h3>IEEE Conference Paper</h3>
+                            <p>Standard IEEE format for conference submissions</p>
+                            <div class="template-features">
+                                <span>✓ Proper formatting</span>
+                                <span>✓ Citation style</span>
+                                <span>✓ Figure guidelines</span>
+                            </div>
+                            <button class="template-btn" onclick="downloadTemplate('ieee-conference-paper')">
+                                <i class="fas fa-download"></i>
+                                Download Template
+                            </button>
+                        </div>
+                        
+                        <div class="template-item">
+                            <h3>APA Research Paper</h3>
+                            <p>Complete APA 7th edition format template</p>
+                            <div class="template-features">
+                                <span>✓ Title page</span>
+                                <span>✓ Running head</span>
+                                <span>✓ Reference list</span>
+                            </div>
+                            <button class="template-btn" onclick="downloadTemplate('apa-research-paper')">
+                                <i class="fas fa-download"></i>
+                                Download Template
+                            </button>
+                        </div>
+                        
+                        <div class="template-item">
+                            <h3>Journal Article</h3>
+                            <p>Professional journal submission template</p>
+                            <div class="template-features">
+                                <span>✓ Abstract format</span>
+                                <span>✓ Keywords section</span>
+                                <span>✓ Author guidelines</span>
+                            </div>
+                            <button class="template-btn" onclick="downloadTemplate('mla-essay')">
+                                <i class="fas fa-download"></i>
+                                Download Template
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="template-category">
+                    <h2><i class="fas fa-graduation-cap"></i> Thesis & Dissertations</h2>
+                    <div class="template-list">
+                        <div class="template-item">
+                            <h3>Master's Thesis</h3>
+                            <p>Complete thesis template with all required sections</p>
+                            <div class="template-features">
+                                <span>✓ Chapter structure</span>
+                                <span>✓ Table of contents</span>
+                                <span>✓ Bibliography</span>
+                            </div>
+                            <button class="template-btn" onclick="downloadTemplate('master-thesis')">
+                                <i class="fas fa-download"></i>
+                                Download Template
+                            </button>
+                        </div>
+                        
+                        <div class="template-item">
+                            <h3>PhD Dissertation</h3>
+                            <p>Comprehensive dissertation format template</p>
+                            <div class="template-features">
+                                <span>✓ Multi-chapter</span>
+                                <span>✓ Appendices</span>
+                                <span>✓ Index format</span>
+                            </div>
+                            <button class="template-btn" onclick="downloadTemplate('phd-dissertation')">
+                                <i class="fas fa-download"></i>
+                                Download Template
+                            </button>
+                        </div>
+                        
+                        <div class="template-item">
+                            <h3>Thesis Proposal</h3>
+                            <p>Research proposal template for thesis planning</p>
+                            <div class="template-features">
+                                <span>✓ Research questions</span>
+                                <span>✓ Methodology</span>
+                                <span>✓ Timeline</span>
+                            </div>
+                            <button class="template-btn" onclick="downloadTemplate('thesis-proposal')">
+                                <i class="fas fa-download"></i>
+                                Download Template
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="template-category">
+                    <h2><i class="fas fa-presentation"></i> Presentations</h2>
+                    <div class="template-list">
+                        <div class="template-item">
+                            <h3>Conference Presentation</h3>
+                            <p>Professional slides for academic conferences</p>
+                            <div class="template-features">
+                                <span>✓ Clean design</span>
+                                <span>✓ Data visualization</span>
+                                <span>✓ Reference slides</span>
+                            </div>
+                            <button class="template-btn" onclick="downloadTemplate('conference-presentation')">
+                                <i class="fas fa-download"></i>
+                                Download Template
+                            </button>
+                        </div>
+                        
+                        <div class="template-item">
+                            <h3>Thesis Defense</h3>
+                            <p>Comprehensive defense presentation template</p>
+                            <div class="template-features">
+                                <span>✓ Research overview</span>
+                                <span>✓ Results presentation</span>
+                                <span>✓ Q&A preparation</span>
+                            </div>
+                            <button class="template-btn" onclick="downloadTemplate('thesis-defense')">
+                                <i class="fas fa-download"></i>
+                                Download Template
+                            </button>
+                        </div>
+                        
+                        <div class="template-item">
+                            <h3>Research Poster</h3>
+                            <p>Academic poster template for conferences</p>
+                            <div class="template-features">
+                                <span>✓ Visual layout</span>
+                                <span>✓ Content sections</span>
+                                <span>✓ Print-ready</span>
+                            </div>
+                            <button class="template-btn" onclick="downloadTemplate('research-poster')">
+                                <i class="fas fa-download"></i>
+                                Download Template
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Need Custom Templates?</h2>
+            <p>Can't find the template you need? Our AI can generate custom academic templates tailored to your specific requirements.</p>
+            <a href="index.html#tools" class="btn btn-primary">
+                <i class="fas fa-magic"></i>
+                Generate Custom Template
+            </a>
+        </div>
+    </section>
+
+    <style>
+        .academic-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+        }
+
+        .templates-section {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+
+        .templates-grid {
+            display: grid;
+            gap: 60px;
+        }
+
+        .template-category h2 {
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .template-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .template-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .template-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .template-item h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .template-item p {
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .template-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .template-features span {
+            background: #e2e8f0;
+            color: #475569;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .template-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .template-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .cta-section {
+            background: #2d3748;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+
+        .cta-section p {
+            margin-bottom: 30px;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+    </style>
+    <script>
+        // Template download functionality
+        function downloadTemplate(templateType) {
+            const templates = {
+                'ieee-conference-paper': {
+                    filename: 'IEEE_Conference_Paper_Template.docx',
+                    content: generateIEEETemplate()
+                },
+                'apa-research-paper': {
+                    filename: 'APA_Research_Paper_Template.docx', 
+                    content: generateAPATemplate()
+                },
+                'mla-essay': {
+                    filename: 'MLA_Essay_Template.docx',
+                    content: generateMLATemplate()
+                },
+                'master-thesis': {
+                    filename: 'Master_Thesis_Template.docx',
+                    content: generateThesisTemplate()
+                },
+                'phd-dissertation': {
+                    filename: 'PhD_Dissertation_Template.docx',
+                    content: generateDissertationTemplate()
+                },
+                'conference-presentation': {
+                    filename: 'Conference_Presentation_Template.pptx',
+                    content: generatePresentationTemplate()
+                }
+            };
+
+            const template = templates[templateType];
+            if (template) {
+                // Create and download the template file
+                const blob = new Blob([template.content], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = template.filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+                
+                // Show success message
+                showDownloadSuccess(template.filename);
+            }
+        }
+
+        function generateIEEETemplate() {
+            return `IEEE Conference Paper Template
+
+TITLE: [Your Paper Title Here]
+AUTHORS: [Author Names and Affiliations]
+
+ABSTRACT
+[Write your abstract here - 150-250 words summarizing your research objectives, methods, results, and conclusions]
+
+Keywords: [List 3-5 keywords separated by commas]
+
+I. INTRODUCTION
+[Introduce your research problem, motivation, and contributions]
+
+II. RELATED WORK  
+[Review relevant literature and position your work]
+
+III. METHODOLOGY
+[Describe your approach and methods]
+
+IV. RESULTS
+[Present your findings with figures and tables]
+
+V. DISCUSSION
+[Analyze and interpret your results]
+
+VI. CONCLUSION
+[Summarize contributions and future work]
+
+REFERENCES
+[List all references in IEEE format]
+
+FORMATTING GUIDELINES:
+- Use Times New Roman, 10pt font
+- Two-column format
+- 1-inch margins
+- Single-spaced
+- Maximum 6 pages for conference papers`;
+        }
+
+        function generateAPATemplate() {
+            return `APA Research Paper Template
+
+Running head: [SHORTENED TITLE IN CAPS]                                                    1
+
+
+[Full Title of Your Paper]
+[Your Name]
+[Your Institution]
+
+
+Abstract
+
+[Write your abstract here - typically 150-250 words. Include research topic, questions, participants, methods, results, and conclusions. Do not indent the first line.]
+
+Keywords: [list 3-5 keywords separated by commas]
+
+
+[Full Title of Your Paper]
+
+Introduction
+[Introduce your topic and thesis statement. Provide background information and literature review.]
+
+Method
+Participants
+[Describe your study participants]
+
+Materials
+[Describe materials used in your study]
+
+Procedure  
+[Describe your research procedure step by step]
+
+Results
+[Present your findings objectively with statistical data if applicable]
+
+Discussion
+[Interpret your results and relate them to existing literature]
+
+Conclusion
+[Summarize your findings and suggest future research directions]
+
+References
+
+[List all sources in APA format, alphabetically by author's last name]
+
+FORMATTING GUIDELINES:
+- 12pt Times New Roman font
+- Double-spaced throughout
+- 1-inch margins on all sides
+- Page numbers in top right corner
+- In-text citations: (Author, Year)`;
+        }
+
+        function generateMLATemplate() {
+            return `MLA Essay Template
+
+[Your Name]
+[Professor's Name]  
+[Course Name]
+[Date]
+
+[Essay Title]
+
+[Introduction paragraph with thesis statement at the end]
+
+[Body paragraph 1 - Start with topic sentence, provide evidence and analysis]
+
+[Body paragraph 2 - Continue developing your argument with new evidence]
+
+[Body paragraph 3 - Further support your thesis with additional evidence]
+
+[Conclusion paragraph - Restate thesis and summarize main points]
+
+Works Cited
+
+[List all sources in MLA format, alphabetically by author's last name]
+
+FORMATTING GUIDELINES:
+- 12pt Times New Roman font
+- Double-spaced throughout
+- 1-inch margins on all sides
+- Last name and page number in top right corner
+- In-text citations: (Author Page#)
+- Works Cited on separate page`;
+        }
+
+        function generateThesisTemplate() {
+            return `Master's Thesis Template
+
+TITLE PAGE
+[University Name]
+[Department]
+
+[Thesis Title]
+
+A thesis submitted in partial fulfillment
+of the requirements for the degree of
+Master of [Your Degree]
+
+by
+[Your Full Name]
+[Date]
+
+TABLE OF CONTENTS
+Abstract...................................................i
+Acknowledgments...........................................ii
+List of Tables...........................................iii
+List of Figures..........................................iv
+
+Chapter 1: Introduction...................................1
+1.1 Background and Motivation
+1.2 Research Questions
+1.3 Objectives
+1.4 Thesis Structure
+
+Chapter 2: Literature Review.............................10
+2.1 Theoretical Framework
+2.2 Previous Studies
+2.3 Research Gap
+
+Chapter 3: Methodology...................................25
+3.1 Research Design
+3.2 Data Collection
+3.3 Analysis Methods
+
+Chapter 4: Results.......................................40
+4.1 Findings
+4.2 Data Analysis
+4.3 Statistical Results
+
+Chapter 5: Discussion....................................55
+5.1 Interpretation of Results
+5.2 Implications
+5.3 Limitations
+
+Chapter 6: Conclusion....................................70
+6.1 Summary of Findings
+6.2 Contributions
+6.3 Future Research
+
+References...............................................75
+Appendices...............................................85
+
+FORMATTING GUIDELINES:
+- 12pt Times New Roman font
+- Double-spaced (except footnotes and bibliography)
+- 1.5-inch left margin, 1-inch other margins
+- Page numbers centered at bottom
+- Chapters start on new pages`;
+        }
+
+        function generateDissertationTemplate() {
+            return `PhD Dissertation Template
+
+[Similar structure to thesis but more comprehensive with additional chapters for comprehensive literature review, detailed methodology, multiple studies/experiments, and extensive discussion]
+
+TYPICAL STRUCTURE:
+- Title Page
+- Abstract (350-500 words)
+- Acknowledgments
+- Table of Contents
+- List of Tables/Figures
+- Chapter 1: Introduction (15-20 pages)
+- Chapter 2: Literature Review (30-40 pages)
+- Chapter 3: Theoretical Framework (20-25 pages)
+- Chapter 4: Methodology (25-30 pages)
+- Chapter 5: Study 1 Results (20-25 pages)
+- Chapter 6: Study 2 Results (20-25 pages)
+- Chapter 7: Discussion (25-30 pages)
+- Chapter 8: Conclusion (15-20 pages)
+- References (15-25 pages)
+- Appendices
+
+REQUIREMENTS:
+- Typically 150-300 pages
+- Original contribution to knowledge
+- Rigorous methodology
+- Comprehensive literature review
+- Multiple studies or experiments
+- Theoretical and practical implications`;
+        }
+
+        function generatePresentationTemplate() {
+            return `Conference Presentation Template (PowerPoint Structure)
+
+Slide 1: Title Slide
+- Presentation Title
+- Your Name and Affiliation
+- Conference Name and Date
+
+Slide 2: Agenda/Outline
+- Research Question
+- Methodology
+- Key Findings
+- Implications
+- Q&A
+
+Slide 3: Research Problem
+- Background and Context
+- Problem Statement
+- Research Gap
+
+Slide 4: Research Questions/Objectives
+- Primary Research Question
+- Secondary Questions
+- Objectives
+
+Slide 5: Literature Review (Brief)
+- Key Theories
+- Previous Studies
+- Your Contribution
+
+Slide 6: Methodology
+- Research Design
+- Data Collection
+- Analysis Methods
+- Sample Size
+
+Slide 7-9: Key Findings
+- Main Results
+- Statistical Significance
+- Visual Data (Charts/Graphs)
+
+Slide 10: Discussion
+- Interpretation of Results
+- Theoretical Implications
+- Practical Applications
+
+Slide 11: Limitations
+- Study Limitations
+- Future Research Directions
+
+Slide 12: Conclusion
+- Summary of Contributions
+- Key Takeaways
+
+Slide 13: Thank You/Questions
+- Contact Information
+- References (if needed)
+
+PRESENTATION TIPS:
+- 15-20 minutes for conference presentations
+- Use clear, readable fonts (24pt minimum)
+- Limit text per slide (6x6 rule)
+- Include visuals and data charts
+- Practice timing and transitions`;
+        }
+
+        function showDownloadSuccess(filename) {
+            // Create success notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4CAF50;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 5px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 1000;
+                font-family: Arial, sans-serif;
+            `;
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                Successfully downloaded: ${filename}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 3000);
+        }
+
+        // Update all download buttons with proper onclick handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.template-btn');
+            buttons.forEach((button, index) => {
+                const templateTypes = [
+                    'ieee-conference-paper', 'apa-research-paper', 'mla-essay',
+                    'master-thesis', 'phd-dissertation', 'conference-presentation'
+                ];
+                if (templateTypes[index]) {
+                    button.onclick = () => downloadTemplate(templateTypes[index]);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

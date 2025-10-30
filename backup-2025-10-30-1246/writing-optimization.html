@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学术写作优化 - AI写作增强工具 | AI学术助手</title>
+    <meta name="description" content="AI驱动的学术写作优化工具。通过改进风格、结构、清晰度和学术标准合规性来增强您的研究论文。">
+    <meta name="keywords" content="学术写作优化, 研究论文增强, 写作风格改进, 学术编辑, 学术写作助手, 论文修订工具">
+    <meta name="author" content="AI Grant Writer">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="AI学术写作优化 - 研究论文增强">
+    <meta property="og:description" content="专业的AI工具，用于优化学术写作风格、结构和清晰度。通过先进的写作增强功能改进您的研究论文。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aigrantwriter.xyz/writing-optimization.html">
+    <link rel="canonical" href="https://aigrantwriter.xyz/writing-optimization.html">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "学术写作优化工具",
+        "description": "AI驱动的工具，用于增强研究论文的学术写作风格、结构和清晰度",
+        "url": "https://aigrantwriter.xyz/writing-optimization.html",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web Browser"
+    }
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI学术助手</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="index.html#features">功能</a></li>
+                <li><a href="index.html#tools">工具</a></li>
+                <li><a href="index.html#pricing">价格</a></li>
+                <li><a href="index.html#contact">联系</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-title">
+                <i class="fas fa-edit"></i>
+                <h1>学术写作优化</h1>
+                <p>AI驱动的工具，用于增强您的学术写作风格，提高清晰度，并确保学术标准合规性</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>写作增强功能</h2>
+                <p>全面的工具，将您的学术写作提升到专业标准</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-language"></i>
+                    <h3>风格增强</h3>
+                    <p>自动改进学术写作风格，确保精确性和专业语调</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-sitemap"></i>
+                    <h3>结构优化</h3>
+                    <p>增强逻辑流程和连贯性，提高可读性和论证强度</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-spell-check"></i>
+                    <h3>语法与清晰度</h3>
+                    <p>高级语法检查和清晰度改进，确保无错误的学术写作</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-quote-right"></i>
+                    <h3>引用格式</h3>
+                    <p>确保正确的引用格式和学术参考标准合规性</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>可读性分析</h3>
+                    <p>分析和改进文本可读性，同时保持学术严谨性</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-microscope"></i>
+                    <h3>学术语调</h3>
+                    <p>在整个文档中保持适当的学术语调和正式性</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Writing Optimizer Tool -->
+    <section class="generator-section">
+        <div class="container">
+            <div class="generator-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-magic"></i> 学术写作优化器</h2>
+                    <p>上传或粘贴您的文本以获得全面的写作增强建议</p>
+                </div>
+                
+                <div class="optimization-tabs">
+                    <button class="tab-btn active" onclick="switchTab('text-input')">
+                        <i class="fas fa-keyboard"></i>
+                        文本输入
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('file-upload')">
+                        <i class="fas fa-upload"></i>
+                        文件上传
+                    </button>
+                </div>
+
+                <div id="text-input" class="tab-content active">
+                    <div class="form-group">
+                        <label for="original-text">原始文本</label>
+                        <textarea id="original-text" rows="10" placeholder="在此粘贴您的学术文本进行优化..."></textarea>
+                        <div class="text-stats">
+                            <span id="word-count">字数: 0</span>
+                            <span id="char-count">字符数: 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="file-upload" class="tab-content">
+                    <div class="upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>将您的文档拖放到此处或点击浏览</p>
+                        <input type="file" id="file-input" accept=".txt,.doc,.docx,.pdf" style="display: none;">
+                        <button class="upload-btn" onclick="document.getElementById('file-input').click()">
+                            选择文件
+                        </button>
+                    </div>
+                </div>
+
+                <div class="optimization-options">
+                    <div class="form-group">
+                        <label for="optimization-type">优化重点</label>
+                        <select id="optimization-type">
+                            <option value="comprehensive">全面增强</option>
+                            <option value="style">风格与语调</option>
+                            <option value="structure">结构与流程</option>
+                            <option value="clarity">清晰度与简洁性</option>
+                            <option value="grammar">语法与机制</option>
+                            <option value="academic">学术标准</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="academic-field">学术领域</label>
+                        <select id="academic-field">
+                            <option value="general">一般学术</option>
+                            <option value="stem">STEM领域</option>
+                            <option value="humanities">人文学科</option>
+                            <option value="social-sciences">社会科学</option>
+                            <option value="business">商业与经济</option>
+                            <option value="medicine">医学与健康</option>
+                            <option value="law">法律与法学研究</option>
+                            <option value="education">教育学</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="writing-level">目标受众</label>
+                        <select id="writing-level">
+                            <option value="undergraduate">本科生水平</option>
+                            <option value="graduate">研究生水平</option>
+                            <option value="doctoral">博士生水平</option>
+                            <option value="professional">专业/期刊</option>
+                            <option value="conference">会议演示</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="citation-style">引用风格</label>
+                        <select id="citation-style">
+                            <option value="apa">APA风格</option>
+                            <option value="mla">MLA风格</option>
+                            <option value="chicago">芝加哥风格</option>
+                            <option value="harvard">哈佛风格</option>
+                            <option value="ieee">IEEE风格</option>
+                            <option value="vancouver">温哥华风格</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="generate-btn" onclick="optimizeWriting()">
+                    <i class="fas fa-magic"></i>
+                    优化写作
+                </button>
+
+                <div id="optimization-output" class="output-section" style="display: none;">
+                    <div class="output-header">
+                        <h3>优化结果</h3>
+                        <div class="output-actions">
+                            <button class="copy-btn" onclick="copyOptimizedText()">
+                                <i class="fas fa-copy"></i>
+                                复制优化文本
+                            </button>
+                            <button class="download-btn" onclick="downloadOptimizedText()">
+                                <i class="fas fa-download"></i>
+                                下载
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="optimization-results">
+                        <div class="result-tabs">
+                            <button class="result-tab active" onclick="showResult('optimized')">优化文本</button>
+                            <button class="result-tab" onclick="showResult('suggestions')">建议</button>
+                            <button class="result-tab" onclick="showResult('analysis')">分析</button>
+                        </div>
+                        
+                        <div id="optimized-result" class="result-content active">
+                            <div id="optimized-text" class="generated-content"></div>
+                        </div>
+                        
+                        <div id="suggestions-result" class="result-content">
+                            <div id="writing-suggestions" class="suggestions-list"></div>
+                        </div>
+                        
+                        <div id="analysis-result" class="result-content">
+                            <div id="writing-analysis" class="analysis-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Optimization Benefits -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>为什么要优化您的学术写作？</h2>
+                <p>专业的写作增强能带来更好的研究影响力和学术成功</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <i class="fas fa-trophy"></i>
+                    <h3>更高的发表成功率</h3>
+                    <p>优化良好的论文在学术期刊中有更高的接受率</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-eye"></i>
+                    <h3>提高可读性</h3>
+                    <p>清晰、结构良好的写作能够触及并吸引更广泛的学术受众</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-star"></i>
+                    <h3>专业质量</h3>
+                    <p>保持一致的学术标准和专业呈现</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-clock"></i>
+                    <h3>时间效率</h3>
+                    <p>通过AI驱动的优化建议减少修订周期</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Writing Standards -->
+    <section class="standards-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>学术写作标准</h2>
+                <p>我们的AI确保符合国际学术写作惯例</p>
+            </div>
+            <div class="standards-grid">
+                <div class="standard-card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>清晰度与精确性</h3>
+                    <ul>
+                        <li>清晰的论文陈述</li>
+                        <li>精确的术语</li>
+                        <li>逻辑论证流程</li>
+                        <li>简洁的表达</li>
+                    </ul>
+                </div>
+                <div class="standard-card">
+                    <i class="fas fa-book-open"></i>
+                    <h3>学术惯例</h3>
+                    <ul>
+                        <li>正式的学术语调</li>
+                        <li>客观的视角</li>
+                        <li>基于证据的论证</li>
+                        <li>正确的引用</li>
+                    </ul>
+                </div>
+                <div class="standard-card">
+                    <i class="fas fa-cogs"></i>
+                    <h3>技术卓越</h3>
+                    <ul>
+                        <li>语法准确性</li>
+                        <li>拼写一致性</li>
+                        <li>标点符号精确性</li>
+                        <li>风格指南合规性</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>准备好增强您的学术写作了吗？</h2>
+                <p>开始使用专业的AI驱动写作增强功能优化您的研究论文</p>
+                <a href="#original-text" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    开始优化
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>AI学术助手</span>
+                    </div>
+                    <p>为全球研究人员提供专业的AI驱动学术写作助手。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>工具</h3>
+                    <ul>
+                        <li><a href="research-question.html">研究问题</a></li>
+                        <li><a href="literature-review.html">文献综述</a></li>
+                        <li><a href="research-method.html">研究方法</a></li>
+                        <li><a href="phd-assistant.html">博士助手</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>功能</h3>
+                    <ul>
+                        <li><a href="writing-optimization.html">写作优化</a></li>
+                        <li><a href="data-analysis.html">数据分析</a></li>
+                        <li><a href="ai-reducer.html">AI人性化</a></li>
+                        <li><a href="index.html#pricing">价格</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>联系</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@aigrantwriter.xyz</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AI学术助手. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        function showResult(resultType) {
+            // Hide all result contents
+            document.querySelectorAll('.result-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all result tabs
+            document.querySelectorAll('.result-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected result content
+            document.getElementById(resultType + '-result').classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function updateTextStats() {
+            const text = document.getElementById('original-text').value;
+            const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const charCount = text.length;
+            
+            document.getElementById('word-count').textContent = `Words: ${wordCount}`;
+            document.getElementById('char-count').textContent = `Characters: ${charCount}`;
+        }
+
+        function optimizeWriting() {
+            const originalText = document.getElementById('original-text').value;
+            const optimizationType = document.getElementById('optimization-type').value;
+            const academicField = document.getElementById('academic-field').value;
+            const writingLevel = document.getElementById('writing-level').value;
+
+            if (!originalText.trim()) {
+                alert('Please enter text to optimize.');
+                return;
+            }
+
+            // Show output section
+            const outputSection = document.getElementById('optimization-output');
+            const optimizedTextDiv = document.getElementById('optimized-text');
+            const suggestionsDiv = document.getElementById('writing-suggestions');
+            const analysisDiv = document.getElementById('writing-analysis');
+            
+            outputSection.style.display = 'block';
+            optimizedTextDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Optimizing your text...</div>';
+
+            // Simulate API call
+            setTimeout(() => {
+                const results = generateOptimizationResults(originalText, optimizationType, academicField, writingLevel);
+                optimizedTextDiv.innerHTML = results.optimizedText;
+                suggestionsDiv.innerHTML = results.suggestions;
+                analysisDiv.innerHTML = results.analysis;
+            }, 3000);
+        }
+
+        function generateOptimizationResults(text, type, field, level) {
+            // This is a simulation - in real implementation, this would call an AI service
+            const optimizedText = `
+                <div class="optimized-content">
+                    <h4>Optimized Version</h4>
+                    <div class="text-comparison">
+                        <div class="original-section">
+                            <h5>Original Text:</h5>
+                            <p class="original-text">${text.substring(0, 200)}...</p>
+                        </div>
+                        <div class="optimized-section">
+                            <h5>Optimized Text:</h5>
+                            <p class="enhanced-text">This research investigates the significant implications of ${field} methodologies within ${level} academic contexts. The study employs rigorous analytical frameworks to examine the theoretical foundations and practical applications of the proposed research questions. Through comprehensive literature review and systematic analysis, this investigation contributes to the existing body of knowledge by providing novel insights and evidence-based recommendations for future research directions.</p>
+                        </div>
+                    </div>
+                    <div class="improvement-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Readability Score:</span>
+                            <span class="stat-value improved">+15%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Academic Tone:</span>
+                            <span class="stat-value improved">+22%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Clarity Index:</span>
+                            <span class="stat-value improved">+18%</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const suggestions = `
+                <div class="suggestions-content">
+                    <h4>Writing Enhancement Suggestions</h4>
+                    <div class="suggestion-categories">
+                        <div class="suggestion-category">
+                            <h5><i class="fas fa-language"></i> Style Improvements</h5>
+                            <ul>
+                                <li>Replace informal expressions with academic terminology</li>
+                                <li>Use more precise and specific vocabulary</li>
+                                <li>Maintain consistent formal tone throughout</li>
+                                <li>Eliminate redundant phrases and wordiness</li>
+                            </ul>
+                        </div>
+                        <div class="suggestion-category">
+                            <h5><i class="fas fa-sitemap"></i> Structure Enhancements</h5>
+                            <ul>
+                                <li>Improve paragraph transitions for better flow</li>
+                                <li>Strengthen topic sentences and conclusions</li>
+                                <li>Organize arguments in logical sequence</li>
+                                <li>Add clear signposting for reader guidance</li>
+                            </ul>
+                        </div>
+                        <div class="suggestion-category">
+                            <h5><i class="fas fa-check-circle"></i> Technical Corrections</h5>
+                            <ul>
+                                <li>Fix subject-verb agreement issues</li>
+                                <li>Correct punctuation and capitalization</li>
+                                <li>Ensure proper citation formatting</li>
+                                <li>Standardize terminology usage</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const analysis = `
+                <div class="analysis-content">
+                    <h4>Writing Analysis Report</h4>
+                    <div class="analysis-sections">
+                        <div class="analysis-section">
+                            <h5>Overall Assessment</h5>
+                            <p>Your text demonstrates strong foundational content with opportunities for enhancement in academic style and structural clarity. The optimization focuses on ${type} improvements suitable for ${level} academic writing in ${field}.</p>
+                        </div>
+                        <div class="analysis-metrics">
+                            <div class="metric-grid">
+                                <div class="metric-item">
+                                    <div class="metric-label">Readability Level</div>
+                                    <div class="metric-score">Graduate</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">Academic Tone</div>
+                                    <div class="metric-score">Professional</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">Sentence Complexity</div>
+                                    <div class="metric-score">Appropriate</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">Vocabulary Level</div>
+                                    <div class="metric-score">Advanced</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="analysis-section">
+                            <h5>Recommendations</h5>
+                            <ul>
+                                <li>Continue developing technical vocabulary specific to ${field}</li>
+                                <li>Focus on creating stronger argumentative structures</li>
+                                <li>Enhance evidence integration and citation practices</li>
+                                <li>Maintain consistency in academic voice and perspective</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return {
+                optimizedText: optimizedText,
+                suggestions: suggestions,
+                analysis: analysis
+            };
+        }
+
+        function copyOptimizedText() {
+            const optimizedContent = document.querySelector('.enhanced-text').innerText;
+            navigator.clipboard.writeText(optimizedContent).then(() => {
+                alert('Optimized text copied to clipboard!');
+            });
+        }
+
+        function downloadOptimizedText() {
+            const optimizedContent = document.querySelector('.enhanced-text').innerText;
+            const blob = new Blob([optimizedContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'optimized-academic-text.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Add event listener for text stats
+        document.getElementById('original-text').addEventListener('input', updateTextStats);
+
+        // Navigation toggle
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // File upload handling
+        document.getElementById('file-input').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('original-text').value = e.target.result;
+                    updateTextStats();
+                    // Switch to text input tab
+                    switchTab('text-input');
+                };
+                reader.readAsText(file);
+            }
+        });
+    </script>
+</body>
+</html>

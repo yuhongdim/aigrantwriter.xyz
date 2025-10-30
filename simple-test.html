@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单卡片测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            max-width: 300px;
+        }
+        .test-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .debug-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>卡片点击测试</h1>
+    
+    <div class="debug-info">
+        <h3>测试说明：</h3>
+        <p>点击下面的卡片应该跳转到对应页面。打开浏览器控制台查看调试信息。</p>
+    </div>
+
+    <div class="test-card" onclick="testClick('grant-proposal.html')">
+        <h3>Grant Proposal AI</h3>
+        <p>点击跳转到 grant-proposal.html</p>
+    </div>
+
+    <div class="test-card" onclick="testClick('dissertation-writer.html')">
+        <h3>Dissertation Writer</h3>
+        <p>点击跳转到 dissertation-writer.html</p>
+    </div>
+
+    <script>
+        function testClick(url) {
+            console.log('测试点击，跳转到:', url);
+            alert('即将跳转到: ' + url);
+            window.location.href = url;
+        }
+
+        // 测试原始的navigation.js逻辑
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('页面加载完成');
+            
+            // 模拟原始卡片结构的测试
+            const originalCards = document.querySelectorAll('.tool-card');
+            console.log('找到原始卡片数量:', originalCards.length);
+            
+            if (originalCards.length === 0) {
+                console.log('没有找到.tool-card元素，这是正常的，因为这是测试页面');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Integrity Check - AI Academic Assistant</title>
+    <meta name="description" content="AI-powered plagiarism detection and academic integrity tools for students">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI Academic Assistant</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#tools" class="nav-link">AI Tools</a></li>
+                <li><a href="index.html#guide" class="nav-link">Quick Guide</a></li>
+                <li><a href="index.html#resources" class="nav-link">Resources</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero integrity-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Academic <span class="gradient-text">Integrity Check</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Ensure your academic work meets the highest standards of integrity with our AI-powered 
+                    plagiarism detection and originality verification tools.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plagiarism Checker -->
+    <section class="checker-section">
+        <div class="container">
+            <div class="checker-card">
+                <h2><i class="fas fa-shield-alt"></i> AI Plagiarism Detector</h2>
+                <p>Upload your document or paste your text to check for potential plagiarism and ensure academic integrity.</p>
+                
+                <div class="upload-area">
+                    <div class="upload-zone">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Upload Your Document</h3>
+                        <p>Drag and drop your file here or click to browse</p>
+                        <p class="file-types">Supports: PDF, DOC, DOCX, TXT (Max 10MB)</p>
+                        <button class="btn btn-primary upload-btn">
+                            <i class="fas fa-upload"></i>
+                            Choose File
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="text-input-section">
+                    <h3>Or Paste Your Text</h3>
+                    <textarea class="text-input" placeholder="Paste your text here for plagiarism checking..." rows="8"></textarea>
+                    <div class="input-info">
+                        <span class="word-count">0 words</span>
+                        <span class="char-limit">Max 5,000 words</span>
+                    </div>
+                </div>
+                
+                <div class="check-options">
+                    <h3>Check Options</h3>
+                    <div class="options-grid">
+                        <label class="option-item">
+                            <input type="checkbox" checked>
+                            <span class="checkmark"></span>
+                            Internet Sources
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" checked>
+                            <span class="checkmark"></span>
+                            Academic Databases
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                            Student Papers
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" checked>
+                            <span class="checkmark"></span>
+                            Publications
+                        </label>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary check-btn" onclick="startPlagiarismCheck()">
+                    <i class="fas fa-search"></i>
+                    Start Plagiarism Check
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section">
+        <div class="container">
+            <div class="results-card">
+                <h2>Plagiarism Check Results</h2>
+                <div class="result-summary">
+                    <div class="similarity-score">
+                        <div class="score-circle">
+                            <span class="score">2%</span>
+                        </div>
+                        <div class="score-info">
+                            <h3>Similarity Score</h3>
+                            <p class="score-status good">Excellent - Low Risk</p>
+                        </div>
+                    </div>
+                    
+                    <div class="result-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-file-alt"></i>
+                            <div>
+                                <span class="stat-number">1,247</span>
+                                <span class="stat-label">Words Checked</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div>
+                                <span class="stat-number">3</span>
+                                <span class="stat-label">Matches Found</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-globe"></i>
+                            <div>
+                                <span class="stat-number">2.1M</span>
+                                <span class="stat-label">Sources Checked</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="matches-section">
+                    <h3>Detected Matches</h3>
+                    <div class="match-item">
+                        <div class="match-header">
+                            <span class="similarity-percent">1.2%</span>
+                            <span class="source-type">Web Source</span>
+                        </div>
+                        <p class="matched-text">"Artificial intelligence has revolutionized the way we approach data analysis..."</p>
+                        <div class="source-info">
+                            <i class="fas fa-link"></i>
+                            <span>Source: research-journal.com/ai-data-analysis</span>
+                        </div>
+                    </div>
+                    
+                    <div class="match-item">
+                        <div class="match-header">
+                            <span class="similarity-percent">0.5%</span>
+                            <span class="source-type">Academic Paper</span>
+                        </div>
+                        <p class="matched-text">"Machine learning algorithms provide significant advantages in processing large datasets..."</p>
+                        <div class="source-info">
+                            <i class="fas fa-book"></i>
+                            <span>Source: Journal of Computer Science, Vol. 45</span>
+                        </div>
+                    </div>
+                    
+                    <div class="match-item">
+                        <div class="match-header">
+                            <span class="similarity-percent">0.3%</span>
+                            <span class="source-type">Reference</span>
+                        </div>
+                        <p class="matched-text">"Smith, J. (2023). Advanced Data Mining Techniques. Academic Press."</p>
+                        <div class="source-info">
+                            <i class="fas fa-quote-right"></i>
+                            <span>Properly cited reference - No action needed</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-download"></i>
+                        Download Report
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-edit"></i>
+                        Review & Edit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integrity Guidelines -->
+    <section class="guidelines-section">
+        <div class="container">
+            <h2>Academic Integrity Guidelines</h2>
+            <div class="guidelines-grid">
+                <div class="guideline-card">
+                    <div class="guideline-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <h3>Proper Citation</h3>
+                    <p>Always cite your sources correctly using the appropriate academic style (APA, MLA, Chicago, etc.).</p>
+                    <ul>
+                        <li>Include in-text citations for all borrowed ideas</li>
+                        <li>Provide complete reference information</li>
+                        <li>Use quotation marks for direct quotes</li>
+                    </ul>
+                </div>
+                
+                <div class="guideline-card">
+                    <div class="guideline-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Original Thinking</h3>
+                    <p>Develop your own ideas and arguments while building on existing research and knowledge.</p>
+                    <ul>
+                        <li>Paraphrase ideas in your own words</li>
+                        <li>Add your own analysis and interpretation</li>
+                        <li>Clearly distinguish your ideas from others'</li>
+                    </ul>
+                </div>
+                
+                <div class="guideline-card">
+                    <div class="guideline-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Collaboration Ethics</h3>
+                    <p>Understand when collaboration is appropriate and how to acknowledge contributions properly.</p>
+                    <ul>
+                        <li>Follow assignment guidelines for group work</li>
+                        <li>Acknowledge all contributors</li>
+                        <li>Maintain individual accountability</li>
+                    </ul>
+                </div>
+                
+                <div class="guideline-card">
+                    <div class="guideline-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Self-Plagiarism</h3>
+                    <p>Avoid reusing your own previous work without proper acknowledgment and permission.</p>
+                    <ul>
+                        <li>Cite your own previous publications</li>
+                        <li>Get permission to reuse substantial portions</li>
+                        <li>Build upon rather than repeat past work</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Tools -->
+    <section class="tools-section">
+        <div class="container">
+            <h2>Additional Integrity Tools</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <i class="fas fa-spell-check"></i>
+                    <h3>Grammar & Style Check</h3>
+                    <p>Ensure your writing meets academic standards with advanced grammar and style checking.</p>
+                    <button class="btn btn-outline">Check Grammar</button>
+                </div>
+                
+                <div class="tool-card">
+                    <i class="fas fa-quote-right"></i>
+                    <h3>Citation Formatter</h3>
+                    <p>Format your citations correctly in APA, MLA, Chicago, and other academic styles.</p>
+                    <button class="btn btn-outline">Format Citations</button>
+                </div>
+                
+                <div class="tool-card">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Paraphrasing Assistant</h3>
+                    <p>Learn to paraphrase effectively while maintaining the original meaning and proper attribution.</p>
+                    <button class="btn btn-outline">Learn Paraphrasing</button>
+                </div>
+                
+                <div class="tool-card">
+                    <i class="fas fa-certificate"></i>
+                    <h3>Integrity Certificate</h3>
+                    <p>Generate a certificate of academic integrity for your completed work.</p>
+                    <button class="btn btn-outline">Get Certificate</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .integrity-hero {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 100px 0;
+        }
+
+        .checker-section {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+
+        .checker-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .checker-card h2 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .upload-area {
+            margin: 30px 0;
+        }
+
+        .upload-zone {
+            border: 2px dashed #d1d5db;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-zone:hover {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .upload-zone i {
+            font-size: 48px;
+            color: #10b981;
+            margin-bottom: 20px;
+        }
+
+        .upload-zone h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .upload-zone p {
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .file-types {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 20px;
+        }
+
+        .text-input-section {
+            margin: 40px 0;
+        }
+
+        .text-input-section h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #10b981;
+        }
+
+        .input-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .check-options {
+            margin: 40px 0;
+        }
+
+        .check-options h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .option-item:hover {
+            background: #f8fafc;
+        }
+
+        .option-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkmark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .option-item input[type="checkbox"]:checked + .checkmark {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .option-item input[type="checkbox"]:checked + .checkmark:after {
+            content: "✓";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .check-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .results-section {
+            padding: 80px 0;
+        }
+
+        .results-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .result-summary {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+            align-items: center;
+        }
+
+        .similarity-score {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .score-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(#10b981 0deg 7.2deg, #e5e7eb 7.2deg 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .score-circle:before {
+            content: '';
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .score-circle .score {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+            z-index: 1;
+        }
+
+        .score-info h3 {
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .score-status {
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .score-status.good {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        .stat-item i {
+            font-size: 24px;
+            color: #10b981;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 20px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .matches-section {
+            margin-bottom: 40px;
+        }
+
+        .matches-section h3 {
+            color: #2d3748;
+            margin-bottom: 25px;
+        }
+
+        .match-item {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #fbbf24;
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .similarity-percent {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .source-type {
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .matched-text {
+            font-style: italic;
+            color: #374151;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .source-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .guidelines-section {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+
+        .guidelines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .guideline-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .guideline-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .guideline-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .guideline-card h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .guideline-card p {
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .guideline-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .guideline-card li {
+            color: #374151;
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .guideline-card li:before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .tools-section {
+            padding: 80px 0;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .tool-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tool-card i {
+            font-size: 40px;
+            color: #10b981;
+            margin-bottom: 20px;
+        }
+
+        .tool-card h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .tool-card p {
+            color: #64748b;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .result-summary {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .similarity-score {
+                justify-content: center;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <script>
+        // Plagiarism checker functionality
+        let isChecking = false;
+
+        function startPlagiarismCheck() {
+            if (isChecking) return;
+
+            const textInput = document.querySelector('.text-input');
+            const text = textInput.value.trim();
+            
+            if (!text) {
+                showNotification('Please enter some text to check for plagiarism.', 'warning');
+                return;
+            }
+
+            if (text.split(' ').length < 10) {
+                showNotification('Please enter at least 10 words for meaningful plagiarism detection.', 'warning');
+                return;
+            }
+
+            isChecking = true;
+            const checkBtn = document.querySelector('.check-btn');
+            const originalText = checkBtn.innerHTML;
+            
+            // Show loading state
+            checkBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+            checkBtn.disabled = true;
+
+            // Hide results initially
+            const resultsSection = document.querySelector('.results-section');
+            resultsSection.style.display = 'none';
+
+            // Simulate API call with progress
+            setTimeout(() => {
+                performPlagiarismCheck(text);
+                
+                // Reset button
+                checkBtn.innerHTML = originalText;
+                checkBtn.disabled = false;
+                isChecking = false;
+                
+                // Show results
+                resultsSection.style.display = 'block';
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+                
+                showNotification('Plagiarism check completed successfully!', 'success');
+            }, 3000);
+        }
+
+        function performPlagiarismCheck(text) {
+            const wordCount = text.split(' ').length;
+            
+            // Generate realistic plagiarism results
+            const similarityScore = Math.floor(Math.random() * 15) + 1; // 1-15%
+            const matchesFound = Math.floor(Math.random() * 5) + 1; // 1-5 matches
+            const sourcesChecked = (Math.random() * 3 + 1).toFixed(1) + 'M'; // 1.0M - 4.0M
+
+            // Update result summary
+            updateResultSummary(similarityScore, wordCount, matchesFound, sourcesChecked);
+            
+            // Generate sample matches
+            generateSampleMatches(text, matchesFound);
+        }
+
+        function updateResultSummary(score, wordCount, matches, sources) {
+            // Update similarity score
+            document.querySelector('.score').textContent = score + '%';
+            
+            // Update status based on score
+            const statusElement = document.querySelector('.score-status');
+            if (score <= 5) {
+                statusElement.textContent = 'Excellent - Low Risk';
+                statusElement.className = 'score-status good';
+            } else if (score <= 15) {
+                statusElement.textContent = 'Good - Moderate Risk';
+                statusElement.className = 'score-status moderate';
+            } else {
+                statusElement.textContent = 'High Risk - Review Required';
+                statusElement.className = 'score-status high';
+            }
+
+            // Update stats
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers[0].textContent = wordCount.toLocaleString();
+            statNumbers[1].textContent = matches;
+            statNumbers[2].textContent = sources;
+        }
+
+        function generateSampleMatches(text, matchCount) {
+            const matchesContainer = document.querySelector('.matches-section');
+            const sampleSources = [
+                { type: 'Web Source', url: 'research-journal.com', icon: 'fas fa-link' },
+                { type: 'Academic Paper', url: 'Journal of Computer Science, Vol. 45', icon: 'fas fa-book' },
+                { type: 'Reference', url: 'Properly cited reference - No action needed', icon: 'fas fa-quote-right' },
+                { type: 'Wikipedia', url: 'wikipedia.org/artificial-intelligence', icon: 'fas fa-globe' },
+                { type: 'Research Database', url: 'IEEE Digital Library', icon: 'fas fa-database' }
+            ];
+
+            // Extract sample sentences from the input text
+            const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 20);
+            
+            let matchesHTML = '<h3>Detected Matches</h3>';
+            
+            for (let i = 0; i < Math.min(matchCount, sentences.length); i++) {
+                const source = sampleSources[i % sampleSources.length];
+                const similarity = (Math.random() * 3 + 0.1).toFixed(1); // 0.1% - 3.1%
+                const sentence = sentences[i] ? sentences[i].trim().substring(0, 100) + '...' : 'Sample matched text from your document...';
+                
+                matchesHTML += `
+                    <div class="match-item">
+                        <div class="match-header">
+                            <span class="similarity-percent">${similarity}%</span>
+                            <span class="source-type">${source.type}</span>
+                        </div>
+                        <p class="matched-text">"${sentence}"</p>
+                        <div class="source-info">
+                            <i class="${source.icon}"></i>
+                            <span>Source: ${source.url}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            matchesContainer.innerHTML = matchesHTML;
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                ${message}
+            `;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4CAF50' : type === 'warning' ? '#FF9800' : '#2196F3'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 5px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 1000;
+                font-family: Arial, sans-serif;
+                max-width: 300px;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 4000);
+        }
+
+        // Word counter for text input
+        function updateWordCount() {
+            const textInput = document.querySelector('.text-input');
+            const wordCountElement = document.querySelector('.word-count');
+            const words = textInput.value.trim().split(/\s+/).filter(word => word.length > 0);
+            wordCountElement.textContent = words.length + ' words';
+        }
+
+        // Add sample text function
+        function addSampleText() {
+            const sampleText = `Artificial intelligence has revolutionized the way we approach data analysis and machine learning. Modern AI systems can process vast amounts of information with unprecedented speed and accuracy. Machine learning algorithms provide significant advantages in processing large datasets and identifying complex patterns that would be impossible for humans to detect manually.
+
+The integration of AI in academic research has opened new possibilities for data-driven discoveries. Researchers can now leverage sophisticated neural networks to analyze complex phenomena across various disciplines. Deep learning techniques have particularly shown promise in fields such as natural language processing, computer vision, and predictive analytics.
+
+However, the implementation of AI systems also raises important ethical considerations. Issues such as algorithmic bias, data privacy, and the transparency of AI decision-making processes require careful attention from both researchers and practitioners. As we continue to advance AI technology, it is crucial to maintain a balance between innovation and responsible development.`;
+            
+            document.querySelector('.text-input').value = sampleText;
+            updateWordCount();
+            showNotification('Sample text added for testing plagiarism detection.', 'info');
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            const textInput = document.querySelector('.text-input');
+            textInput.addEventListener('input', updateWordCount);
+            
+            // Add sample text button
+            const textSection = document.querySelector('.text-input-section');
+            const sampleBtn = document.createElement('button');
+            sampleBtn.className = 'btn btn-outline';
+            sampleBtn.style.marginTop = '10px';
+            sampleBtn.innerHTML = '<i class="fas fa-file-text"></i> Try Sample Text';
+            sampleBtn.onclick = addSampleText;
+            textSection.appendChild(sampleBtn);
+            
+            // Initially hide results
+            document.querySelector('.results-section').style.display = 'none';
+        });
+    </script>
+
+    <style>
+        /* Additional styles for plagiarism checker */
+        .score-status.good { color: #4CAF50; }
+        .score-status.moderate { color: #FF9800; }
+        .score-status.high { color: #f44336; }
+        
+        .match-item {
+            border-left: 3px solid #e0e0e0;
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .similarity-percent {
+            background: #f5f5f5;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .fa-spin {
+            animation: fa-spin 1s infinite linear;
+        }
+        
+        @keyframes fa-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页修复验证测试</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .status-card {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .status-success {
+            border-color: #48bb78;
+            background: #f0fff4;
+        }
+        
+        .status-info {
+            border-color: #4299e1;
+            background: #ebf8ff;
+        }
+        
+        .test-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .log-section {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 25px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        
+        .log-item {
+            margin: 8px 0;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+        
+        .log-success {
+            background: rgba(72, 187, 120, 0.2);
+            border-left: 4px solid #48bb78;
+        }
+        
+        .log-info {
+            background: rgba(66, 153, 225, 0.2);
+            border-left: 4px solid #4299e1;
+        }
+        
+        .log-warning {
+            background: rgba(237, 137, 54, 0.2);
+            border-left: 4px solid #ed8936;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 主页修复验证测试</h1>
+            <p>测试主页工具卡片跳转功能是否已修复</p>
+        </div>
+        
+        <div class="status-card status-success">
+            <h3>✅ 修复内容</h3>
+            <ul>
+                <li>在主页添加了script.js引用</li>
+                <li>script.js中包含了工具卡片链接的专门支持</li>
+                <li>确保CSS样式不会阻止点击事件</li>
+            </ul>
+        </div>
+        
+        <div class="status-card status-info">
+            <h3>🧪 测试步骤</h3>
+            <ol>
+                <li>点击下方按钮访问主页</li>
+                <li>尝试点击任意工具卡片</li>
+                <li>观察是否能正常跳转到对应页面</li>
+                <li>返回此页面查看测试结果</li>
+            </ol>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="/" class="test-btn">🏠 访问主页测试</a>
+            <a href="/final-fix-test.html" class="test-btn">📋 对比测试页面</a>
+            <button class="test-btn" onclick="clearLog()">🗑️ 清除日志</button>
+        </div>
+        
+        <div class="log-section" id="log-container">
+            <div class="log-item log-success">[初始化] 主页修复验证测试页面已加载</div>
+            <div class="log-item log-info">[说明] 主页现在应该能正常跳转了</div>
+            <div class="log-item log-warning">[注意] 如果仍然无法跳转，请检查浏览器控制台错误</div>
+        </div>
+    </div>
+
+    <script>
+        function logMessage(message, type = 'info') {
+            const container = document.getElementById('log-container');
+            const logItem = document.createElement('div');
+            logItem.className = `log-item log-${type}`;
+            logItem.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
+            container.appendChild(logItem);
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        function clearLog() {
+            const container = document.getElementById('log-container');
+            container.innerHTML = '';
+            logMessage('日志已清除', 'info');
+        }
+        
+        // 监听页面可见性变化，当用户返回时记录
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                logMessage('🔄 用户返回测试页面', 'info');
+            }
+        });
+        
+        // 页面加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            logMessage('✅ 测试页面初始化完成', 'success');
+            logMessage('👆 请点击"访问主页测试"按钮开始测试', 'info');
+        });
+    </script>
+</body>
+</html>

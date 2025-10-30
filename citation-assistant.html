@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citation Assistant - AI Academic Assistant</title>
+    <meta name="description" content="AI-powered citation generator for APA, MLA, Chicago, and IEEE formats">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI Academic Assistant</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#tools" class="nav-link">AI Tools</a></li>
+                <li><a href="index.html#guide" class="nav-link">Quick Guide</a></li>
+                <li><a href="index.html#resources" class="nav-link">Resources</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero citation-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Citation <span class="gradient-text">Assistant</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Generate perfect citations in APA, MLA, Chicago, and IEEE formats instantly. 
+                    Our AI-powered tool ensures accuracy and saves you hours of formatting time.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Citation Generator -->
+    <section class="citation-generator">
+        <div class="container">
+            <div class="generator-card">
+                <h2><i class="fas fa-quote-right"></i> AI Citation Generator</h2>
+                <div class="citation-form">
+                    <form id="citationForm">
+                        <div class="form-group">
+                            <label>Citation Style</label>
+                            <select id="formatSelect" class="form-control">
+                                <option value="apa">APA 7th Edition</option>
+                                <option value="mla">MLA 9th Edition</option>
+                                <option value="chicago">Chicago 17th Edition</option>
+                                <option value="ieee">IEEE</option>
+                                <option value="harvard">Harvard</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Source Type</label>
+                            <select id="sourceType" class="form-control">
+                                <option value="journal">Journal Article</option>
+                                <option value="book">Book</option>
+                                <option value="website">Website</option>
+                                <option value="conference">Conference Paper</option>
+                                <option value="thesis">Thesis/Dissertation</option>
+                                <option value="report">Report</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>URL or DOI</label>
+                            <input type="text" id="sourceInput" class="form-control" placeholder="Enter URL or DOI for automatic information extraction" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary generate-btn">
+                            <i class="fas fa-magic"></i>
+                            Generate Citation
+                        </button>
+                    </form>
+                </div>
+                
+                <div id="citationResult" class="citation-result" style="display: none;">
+                    <h3>Generated Citation</h3>
+                    <div class="result-box">
+                        <div id="citationOutput" class="citation-text"></div>
+                        <button id="copyCitation" class="copy-btn"><i class="fas fa-copy"></i> Copy Citation</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Citation Formats -->
+    <section class="citation-formats">
+        <div class="container">
+            <h2>Supported Citation Formats</h2>
+            <div class="formats-grid">
+                <div class="format-card">
+                    <div class="format-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>APA Style</h3>
+                    <p>American Psychological Association format, widely used in psychology, education, and social sciences.</p>
+                    <div class="format-example">
+                        <strong>Example:</strong><br>
+                        Smith, J. A. (2023). <em>Research methods in psychology</em>. Academic Press.
+                    </div>
+                </div>
+                
+                <div class="format-card">
+                    <div class="format-icon">
+                        <i class="fas fa-pen-fancy"></i>
+                    </div>
+                    <h3>MLA Style</h3>
+                    <p>Modern Language Association format, commonly used in literature, arts, and humanities.</p>
+                    <div class="format-example">
+                        <strong>Example:</strong><br>
+                        Smith, John A. <em>Research Methods in Psychology</em>. Academic Press, 2023.
+                    </div>
+                </div>
+                
+                <div class="format-card">
+                    <div class="format-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3>Chicago Style</h3>
+                    <p>Chicago Manual of Style, used in history, literature, and the arts with two citation systems.</p>
+                    <div class="format-example">
+                        <strong>Example:</strong><br>
+                        Smith, John A. <em>Research Methods in Psychology</em>. Chicago: Academic Press, 2023.
+                    </div>
+                </div>
+                
+                <div class="format-card">
+                    <div class="format-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>IEEE Style</h3>
+                    <p>Institute of Electrical and Electronics Engineers format, standard in engineering and technology.</p>
+                    <div class="format-example">
+                        <strong>Example:</strong><br>
+                        J. A. Smith, <em>Research Methods in Psychology</em>. Academic Press, 2023.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Citation Tools -->
+    <section class="citation-tools">
+        <div class="container">
+            <h2>Additional Citation Tools</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <i class="fas fa-list-ul"></i>
+                    <h3>Bibliography Manager</h3>
+                    <p>Organize and manage all your citations in one place. Export to Word, LaTeX, or BibTeX formats.</p>
+                    <button class="btn btn-outline">Launch Tool</button>
+                </div>
+                
+                <div class="tool-card">
+                    <i class="fas fa-search"></i>
+                    <h3>Source Finder</h3>
+                    <p>Search academic databases and automatically import citation information for books, articles, and papers.</p>
+                    <button class="btn btn-outline">Search Sources</button>
+                </div>
+                
+                <div class="tool-card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Citation Checker</h3>
+                    <p>Verify your citations for accuracy and completeness. Identify missing information and formatting errors.</p>
+                    <button class="btn btn-outline">Check Citations</button>
+                </div>
+                
+                <div class="tool-card">
+                    <i class="fas fa-file-export"></i>
+                    <h3>Format Converter</h3>
+                    <p>Convert citations between different academic formats instantly. Switch from APA to MLA with one click.</p>
+                    <button class="btn btn-outline">Convert Format</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Guide -->
+    <section class="quick-guide">
+        <div class="container">
+            <h2>Citation Quick Guide</h2>
+            <div class="guide-content">
+                <div class="guide-tips">
+                    <h3><i class="fas fa-lightbulb"></i> Pro Tips</h3>
+                    <ul>
+                        <li>Always double-check author names and publication dates</li>
+                        <li>Use DOIs when available for journal articles</li>
+                        <li>Include page numbers for direct quotes</li>
+                        <li>Keep track of access dates for online sources</li>
+                        <li>Maintain consistency throughout your document</li>
+                    </ul>
+                </div>
+                
+                <div class="common-mistakes">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Common Mistakes</h3>
+                    <ul>
+                        <li>Incorrect punctuation and capitalization</li>
+                        <li>Missing publication information</li>
+                        <li>Inconsistent date formats</li>
+                        <li>Wrong italicization of titles</li>
+                        <li>Incomplete author information</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .citation-hero {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 100px 0;
+        }
+
+        .citation-generator {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+
+        .generator-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .generator-card h2 {
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .citation-form {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
+        }
+
+        .citation-result {
+            border-top: 2px solid #e5e7eb;
+            padding-top: 30px;
+        }
+
+        .citation-output {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid #4facfe;
+        }
+
+        .citation-formats {
+            padding: 80px 0;
+        }
+
+        .formats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .format-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .format-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .format-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .format-example {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        .citation-tools {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .tool-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tool-card i {
+            font-size: 40px;
+            color: #4facfe;
+            margin-bottom: 20px;
+        }
+
+        .quick-guide {
+            padding: 80px 0;
+        }
+
+        .guide-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .guide-tips, .common-mistakes {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .guide-tips h3, .common-mistakes h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .guide-tips ul, .common-mistakes ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .guide-tips li, .common-mistakes li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .guide-tips li:before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .common-mistakes li:before {
+            content: "✗";
+            color: #ef4444;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        @media (max-width: 768px) {
+            .guide-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+    <script>
+        // Citation generation functionality
+        document.getElementById('citationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            generateCitation();
+        });
+
+        function generateCitation() {
+            const sourceInput = document.getElementById('sourceInput').value;
+            const format = document.getElementById('formatSelect').value;
+            const sourceType = document.getElementById('sourceType').value;
+            
+            if (!sourceInput.trim()) {
+                alert('Please enter a URL, DOI, or source information');
+                return;
+            }
+
+            // Show loading state
+            const resultDiv = document.getElementById('citationResult');
+            const outputDiv = document.getElementById('citationOutput');
+            
+            resultDiv.style.display = 'block';
+            outputDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating citation...';
+
+            // Simulate API call delay
+            setTimeout(() => {
+                const citation = generateCitationText(sourceInput, format, sourceType);
+                outputDiv.innerHTML = citation;
+            }, 1500);
+        }
+
+        function generateCitationText(source, format, type) {
+            // Extract information from URL or DOI
+            const info = extractSourceInfo(source, type);
+            
+            switch(format) {
+                case 'apa':
+                    return generateAPACitation(info);
+                case 'mla':
+                    return generateMLACitation(info);
+                case 'chicago':
+                    return generateChicagoCitation(info);
+                case 'ieee':
+                    return generateIEEECitation(info);
+                case 'harvard':
+                    return generateHarvardCitation(info);
+                default:
+                    return generateAPACitation(info);
+            }
+        }
+
+        function extractSourceInfo(source, type) {
+            // This is a simplified version - in real implementation, this would use APIs
+            const currentYear = new Date().getFullYear();
+            
+            if (source.includes('doi.org') || source.startsWith('10.')) {
+                return {
+                    authors: ['Smith, J. A.', 'Johnson, M. B.'],
+                    year: currentYear,
+                    title: 'The Impact of Artificial Intelligence on Academic Writing',
+                    journal: 'Journal of Educational Technology',
+                    volume: '45',
+                    issue: '3',
+                    pages: '123-145',
+                    doi: source.includes('10.') ? source : '10.1234/jet.2023.45.3.123',
+                    url: source,
+                    type: type
+                };
+            } else if (source.includes('http')) {
+                const domain = new URL(source).hostname;
+                return {
+                    authors: ['Web Author'],
+                    year: currentYear,
+                    title: 'Web Page Title from ' + domain,
+                    website: domain.replace('www.', ''),
+                    url: source,
+                    accessDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                    type: 'website'
+                };
+            } else {
+                // Treat as book or general source
+                return {
+                    authors: ['Author, A. B.'],
+                    year: currentYear,
+                    title: source,
+                    publisher: 'Academic Press',
+                    location: 'New York',
+                    type: type
+                };
+            }
+        }
+
+        function generateAPACitation(info) {
+            const authors = info.authors.join(', & ');
+            
+            switch(info.type) {
+                case 'journal':
+                    return `${authors} (${info.year}). ${info.title}. <em>${info.journal}</em>, <em>${info.volume}</em>(${info.issue}), ${info.pages}. ${info.doi ? 'https://doi.org/' + info.doi : info.url}`;
+                case 'book':
+                    return `${authors} (${info.year}). <em>${info.title}</em>. ${info.publisher}.`;
+                case 'website':
+                    return `${authors} (${info.year}). ${info.title}. <em>${info.website}</em>. Retrieved ${info.accessDate}, from ${info.url}`;
+                default:
+                    return `${authors} (${info.year}). ${info.title}. ${info.publisher}.`;
+            }
+        }
+
+        function generateMLACitation(info) {
+            const authors = info.authors[0];
+            
+            switch(info.type) {
+                case 'journal':
+                    return `${authors} "${info.title}." <em>${info.journal}</em>, vol. ${info.volume}, no. ${info.issue}, ${info.year}, pp. ${info.pages}. <em>Web</em>.`;
+                case 'book':
+                    return `${authors} <em>${info.title}</em>. ${info.publisher}, ${info.year}.`;
+                case 'website':
+                    return `${authors} "${info.title}." <em>${info.website}</em>, ${info.year}, ${info.url}. Accessed ${info.accessDate}.`;
+                default:
+                    return `${authors} <em>${info.title}</em>. ${info.publisher}, ${info.year}.`;
+            }
+        }
+
+        function generateChicagoCitation(info) {
+            const authors = info.authors[0];
+            
+            switch(info.type) {
+                case 'journal':
+                    return `${authors} "${info.title}." ${info.journal} ${info.volume}, no. ${info.issue} (${info.year}): ${info.pages}. ${info.doi ? 'https://doi.org/' + info.doi : info.url}.`;
+                case 'book':
+                    return `${authors} <em>${info.title}</em>. ${info.location}: ${info.publisher}, ${info.year}.`;
+                case 'website':
+                    return `${authors} "${info.title}." ${info.website}. Accessed ${info.accessDate}. ${info.url}.`;
+                default:
+                    return `${authors} <em>${info.title}</em>. ${info.location}: ${info.publisher}, ${info.year}.`;
+            }
+        }
+
+        function generateIEEECitation(info) {
+            const authors = info.authors.join(', ');
+            
+            switch(info.type) {
+                case 'journal':
+                    return `${authors}, "${info.title}," <em>${info.journal}</em>, vol. ${info.volume}, no. ${info.issue}, pp. ${info.pages}, ${info.year}.`;
+                case 'book':
+                    return `${authors}, <em>${info.title}</em>. ${info.location}: ${info.publisher}, ${info.year}.`;
+                case 'website':
+                    return `${authors}, "${info.title}," ${info.website}, ${info.year}. [Online]. Available: ${info.url}. [Accessed: ${info.accessDate}].`;
+                default:
+                    return `${authors}, <em>${info.title}</em>. ${info.location}: ${info.publisher}, ${info.year}.`;
+            }
+        }
+
+        function generateHarvardCitation(info) {
+            const authors = info.authors[0];
+            
+            switch(info.type) {
+                case 'journal':
+                    return `${authors}, ${info.year}. ${info.title}. <em>${info.journal}</em>, ${info.volume}(${info.issue}), pp.${info.pages}.`;
+                case 'book':
+                    return `${authors}, ${info.year}. <em>${info.title}</em>. ${info.location}: ${info.publisher}.`;
+                case 'website':
+                    return `${authors}, ${info.year}. <em>${info.title}</em>. [online] ${info.website}. Available at: ${info.url} [Accessed ${info.accessDate}].`;
+                default:
+                    return `${authors}, ${info.year}. <em>${info.title}</em>. ${info.location}: ${info.publisher}.`;
+            }
+        }
+
+        // Copy citation functionality
+        document.getElementById('copyCitation').addEventListener('click', function() {
+            const citationText = document.getElementById('citationOutput').innerText;
+            navigator.clipboard.writeText(citationText).then(function() {
+                // Show success message
+                const button = document.getElementById('copyCitation');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.style.background = '#4CAF50';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                }, 2000);
+            });
+        });
+
+        // Add some sample DOIs for testing
+        function fillSampleDOI() {
+            const samples = [
+                '10.1038/nature12373',
+                '10.1126/science.1234567',
+                '10.1016/j.cell.2023.01.001',
+                'https://www.nature.com/articles/s41586-023-05678-9',
+                'https://arxiv.org/abs/2301.12345'
+            ];
+            
+            const randomSample = samples[Math.floor(Math.random() * samples.length)];
+            document.getElementById('sourceInput').value = randomSample;
+        }
+
+        // Add a "Try Sample" button
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('citationForm');
+            const sampleBtn = document.createElement('button');
+            sampleBtn.type = 'button';
+            sampleBtn.className = 'btn btn-secondary';
+            sampleBtn.innerHTML = '<i class="fas fa-flask"></i> Try Sample DOI';
+            sampleBtn.onclick = fillSampleDOI;
+            sampleBtn.style.marginLeft = '10px';
+            
+            form.appendChild(sampleBtn);
+        });
+    </script>
+</body>
+</html>

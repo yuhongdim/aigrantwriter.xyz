@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控制台调试测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .console-output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .tool-card-link {
+            display: inline-block;
+            background: #6366f1;
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .tool-card-link:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .status.info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔍 主页JavaScript调试测试</h1>
+        
+        <div class="test-section">
+            <h3>1. JavaScript加载检测</h3>
+            <button class="test-button" onclick="checkScriptLoading()">检查Script.js加载状态</button>
+            <div id="script-status" class="console-output"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>2. 工具卡片链接测试</h3>
+            <p>测试工具卡片链接（与主页相同的HTML结构）：</p>
+            <a href="grant-proposal.html" class="tool-card-link">Grant Proposal Generator</a>
+            <a href="dissertation-writer.html" class="tool-card-link">Dissertation Writer</a>
+            <a href="research-paper.html" class="tool-card-link">Research Paper AI</a>
+            
+            <button class="test-button" onclick="testToolCardLinks()">测试卡片链接功能</button>
+            <div id="link-test-output" class="console-output"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. 控制台错误监控</h3>
+            <button class="test-button" onclick="startErrorMonitoring()">开始监控控制台错误</button>
+            <button class="test-button" onclick="clearErrorLog()">清空错误日志</button>
+            <div id="error-log" class="console-output"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>4. 主页链接测试</h3>
+            <button class="test-button" onclick="testMainPageLinks()">测试主页链接</button>
+            <a href="http://localhost:8000" target="_blank" class="test-button" style="text-decoration: none;">打开主页</a>
+            <div id="main-page-test" class="console-output"></div>
+        </div>
+    </div>
+
+    <script>
+        let errorLog = [];
+        
+        // 捕获所有JavaScript错误
+        window.addEventListener('error', function(e) {
+            const errorInfo = {
+                message: e.message,
+                filename: e.filename,
+                lineno: e.lineno,
+                colno: e.colno,
+                error: e.error ? e.error.toString() : 'Unknown error',
+                timestamp: new Date().toLocaleTimeString()
+            };
+            errorLog.push(errorInfo);
+            updateErrorDisplay();
+        });
+
+        // 捕获Promise rejection错误
+        window.addEventListener('unhandledrejection', function(e) {
+            const errorInfo = {
+                message: 'Unhandled Promise Rejection: ' + e.reason,
+                timestamp: new Date().toLocaleTimeString()
+            };
+            errorLog.push(errorInfo);
+            updateErrorDisplay();
+        });
+
+        function checkScriptLoading() {
+            const output = document.getElementById('script-status');
+            let status = '';
+            
+            // 检查script.js是否加载
+            const scripts = document.querySelectorAll('script[src]');
+            status += '已加载的脚本文件:\n';
+            scripts.forEach(script => {
+                status += `- ${script.src}\n`;
+            });
+            
+            // 检查关键函数是否存在
+            status += '\n关键函数检查:\n';
+            status += `- navigateToPage: ${typeof navigateToPage !== 'undefined' ? '✅ 存在' : '❌ 不存在'}\n`;
+            status += `- openTool: ${typeof openTool !== 'undefined' ? '✅ 存在' : '❌ 不存在'}\n`;
+            
+            // 检查DOM元素
+            status += '\nDOM元素检查:\n';
+            const toolCardLinks = document.querySelectorAll('.tool-card-link');
+            status += `- .tool-card-link 元素数量: ${toolCardLinks.length}\n`;
+            
+            output.textContent = status;
+        }
+
+        function testToolCardLinks() {
+            const output = document.getElementById('link-test-output');
+            const links = document.querySelectorAll('.tool-card-link');
+            let result = `找到 ${links.length} 个工具卡片链接:\n\n`;
+            
+            links.forEach((link, index) => {
+                result += `链接 ${index + 1}:\n`;
+                result += `- href: ${link.href}\n`;
+                result += `- 文本: ${link.textContent.trim()}\n`;
+                result += `- 可点击: ${link.style.pointerEvents !== 'none' ? '✅' : '❌'}\n\n`;
+                
+                // 添加点击事件监听器进行测试
+                link.addEventListener('click', function(e) {
+                    console.log('测试页面链接被点击:', link.href);
+                    result += `✅ 链接 ${index + 1} 点击事件触发\n`;
+                    output.textContent = result;
+                });
+            });
+            
+            output.textContent = result;
+        }
+
+        function startErrorMonitoring() {
+            errorLog = []; // 清空之前的错误
+            updateErrorDisplay();
+            
+            // 尝试加载主页的script.js来检测错误
+            const script = document.createElement('script');
+            script.src = 'script.js';
+            script.onload = function() {
+                const output = document.getElementById('error-log');
+                output.textContent = '✅ script.js 加载成功，开始监控错误...\n' + output.textContent;
+            };
+            script.onerror = function() {
+                const errorInfo = {
+                    message: '❌ script.js 加载失败',
+                    timestamp: new Date().toLocaleTimeString()
+                };
+                errorLog.push(errorInfo);
+                updateErrorDisplay();
+            };
+            document.head.appendChild(script);
+        }
+
+        function clearErrorLog() {
+            errorLog = [];
+            updateErrorDisplay();
+        }
+
+        function updateErrorDisplay() {
+            const output = document.getElementById('error-log');
+            if (errorLog.length === 0) {
+                output.textContent = '暂无错误记录';
+                return;
+            }
+            
+            let display = '';
+            errorLog.forEach((error, index) => {
+                display += `[${error.timestamp}] ${error.message}\n`;
+                if (error.filename) {
+                    display += `  文件: ${error.filename}:${error.lineno}:${error.colno}\n`;
+                }
+                if (error.error && error.error !== 'Unknown error') {
+                    display += `  详情: ${error.error}\n`;
+                }
+                display += '\n';
+            });
+            
+            output.textContent = display;
+        }
+
+        function testMainPageLinks() {
+            const output = document.getElementById('main-page-test');
+            output.textContent = '正在测试主页链接...\n';
+            
+            // 使用fetch检查主页是否可访问
+            fetch('http://localhost:8000')
+                .then(response => {
+                    if (response.ok) {
+                        output.textContent += '✅ 主页服务器响应正常\n';
+                        return response.text();
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                })
+                .then(html => {
+                    // 检查HTML中是否包含工具卡片
+                    const hasToolCards = html.includes('tool-card-link');
+                    output.textContent += `✅ 主页HTML加载成功\n`;
+                    output.textContent += `${hasToolCards ? '✅' : '❌'} 主页包含工具卡片链接\n`;
+                    
+                    // 检查是否引用了script.js
+                    const hasScript = html.includes('script.js');
+                    output.textContent += `${hasScript ? '✅' : '❌'} 主页引用了script.js\n`;
+                })
+                .catch(error => {
+                    output.textContent += `❌ 主页访问失败: ${error.message}\n`;
+                });
+        }
+
+        // 页面加载完成后自动运行一些检查
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('调试页面加载完成');
+            checkScriptLoading();
+        });
+    </script>
+</body>
+</html>

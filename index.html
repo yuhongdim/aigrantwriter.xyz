@@ -1,401 +1,471 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI学术写作助手 - 智能论文生成器 | aigrantwriter.xyz</title>
-    <meta name="description" content="专业的AI学术写作工具，提供论文生成、文献综述、研究方法论生成等服务。支持博士论文、硕士论文、学术提案写作。">
-    <meta name="keywords" content="AI thesis writing assistant, automated literature review, academic proposal AI, research methodology generator, PhD dissertation helper">
-    <link rel="stylesheet" href="styles.css">
+    <title>AI Grant Writer - Professional Academic Writing Assistant | aigrantwriter.xyz</title>
+    <meta name="description" content="Transform your academic writing with AI. Generate grant proposals, dissertations, research papers, and literature reviews. Professional AI writing assistant for researchers and students.">
+    <meta name="keywords" content="AI grant writer, dissertation writing AI, academic writing assistant, research paper generator, grant proposal AI, literature review assistant, thesis writing tool">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="AI Grant Writer - Professional Academic Writing Assistant">
+    <meta property="og:description" content="Transform your academic writing with AI. Generate grant proposals, dissertations, and research papers with professional quality.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aigrantwriter.xyz">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="alternate icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- 导航栏 -->
+    <!-- Navigation -->
     <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-graduation-cap"></i>
-                <span>AI学术写作</span>
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>AI Academic Assistant</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#tools" class="nav-link">AI Tools</a></li>
+                    <li><a href="#guide" class="nav-link">Quick Guide</a></li>
+                    <li><a href="#resources" class="nav-link">Resources</a></li>
+                    <li><a href="#pricing" class="nav-link">Pricing</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#home">首页</a></li>
-                <li><a href="#features">功能</a></li>
-                <li><a href="#tools">工具</a></li>
-                <li><a href="#pricing">定价</a></li>
-                <li><a href="#contact">联系</a></li>
-            </ul>
-            <div class="nav-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        </nav>
 
-    <!-- 主页横幅 -->
+    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    AI驱动的<span class="highlight">学术写作助手</span>
-                    <br>让论文写作更智能
+                    Transform Your Academic Writing with 
+                    <span class="gradient-text">AI Intelligence</span>
                 </h1>
                 <p class="hero-subtitle">
-                    专业的AI论文生成器，支持博士论文、硕士论文、学术提案写作。
-                    <br>自动化文献综述、研究方法论生成，让学术写作事半功倍。
+                    AI-powered academic writing assistant designed for students. From literature reviews to dissertations, from research proposals to journal submissions - make writing simple and efficient.
                 </p>
                 <div class="hero-buttons">
-                    <button class="btn-primary" onclick="scrollToGenerator()">
-                        <i class="fas fa-magic"></i>
-                        开始写作
-                    </button>
-                    <button class="btn-secondary">
+                    <a href="#tools" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        Start Writing
+                    </a>
+                    <a href="#pricing" class="btn btn-secondary">
                         <i class="fas fa-play"></i>
-                        观看演示
-                    </button>
+                        Learn More
+                    </a>
                 </div>
                 <div class="hero-stats">
                     <div class="stat">
                         <span class="stat-number">50K+</span>
-                        <span class="stat-label">论文生成</span>
+                        <span class="stat-label">Student Users</span>
                     </div>
                     <div class="stat">
                         <span class="stat-number">95%</span>
-                        <span class="stat-label">通过率</span>
+                        <span class="stat-label">Satisfaction Rate</span>
                     </div>
                     <div class="stat">
                         <span class="stat-number">24/7</span>
-                        <span class="stat-label">在线服务</span>
+                        <span class="stat-label">AI Assistant</span>
                     </div>
                 </div>
             </div>
-            <div class="hero-image">
-                <div class="floating-card">
-                    <i class="fas fa-file-alt"></i>
-                    <h3>智能论文生成</h3>
-                    <p>AI自动生成高质量学术内容</p>
-                </div>
-                <div class="floating-card">
-                    <i class="fas fa-search"></i>
-                    <h3>文献综述</h3>
-                    <p>自动搜索和整理相关文献</p>
-                </div>
-                <div class="floating-card">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>研究方法</h3>
-                    <p>生成专业的研究方法论</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 核心功能 -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>强大的AI学术写作功能</h2>
-                <p>基于最新AI技术，为学术研究者提供全方位写作支持</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-brain"></i>
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <div class="card-header">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Grant Proposal Generator</span>
                     </div>
-                    <h3>AI论文生成器</h3>
-                    <p>智能生成论文章节，包括引言、文献综述、方法论、结果分析等完整结构</p>
-                    <ul>
-                        <li>博士论文助手</li>
-                        <li>硕士论文生成</li>
-                        <li>学术提案写作</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-books"></i>
+                    <div class="card-content">
+                        <div class="typing-animation">
+                            <span class="typing-text">Generating professional grant proposal...</span>
+                            <span class="cursor">|</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
                     </div>
-                    <h3>自动化文献综述</h3>
-                    <p>AI自动搜索、筛选和整理相关学术文献，生成专业的文献综述章节</p>
-                    <ul>
-                        <li>智能文献搜索</li>
-                        <li>自动引用格式</li>
-                        <li>文献关系分析</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-microscope"></i>
-                    </div>
-                    <h3>研究方法论生成</h3>
-                    <p>根据研究主题自动生成合适的研究方法、实验设计和数据分析方案</p>
-                    <ul>
-                        <li>定量研究方法</li>
-                        <li>定性研究设计</li>
-                        <li>混合研究方法</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <h3>研究问题生成</h3>
-                    <p>AI帮助生成有价值的研究问题和假设，确保研究的创新性和可行性</p>
-                    <ul>
-                        <li>问题创新性评估</li>
-                        <li>研究假设生成</li>
-                        <li>可行性分析</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-edit"></i>
-                    </div>
-                    <h3>学术写作优化</h3>
-                    <p>智能优化学术写作风格，提升论文的逻辑性、连贯性和学术规范性</p>
-                    <ul>
-                        <li>语言风格优化</li>
-                        <li>逻辑结构调整</li>
-                        <li>学术规范检查</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-bar"></i>
-                    </div>
-                    <h3>数据分析助手</h3>
-                    <p>协助进行统计分析，生成图表和结果解释，提升研究的科学性</p>
-                    <ul>
-                        <li>统计分析建议</li>
-                        <li>图表自动生成</li>
-                        <li>结果解释优化</li>
-                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- AI工具区域 -->
-    <section id="tools" class="tools-section">
+    <!-- Quick Start Guide -->
+    <section class="quick-guide" id="guide">
         <div class="container">
             <div class="section-header">
-                <h2>专业AI写作工具</h2>
-                <p>选择适合您需求的AI写作工具，开始您的学术写作之旅</p>
+                <h2>🚀 How to Use Our AI Writing Tools</h2>
+                <p>Get started with professional academic writing in just 3 simple steps</p>
+            </div>
+            <div class="guide-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Choose Your Tool</h3>
+                        <p>Select the AI writing tool that matches your academic needs - from grant proposals to dissertations</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Input Your Information</h3>
+                        <p>Provide your research topic, requirements, and any specific guidelines or preferences</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Get Professional Results</h3>
+                        <p>Receive high-quality, well-structured academic content ready for review and submission</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Tools Section -->
+    <section id="tools" class="tools-showcase">
+        <div class="container">
+            <div class="section-header">
+                <h2>🎓 Professional AI Writing Tools</h2>
+                <p>Comprehensive suite of AI-powered tools designed specifically for academic success</p>
             </div>
             <div class="tools-grid">
+                <!-- Grant Proposal Generator -->
                 <div class="tool-card">
-                    <div class="tool-header">
-                        <i class="fas fa-graduation-cap"></i>
-                        <h3>博士论文助手</h3>
-                    </div>
-                    <p>专为博士研究生设计的AI写作工具，支持完整论文结构生成</p>
-                    <button class="tool-btn">立即使用</button>
+                    <div class="tool-icon">📄</div>
+                    <h3>Grant Proposal Generator</h3>
+                    <p>Create compelling research grant proposals with AI assistance. Perfect for funding applications and research project proposals.</p>
+                    <ul class="tool-features">
+                        <li>✓ Professional formatting</li>
+                        <li>✓ Budget planning assistance</li>
+                        <li>✓ Impact statement generation</li>
+                    </ul>
+                    <a href="grant-proposal.html" class="tool-btn">Start Writing →</a>
                 </div>
+
+                <!-- Dissertation Writing AI -->
                 <div class="tool-card">
-                    <div class="tool-header">
-                        <i class="fas fa-book-open"></i>
-                        <h3>文献综述生成器</h3>
-                    </div>
-                    <p>自动搜索和整理相关文献，生成专业的文献综述章节</p>
-                    <button class="tool-btn">立即使用</button>
+                    <div class="tool-icon">🎓</div>
+                    <h3>Dissertation Writing AI</h3>
+                    <p>Comprehensive dissertation writing support from outline to final draft. Ideal for graduate students and PhD candidates.</p>
+                    <ul class="tool-features">
+                        <li>✓ Chapter-by-chapter guidance</li>
+                        <li>✓ Literature integration</li>
+                        <li>✓ Academic tone optimization</li>
+                    </ul>
+                    <a href="dissertation-writer.html" class="tool-btn">Start Writing →</a>
                 </div>
+
+                <!-- Literature Review Assistant -->
                 <div class="tool-card">
-                    <div class="tool-header">
-                        <i class="fas fa-flask"></i>
-                        <h3>研究方法生成器</h3>
-                    </div>
-                    <p>根据研究主题生成合适的研究方法论和实验设计</p>
-                    <button class="tool-btn">立即使用</button>
+                    <div class="tool-icon">📚</div>
+                    <h3>Literature Review Assistant</h3>
+                    <p>Synthesize research papers and create comprehensive literature reviews. Essential for any academic research project.</p>
+                    <ul class="tool-features">
+                        <li>✓ Source synthesis</li>
+                        <li>✓ Gap identification</li>
+                        <li>✓ Citation management</li>
+                    </ul>
+                    <a href="literature-review.html" class="tool-btn">Start Writing →</a>
                 </div>
+
+                <!-- AI Text Reducer -->
                 <div class="tool-card">
-                    <div class="tool-header">
-                        <i class="fas fa-question-circle"></i>
-                        <h3>研究问题生成器</h3>
-                    </div>
-                    <p>AI帮助生成创新性的研究问题和研究假设</p>
-                    <button class="tool-btn">立即使用</button>
+                    <div class="tool-icon">🔄</div>
+                    <h3>AI Text Reducer</h3>
+                    <p>Condense lengthy academic texts while preserving key information. Perfect for abstracts and executive summaries.</p>
+                    <ul class="tool-features">
+                        <li>✓ Smart summarization</li>
+                        <li>✓ Key point extraction</li>
+                        <li>✓ Length customization</li>
+                    </ul>
+                    <a href="ai-text-reducer.html" class="tool-btn">Start Writing →</a>
+                </div>
+
+                <!-- Research Question Generator -->
+                <div class="tool-card">
+                    <div class="tool-icon">❓</div>
+                    <h3>Research Question Generator</h3>
+                    <p>Develop focused and impactful research questions for your academic projects and thesis work.</p>
+                    <ul class="tool-features">
+                        <li>✓ Question refinement</li>
+                        <li>✓ Scope optimization</li>
+                        <li>✓ Methodology suggestions</li>
+                    </ul>
+                    <a href="research-question.html" class="tool-btn">Start Writing →</a>
+                </div>
+
+                <!-- Data Analysis AI -->
+                <div class="tool-card">
+                    <div class="tool-icon">📊</div>
+                    <h3>Data Analysis AI</h3>
+                    <p>Transform raw data into meaningful insights and professional research findings for your academic work.</p>
+                    <ul class="tool-features">
+                        <li>✓ Statistical interpretation</li>
+                        <li>✓ Visualization suggestions</li>
+                        <li>✓ Results presentation</li>
+                    </ul>
+                    <a href="data-analysis.html" class="tool-btn">Start Writing →</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 论文生成器 -->
-    <section id="generator" class="generator-section">
-        <div class="container">
-            <div class="generator-container">
-                <div class="generator-left">
-                    <h2>AI学术论文生成器</h2>
-                    <p>输入您的研究主题和要求，AI将为您生成专业的学术内容</p>
-                    
-                    <form class="generator-form">
-                        <div class="form-group">
-                            <label for="research-topic">研究主题</label>
-                            <input type="text" id="research-topic" placeholder="例如：人工智能在教育中的应用研究">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="paper-type">论文类型</label>
-                            <select id="paper-type">
-                                <option value="phd">博士论文</option>
-                                <option value="master">硕士论文</option>
-                                <option value="proposal">研究提案</option>
-                                <option value="review">文献综述</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="research-field">研究领域</label>
-                            <select id="research-field">
-                                <option value="education">教育学</option>
-                                <option value="psychology">心理学</option>
-                                <option value="computer-science">计算机科学</option>
-                                <option value="medicine">医学</option>
-                                <option value="engineering">工程学</option>
-                                <option value="business">商学</option>
-                                <option value="other">其他</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="requirements">具体要求</label>
-                            <textarea id="requirements" placeholder="请描述您的具体要求，如字数、重点章节、特殊格式等..."></textarea>
-                        </div>
-                        
-                        <button type="button" class="generate-btn" onclick="generatePaper()">
-                            <i class="fas fa-magic"></i>
-                            生成论文
-                        </button>
-                    </form>
-                </div>
-                
-                <div class="generator-right">
-                    <div class="output-container">
-                        <div class="output-header">
-                            <h3>生成结果</h3>
-                            <div class="output-actions">
-                                <button class="action-btn"><i class="fas fa-copy"></i></button>
-                                <button class="action-btn"><i class="fas fa-download"></i></button>
-                                <button class="action-btn"><i class="fas fa-share"></i></button>
-                            </div>
-                        </div>
-                        <div class="output-content" id="output-content">
-                            <div class="placeholder">
-                                <i class="fas fa-file-alt"></i>
-                                <p>您生成的学术内容将在这里显示...</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 定价方案 -->
-    <section id="pricing" class="pricing-section">
+    <!-- Student Resources Section -->
+    <section class="student-resources" id="resources">
         <div class="container">
             <div class="section-header">
-                <h2>选择适合您的方案</h2>
-                <p>灵活的定价选项，满足不同用户的需求</p>
+                <h2>📚 Essential Academic Resources</h2>
+                <p>Comprehensive tools and templates to support your academic journey</p>
+            </div>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">📝</div>
+                    <h3>Academic Templates</h3>
+                    <p>Professional templates for research papers, thesis proposals, and academic presentations</p>
+                    <div class="resource-tags">
+                        <span>Research Papers</span>
+                        <span>Thesis Templates</span>
+                        <span>Presentations</span>
+                    </div>
+                    <a href="academic-templates.html" class="resource-link">
+                        <i class="fas fa-arrow-right"></i>
+                        Explore Templates
+                    </a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">📖</div>
+                    <h3>Citation Assistant</h3>
+                    <p>Automatic citation generation for APA, MLA, Chicago and other academic styles</p>
+                    <div class="resource-tags">
+                        <span>Bibliography</span>
+                        <span>Footnotes</span>
+                        <span>Figure Citations</span>
+                    </div>
+                    <a href="citation-assistant.html" class="resource-link">
+                        <i class="fas fa-arrow-right"></i>
+                        Generate Citations
+                    </a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">⏰</div>
+                    <h3>Writing Progress Tracker</h3>
+                    <p>Plan and monitor your writing progress with deadlines and milestones</p>
+                    <div class="resource-tags">
+                        <span>Time Planning</span>
+                        <span>Task Breakdown</span>
+                        <span>Progress Alerts</span>
+                    </div>
+                    <a href="writing-progress.html" class="resource-link">
+                        <i class="fas fa-arrow-right"></i>
+                        Track Progress
+                    </a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">🔍</div>
+                    <h3>Academic Integrity Check</h3>
+                    <p>Plagiarism detection and originality verification for academic work</p>
+                    <div class="resource-tags">
+                        <span>Plagiarism Check</span>
+                        <span>Citation Standards</span>
+                        <span>Originality Tips</span>
+                    </div>
+                    <a href="academic-integrity.html" class="resource-link">
+                        <i class="fas fa-arrow-right"></i>
+                        Check Integrity
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Choose Your Plan</h2>
+                <p>Flexible pricing options for students, researchers, and institutions</p>
             </div>
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <div class="pricing-header">
-                        <h3>免费版</h3>
-                        <div class="price">¥0<span>/月</span></div>
+                        <h3>Free Trial</h3>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">0</span>
+                            <span class="period">/forever</span>
+                        </div>
                     </div>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i>每月3次生成</li>
-                        <li><i class="fas fa-check"></i>基础论文结构</li>
-                        <li><i class="fas fa-check"></i>简单文献搜索</li>
-                        <li><i class="fas fa-times"></i>高级AI模型</li>
-                        <li><i class="fas fa-times"></i>优先支持</li>
+                        <li><i class="fas fa-check"></i> 3 free uses per tool</li>
+                        <li><i class="fas fa-check"></i> Grant Proposal Generator</li>
+                        <li><i class="fas fa-check"></i> Research Paper Assistant</li>
+                        <li><i class="fas fa-check"></i> Literature Review AI</li>
+                        <li><i class="fas fa-check"></i> Citation Generator</li>
+                        <li><i class="fas fa-check"></i> Basic Grammar Check</li>
+                        <li><i class="fas fa-check"></i> Email Support</li>
                     </ul>
-                    <button class="pricing-btn">开始使用</button>
+                    <a href="#" class="btn btn-outline">Get Started</a>
                 </div>
                 <div class="pricing-card featured">
-                    <div class="pricing-badge">推荐</div>
                     <div class="pricing-header">
-                        <h3>专业版</h3>
-                        <div class="price">¥99<span>/月</span></div>
+                        <h3>Professional</h3>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">19.9</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <span class="popular-badge">Most Popular</span>
                     </div>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i>无限次生成</li>
-                        <li><i class="fas fa-check"></i>完整论文结构</li>
-                        <li><i class="fas fa-check"></i>高级文献综述</li>
-                        <li><i class="fas fa-check"></i>GPT-4模型</li>
-                        <li><i class="fas fa-check"></i>优先支持</li>
+                        <li><i class="fas fa-check"></i> Unlimited access to all tools</li>
+                        <li><i class="fas fa-check"></i> Advanced AI Writing Assistant</li>
+                        <li><i class="fas fa-check"></i> Plagiarism Detection & Reports</li>
+                        <li><i class="fas fa-check"></i> Academic Template Library</li>
+                        <li><i class="fas fa-check"></i> Citation Generator (APA, MLA, Chicago)</li>
+                        <li><i class="fas fa-check"></i> Writing Progress Tracker</li>
+                        <li><i class="fas fa-check"></i> Advanced Grammar & Style Check</li>
+                        <li><i class="fas fa-check"></i> Export to Word/PDF</li>
+                        <li><i class="fas fa-check"></i> Priority Support</li>
                     </ul>
-                    <button class="pricing-btn">立即订阅</button>
+                    <a href="#" class="btn btn-primary">Subscribe Now</a>
                 </div>
                 <div class="pricing-card">
                     <div class="pricing-header">
-                        <h3>学术版</h3>
-                        <div class="price">¥199<span>/月</span></div>
+                        <h3>Annual Plan</h3>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">199</span>
+                            <span class="period">/year</span>
+                        </div>
                     </div>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i>无限次生成</li>
-                        <li><i class="fas fa-check"></i>定制化模板</li>
-                        <li><i class="fas fa-check"></i>专业导师指导</li>
-                        <li><i class="fas fa-check"></i>最新AI模型</li>
-                        <li><i class="fas fa-check"></i>24/7专属支持</li>
+                        <li><i class="fas fa-check"></i> All Professional features</li>
+                        <li><i class="fas fa-check"></i> Advanced Analytics Dashboard</li>
+                        <li><i class="fas fa-check"></i> Custom AI Model Training</li>
+                        <li><i class="fas fa-check"></i> Collaboration Tools</li>
+                        <li><i class="fas fa-check"></i> API Access</li>
+                        <li><i class="fas fa-check"></i> Dedicated Account Manager</li>
+                        <li><i class="fas fa-check"></i> White-label Options</li>
+                        <li><i class="fas fa-check"></i> 24/7 Premium Support</li>
                     </ul>
-                    <button class="pricing-btn">联系销售</button>
+                    <a href="#" class="btn btn-outline">Contact Sales</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 页脚 -->
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get Started Today</h2>
+                <p>Join thousands of researchers using AI to enhance their academic writing</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Ready to Transform Your Writing?</h3>
+                    <p>Experience the power of AI-assisted academic writing. Start your free trial today and see the difference professional AI tools can make.</p>
+                    <div class="contact-features">
+                        <div class="contact-feature">
+                            <i class="fas fa-clock"></i>
+                            <span>24/7 AI Assistant</span>
+                        </div>
+                        <div class="contact-feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Secure & Private</span>
+                        </div>
+                        <div class="contact-feature">
+                            <i class="fas fa-users"></i>
+                            <span>Expert Support</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form class="form">
+                        <div class="form-group">
+                            <input type="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <select required>
+                                <option value="">Select your role</option>
+                                <option value="student">Graduate Student</option>
+                                <option value="researcher">Researcher</option>
+                                <option value="faculty">Faculty</option>
+                                <option value="institution">Institution</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            Start Free Trial
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <i class="fas fa-graduation-cap"></i>
-                        <span>AI学术写作</span>
+                        <i class="fas fa-brain"></i>
+                        <span>AI Grant Writer</span>
                     </div>
-                    <p>专业的AI学术写作助手，让学术研究更高效</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                    </div>
+                    <p>Professional AI writing assistant for academic researchers, students, and institutions worldwide.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>产品</h4>
+                    <h4>AI Tools</h4>
                     <ul>
-                        <li><a href="#">论文生成器</a></li>
-                        <li><a href="#">文献综述</a></li>
-                        <li><a href="#">研究方法</a></li>
-                        <li><a href="#">数据分析</a></li>
+                        <li><a href="grant-proposal.html">Grant Proposal Generator</a></li>
+                        <li><a href="dissertation-writer.html">Dissertation Writer</a></li>
+                        <li><a href="research-paper.html">Research Paper AI</a></li>
+                        <li><a href="literature-review.html">Literature Review</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>支持</h4>
+                    <h4>Resources</h4>
                     <ul>
-                        <li><a href="#">帮助中心</a></li>
-                        <li><a href="#">使用教程</a></li>
-                        <li><a href="#">API文档</a></li>
-                        <li><a href="#">联系我们</a></li>
+                        <li><a href="#">Writing Guidelines</a></li>
+                        <li><a href="#">Academic Standards</a></li>
+                        <li><a href="#">Citation Styles</a></li>
+                        <li><a href="#">Success Stories</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>公司</h4>
+                    <h4>Support</h4>
                     <ul>
-                        <li><a href="#">关于我们</a></li>
-                        <li><a href="#">隐私政策</a></li>
-                        <li><a href="#">服务条款</a></li>
-                        <li><a href="#">加入我们</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 aigrantwriter.xyz. 保留所有权利。</p>
+                <p>&copy; 2024 AI Grant Writer. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Scripts -->
+    <script src="script-ultra-clean.js"></script>
 </body>
 </html>

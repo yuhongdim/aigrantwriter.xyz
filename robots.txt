@@ -1,37 +1,51 @@
-# AI Grant Writer - Robots.txt
-# 搜索引擎爬虫配置文件
+# Robots.txt for AI Grant Writer - Academic Writing Assistant
+# Website: https://aigrantwriter.xyz
 
 User-agent: *
 Allow: /
 
-# 优先抓取重要页面
-Allow: /index.html
-Allow: /*.css
-Allow: /*.js
-
-# 禁止抓取的文件和目录
-Disallow: /.htaccess
-Disallow: /README.md
-Disallow: /netlify.toml
-Disallow: /*.log
-Disallow: /tmp/
-Disallow: /backup/
-
-# 网站地图位置
-Sitemap: https://aigrantwriter.xyz/sitemap.xml
-
-# 爬取延迟（秒）
-Crawl-delay: 1
-
-# 针对特定搜索引擎的配置
+# Allow all major search engines to crawl the site
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0
 
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
 
 User-agent: Baiduspider
 Allow: /
-Crawl-delay: 2
+
+# Disallow crawling of potential admin or private directories
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /.git/
+Disallow: /node_modules/
+
+# Allow crawling of CSS and JS files for better rendering
+Allow: /styles.css
+Allow: /script.js
+Allow: /*.css
+Allow: /*.js
+
+# Sitemap
+Sitemap: https://aigrantwriter.xyz/sitemap.xml
+
+# Disallow backup folder
+Disallow: /backup-*
+
+# Allow important pages
+Allow: /index.html
+Allow: /dissertation-ai.html
+Allow: /grant-proposal-generator.html
+Allow: /literature-review-ai.html
+Allow: /styles.css
+Allow: /script.js
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1

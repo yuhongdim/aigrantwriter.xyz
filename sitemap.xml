@@ -4,44 +4,98 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-    <!-- 主页 - 最高优先级 -->
+    <!-- Homepage -->
     <url>
         <loc>https://aigrantwriter.xyz/</loc>
-        <lastmod>2024-01-20</lastmod>
+        <lastmod>2024-10-30</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
 
-    <!-- AI论文生成器页面 -->
+    <!-- Main index page -->
     <url>
-        <loc>https://aigrantwriter.xyz/#ai-tools</loc>
-        <lastmod>2024-01-20</lastmod>
+        <loc>https://aigrantwriter.xyz/index.html</loc>
+        <lastmod>2024-10-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Blue Ocean Landing Pages -->
+    <url>
+        <loc>https://aigrantwriter.xyz/dissertation-ai.html</loc>
+        <lastmod>2024-10-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <url>
+        <loc>https://aigrantwriter.xyz/grant-proposal-generator.html</loc>
+        <lastmod>2024-10-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <url>
+        <loc>https://aigrantwriter.xyz/literature-review-ai.html</loc>
+        <lastmod>2024-10-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- AI Humanizer / Plagiarism Reducer -->
+    <url>
+        <loc>https://aigrantwriter.xyz/ai-text-reducer.html</loc>
+        <lastmod>2024-01-15</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
 
-    <!-- 论文生成器功能 -->
+    <!-- Research Question Generator -->
     <url>
-        <loc>https://aigrantwriter.xyz/#paper-generator</loc>
-        <lastmod>2024-01-20</lastmod>
+        <loc>https://aigrantwriter.xyz/research-question.html</loc>
+        <lastmod>2024-01-15</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
 
-    <!-- 价格页面 -->
+    <!-- Literature Review Generator -->
     <url>
-        <loc>https://aigrantwriter.xyz/#pricing</loc>
-        <lastmod>2024-01-20</lastmod>
+        <loc>https://aigrantwriter.xyz/literature-review.html</loc>
+        <lastmod>2024-01-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Research Methodology Generator -->
+    <url>
+        <loc>https://aigrantwriter.xyz/research-method.html</loc>
+        <lastmod>2024-01-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- PhD Assistant -->
+    <url>
+        <loc>https://aigrantwriter.xyz/phd-assistant.html</loc>
+        <lastmod>2024-01-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Writing Optimization Tool -->
+    <url>
+        <loc>https://aigrantwriter.xyz/writing-optimization.html</loc>
+        <lastmod>2024-01-15</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
 
-    <!-- 功能特色页面 -->
+    <!-- Data Analysis Assistant -->
     <url>
-        <loc>https://aigrantwriter.xyz/#features</loc>
-        <lastmod>2024-01-20</lastmod>
+        <loc>https://aigrantwriter.xyz/data-analysis.html</loc>
+        <lastmod>2024-01-15</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
 
 </urlset>

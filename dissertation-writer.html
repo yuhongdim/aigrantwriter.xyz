@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dissertation Writer AI - Complete PhD Writing Assistant</title>
+    <meta name="description" content="Complete dissertation writing support from proposal to defense. AI-powered PhD writing assistant for students.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 100px;
+        }
+        .chapter-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .chapter-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .chapter-card.active {
+            border-color: #6366f1;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+        }
+        .chapter-form {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: none;
+        }
+        .chapter-form.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .generate-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 100%;
+        }
+        .generate-btn:hover {
+            transform: translateY(-2px);
+        }
+        .output-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+        .output-content {
+            line-height: 1.8;
+            color: #333;
+        }
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> 返回首页
+    </a>
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-book-open"></i> Dissertation Writer AI</h1>
+            <p>Complete dissertation writing support from proposal to defense</p>
+        </div>
+
+        <div class="chapter-selector">
+            <div class="chapter-card" onclick="selectChapter('introduction')">
+                <h3><i class="fas fa-play"></i> Introduction</h3>
+                <p>Problem statement, objectives, and research questions</p>
+            </div>
+            <div class="chapter-card" onclick="selectChapter('literature')">
+                <h3><i class="fas fa-books"></i> Literature Review</h3>
+                <p>Comprehensive review of existing research</p>
+            </div>
+            <div class="chapter-card" onclick="selectChapter('methodology')">
+                <h3><i class="fas fa-cogs"></i> Methodology</h3>
+                <p>Research design and data collection methods</p>
+            </div>
+            <div class="chapter-card" onclick="selectChapter('results')">
+                <h3><i class="fas fa-chart-bar"></i> Results</h3>
+                <p>Data analysis and findings presentation</p>
+            </div>
+            <div class="chapter-card" onclick="selectChapter('discussion')">
+                <h3><i class="fas fa-comments"></i> Discussion</h3>
+                <p>Interpretation and implications of findings</p>
+            </div>
+            <div class="chapter-card" onclick="selectChapter('conclusion')">
+                <h3><i class="fas fa-flag-checkered"></i> Conclusion</h3>
+                <p>Summary and future research directions</p>
+            </div>
+        </div>
+
+        <!-- Introduction Form -->
+        <div id="introduction-form" class="chapter-form">
+            <h3>Introduction Chapter</h3>
+            <form onsubmit="generateChapter(event, 'introduction')">
+                <div class="form-group">
+                    <label for="intro-topic">Research Topic</label>
+                    <input type="text" id="intro-topic" placeholder="Enter your research topic" required>
+                </div>
+                <div class="form-group">
+                    <label for="intro-problem">Problem Statement</label>
+                    <textarea id="intro-problem" placeholder="Describe the research problem you're addressing" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="intro-objectives">Research Objectives</label>
+                    <textarea id="intro-objectives" placeholder="List your main research objectives" required></textarea>
+                </div>
+                <button type="submit" class="generate-btn">
+                    <i class="fas fa-magic"></i> Generate Introduction
+                </button>
+            </form>
+        </div>
+
+        <!-- Literature Review Form -->
+        <div id="literature-form" class="chapter-form">
+            <h3>Literature Review Chapter</h3>
+            <form onsubmit="generateChapter(event, 'literature')">
+                <div class="form-group">
+                    <label for="lit-keywords">Key Research Keywords</label>
+                    <input type="text" id="lit-keywords" placeholder="e.g., machine learning, climate change, social media" required>
+                </div>
+                <div class="form-group">
+                    <label for="lit-themes">Main Themes</label>
+                    <textarea id="lit-themes" placeholder="Describe the main themes in your literature review" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="lit-gap">Research Gap</label>
+                    <textarea id="lit-gap" placeholder="Identify the gap in existing literature" required></textarea>
+                </div>
+                <button type="submit" class="generate-btn">
+                    <i class="fas fa-magic"></i> Generate Literature Review
+                </button>
+            </form>
+        </div>
+
+        <!-- Methodology Form -->
+        <div id="methodology-form" class="chapter-form">
+            <h3>Methodology Chapter</h3>
+            <form onsubmit="generateChapter(event, 'methodology')">
+                <div class="form-group">
+                    <label for="method-approach">Research Approach</label>
+                    <select id="method-approach" required>
+                        <option value="">Select approach</option>
+                        <option value="quantitative">Quantitative</option>
+                        <option value="qualitative">Qualitative</option>
+                        <option value="mixed">Mixed Methods</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="method-design">Research Design</label>
+                    <textarea id="method-design" placeholder="Describe your research design and methodology" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="method-data">Data Collection</label>
+                    <textarea id="method-data" placeholder="Explain your data collection methods" required></textarea>
+                </div>
+                <button type="submit" class="generate-btn">
+                    <i class="fas fa-magic"></i> Generate Methodology
+                </button>
+            </form>
+        </div>
+
+        <!-- Results Form -->
+        <div id="results-form" class="chapter-form">
+            <h3>Results Chapter</h3>
+            <form onsubmit="generateChapter(event, 'results')">
+                <div class="form-group">
+                    <label for="results-findings">Key Findings</label>
+                    <textarea id="results-findings" placeholder="Summarize your main research findings" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="results-data">Data Analysis</label>
+                    <textarea id="results-data" placeholder="Describe your data analysis process and results" required></textarea>
+                </div>
+                <button type="submit" class="generate-btn">
+                    <i class="fas fa-magic"></i> Generate Results
+                </button>
+            </form>
+        </div>
+
+        <!-- Discussion Form -->
+        <div id="discussion-form" class="chapter-form">
+            <h3>Discussion Chapter</h3>
+            <form onsubmit="generateChapter(event, 'discussion')">
+                <div class="form-group">
+                    <label for="disc-interpretation">Interpretation</label>
+                    <textarea id="disc-interpretation" placeholder="How do you interpret your findings?" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="disc-implications">Implications</label>
+                    <textarea id="disc-implications" placeholder="What are the implications of your research?" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="disc-limitations">Limitations</label>
+                    <textarea id="disc-limitations" placeholder="Acknowledge any limitations of your study" required></textarea>
+                </div>
+                <button type="submit" class="generate-btn">
+                    <i class="fas fa-magic"></i> Generate Discussion
+                </button>
+            </form>
+        </div>
+
+        <!-- Conclusion Form -->
+        <div id="conclusion-form" class="chapter-form">
+            <h3>Conclusion Chapter</h3>
+            <form onsubmit="generateChapter(event, 'conclusion')">
+                <div class="form-group">
+                    <label for="conc-summary">Research Summary</label>
+                    <textarea id="conc-summary" placeholder="Summarize your entire research project" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="conc-contributions">Contributions</label>
+                    <textarea id="conc-contributions" placeholder="What are your main contributions to the field?" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="conc-future">Future Research</label>
+                    <textarea id="conc-future" placeholder="Suggest directions for future research" required></textarea>
+                </div>
+                <button type="submit" class="generate-btn">
+                    <i class="fas fa-magic"></i> Generate Conclusion
+                </button>
+            </form>
+        </div>
+
+        <div id="outputSection" class="output-section">
+            <h3><i class="fas fa-file-alt"></i> Generated Chapter</h3>
+            <div id="outputContent" class="output-content"></div>
+            <button onclick="downloadChapter()" class="generate-btn" style="margin-top: 1rem;">
+                <i class="fas fa-download"></i> Download Chapter
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentChapter = '';
+
+        function selectChapter(chapter) {
+            // Remove active class from all cards and forms
+            document.querySelectorAll('.chapter-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.chapter-form').forEach(form => form.classList.remove('active'));
+            
+            // Add active class to selected card and form
+            event.target.closest('.chapter-card').classList.add('active');
+            document.getElementById(chapter + '-form').classList.add('active');
+            
+            currentChapter = chapter;
+        }
+
+        function generateChapter(event, chapter) {
+            event.preventDefault();
+            
+            const outputSection = document.getElementById('outputSection');
+            const outputContent = document.getElementById('outputContent');
+            
+            outputSection.style.display = 'block';
+            outputContent.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>AI is generating your ${chapter} chapter...</p>
+                </div>
+            `;
+            
+            // Simulate AI generation
+            setTimeout(() => {
+                const content = generateChapterContent(chapter);
+                outputContent.innerHTML = content;
+            }, 3000);
+        }
+
+        function generateChapterContent(chapter) {
+            const templates = {
+                introduction: `
+                    <h4>Chapter 1: Introduction</h4>
+                    <h5>1.1 Background and Context</h5>
+                    <p>This research addresses a critical gap in the current understanding of [research topic]. The significance of this study lies in its potential to contribute to both theoretical knowledge and practical applications in the field.</p>
+                    
+                    <h5>1.2 Problem Statement</h5>
+                    <p>The research problem centers on [problem description]. This issue has significant implications for [field/industry] and requires immediate attention from the research community.</p>
+                    
+                    <h5>1.3 Research Objectives</h5>
+                    <p>The primary objectives of this research are:</p>
+                    <ul>
+                        <li>To investigate [objective 1]</li>
+                        <li>To analyze [objective 2]</li>
+                        <li>To develop [objective 3]</li>
+                    </ul>
+                    
+                    <h5>1.4 Research Questions</h5>
+                    <p>This study seeks to answer the following research questions:</p>
+                    <ol>
+                        <li>How does [research question 1]?</li>
+                        <li>What is the relationship between [research question 2]?</li>
+                        <li>To what extent does [research question 3]?</li>
+                    </ol>
+                `,
+                literature: `
+                    <h4>Chapter 2: Literature Review</h4>
+                    <h5>2.1 Theoretical Framework</h5>
+                    <p>The theoretical foundation of this research is built upon established theories in [field]. Key theoretical perspectives include [theory 1], [theory 2], and [theory 3].</p>
+                    
+                    <h5>2.2 Previous Research</h5>
+                    <p>Extensive research has been conducted in this area. Notable studies include [Author, Year] who found that [finding]. Similarly, [Author, Year] demonstrated [finding].</p>
+                    
+                    <h5>2.3 Research Gap</h5>
+                    <p>Despite the substantial body of research, there remains a significant gap in understanding [gap description]. This study addresses this gap by [approach].</p>
+                    
+                    <h5>2.4 Conceptual Model</h5>
+                    <p>Based on the literature review, a conceptual model has been developed that illustrates the relationships between key variables and constructs.</p>
+                `,
+                methodology: `
+                    <h4>Chapter 3: Research Methodology</h4>
+                    <h5>3.1 Research Philosophy</h5>
+                    <p>This research adopts a [philosophical approach] paradigm, which is appropriate for investigating [research topic] due to its emphasis on [rationale].</p>
+                    
+                    <h5>3.2 Research Design</h5>
+                    <p>A [research design] approach was employed to address the research questions. This design allows for [advantages] while maintaining [validity/reliability].</p>
+                    
+                    <h5>3.3 Data Collection</h5>
+                    <p>Data was collected through [methods]. The sample consisted of [sample description] selected using [sampling method].</p>
+                    
+                    <h5>3.4 Data Analysis</h5>
+                    <p>The collected data was analyzed using [analytical methods]. Statistical analysis was performed using [software] to ensure accuracy and reliability.</p>
+                `,
+                results: `
+                    <h4>Chapter 4: Results and Analysis</h4>
+                    <h5>4.1 Descriptive Statistics</h5>
+                    <p>The analysis revealed [descriptive findings]. The sample characteristics showed [characteristics].</p>
+                    
+                    <h5>4.2 Main Findings</h5>
+                    <p>The primary findings of this research indicate that [main finding 1]. Additionally, the analysis revealed [main finding 2].</p>
+                    
+                    <h5>4.3 Statistical Analysis</h5>
+                    <p>Statistical tests confirmed [statistical findings]. The correlation analysis showed [correlation results].</p>
+                    
+                    <h5>4.4 Hypothesis Testing</h5>
+                    <p>The research hypotheses were tested using appropriate statistical methods. The results show [hypothesis results].</p>
+                `,
+                discussion: `
+                    <h4>Chapter 5: Discussion</h4>
+                    <h5>5.1 Interpretation of Findings</h5>
+                    <p>The findings of this research provide significant insights into [topic]. The results suggest that [interpretation].</p>
+                    
+                    <h5>5.2 Theoretical Implications</h5>
+                    <p>These findings contribute to the theoretical understanding of [field] by [theoretical contribution].</p>
+                    
+                    <h5>5.3 Practical Implications</h5>
+                    <p>From a practical perspective, these results have important implications for [practical applications].</p>
+                    
+                    <h5>5.4 Limitations</h5>
+                    <p>This study has several limitations that should be acknowledged: [limitations].</p>
+                `,
+                conclusion: `
+                    <h4>Chapter 6: Conclusion</h4>
+                    <h5>6.1 Research Summary</h5>
+                    <p>This research investigated [research topic] through [methodology]. The study successfully addressed the research questions and achieved the stated objectives.</p>
+                    
+                    <h5>6.2 Key Contributions</h5>
+                    <p>The main contributions of this research include:</p>
+                    <ul>
+                        <li>[Contribution 1]</li>
+                        <li>[Contribution 2]</li>
+                        <li>[Contribution 3]</li>
+                    </ul>
+                    
+                    <h5>6.3 Recommendations</h5>
+                    <p>Based on the findings, the following recommendations are made: [recommendations].</p>
+                    
+                    <h5>6.4 Future Research</h5>
+                    <p>Future research should focus on [future directions] to further advance understanding in this field.</p>
+                `
+            };
+            
+            return templates[chapter] + `<p><em>Note: This is an AI-generated draft. Please review and customize according to your specific research and institutional requirements.</em></p>`;
+        }
+
+        function downloadChapter() {
+            const content = document.getElementById('outputContent').innerText;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${currentChapter}-chapter.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

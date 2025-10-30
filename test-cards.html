@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卡片交互测试</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .test-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+        .status-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>卡片交互功能测试</h1>
+            <div class="status-info">
+                <p><strong>测试说明：</strong></p>
+                <ul style="text-align: left; display: inline-block;">
+                    <li>鼠标悬停在卡片上应该显示手型指针</li>
+                    <li>卡片应该有悬停动画效果（向上移动、阴影、边框变色）</li>
+                    <li>点击卡片应该跳转到对应的页面</li>
+                    <li>打开浏览器控制台可以看到详细的调试信息</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-header">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>Grant Proposal AI</h3>
+                    <span class="tool-badge">Most Popular</span>
+                </div>
+                <p>Generate winning grant proposals with AI assistance</p>
+                <a href="grant-proposal.html" class="tool-link">
+                    Launch Tool <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Dissertation Writer</h3>
+                    <span class="tool-badge">PhD Students</span>
+                </div>
+                <p>Complete dissertation writing support and guidance</p>
+                <a href="dissertation-writer.html" class="tool-link">
+                    Launch Tool <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Research Paper AI</h3>
+                    <span class="tool-badge">Researchers</span>
+                </div>
+                <p>Generate research papers with proper methodology</p>
+                <a href="research-paper.html" class="tool-link">
+                    Launch Tool <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <i class="fas fa-search"></i>
+                    <h3>Literature Review AI</h3>
+                    <span class="tool-badge">New</span>
+                </div>
+                <p>Comprehensive literature analysis and synthesis</p>
+                <a href="literature-review.html" class="tool-link">
+                    Launch Tool <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <i class="fas fa-spell-check"></i>
+                    <h3>Academic Proofreading AI</h3>
+                    <span class="tool-badge">Professional</span>
+                </div>
+                <p>Professional-grade proofreading and editing for academic papers</p>
+                <a href="academic-proofreading.html" class="tool-link">
+                    Launch Tool <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Manuscript Editor</h3>
+                    <span class="tool-badge">Publication</span>
+                </div>
+                <p>Prepare your manuscripts for publication with journal-specific formatting</p>
+                <a href="manuscript-editor.html" class="tool-link">
+                    Launch Tool <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="status-info" style="margin-top: 40px;">
+            <h3>调试信息</h3>
+            <p>打开浏览器开发者工具的Console面板查看详细的交互日志。</p>
+            <p>如果卡片功能正常，你应该能看到以下信息：</p>
+            <ul style="text-align: left; display: inline-block;">
+                <li>Navigation loaded</li>
+                <li>Found cards: 6</li>
+                <li>Card 1: "Grant Proposal AI" -> grant-proposal.html</li>
+                <li>鼠标悬停和点击事件的日志</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="navigation.js"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+</body>
+</html>

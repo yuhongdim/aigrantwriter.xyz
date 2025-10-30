@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页卡片调试 - AI Grant Writer</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .debug-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+        .debug-log {
+            background: #000;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 12px;
+        }
+        .card-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin: 2px;
+            font-size: 11px;
+        }
+        .status-working { background: #d4edda; color: #155724; }
+        .status-broken { background: #f8d7da; color: #721c24; }
+        .status-unknown { background: #fff3cd; color: #856404; }
+    </style>
+</head>
+<body>
+    <div class="container" style="padding: 20px;">
+        <h1>主页卡片调试工具</h1>
+        
+        <div class="debug-info">
+            <h3>调试信息</h3>
+            <p><strong>检测到的卡片数量:</strong> <span id="card-count">检测中...</span></p>
+            <p><strong>JavaScript状态:</strong> <span id="js-status">加载中...</span></p>
+            <p><strong>事件绑定状态:</strong> <span id="event-status">检查中...</span></p>
+        </div>
+
+        <div class="debug-info">
+            <h3>卡片状态检查</h3>
+            <div id="card-status-list">检测中...</div>
+        </div>
+
+        <div class="debug-info">
+            <h3>实时日志</h3>
+            <div id="debug-log" class="debug-log">等待日志输出...</div>
+        </div>
+
+        <!-- 复制主页的工具卡片结构 -->
+        <section id="tools" class="tools">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Professional AI Writing Tools</h2>
+                    <p>Choose the perfect tool for your academic writing needs</p>
+                </div>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <h3>Grant Proposal AI</h3>
+                            <span class="tool-badge">Most Popular</span>
+                        </div>
+                        <p>Generate winning grant proposals with AI assistance</p>
+                        <a href="grant-proposal.html" class="tool-link">
+                            Launch Tool <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <i class="fas fa-book-open"></i>
+                            <h3>Dissertation Writer</h3>
+                            <span class="tool-badge">PhD Students</span>
+                        </div>
+                        <p>Complete dissertation writing support and guidance</p>
+                        <a href="dissertation-writer.html" class="tool-link">
+                            Launch Tool <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>Research Paper AI</h3>
+                            <span class="tool-badge">Researchers</span>
+                        </div>
+                        <p>Generate research papers with proper methodology</p>
+                        <a href="research-paper.html" class="tool-link">
+                            Launch Tool <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <i class="fas fa-search"></i>
+                            <h3>Literature Review AI</h3>
+                            <span class="tool-badge">New</span>
+                        </div>
+                        <p>Comprehensive literature analysis and synthesis</p>
+                        <a href="literature-review.html" class="tool-link">
+                            Launch Tool <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <i class="fas fa-spell-check"></i>
+                            <h3>Academic Proofreading AI</h3>
+                            <span class="tool-badge">Professional</span>
+                        </div>
+                        <p>Professional-grade proofreading and editing for academic papers</p>
+                        <a href="academic-proofreading.html" class="tool-link">
+                            Launch Tool <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>Manuscript Editor</h3>
+                            <span class="tool-badge">Publication</span>
+                        </div>
+                        <p>Prepare your manuscripts for publication with journal-specific formatting</p>
+                        <a href="manuscript-editor.html" class="tool-link">
+                            Launch Tool <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-header">
+                            <i class="fas fa-magic"></i>
+                            <h3>AI Text Reducer</h3>
+                            <span class="tool-badge">Hot</span>
+                        </div>
+                        <p>Reduce plagiarism and AI detection rates effectively</p>
+                        <a href="ai-text-reducer.html" class="tool-link">
+                            Launch Tool <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 调试脚本
+        let debugLog = [];
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            const logMessage = `[${timestamp}] ${message}`;
+            debugLog.push(logMessage);
+            console.log(logMessage);
+            
+            const logElement = document.getElementById('debug-log');
+            if (logElement) {
+                logElement.innerHTML = debugLog.slice(-20).join('\n');
+                logElement.scrollTop = logElement.scrollHeight;
+            }
+        }
+
+        function updateStatus(elementId, text, className = '') {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = text;
+                if (className) {
+                    element.className = className;
+                }
+            }
+        }
+
+        function testCardDetection() {
+            log('开始检测卡片...');
+            
+            const cards = document.querySelectorAll('.tool-card');
+            log(`找到 ${cards.length} 个卡片`);
+            updateStatus('card-count', cards.length);
+            
+            let statusHtml = '';
+            cards.forEach((card, index) => {
+                const titleElement = card.querySelector('.tool-header h3');
+                const linkElement = card.querySelector('.tool-link');
+                
+                if (titleElement && linkElement) {
+                    const title = titleElement.textContent.trim();
+                    const href = linkElement.getAttribute('href');
+                    log(`卡片 ${index + 1}: "${title}" -> ${href}`);
+                    
+                    // 测试点击事件
+                    let hasClickEvent = false;
+                    try {
+                        // 检查是否有onclick属性
+                        if (card.onclick) hasClickEvent = true;
+                        
+                        // 检查是否有addEventListener绑定的事件
+                        const listeners = getEventListeners ? getEventListeners(card) : null;
+                        if (listeners && listeners.click && listeners.click.length > 0) {
+                            hasClickEvent = true;
+                        }
+                    } catch (e) {
+                        log(`检查卡片 ${index + 1} 事件时出错: ${e.message}`);
+                    }
+                    
+                    const statusClass = hasClickEvent ? 'status-working' : 'status-broken';
+                    const statusText = hasClickEvent ? '✓' : '✗';
+                    statusHtml += `<span class="card-status ${statusClass}">${index + 1}: ${title} ${statusText}</span>`;
+                } else {
+                    log(`卡片 ${index + 1}: 结构不完整`);
+                    statusHtml += `<span class="card-status status-broken">${index + 1}: 结构错误 ✗</span>`;
+                }
+            });
+            
+            document.getElementById('card-status-list').innerHTML = statusHtml;
+            updateStatus('js-status', 'JavaScript已加载', 'status-working');
+        }
+
+        // 页面加载完成后开始测试
+        document.addEventListener('DOMContentLoaded', function() {
+            log('DOM加载完成');
+            setTimeout(testCardDetection, 100);
+            
+            // 每5秒重新检测一次
+            setInterval(testCardDetection, 5000);
+        });
+
+        // 手动测试卡片点击
+        function testCardClick(index) {
+            const cards = document.querySelectorAll('.tool-card');
+            if (cards[index]) {
+                log(`手动测试点击卡片 ${index + 1}`);
+                cards[index].click();
+            }
+        }
+
+        log('调试脚本已加载');
+    </script>
+    
+    <!-- 加载navigation.js -->
+    <script src="navigation.js"></script>
+    
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+</body>
+</html>

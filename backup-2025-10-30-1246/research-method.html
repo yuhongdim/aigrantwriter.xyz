@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研究方法设计 - AI学术写作助手 | aigrantwriter.xyz</title>
+    <meta name="description" content="AI智能设计研究方法，提供定量、定性和混合研究方法的专业指导">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI学术写作</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="index.html#tools">工具</a></li>
+                <li><a href="index.html#features">特性</a></li>
+                <li><a href="index.html#contact">联系</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="tool-header">
+        <div class="container">
+            <div class="tool-header-content">
+                <div class="tool-icon-large">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <h1>研究方法设计</h1>
+                <p>AI智能设计研究方法，提供定量、定性和混合研究方法的专业指导</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能特色 -->
+    <section class="tool-features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>定量研究设计</h3>
+                    <p>实验设计、调查研究、统计分析方法的专业指导</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>定性研究方法</h3>
+                    <p>访谈、观察、案例研究等定性方法的详细设计</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>混合研究方法</h3>
+                    <p>定量与定性相结合的综合研究设计方案</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>样本设计</h3>
+                    <p>样本量计算、抽样方法、参与者招募策略</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 研究方法生成器 -->
+    <section class="tool-generator-section">
+        <div class="container">
+            <div class="generator-card">
+                <h2>
+                    <i class="fas fa-magic"></i>
+                    研究方法生成器
+                </h2>
+                <p>输入您的研究信息，AI将为您设计最适合的研究方法</p>
+                
+                <form class="generator-form">
+                    <div class="form-group">
+                        <label for="research-question">研究问题</label>
+                        <textarea id="research-question" rows="3" placeholder="请详细描述您的研究问题或假设"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="research-type">研究类型</label>
+                        <select id="research-type">
+                            <option value="">选择研究类型</option>
+                            <option value="quantitative">定量研究</option>
+                            <option value="qualitative">定性研究</option>
+                            <option value="mixed">混合研究</option>
+                            <option value="experimental">实验研究</option>
+                            <option value="survey">调查研究</option>
+                            <option value="case-study">案例研究</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="research-field">研究领域</label>
+                        <select id="research-field">
+                            <option value="">选择研究领域</option>
+                            <option value="psychology">心理学</option>
+                            <option value="education">教育学</option>
+                            <option value="business">商学</option>
+                            <option value="medicine">医学</option>
+                            <option value="engineering">工程学</option>
+                            <option value="social-science">社会科学</option>
+                            <option value="computer-science">计算机科学</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="target-population">目标人群</label>
+                        <input type="text" id="target-population" placeholder="例如：大学生、企业管理者、患者等">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="data-collection">数据收集方式</label>
+                        <select id="data-collection" multiple>
+                            <option value="survey">问卷调查</option>
+                            <option value="interview">深度访谈</option>
+                            <option value="observation">观察法</option>
+                            <option value="experiment">实验法</option>
+                            <option value="document">文档分析</option>
+                            <option value="focus-group">焦点小组</option>
+                        </select>
+                        <small>按住Ctrl键可多选</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sample-size">预期样本量</label>
+                        <select id="sample-size">
+                            <option value="small">小样本 (30-100)</option>
+                            <option value="medium">中等样本 (100-500)</option>
+                            <option value="large">大样本 (500+)</option>
+                            <option value="calculate">需要计算</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="research-duration">研究周期</label>
+                        <select id="research-duration">
+                            <option value="short">短期 (1-3个月)</option>
+                            <option value="medium">中期 (3-12个月)</option>
+                            <option value="long">长期 (1年以上)</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-large">
+                        <i class="fas fa-rocket"></i>
+                        生成研究方法
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 研究方法类型 -->
+    <section class="method-types-section">
+        <div class="container">
+            <h2 class="section-title">研究方法类型</h2>
+            <div class="method-types-grid">
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>定量研究</h3>
+                    <ul>
+                        <li>实验设计</li>
+                        <li>调查研究</li>
+                        <li>相关研究</li>
+                        <li>准实验设计</li>
+                    </ul>
+                    <p>适用于验证假设、测量变量关系、大样本统计分析</p>
+                </div>
+                
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3>定性研究</h3>
+                    <ul>
+                        <li>深度访谈</li>
+                        <li>参与观察</li>
+                        <li>焦点小组</li>
+                        <li>民族志研究</li>
+                    </ul>
+                    <p>适用于探索现象、理解意义、深入分析复杂问题</p>
+                </div>
+                
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>混合方法</h3>
+                    <ul>
+                        <li>顺序解释设计</li>
+                        <li>顺序探索设计</li>
+                        <li>并行混合设计</li>
+                        <li>嵌入式设计</li>
+                    </ul>
+                    <p>结合定量与定性优势，提供更全面的研究视角</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 使用步骤 -->
+    <section class="steps-section">
+        <div class="container">
+            <h2 class="section-title">使用步骤</h2>
+            <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <h3>明确研究问题</h3>
+                    <p>详细描述您的研究问题和研究目标</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <h3>选择研究类型</h3>
+                    <p>根据研究性质选择最适合的研究方法</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <h3>设置参数</h3>
+                    <p>配置样本、数据收集方式等关键参数</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <h3>获得方案</h3>
+                    <p>获得详细的研究方法设计方案</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>AI学术写作</span>
+                    </div>
+                    <p>专业的AI驱动学术写作助手，助力您的研究成功</p>
+                </div>
+                <div class="footer-section">
+                    <h4>工具</h4>
+                    <ul>
+                        <li><a href="phd-assistant.html">博士论文助手</a></li>
+                        <li><a href="literature-review.html">文献综述</a></li>
+                        <li><a href="research-method.html">研究方法</a></li>
+                        <li><a href="research-question.html">研究问题</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>功能</h4>
+                    <ul>
+                        <li><a href="writing-optimization.html">写作优化</a></li>
+                        <li><a href="data-analysis.html">数据分析</a></li>
+                        <li><a href="ai-reducer.html">AI降重</a></li>
+                        <li><a href="index.html#contact">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>联系方式</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@aigrantwriter.xyz</li>
+                        <li><i class="fas fa-globe"></i> www.aigrantwriter.xyz</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AI学术写作助手. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="navigation.js"></script>
+</body>
+</html>
