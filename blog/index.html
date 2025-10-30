@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学术写作博客 - AI Grant Writer | Academic Writing Blog</title>
+    <meta name="description" content="专业的学术写作博客，提供论文写作技巧、研究方法指导、学术资源分享等优质内容。Professional academic writing blog with research tips, methodology guides, and academic resources.">
+    <meta name="keywords" content="学术写作博客, 论文写作技巧, 研究方法, 学术资源, 论文发表, 学术指导, academic writing blog, research tips, academic resources, paper writing">
+    <meta name="author" content="AI Grant Writer">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="学术写作博客 - Academic Writing Blog">
+    <meta property="og:description" content="专业的学术写作博客，提供论文写作技巧、研究方法指导、学术资源分享等优质内容。Professional academic writing blog with research tips and methodology guides.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aigrantwriter.xyz/blog/">
+    <meta property="og:image" content="https://aigrantwriter.xyz/favicon.svg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://aigrantwriter.xyz/blog/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="blog-styles.css">
+    
+    <style>
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            z-index: 1000;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+        }
+        .back-btn:hover {
+            background: #5855eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+        .back-btn i {
+            margin-right: 0.5rem;
+        }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "学术写作博客 - Academic Writing Blog",
+        "description": "专业的学术写作博客，提供论文写作技巧、研究方法指导、学术资源分享等优质内容。Professional academic writing blog with research tips and methodology guides.",
+        "url": "https://aigrantwriter.xyz/blog/",
+        "publisher": {
+            "@type": "Organization",
+            "name": "AI Grant Writer",
+            "url": "https://aigrantwriter.xyz"
+        }
+    }
+    </script>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> 返回首页
+    </a>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI Academic Assistant</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">
+                    <span data-zh="首页" data-en="Home">首页</span>
+                </a></li>
+                <li><a href="../index.html#tools" class="nav-link">
+                    <span data-zh="AI工具" data-en="AI Tools">AI工具</span>
+                </a></li>
+                <li><a href="index.html" class="nav-link active">
+                    <span data-zh="博客" data-en="Blog">博客</span>
+                </a></li>
+                <li><a href="../index.html#resources" class="nav-link">
+                    <span data-zh="资源" data-en="Resources">资源</span>
+                </a></li>
+                <li><a href="../index.html#contact" class="nav-link">
+                    <span data-zh="联系" data-en="Contact">联系</span>
+                </a></li>
+            </ul>
+            <div class="language-switcher">
+                <button class="lang-btn" data-lang="zh">中文</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Header -->
+    <section class="blog-header">
+        <div class="container">
+            <div class="blog-header-content">
+                <h1>
+                    <span data-zh="学术写作博客" data-en="Academic Writing Blog">学术写作博客</span>
+                </h1>
+                <p>
+                    <span data-zh="专业的学术写作指南，助力您的研究成功" data-en="Professional academic writing guides to empower your research success">专业的学术写作指南，助力您的研究成功</span>
+                </p>
+                <div class="blog-stats">
+                    <div class="stat">
+                        <i class="fas fa-newspaper"></i>
+                        <span data-zh="最新文章" data-en="Latest Articles">最新文章</span>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-users"></i>
+                        <span data-zh="专家作者" data-en="Expert Authors">专家作者</span>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-clock"></i>
+                        <span data-zh="每日更新" data-en="Daily Updates">每日更新</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Categories -->
+    <section class="blog-categories">
+        <div class="container">
+            <!-- 搜索和发布区域 -->
+            <div class="blog-controls">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search articles... / 搜索文章..." class="search-input">
+                    <button class="search-btn" onclick="searchArticles()">
+                        <i class="fas fa-search"></i>
+                        <span data-zh="搜索" data-en="Search">搜索</span>
+                    </button>
+                </div>
+                <div class="publish-container">
+                    <button class="btn btn-primary" onclick="showPublishForm()">
+                        <i class="fas fa-plus"></i>
+                        <span data-zh="发布新文章" data-en="Publish Article">发布新文章</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 分类筛选 -->
+            <div class="categories-filter">
+                <button class="category-btn active" data-category="all">
+                    <span data-zh="全部文章" data-en="All Articles">全部文章</span>
+                </button>
+                <button class="category-btn" data-category="writing-tips">
+                    <span data-zh="写作技巧" data-en="Writing Tips">写作技巧</span>
+                </button>
+                <button class="category-btn" data-category="research-methods">
+                    <span data-zh="研究方法" data-en="Research Methods">研究方法</span>
+                </button>
+                <button class="category-btn" data-category="academic-resources">
+                    <span data-zh="学术资源" data-en="Academic Resources">学术资源</span>
+                </button>
+                <button class="category-btn" data-category="publication-guide">
+                    <span data-zh="发表指南" data-en="Publication Guide">发表指南</span>
+                </button>
+                <button class="category-btn" data-category="ai-tools">
+                    <span data-zh="AI工具" data-en="AI Tools">AI工具</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts -->
+    <section class="blog-posts">
+        <div class="container">
+            <div class="posts-grid" id="postsGrid">
+                <!-- 文章将通过JavaScript动态加载 -->
+            </div>
+            
+            <!-- Load More Button -->
+            <div class="load-more-container">
+                <button class="btn btn-outline" id="loadMoreBtn">
+                    <span data-zh="加载更多文章" data-en="Load More Articles">加载更多文章</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Subscription -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h3>
+                        <span data-zh="订阅我们的学术写作指南" data-en="Subscribe to Our Academic Writing Guide">订阅我们的学术写作指南</span>
+                    </h3>
+                    <p>
+                        <span data-zh="获取最新的学术写作技巧、研究方法和AI工具使用指南" data-en="Get the latest academic writing tips, research methods, and AI tool usage guides">获取最新的学术写作技巧、研究方法和AI工具使用指南</span>
+                    </p>
+                </div>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="输入您的邮箱地址 / Enter your email address" id="emailInput">
+                    <button class="btn btn-primary" onclick="subscribeNewsletter()">
+                        <i class="fas fa-paper-plane"></i>
+                        <span data-zh="订阅" data-en="Subscribe">订阅</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>AI Academic Assistant</span>
+                    </div>
+                    <p>
+                        <span data-zh="专业的AI驱动学术写作助手，助力您的研究成功" data-en="Professional AI-powered academic writing assistant to empower your research success">专业的AI驱动学术写作助手，助力您的研究成功</span>
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>
+                        <span data-zh="工具" data-en="Tools">工具</span>
+                    </h4>
+                    <ul>
+                        <li><a href="../grant-proposal.html">
+                            <span data-zh="资助提案生成器" data-en="Grant Proposal Generator">资助提案生成器</span>
+                        </a></li>
+                        <li><a href="../literature-review.html">
+                            <span data-zh="文献综述助手" data-en="Literature Review Assistant">文献综述助手</span>
+                        </a></li>
+                        <li><a href="../research-method.html">
+                            <span data-zh="研究方法指导" data-en="Research Method Guide">研究方法指导</span>
+                        </a></li>
+                        <li><a href="../dissertation-writer.html">
+                            <span data-zh="论文写作助手" data-en="Dissertation Writer">论文写作助手</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>
+                        <span data-zh="博客分类" data-en="Blog Categories">博客分类</span>
+                    </h4>
+                    <ul>
+                        <li><a href="#" data-category="writing-tips">
+                            <span data-zh="写作技巧" data-en="Writing Tips">写作技巧</span>
+                        </a></li>
+                        <li><a href="#" data-category="research-methods">
+                            <span data-zh="研究方法" data-en="Research Methods">研究方法</span>
+                        </a></li>
+                        <li><a href="#" data-category="academic-resources">
+                            <span data-zh="学术资源" data-en="Academic Resources">学术资源</span>
+                        </a></li>
+                        <li><a href="#" data-category="publication-guide">
+                            <span data-zh="发表指南" data-en="Publication Guide">发表指南</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>
+                        <span data-zh="联系方式" data-en="Contact Info">联系方式</span>
+                    </h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@aigrantwriter.xyz</li>
+                        <li><i class="fas fa-envelope"></i> yuhongdim@gmail.com</li>
+                        <li><i class="fas fa-globe"></i> www.aigrantwriter.xyz</li>
+                        <li><i class="fas fa-question-circle"></i> 
+                            <span data-zh="问题咨询请联系客服" data-en="Contact customer service for inquiries">问题咨询请联系客服</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>
+                    <span data-zh="&copy; 2024 AI Grant Writer. 保留所有权利." data-en="&copy; 2024 AI Grant Writer. All rights reserved.">&copy; 2024 AI Grant Writer. 保留所有权利.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="blog-script.js"></script>
+</body>
+</html>

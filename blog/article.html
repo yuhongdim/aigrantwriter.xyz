@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="articleTitle">文章标题 - AI学术写作助手</title>
+    <meta name="description" id="articleDescription" content="专业的学术写作指导和研究方法分享">
+    <meta name="keywords" id="articleKeywords" content="学术写作,论文写作,研究方法,AI工具">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" id="ogTitle" content="文章标题 - AI学术写作助手">
+    <meta property="og:description" id="ogDescription" content="专业的学术写作指导和研究方法分享">
+    <meta property="og:type" content="article">
+    <meta property="og:url" id="ogUrl" content="">
+    <meta property="og:site_name" content="AI学术写作助手">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" id="twitterTitle" content="文章标题 - AI学术写作助手">
+    <meta name="twitter:description" id="twitterDescription" content="专业的学术写作指导和研究方法分享">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="blog-styles.css">
+    
+    <style>
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            z-index: 1000;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+        }
+        .back-btn:hover {
+            background: #5855eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+        .back-btn i {
+            margin-right: 0.5rem;
+        }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json" id="structuredData">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "文章标题",
+        "description": "文章描述",
+        "author": {
+            "@type": "Person",
+            "name": "作者姓名"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "AI学术写作助手",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://aigrantwriter.xyz/logo.png"
+            }
+        },
+        "datePublished": "",
+        "dateModified": "",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": ""
+        }
+    }
+    </script>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> 返回首页
+    </a>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html">
+                    <i class="fas fa-graduation-cap"></i>
+                    AI学术写作助手
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../grant-proposal.html" class="nav-link">申请书生成器</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../literature-review.html" class="nav-link">文献综述</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../writing-optimization.html" class="nav-link">写作优化</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">博客</a>
+                </li>
+            </ul>
+            <div class="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Article Header -->
+    <header class="article-header">
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">首页</a>
+                <span>/</span>
+                <a href="index.html">博客</a>
+                <span>/</span>
+                <span id="breadcrumbCategory">分类</span>
+                <span>/</span>
+                <span>当前文章</span>
+            </nav>
+            
+            <div class="article-meta">
+                <span class="article-category" id="articleCategory">分类</span>
+                <span class="article-date" id="articleDate">
+                    <i class="fas fa-calendar"></i>
+                    发布日期
+                </span>
+                <span class="article-read-time" id="articleReadTime">
+                    <i class="fas fa-clock"></i>
+                    阅读时间
+                </span>
+            </div>
+            
+            <h1 class="article-title" id="mainTitle">文章标题</h1>
+            <p class="article-excerpt" id="mainExcerpt">文章摘要</p>
+            
+            <div class="article-author">
+                <div class="author-info">
+                    <i class="fas fa-user-circle author-avatar"></i>
+                    <div class="author-details">
+                        <span class="author-name" id="authorName">作者姓名</span>
+                        <span class="author-title" id="authorTitle">作者职位</span>
+                    </div>
+                </div>
+                <div class="article-actions">
+                    <button class="action-btn" onclick="shareArticle()">
+                        <i class="fas fa-share-alt"></i>
+                        分享
+                    </button>
+                    <button class="action-btn" onclick="bookmarkArticle()">
+                        <i class="fas fa-bookmark"></i>
+                        收藏
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <main class="article-main">
+        <div class="container">
+            <div class="article-layout">
+                <!-- Article Content -->
+                <article class="article-content">
+                    <div class="content-wrapper" id="articleContent">
+                        <!-- 文章内容将通过JavaScript动态加载 -->
+                        <div class="loading-placeholder">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>正在加载文章内容...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Article Tags -->
+                    <div class="article-tags" id="articleTags">
+                        <!-- 标签将通过JavaScript动态加载 -->
+                    </div>
+                    
+                    <!-- Article Navigation -->
+                    <div class="article-navigation">
+                        <div class="nav-prev" id="prevArticle">
+                            <span class="nav-label">上一篇</span>
+                            <span class="nav-title">文章标题</span>
+                        </div>
+                        <div class="nav-next" id="nextArticle">
+                            <span class="nav-label">下一篇</span>
+                            <span class="nav-title">文章标题</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Sidebar -->
+                <aside class="article-sidebar">
+                    <!-- Table of Contents -->
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">目录</h3>
+                        <div class="table-of-contents" id="tableOfContents">
+                            <!-- 目录将通过JavaScript自动生成 -->
+                        </div>
+                    </div>
+                    
+                    <!-- Related Articles -->
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">相关文章</h3>
+                        <div class="related-articles" id="relatedArticles">
+                            <!-- 相关文章将通过JavaScript动态加载 -->
+                        </div>
+                    </div>
+                    
+                    <!-- Newsletter Subscription -->
+                    <div class="sidebar-widget newsletter-widget">
+                        <h3 class="widget-title">订阅更新</h3>
+                        <p>获取最新的学术写作技巧和研究方法</p>
+                        <div class="newsletter-form">
+                            <input type="email" id="sidebarEmailInput" placeholder="输入您的邮箱">
+                            <button onclick="subscribeNewsletter('sidebar')" class="subscribe-btn">
+                                订阅
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Comments Section (Optional) -->
+    <section class="comments-section">
+        <div class="container">
+            <h3 class="comments-title">评论讨论</h3>
+            <div class="comments-placeholder">
+                <p>评论功能即将上线，敬请期待！</p>
+                <p>如有问题或建议，请通过邮件联系我们。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AI学术写作助手</h3>
+                    <p>专业的学术写作工具和指导，助力您的研究之路</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>工具</h4>
+                    <ul>
+                        <li><a href="../grant-proposal.html">申请书生成器</a></li>
+                        <li><a href="../literature-review.html">文献综述工具</a></li>
+                        <li><a href="../writing-optimization.html">写作优化</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>资源</h4>
+                    <ul>
+                        <li><a href="index.html">博客文章</a></li>
+                        <li><a href="#" onclick="showNotification('功能开发中', 'info')">写作指南</a></li>
+                        <li><a href="#" onclick="showNotification('功能开发中', 'info')">模板下载</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>联系我们</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> contact@aigrantwriter.xyz</li>
+                        <li><i class="fas fa-phone"></i> +86 400-123-4567</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AI学术写作助手. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../script.js"></script>
+    <script src="blog-script.js"></script>
+    <script src="article-script.js"></script>
+    <script src="article-data-extended.js"></script>
+</body>
+</html>
