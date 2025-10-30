@@ -40,8 +40,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// API 配置
+const API_CONFIG = {
+    baseURL: 'https://breakout.wenwen-ai.com/v1/chat/completions',
+    apiKey: 'sk-6ogS4COJPVLfLclruLQ6h59IxyvcN61nGuvgpr71VNL3ARsN'
+};
+
 // 论文生成功能
-function generatePaper() {
+async function generatePaper() {
     const generateBtn = document.querySelector('.generate-btn');
     const outputContent = document.getElementById('output-content');
     const researchTopic = document.getElementById('research-topic').value;
@@ -59,15 +65,116 @@ function generatePaper() {
     generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 生成中...';
     generateBtn.disabled = true;
 
-    // 模拟生成过程
-    setTimeout(() => {
+    try {
+        // 构建提示词
+        const prompt = buildPrompt(researchTopic, paperType, researchField, requirements);
+        
+        // 调用 AI API
+        const response = await fetch(API_CONFIG.baseURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${API_CONFIG.apiKey}`
+            },
+            body: JSON.stringify({
+                model: 'gpt-3.5-turbo',
+                messages: [
+                    {
+                        role: 'system',
+                        content: '你是一个专业的学术论文写作助手，擅长生成高质量的学术论文内容。'
+                    },
+                    {
+                        role: 'user',
+                        content: prompt
+                    }
+                ],
+                max_tokens: 4000,
+                temperature: 0.7
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`API 请求失败: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const generatedContent = data.choices[0].message.content;
+        
+        // 格式化并显示生成的内容
+        outputContent.innerHTML = formatGeneratedContent(generatedContent, researchTopic, paperType, researchField);
+        
+    } catch (error) {
+        console.error('生成论文时出错:', error);
+        // 如果 API 调用失败，使用备用的模拟内容
         const generatedContent = generateMockContent(researchTopic, paperType, researchField, requirements);
         outputContent.innerHTML = generatedContent;
-        
+        showNotification('API 调用失败，显示示例内容');
+    } finally {
         // 恢复按钮状态
         generateBtn.innerHTML = '<i class="fas fa-magic"></i> 生成论文';
         generateBtn.disabled = false;
-    }, 3000);
+    }
+}
+
+// 构建提示词
+function buildPrompt(topic, type, field, requirements) {
+    const typeNames = {
+        'phd': '博士论文',
+        'master': '硕士论文',
+        'proposal': '研究提案',
+        'review': '文献综述'
+    };
+
+    let prompt = `请为以下研究主题生成一份${typeNames[type] || '学术论文'}的详细大纲和内容：
+
+研究主题：${topic}
+研究领域：${field}
+论文类型：${typeNames[type] || type}`;
+
+    if (requirements) {
+        prompt += `\n特殊要求：${requirements}`;
+    }
+
+    prompt += `
+
+请按照以下结构生成内容：
+1. 研究背景与意义
+2. 文献综述
+3. 研究方法
+4. 预期结果
+5. 创新点
+6. 参考文献建议
+
+请确保内容专业、详细且具有学术价值。`;
+
+    return prompt;
+}
+
+// 格式化生成的内容
+function formatGeneratedContent(content, topic, type, field) {
+    const typeNames = {
+        'phd': '博士论文',
+        'master': '硕士论文',
+        'proposal': '研究提案',
+        'review': '文献综述'
+    };
+
+    return `
+        <div class="generated-paper">
+            <h3>${typeNames[type] || '学术论文'}: ${topic}</h3>
+            <div class="paper-content">
+                ${content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}
+            </div>
+            <div class="generation-info">
+                <small>
+                    <i class="fas fa-info-circle"></i>
+                    生成时间: ${new Date().toLocaleString()} | 
+                    研究领域: ${field} | 
+                    论文类型: ${typeNames[type] || type}
+                </small>
+            </div>
+        </div>
+    `;
 }
 
 // 生成模拟内容
