@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article View</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #545b62;
+            color: white;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+
+        .article-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .article-header {
+            padding: 40px;
+            border-bottom: 2px solid #f1f3f4;
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            color: #6c757d;
+            font-size: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: #f5f5f5;
+            color: #666;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .article-content {
+            padding: 40px;
+        }
+
+        .content-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #2c3e50;
+            white-space: pre-wrap;
+        }
+
+        .content-text h1,
+        .content-text h2,
+        .content-text h3 {
+            margin: 30px 0 15px 0;
+            color: #2c3e50;
+        }
+
+        .content-text h1 {
+            font-size: 2rem;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        .content-text h2 {
+            font-size: 1.5rem;
+            color: #007bff;
+        }
+
+        .content-text h3 {
+            font-size: 1.2rem;
+        }
+
+        .content-text p {
+            margin-bottom: 20px;
+        }
+
+        .content-text ul,
+        .content-text ol {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        .content-text li {
+            margin-bottom: 8px;
+        }
+
+        .article-stats {
+            background: #f8f9fa;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid #f1f3f4;
+        }
+
+        .stats-left {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6c757d;
+            font-size: 1rem;
+        }
+
+        .stat-number {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .share-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .share-twitter {
+            background: #1da1f2;
+            color: white;
+        }
+
+        .share-facebook {
+            background: #4267b2;
+            color: white;
+        }
+
+        .share-linkedin {
+            background: #0077b5;
+            color: white;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            createSampleData() {
+                return [
+                    {
+                        id: '1',
+                        title: 'How AI Tools Assist in Literature Review for Dissertations',
+                        author: 'Research Team',
+                        category: 'Research',
+                        tags: 'AI, Literature Review, Dissertation, Academic Writing',
+                        content: 'Crafting a comprehensive literature review is often one of the most demanding phases of writing a dissertation. It requires extensive reading, systematic analysis, and the ability to synthesize vast amounts of information into a coherent narrative. Fortunately, artificial intelligence tools are revolutionizing this process, making it more efficient and thorough.\n\nTraditional literature review processes involve manually searching through databases, reading countless papers, taking notes, and organizing findings. This approach is time-consuming and prone to human error, often resulting in missed relevant studies or inconsistent analysis.\n\nModern AI tools can scan thousands of academic papers in minutes, identifying relevant studies based on your research questions. These tools use natural language processing to understand context and relevance, ensuring you don\'t miss important research in your field.',
+                        publishDate: new Date('2024-12-15').toISOString(),
+                        status: 'published'
+                    },
+                    {
+                        id: '2',
+                        title: 'Grant Writing Best Practices for Academic Researchers',
+                        author: 'Dr. Sarah Johnson',
+                        category: 'Grant Writing',
+                        tags: 'Grants, Funding, Academic Research, Proposal Writing',
+                        content: 'Securing funding for academic research requires more than just a good idea. It demands strategic thinking, clear communication, and a deep understanding of what funding agencies are looking for. This comprehensive guide will walk you through the essential elements of successful grant writing.\n\nThe foundation of any successful grant proposal is a compelling research question. Your question should be significant, feasible, and aligned with the funding agency\'s priorities. Take time to thoroughly research the agency\'s mission, recent awards, and review criteria before you begin writing.\n\nA well-structured proposal typically includes an executive summary, statement of need, project description, methodology, evaluation plan, and budget justification. Each section should build upon the previous one, creating a cohesive narrative that demonstrates your project\'s value and feasibility.',
+                        publishDate: new Date('2024-12-10').toISOString(),
+                        status: 'published'
+                    },
+                    {
+                        id: '3',
+                        title: 'The Future of Academic Publishing in the Digital Age',
+                        author: 'Prof. Michael Chen',
+                        category: 'Academic Publishing',
+                        tags: 'Publishing, Digital, Open Access, Academic Journals',
+                        content: 'The landscape of academic publishing is undergoing a dramatic transformation. Traditional publishing models are being challenged by open access initiatives, preprint servers, and new digital platforms that promise to make research more accessible and collaborative.\n\nOpen access publishing has gained significant momentum in recent years, with many funding agencies now requiring researchers to make their work freely available. This shift is democratizing access to knowledge and accelerating the pace of scientific discovery.\n\nPreprint servers like arXiv and bioRxiv have revolutionized how researchers share their work, allowing for rapid dissemination of findings before formal peer review. This model enables faster feedback and collaboration while maintaining the integrity of the peer review process for final publication.',
+                        publishDate: new Date('2024-12-05').toISOString(),
+                        status: 'published'
+                    }
+                ];
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+
+            .header-actions {
+                justify-content: center;
+            }
+
+            .article-header,
+            .article-content {
+                padding: 20px;
+            }
+
+            .article-title {
+                font-size: 2rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .article-stats {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .stats-left {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div style="display: flex; gap: 10px;">
+                <a href="simple-blog.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Articles
+                </a>
+                <a href="../index.html" class="back-btn">
+                    <i class="fas fa-home"></i> Back to Homepage
+                </a>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-warning" onclick="editArticle()">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class="btn btn-primary" onclick="shareArticle()">
+                    <i class="fas fa-share"></i> Share
+                </button>
+            </div>
+        </div>
+
+        <!-- Article Container -->
+        <div class="article-container">
+            <!-- Article Header -->
+            <div class="article-header">
+                <h1 class="article-title" id="articleTitle">Loading...</h1>
+                <div class="article-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-user"></i>
+                        <span id="articleAuthor">Loading...</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-calendar"></i>
+                        <span id="articleDate">Loading...</span>
+                    </div>
+                    <div class="category-tag" id="articleCategory">Loading...</div>
+                    <div class="tags" id="articleTags">
+                        <!-- Tags will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Article Content -->
+            <div class="article-content">
+                <div class="content-text" id="articleContent">
+                    Loading article content...
+                </div>
+            </div>
+
+            <!-- Article Stats -->
+            <div class="article-stats">
+                <div class="stats-left">
+                    <div class="stat-item">
+                        <i class="fas fa-eye"></i>
+                        <span class="stat-number" id="viewCount">0</span>
+                        <span>Views</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-thumbs-up"></i>
+                        <span class="stat-number" id="likeCount">0</span>
+                        <span>Likes</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-comment"></i>
+                        <span class="stat-number" id="commentCount">0</span>
+                        <span>Comments</span>
+                    </div>
+                </div>
+                <div class="share-buttons">
+                    <button class="share-btn share-twitter" onclick="shareToTwitter()">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </button>
+                    <button class="share-btn share-facebook" onclick="shareToFacebook()">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </button>
+                    <button class="share-btn share-linkedin" onclick="shareToLinkedIn()">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class ArticleViewer {
+            constructor() {
+                this.currentArticle = null;
+                this.init();
+            }
+
+            init() {
+                this.loadArticle();
+                this.updateViewCount();
+            }
+
+            loadArticle() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const articleId = urlParams.get('id');
+
+                if (!articleId) {
+                    this.showError('Article ID not found');
+                    return;
+                }
+
+                // Load articles from localStorage
+                let articles = JSON.parse(localStorage.getItem('blogArticles') || '[]');
+                
+                // If no articles exist, create sample data
+                if (articles.length === 0) {
+                    articles = this.createSampleData();
+                    localStorage.setItem('blogArticles', JSON.stringify(articles));
+                }
+                
+                // Find article by ID (handle both string and number IDs)
+                const article = articles.find(a => a.id === articleId || a.id === parseInt(articleId) || a.id.toString() === articleId);
+
+                if (!article) {
+                    this.showError('Article not found');
+                    return;
+                }
+
+                this.currentArticle = article;
+                this.displayArticle(article);
+            }
+
+            displayArticle(article) {
+                // Update title
+                document.getElementById('articleTitle').textContent = article.title;
+                document.title = article.title;
+
+                // Update meta information
+                document.getElementById('articleAuthor').textContent = article.author;
+                document.getElementById('articleDate').textContent = new Date(article.publishDate).toLocaleDateString();
+                document.getElementById('articleCategory').textContent = article.category;
+
+                // Update tags
+                const tagsContainer = document.getElementById('articleTags');
+                if (article.tags) {
+                    tagsContainer.innerHTML = article.tags.split(',').map(tag => 
+                        `<span class="tag">${tag.trim()}</span>`
+                    ).join('');
+                } else {
+                    tagsContainer.innerHTML = '';
+                }
+
+                // Update content
+                document.getElementById('articleContent').innerHTML = this.formatContent(article.content);
+
+                // Update stats (random numbers for demo)
+                document.getElementById('viewCount').textContent = Math.floor(Math.random() * 1000) + 100;
+                document.getElementById('likeCount').textContent = Math.floor(Math.random() * 50) + 10;
+                document.getElementById('commentCount').textContent = Math.floor(Math.random() * 20) + 5;
+            }
+
+            formatContent(content) {
+                // Simple content formatting
+                return content
+                    .replace(/\n\n/g, '</p><p>')
+                    .replace(/^/, '<p>')
+                    .replace(/$/, '</p>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>');
+            }
+
+            showError(message) {
+                document.getElementById('articleTitle').textContent = 'Error';
+                document.getElementById('articleContent').innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #dc3545;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                        <h3>${message}</h3>
+                        <p>Please check the article ID and try again.</p>
+                    </div>
+                `;
+            }
+
+            updateViewCount() {
+                // Simulate view count update
+                if (this.currentArticle) {
+                    // In a real application, this would update the server
+                    console.log(`View count updated for article: ${this.currentArticle.id}`);
+                }
+            }
+        }
+
+        function editArticle() {
+            if (window.articleViewer && window.articleViewer.currentArticle) {
+                const articleId = window.articleViewer.currentArticle.id;
+                window.location.href = `simple-blog.html?edit=${articleId}`;
+            }
+        }
+
+        function shareArticle() {
+            if (navigator.share && window.articleViewer && window.articleViewer.currentArticle) {
+                navigator.share({
+                    title: window.articleViewer.currentArticle.title,
+                    text: window.articleViewer.currentArticle.content.substring(0, 200) + '...',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback: copy URL to clipboard
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Article URL copied to clipboard!');
+                });
+            }
+        }
+
+        function shareToTwitter() {
+            if (window.articleViewer && window.articleViewer.currentArticle) {
+                const article = window.articleViewer.currentArticle;
+                const text = encodeURIComponent(`${article.title} - ${article.content.substring(0, 100)}...`);
+                const url = encodeURIComponent(window.location.href);
+                window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+            }
+        }
+
+        function shareToFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareToLinkedIn() {
+            if (window.articleViewer && window.articleViewer.currentArticle) {
+                const article = window.articleViewer.currentArticle;
+                const title = encodeURIComponent(article.title);
+                const summary = encodeURIComponent(article.content.substring(0, 200));
+                const url = encodeURIComponent(window.location.href);
+                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}&title=${title}&summary=${summary}`, '_blank');
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.articleViewer = new ArticleViewer();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Published Articles - AI Grant Writer Blog</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-newspaper"></i> Published Articles</h1>
+                <p>Browse all published blog articles</p>
+            </div>
+            <nav class="header-nav">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-plus"></i> New Article
+                </a>
+                <a href="manage.html" class="nav-link">
+                    <i class="fas fa-cog"></i> Manage
+                </a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <div class="articles-container">
+                <div class="articles-header">
+                    <div class="articles-stats">
+                        <span id="articlesCount">0 articles</span>
+                    </div>
+                    <div class="articles-actions">
+                        <button id="refreshBtn" class="btn btn-secondary">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div id="articlesGrid" class="articles-grid">
+                    <!-- Articles will be loaded here -->
+                </div>
+
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <div class="empty-content">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>No Articles Published Yet</h3>
+                        <p>Start creating your first article to see it listed here.</p>
+                        <a href="index.html" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Create First Article
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instructions Modal -->
+            <div id="instructionsModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-info-circle"></i> How to Access Your Articles</h3>
+                        <button id="closeInstructions" class="close-btn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="instructions">
+                            <h4>To view your published articles:</h4>
+                            <ol>
+                                <li>Save the downloaded HTML file to the <code>blog/articles/</code> folder</li>
+                                <li>The file will be accessible at: <code>articles/[filename].html</code></li>
+                                <li>You can then click the "View Article" link to open it</li>
+                            </ol>
+                            <div class="note">
+                                <i class="fas fa-lightbulb"></i>
+                                <strong>Note:</strong> Articles are downloaded as HTML files that you need to manually save to the articles folder.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        class ArticlesList {
+            constructor() {
+                this.articles = [];
+                this.initializeEventListeners();
+                this.loadArticles();
+            }
+
+            initializeEventListeners() {
+                document.getElementById('refreshBtn').addEventListener('click', () => this.loadArticles());
+                document.getElementById('closeInstructions').addEventListener('click', () => this.closeInstructions());
+            }
+
+            loadArticles() {
+                this.articles = JSON.parse(localStorage.getItem('blogArticles') || '[]');
+                this.renderArticles();
+                this.updateStats();
+            }
+
+            renderArticles() {
+                const grid = document.getElementById('articlesGrid');
+                const emptyState = document.getElementById('emptyState');
+
+                if (this.articles.length === 0) {
+                    grid.style.display = 'none';
+                    emptyState.style.display = 'flex';
+                    return;
+                }
+
+                grid.style.display = 'grid';
+                emptyState.style.display = 'none';
+
+                grid.innerHTML = this.articles.map(article => this.createArticleCard(article)).join('');
+            }
+
+            createArticleCard(article) {
+                const publishDate = new Date(article.publishDate).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+
+                const excerpt = this.createExcerpt(article.content);
+
+                return `
+                    <div class="article-card">
+                        <div class="article-card-header">
+                            <h3 class="article-title">${article.title}</h3>
+                            <div class="article-meta">
+                                <span><i class="fas fa-user"></i> ${article.author}</span>
+                                <span><i class="fas fa-calendar"></i> ${publishDate}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="article-card-body">
+                            <div class="article-category">
+                                <i class="fas fa-tag"></i> ${article.category}
+                            </div>
+                            <p class="article-excerpt">${excerpt}</p>
+                        </div>
+                        
+                        <div class="article-card-footer">
+                            <div class="article-filename">
+                                <i class="fas fa-file"></i> ${article.fileName}
+                            </div>
+                            <div class="article-actions">
+                                <button onclick="articlesList.viewArticle('${article.fileName}')" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-external-link-alt"></i> View
+                                </button>
+                                <button onclick="articlesList.showInstructions()" class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-question-circle"></i> Help
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            createExcerpt(content) {
+                const plainText = content.replace(/[#*`]/g, '').replace(/\n/g, ' ');
+                return plainText.length > 150 ? plainText.substring(0, 150) + '...' : plainText;
+            }
+
+            updateStats() {
+                const count = this.articles.length;
+                const countText = count === 1 ? '1 article' : `${count} articles`;
+                document.getElementById('articlesCount').textContent = countText;
+            }
+
+            viewArticle(fileName) {
+                const articleUrl = `articles/${fileName}`;
+                
+                // Check if file exists by trying to open it
+                const link = document.createElement('a');
+                link.href = articleUrl;
+                link.target = '_blank';
+                link.click();
+                
+                // Show instructions if the file might not exist
+                setTimeout(() => {
+                    this.showInstructions();
+                }, 1000);
+            }
+
+            showInstructions() {
+                document.getElementById('instructionsModal').style.display = 'flex';
+            }
+
+            closeInstructions() {
+                document.getElementById('instructionsModal').style.display = 'none';
+            }
+        }
+
+        // Initialize the articles list
+        let articlesList;
+        document.addEventListener('DOMContentLoaded', () => {
+            articlesList = new ArticlesList();
+        });
+    </script>
+
+    <style>
+        .articles-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .articles-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .articles-stats {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .article-card-header {
+            padding: 1.5rem 1.5rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .article-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .article-card-body {
+            padding: 1rem 1.5rem;
+        }
+
+        .article-category {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .article-excerpt {
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .article-card-footer {
+            padding: 1rem 1.5rem;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .article-filename {
+            font-size: 0.8rem;
+            color: #666;
+            font-family: monospace;
+        }
+
+        .article-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .empty-state {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            text-align: center;
+        }
+
+        .empty-content {
+            max-width: 400px;
+        }
+
+        .empty-content i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+
+        .empty-content h3 {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .empty-content p {
+            color: #888;
+            margin-bottom: 2rem;
+        }
+
+        .instructions {
+            text-align: left;
+        }
+
+        .instructions h4 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .instructions ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .instructions code {
+            background: #f1f5f9;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #e53e3e;
+        }
+
+        .note {
+            background: #f0f8ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .note i {
+            color: #0066cc;
+            margin-top: 0.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .articles-container {
+                padding: 1rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .articles-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .article-card-footer {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</body>
+</html>

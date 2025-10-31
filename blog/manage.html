@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Management - Blog System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="management-header">
+            <div class="header-content">
+                <h1><i class="fas fa-cogs"></i> Article Management</h1>
+                <p>Manage your published articles and blog content</p>
+            </div>
+            <div class="management-actions">
+                <a href="index.html" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> New Article
+                </a>
+                <button onclick="refreshArticles()" class="btn btn-secondary">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <button onclick="exportArticles()" class="btn btn-secondary">
+                    <i class="fas fa-download"></i> Export All
+                </button>
+            </div>
+        </header>
+
+        <!-- Articles Container -->
+        <div class="articles-container">
+            <div class="articles-header">
+                <h2><i class="fas fa-newspaper"></i> Published Articles</h2>
+                <div class="articles-stats">
+                    <span class="stat-item">
+                        <i class="fas fa-file-alt"></i>
+                        Total: <span id="totalCount">0</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="search-filter-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search articles by title, author, or category...">
+                </div>
+                <div class="filter-options">
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                    </select>
+                    <select id="sortBy">
+                        <option value="date-desc">Newest First</option>
+                        <option value="date-asc">Oldest First</option>
+                        <option value="title-asc">Title A-Z</option>
+                        <option value="title-desc">Title Z-A</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Articles Grid -->
+            <div id="articlesGrid" class="articles-grid">
+                <!-- Articles will be loaded here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <i class="fas fa-file-alt"></i>
+                <h3>No Articles Found</h3>
+                <p>You haven't published any articles yet, or no articles match your search criteria.</p>
+                <a href="index.html" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Create Your First Article
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Edit Article</h3>
+                <button class="close-btn" onclick="closeEditModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm" class="article-form">
+                    <div class="form-group">
+                        <label for="editTitle">
+                            <i class="fas fa-heading"></i> Article Title
+                        </label>
+                        <input type="text" id="editTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAuthor">
+                            <i class="fas fa-user"></i> Author
+                        </label>
+                        <input type="text" id="editAuthor" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategory">
+                            <i class="fas fa-tag"></i> Category
+                        </label>
+                        <select id="editCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Science">Science</option>
+                            <option value="Business">Business</option>
+                            <option value="Health">Health</option>
+                            <option value="Education">Education</option>
+                            <option value="Lifestyle">Lifestyle</option>
+                            <option value="Travel">Travel</option>
+                            <option value="Food">Food</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Entertainment">Entertainment</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editContent">
+                            <i class="fas fa-file-text"></i> Content
+                        </label>
+                        <textarea id="editContent" rows="15" required></textarea>
+                        <div class="content-help">
+                            <small><i class="fas fa-info-circle"></i> Supports Markdown formatting</small>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" onclick="closeEditModal()" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button type="button" onclick="previewEditedArticle()" class="btn btn-secondary">
+                            <i class="fas fa-eye"></i> Preview
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-eye"></i> Article Preview</h3>
+                <button class="close-btn" onclick="closePreviewModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="previewContent" class="preview-content">
+                    <!-- Preview content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle" style="color: #f56565;"></i> Confirm Deletion</h3>
+                <button class="close-btn" onclick="closeDeleteModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 1.5rem; font-size: 1.1rem;">
+                    Are you sure you want to delete this article? This action cannot be undone.
+                </p>
+                <div class="article-info" style="background: #f7fafc; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                    <strong id="deleteArticleTitle"></strong>
+                    <div style="color: #666; font-size: 0.9rem; margin-top: 0.5rem;">
+                        <span id="deleteArticleAuthor"></span> • <span id="deleteArticleDate"></span>
+                    </div>
+                </div>
+                <div class="form-actions" style="justify-content: center;">
+                    <button onclick="closeDeleteModal()" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button onclick="confirmDelete()" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete Article
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class ArticleManager {
+            constructor() {
+                this.articles = [];
+                this.filteredArticles = [];
+                this.currentEditId = null;
+                this.currentDeleteId = null;
+                this.init();
+            }
+
+            init() {
+                this.loadArticles();
+                this.setupEventListeners();
+                this.populateCategoryFilter();
+            }
+
+            setupEventListeners() {
+                // Search functionality
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    this.filterArticles();
+                });
+
+                // Filter and sort functionality
+                document.getElementById('categoryFilter').addEventListener('change', () => {
+                    this.filterArticles();
+                });
+
+                document.getElementById('sortBy').addEventListener('change', () => {
+                    this.sortArticles();
+                });
+
+                // Edit form submission
+                document.getElementById('editForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveEditedArticle();
+                });
+
+                // Modal close on background click
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal')) {
+                        this.closeAllModals();
+                    }
+                });
+            }
+
+            loadArticles() {
+                const stored = localStorage.getItem('blogArticles');
+                this.articles = stored ? JSON.parse(stored) : [];
+                this.filteredArticles = [...this.articles];
+                this.renderArticles();
+                this.updateStats();
+            }
+
+            filterArticles() {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const categoryFilter = document.getElementById('categoryFilter').value;
+
+                this.filteredArticles = this.articles.filter(article => {
+                    const matchesSearch = !searchTerm || 
+                        article.title.toLowerCase().includes(searchTerm) ||
+                        article.author.toLowerCase().includes(searchTerm) ||
+                        article.category.toLowerCase().includes(searchTerm) ||
+                        article.content.toLowerCase().includes(searchTerm);
+
+                    const matchesCategory = !categoryFilter || article.category === categoryFilter;
+
+                    return matchesSearch && matchesCategory;
+                });
+
+                this.sortArticles();
+            }
+
+            sortArticles() {
+                const sortBy = document.getElementById('sortBy').value;
+
+                this.filteredArticles.sort((a, b) => {
+                    switch (sortBy) {
+                        case 'date-desc':
+                            return new Date(b.publishDate) - new Date(a.publishDate);
+                        case 'date-asc':
+                            return new Date(a.publishDate) - new Date(b.publishDate);
+                        case 'title-asc':
+                            return a.title.localeCompare(b.title);
+                        case 'title-desc':
+                            return b.title.localeCompare(a.title);
+                        default:
+                            return 0;
+                    }
+                });
+
+                this.renderArticles();
+            }
+
+            renderArticles() {
+                const grid = document.getElementById('articlesGrid');
+                const emptyState = document.getElementById('emptyState');
+
+                if (this.filteredArticles.length === 0) {
+                    grid.style.display = 'none';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                grid.style.display = 'grid';
+                emptyState.style.display = 'none';
+
+                grid.innerHTML = this.filteredArticles.map(article => `
+                    <div class="article-card">
+                        <div class="article-card-header">
+                            <h3>${this.escapeHtml(article.title)}</h3>
+                            <div class="article-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-user"></i>
+                                    <span>${this.escapeHtml(article.author)}</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>${this.formatDate(article.publishDate)}</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="category-tag">${this.escapeHtml(article.category)}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="article-preview">
+                            ${this.getPreviewText(article.content)}
+                        </div>
+                        <div class="article-actions">
+                            <button onclick="articleManager.viewArticle('${article.id}')" class="btn btn-secondary">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button onclick="articleManager.editArticle('${article.id}')" class="btn btn-secondary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button onclick="articleManager.deleteArticle('${article.id}')" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            populateCategoryFilter() {
+                const categories = [...new Set(this.articles.map(article => article.category))];
+                const filter = document.getElementById('categoryFilter');
+                
+                // Clear existing options except "All Categories"
+                filter.innerHTML = '<option value="">All Categories</option>';
+                
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category;
+                    option.textContent = category;
+                    filter.appendChild(option);
+                });
+            }
+
+            updateStats() {
+                document.getElementById('totalCount').textContent = this.articles.length;
+            }
+
+            viewArticle(id) {
+                const article = this.articles.find(a => a.id === id);
+                if (!article) return;
+
+                // Show article in preview modal
+                const previewHtml = this.convertMarkdownToHtml(article.content);
+                document.getElementById('previewContent').innerHTML = `
+                    <h1>${this.escapeHtml(article.title)}</h1>
+                    <div class="article-meta" style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0;">
+                        <div class="meta-item">
+                            <i class="fas fa-user"></i>
+                            <span>By ${this.escapeHtml(article.author)}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Published on ${this.formatDate(article.publishDate)}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="category-tag">${this.escapeHtml(article.category)}</span>
+                        </div>
+                    </div>
+                    ${previewHtml}
+                `;
+
+                document.getElementById('previewModal').style.display = 'flex';
+            }
+
+            editArticle(id) {
+                const article = this.articles.find(a => a.id === id);
+                if (!article) return;
+
+                this.currentEditId = id;
+                
+                // Populate edit form
+                document.getElementById('editTitle').value = article.title;
+                document.getElementById('editAuthor').value = article.author;
+                document.getElementById('editCategory').value = article.category;
+                document.getElementById('editContent').value = article.content;
+
+                // Show edit modal
+                document.getElementById('editModal').style.display = 'flex';
+            }
+
+            saveEditedArticle() {
+                if (!this.currentEditId) return;
+
+                const title = document.getElementById('editTitle').value.trim();
+                const author = document.getElementById('editAuthor').value.trim();
+                const category = document.getElementById('editCategory').value;
+                const content = document.getElementById('editContent').value.trim();
+
+                if (!title || !author || !category || !content) {
+                    alert('Please fill in all fields.');
+                    return;
+                }
+
+                // Update article
+                const articleIndex = this.articles.findIndex(a => a.id === this.currentEditId);
+                if (articleIndex !== -1) {
+                    this.articles[articleIndex] = {
+                        ...this.articles[articleIndex],
+                        title,
+                        author,
+                        category,
+                        content,
+                        lastModified: new Date().toISOString()
+                    };
+
+                    // Save to localStorage
+                    localStorage.setItem('blogArticles', JSON.stringify(this.articles));
+
+                    // Refresh display
+                    this.loadArticles();
+                    this.populateCategoryFilter();
+                    this.closeEditModal();
+
+                    this.showSuccessMessage('Article updated successfully!');
+                }
+            }
+
+            deleteArticle(id) {
+                const article = this.articles.find(a => a.id === id);
+                if (!article) return;
+
+                this.currentDeleteId = id;
+                
+                // Populate delete confirmation
+                document.getElementById('deleteArticleTitle').textContent = article.title;
+                document.getElementById('deleteArticleAuthor').textContent = article.author;
+                document.getElementById('deleteArticleDate').textContent = this.formatDate(article.publishDate);
+
+                // Show delete modal
+                document.getElementById('deleteModal').style.display = 'flex';
+            }
+
+            confirmDelete() {
+                if (!this.currentDeleteId) return;
+
+                // Remove from articles array
+                this.articles = this.articles.filter(a => a.id !== this.currentDeleteId);
+                
+                // Save to localStorage
+                localStorage.setItem('blogArticles', JSON.stringify(this.articles));
+
+                // Refresh display
+                this.loadArticles();
+                this.populateCategoryFilter();
+                this.closeDeleteModal();
+
+                this.showSuccessMessage('Article deleted successfully!');
+            }
+
+            previewEditedArticle() {
+                const title = document.getElementById('editTitle').value.trim();
+                const author = document.getElementById('editAuthor').value.trim();
+                const category = document.getElementById('editCategory').value;
+                const content = document.getElementById('editContent').value.trim();
+
+                if (!title || !content) {
+                    alert('Please enter at least a title and content to preview.');
+                    return;
+                }
+
+                const previewHtml = this.convertMarkdownToHtml(content);
+                document.getElementById('previewContent').innerHTML = `
+                    <h1>${this.escapeHtml(title)}</h1>
+                    <div class="article-meta" style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0;">
+                        <div class="meta-item">
+                            <i class="fas fa-user"></i>
+                            <span>By ${this.escapeHtml(author)}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-tag"></i>
+                            <span class="category-tag">${this.escapeHtml(category)}</span>
+                        </div>
+                    </div>
+                    ${previewHtml}
+                `;
+
+                document.getElementById('previewModal').style.display = 'flex';
+            }
+
+            exportArticles() {
+                if (this.articles.length === 0) {
+                    alert('No articles to export.');
+                    return;
+                }
+
+                const dataStr = JSON.stringify(this.articles, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(dataBlob);
+                link.download = `blog_articles_${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+            }
+
+            refreshArticles() {
+                this.loadArticles();
+                this.populateCategoryFilter();
+                this.showSuccessMessage('Articles refreshed!');
+            }
+
+            // Utility methods
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            formatDate(dateString) {
+                return new Date(dateString).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+
+            getPreviewText(content, maxLength = 150) {
+                const plainText = content.replace(/[#*`_~\[\]()]/g, '').trim();
+                return plainText.length > maxLength 
+                    ? plainText.substring(0, maxLength) + '...'
+                    : plainText;
+            }
+
+            convertMarkdownToHtml(markdown) {
+                return markdown
+                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/`(.*?)`/g, '<code>$1</code>')
+                    .replace(/\n\n/g, '</p><p>')
+                    .replace(/^(.*)$/gm, '<p>$1</p>')
+                    .replace(/<p><\/p>/g, '')
+                    .replace(/<p>(<h[1-6]>.*<\/h[1-6]>)<\/p>/g, '$1');
+            }
+
+            showSuccessMessage(message) {
+                // Create a temporary success notification
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, #48bb78, #38a169);
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 10px;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                    z-index: 10000;
+                    animation: slideIn 0.3s ease;
+                `;
+                notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+
+            // Modal management
+            closeEditModal() {
+                document.getElementById('editModal').style.display = 'none';
+                this.currentEditId = null;
+            }
+
+            closePreviewModal() {
+                document.getElementById('previewModal').style.display = 'none';
+            }
+
+            closeDeleteModal() {
+                document.getElementById('deleteModal').style.display = 'none';
+                this.currentDeleteId = null;
+            }
+
+            closeAllModals() {
+                this.closeEditModal();
+                this.closePreviewModal();
+                this.closeDeleteModal();
+            }
+        }
+
+        // Global functions for onclick handlers
+        let articleManager;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            articleManager = new ArticleManager();
+        });
+
+        function refreshArticles() {
+            articleManager.refreshArticles();
+        }
+
+        function exportArticles() {
+            articleManager.exportArticles();
+        }
+
+        function closeEditModal() {
+            articleManager.closeEditModal();
+        }
+
+        function closePreviewModal() {
+            articleManager.closePreviewModal();
+        }
+
+        function closeDeleteModal() {
+            articleManager.closeDeleteModal();
+        }
+
+        function previewEditedArticle() {
+            articleManager.previewEditedArticle();
+        }
+
+        function confirmDelete() {
+            articleManager.confirmDelete();
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            .search-filter-section {
+                display: flex;
+                gap: 1rem;
+                margin-bottom: 2rem;
+                flex-wrap: wrap;
+            }
+            .search-box {
+                position: relative;
+                flex: 1;
+                min-width: 250px;
+            }
+            .search-box i {
+                position: absolute;
+                left: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #666;
+            }
+            .search-box input {
+                width: 100%;
+                padding: 1rem 1rem 1rem 3rem;
+                border: 2px solid #e2e8f0;
+                border-radius: 25px;
+                font-size: 1rem;
+                transition: all 0.3s ease;
+            }
+            .search-box input:focus {
+                outline: none;
+                border-color: #667eea;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            }
+            .filter-options {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+            .filter-options select {
+                padding: 1rem;
+                border: 2px solid #e2e8f0;
+                border-radius: 25px;
+                font-size: 1rem;
+                background: white;
+                min-width: 150px;
+            }
+            .articles-stats {
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+            }
+            .stat-item {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: #666;
+                font-size: 1rem;
+            }
+            .stat-item i {
+                color: #667eea;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

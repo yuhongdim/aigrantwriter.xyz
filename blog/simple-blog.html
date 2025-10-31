@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Management Center</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .nav-tabs {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-tabs ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-tabs li {
+            flex: 1;
+        }
+
+        .nav-tab {
+            display: block;
+            padding: 15px 25px;
+            background: #f8f9fa;
+            color: #6c757d;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-tab.active,
+        .nav-tab:hover {
+            background: #007bff;
+            color: white;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f1f3f4;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .search-filters {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+
+        .filter-select {
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            background: white;
+            font-size: 1rem;
+            min-width: 150px;
+        }
+
+        .articles-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .articles-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .articles-table td {
+            padding: 20px 15px;
+            border-bottom: 1px solid #dee2e6;
+            vertical-align: top;
+        }
+
+        .articles-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .article-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .article-excerpt {
+            color: #6c757d;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .category-tag {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .tag {
+            background: #f5f5f5;
+            color: #666;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-published {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-draft {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .stats {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .stats div {
+            margin-bottom: 4px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #138496;
+        }
+
+        .btn-edit {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .btn-edit:hover {
+            background: #e0a800;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #dee2e6;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f3f4;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6c757d;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        textarea.form-control {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        @media (max-width: 768px) {
+            .search-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .articles-table {
+                font-size: 0.9rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <div>
+                    <h1><i class="fas fa-blog"></i> Blog Management Center</h1>
+                    <p>Manage your article content, optimize SEO, and improve website ranking</p>
+                </div>
+                <a href="../index.html" class="btn btn-secondary" style="margin-left: 20px;">
+                    <i class="fas fa-home"></i> Back to Homepage
+                </a>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <ul>
+                <li><a href="#" class="nav-tab active" data-panel="articles"><i class="fas fa-newspaper"></i> Article Management</a></li>
+                <li><a href="#" class="nav-tab" data-panel="seo"><i class="fas fa-search"></i> SEO Optimization</a></li>
+                <li><a href="#" class="nav-tab" data-panel="analytics"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-newspaper"></i> Published Articles</h2>
+                <button class="btn btn-primary" onclick="openNewArticleModal()">
+                    <i class="fas fa-plus"></i> Publish New Article
+                </button>
+            </div>
+
+            <!-- Search and Filters -->
+            <div class="search-filters">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search articles...">
+                </div>
+                <select class="filter-select" id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="published">Published</option>
+                    <option value="draft">Draft</option>
+                </select>
+                <select class="filter-select" id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="AI Tools">AI Tools</option>
+                    <option value="Academic Writing">Academic Writing</option>
+                    <option value="Research Methods">Research Methods</option>
+                </select>
+                <button class="btn btn-secondary" onclick="refreshArticles()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+
+            <!-- Articles Table -->
+            <table class="articles-table" id="articlesTable">
+                <thead>
+                    <tr>
+                        <th>ARTICLE</th>
+                        <th>CATEGORY/TAGS</th>
+                        <th>STATUS</th>
+                        <th>STATS</th>
+                        <th>PUBLISH DATE</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody id="articlesTableBody">
+                    <!-- Articles will be loaded here -->
+                </tbody>
+            </table>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="fas fa-newspaper"></i>
+                <h3>No articles found</h3>
+                <p>Start by creating your first article</p>
+                <button class="btn btn-primary" onclick="openNewArticleModal()">
+                    <i class="fas fa-plus"></i> Create Article
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Article Modal -->
+    <div class="modal" id="newArticleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Article</h3>
+                <button class="close-btn" onclick="closeNewArticleModal()">&times;</button>
+            </div>
+            <form id="newArticleForm">
+                <div class="form-group">
+                    <label class="form-label">Article Title *</label>
+                    <input type="text" class="form-control" id="articleTitle" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Author</label>
+                    <input type="text" class="form-control" id="articleAuthor" value="Admin">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-control" id="articleCategory">
+                        <option value="AI Tools">AI Tools</option>
+                        <option value="Academic Writing">Academic Writing</option>
+                        <option value="Research Methods">Research Methods</option>
+                        <option value="Grant Writing">Grant Writing</option>
+                        <option value="Academic Publishing">Academic Publishing</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tags (comma separated)</label>
+                    <input type="text" class="form-control" id="articleTags" placeholder="AI, Writing, Research">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Content *</label>
+                    <textarea class="form-control" id="articleContent" required placeholder="Write your article content here..."></textarea>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="closeNewArticleModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Publish Article</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        class SimpleBlogManager {
+            constructor() {
+                this.articles = JSON.parse(localStorage.getItem('blogArticles') || '[]');
+                
+                // If no articles exist, create sample data
+                if (this.articles.length === 0) {
+                    this.articles = this.createSampleData();
+                    localStorage.setItem('blogArticles', JSON.stringify(this.articles));
+                }
+                
+                this.editingId = null;
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.loadArticles();
+            }
+
+            setupEventListeners() {
+                // Search and filters
+                document.getElementById('searchInput').addEventListener('input', () => this.filterArticles());
+                document.getElementById('statusFilter').addEventListener('change', () => this.filterArticles());
+                document.getElementById('categoryFilter').addEventListener('change', () => this.filterArticles());
+
+                // Form submission
+                document.getElementById('newArticleForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.publishArticle();
+                });
+
+                // Article actions
+                document.addEventListener('click', (e) => {
+                    if (e.target.closest('.action-btn')) {
+                        const button = e.target.closest('.action-btn');
+                        const articleId = button.dataset.articleId;
+                        const action = button.dataset.action;
+
+                        switch (action) {
+                            case 'view':
+                                this.viewArticle(articleId);
+                                break;
+                            case 'edit':
+                                this.editArticle(articleId);
+                                break;
+                            case 'delete':
+                                this.deleteArticle(articleId);
+                                break;
+                        }
+                    }
+                });
+            }
+
+            loadArticles() {
+                const tbody = document.getElementById('articlesTableBody');
+                const emptyState = document.getElementById('emptyState');
+                
+                if (this.articles.length === 0) {
+                    tbody.innerHTML = '';
+                    emptyState.style.display = 'block';
+                    document.getElementById('articlesTable').style.display = 'none';
+                    return;
+                }
+
+                emptyState.style.display = 'none';
+                document.getElementById('articlesTable').style.display = 'table';
+
+                tbody.innerHTML = this.articles.map(article => `
+                    <tr>
+                        <td>
+                            <div class="article-title">${article.title}</div>
+                            <div class="article-excerpt">${article.content.substring(0, 120)}...</div>
+                        </td>
+                        <td>
+                            <div class="category-tag">${article.category}</div>
+                            <div class="tags">
+                                ${article.tags ? article.tags.split(',').map(tag => 
+                                    `<span class="tag">${tag.trim()}</span>`
+                                ).join('') : ''}
+                            </div>
+                        </td>
+                        <td>
+                            <span class="status-badge status-${article.status}">${article.status === 'published' ? 'Published' : 'Draft'}</span>
+                        </td>
+                        <td>
+                            <div class="stats">
+                                <div><i class="fas fa-eye"></i> ${Math.floor(Math.random() * 1000) + 100}</div>
+                                <div><i class="fas fa-thumbs-up"></i> ${Math.floor(Math.random() * 50) + 10}</div>
+                            </div>
+                        </td>
+                        <td style="color: #6c757d;">
+                            ${new Date(article.publishDate).toLocaleDateString()}
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-view" data-article-id="${article.id}" data-action="view">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="action-btn btn-edit" data-article-id="${article.id}" data-action="edit">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="action-btn btn-delete" data-article-id="${article.id}" data-action="delete">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            filterArticles() {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const statusFilter = document.getElementById('statusFilter').value;
+                const categoryFilter = document.getElementById('categoryFilter').value;
+
+                const rows = document.querySelectorAll('#articlesTableBody tr');
+                
+                rows.forEach(row => {
+                    const title = row.querySelector('.article-title').textContent.toLowerCase();
+                    const excerpt = row.querySelector('.article-excerpt').textContent.toLowerCase();
+                    const category = row.querySelector('.category-tag').textContent;
+                    const status = row.querySelector('.status-badge').textContent.toLowerCase();
+
+                    const matchesSearch = title.includes(searchTerm) || excerpt.includes(searchTerm);
+                    const matchesStatus = !statusFilter || status.includes(statusFilter);
+                    const matchesCategory = !categoryFilter || category === categoryFilter;
+
+                    row.style.display = matchesSearch && matchesStatus && matchesCategory ? '' : 'none';
+                });
+            }
+
+            viewArticle(articleId) {
+                // Open article in dedicated article view page
+                window.open(`article-view.html?id=${articleId}`, '_blank');
+            }
+
+            editArticle(articleId) {
+                const article = this.articles.find(a => a.id === articleId);
+                if (article) {
+                    this.editingId = articleId;
+                    
+                    // Fill form with article data
+                    document.getElementById('articleTitle').value = article.title;
+                    document.getElementById('articleAuthor').value = article.author;
+                    document.getElementById('articleCategory').value = article.category;
+                    document.getElementById('articleTags').value = article.tags;
+                    document.getElementById('articleContent').value = article.content;
+                    
+                    // Update modal title and button
+                    document.querySelector('.modal-title').textContent = 'Edit Article';
+                    document.querySelector('#newArticleForm button[type="submit"]').textContent = 'Update Article';
+                    
+                    // Show modal
+                    document.getElementById('newArticleModal').style.display = 'block';
+                }
+            }
+
+            deleteArticle(articleId) {
+                if (confirm('Are you sure you want to delete this article?')) {
+                    this.articles = this.articles.filter(a => a.id !== articleId);
+                    localStorage.setItem('blogArticles', JSON.stringify(this.articles));
+                    this.loadArticles();
+                }
+            }
+
+            publishArticle() {
+                const title = document.getElementById('articleTitle').value;
+                const author = document.getElementById('articleAuthor').value;
+                const category = document.getElementById('articleCategory').value;
+                const tags = document.getElementById('articleTags').value;
+                const content = document.getElementById('articleContent').value;
+
+                if (this.editingId) {
+                    // Update existing article
+                    const articleIndex = this.articles.findIndex(a => a.id === this.editingId);
+                    if (articleIndex !== -1) {
+                        this.articles[articleIndex] = {
+                            ...this.articles[articleIndex],
+                            title,
+                            author,
+                            category,
+                            tags,
+                            content
+                        };
+                    }
+                } else {
+                    // Create new article
+                    const newArticle = {
+                        id: Date.now().toString(),
+                        title,
+                        author,
+                        category,
+                        tags,
+                        content,
+                        publishDate: new Date().toISOString(),
+                        status: 'published'
+                    };
+                    this.articles.unshift(newArticle);
+                }
+
+                localStorage.setItem('blogArticles', JSON.stringify(this.articles));
+                this.loadArticles();
+                this.closeNewArticleModal();
+            }
+
+            createSampleData() {
+                return [
+                    {
+                        id: '1',
+                        title: 'How AI Tools Assist in Literature Review for Dissertations',
+                        author: 'Research Team',
+                        category: 'Research',
+                        tags: 'AI, Literature Review, Dissertation, Academic Writing',
+                        content: 'Crafting a comprehensive literature review is often one of the most demanding phases of writing a dissertation. It requires extensive reading, systematic analysis, and the ability to synthesize vast amounts of information into a coherent narrative. Fortunately, artificial intelligence tools are revolutionizing this process, making it more efficient and thorough.\n\nTraditional literature review processes involve manually searching through databases, reading countless papers, taking notes, and organizing findings. This approach is time-consuming and prone to human error, often resulting in missed relevant studies or inconsistent analysis.\n\nModern AI tools can scan thousands of academic papers in minutes, identifying relevant studies based on your research questions. These tools use natural language processing to understand context and relevance, ensuring you don\'t miss important research in your field.',
+                        publishDate: new Date('2024-12-15').toISOString(),
+                        status: 'published'
+                    },
+                    {
+                        id: '2',
+                        title: 'Grant Writing Best Practices for Academic Researchers',
+                        author: 'Dr. Sarah Johnson',
+                        category: 'Grant Writing',
+                        tags: 'Grants, Funding, Academic Research, Proposal Writing',
+                        content: 'Securing funding for academic research requires more than just a good idea. It demands strategic thinking, clear communication, and a deep understanding of what funding agencies are looking for. This comprehensive guide will walk you through the essential elements of successful grant writing.\n\nThe foundation of any successful grant proposal is a compelling research question. Your question should be significant, feasible, and aligned with the funding agency\'s priorities. Take time to thoroughly research the agency\'s mission, recent awards, and review criteria before you begin writing.\n\nA well-structured proposal typically includes an executive summary, statement of need, project description, methodology, evaluation plan, and budget justification. Each section should build upon the previous one, creating a cohesive narrative that demonstrates your project\'s value and feasibility.',
+                        publishDate: new Date('2024-12-10').toISOString(),
+                        status: 'published'
+                    },
+                    {
+                        id: '3',
+                        title: 'The Future of Academic Publishing in the Digital Age',
+                        author: 'Prof. Michael Chen',
+                        category: 'Academic Publishing',
+                        tags: 'Publishing, Digital, Open Access, Academic Journals',
+                        content: 'The landscape of academic publishing is undergoing a dramatic transformation. Traditional publishing models are being challenged by open access initiatives, preprint servers, and new digital platforms that promise to make research more accessible and collaborative.\n\nOpen access publishing has gained significant momentum in recent years, with many funding agencies now requiring researchers to make their work freely available. This shift is democratizing access to knowledge and accelerating the pace of scientific discovery.\n\nPreprint servers like arXiv and bioRxiv have revolutionized how researchers share their work, allowing for rapid dissemination of findings before formal peer review. This model enables faster feedback and collaboration while maintaining the integrity of the peer review process for final publication.',
+                        publishDate: new Date('2024-12-05').toISOString(),
+                        status: 'published'
+                    }
+                ];
+            }
+        }
+
+        function openNewArticleModal() {
+            document.getElementById('newArticleModal').style.display = 'block';
+        }
+
+        function closeNewArticleModal() {
+            document.getElementById('newArticleModal').style.display = 'none';
+            document.getElementById('newArticleForm').reset();
+            blogManager.editingId = null;
+            
+            // Reset modal title and button
+            document.querySelector('.modal-title').textContent = 'Create New Article';
+            document.querySelector('#newArticleForm button[type="submit"]').textContent = 'Publish Article';
+        }
+
+        function refreshArticles() {
+            blogManager.loadArticles();
+        }
+
+        // Initialize with sample data if needed
+        function initializeBlog() {
+            const existingArticles = JSON.parse(localStorage.getItem('blogArticles') || '[]');
+            
+            if (existingArticles.length === 0) {
+                const sampleArticles = [
+                    {
+                        id: '1',
+                        title: '2024 Real Estate Market Investment Strategy Analysis',
+                        author: 'Investment Team',
+                        category: 'Investment Strategy',
+                        tags: 'Investment, Strategy, Real Estate, Market Analysis',
+                        content: 'Comprehensive analysis of 2024 real estate market trends, providing professional investment insights and strategic recommendations for investors.\n\nMarket Overview\nThe 2024 real estate market shows steady growth momentum. With continued policy support and rapid economic development, the real estate market is experiencing new opportunities.\n\nKey Trends\n1. Policy Support: Government has introduced a series of policies supporting real estate development, injecting new vitality into the market.\n2. Growing Demand: With industrial upgrades and business expansion, demand for high-quality real estate continues to grow.\n3. Regional Differentiation: Different regions show distinct characteristics in real estate market performance.',
+                        publishDate: new Date('2024-11-15').toISOString(),
+                        status: 'published'
+                    },
+                    {
+                        id: '2',
+                        title: 'Real Estate Policy Interpretation Guide',
+                        author: 'Policy Analysis Team',
+                        category: 'Policy Interpretation',
+                        tags: 'Policy, Real Estate, Analysis, Investment Guide',
+                        content: 'Detailed analysis of current real estate policies and their impact on market dynamics and investment decisions.\n\nInvestment Environment Analysis\nThe 2024 real estate investment environment continues to optimize with increased policy support and broad market prospects.\n\nKey Investment Areas\n1. High-tech Zone: Technology industry cluster with enormous development potential\n2. Economic Development Zone: Strong manufacturing foundation with complete supporting facilities\n3. Ecological Zone: Beautiful ecological environment with rapid emerging industry development',
+                        publishDate: new Date('2024-11-10').toISOString(),
+                        status: 'published'
+                    },
+                    {
+                        id: '3',
+                        title: 'Market Trends and Future Outlook',
+                        author: 'Market Research Team',
+                        category: 'Market Analysis',
+                        tags: 'Market Trends, Future Outlook, Real Estate, Investment',
+                        content: 'Comprehensive analysis of current market trends and future development prospects in the real estate sector.\n\nMarket Analysis\nCurrent market analysis shows continued growth in real estate demand with emerging new development opportunities.\n\nFuture Prospects\nLooking ahead, the real estate market will continue to benefit from policy support and economic growth, presenting significant investment opportunities.',
+                        publishDate: new Date('2024-11-05').toISOString(),
+                        status: 'published'
+                    }
+                ];
+                
+                localStorage.setItem('blogArticles', JSON.stringify(sampleArticles));
+            }
+            
+            // Create BlogManager instance
+            window.blogManager = new SimpleBlogManager();
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializeBlog);
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('newArticleModal');
+            if (e.target === modal) {
+                closeNewArticleModal();
+            }
+        });
+    </script>
+</body>
+</html>

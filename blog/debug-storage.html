@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客存储调试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .btn-danger {
+            background: #dc3545;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        .btn-success {
+            background: #28a745;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>博客存储调试工具</h1>
+        
+        <div class="controls">
+            <button class="btn" onclick="checkStorage()">检查存储状态</button>
+            <button class="btn btn-success" onclick="initializeArticles()">初始化文章数据</button>
+            <button class="btn btn-danger" onclick="clearStorage()">清空存储</button>
+            <button class="btn" onclick="goToBlog()">返回博客</button>
+        </div>
+
+        <div id="status"></div>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function showOutput(content) {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = `<pre>${content}</pre>`;
+        }
+
+        function checkStorage() {
+            try {
+                const articles = localStorage.getItem('blogArticles');
+                if (articles) {
+                    const parsedArticles = JSON.parse(articles);
+                    showStatus(`找到 ${parsedArticles.length} 篇文章`, 'success');
+                    showOutput(JSON.stringify(parsedArticles, null, 2));
+                } else {
+                    showStatus('localStorage中没有找到文章数据', 'error');
+                    showOutput('localStorage为空');
+                }
+            } catch (error) {
+                showStatus(`检查存储时出错: ${error.message}`, 'error');
+                showOutput(error.stack);
+            }
+        }
+
+        function clearStorage() {
+            if (confirm('确定要清空所有文章数据吗？')) {
+                localStorage.removeItem('blogArticles');
+                showStatus('存储已清空', 'success');
+                showOutput('localStorage已清空');
+            }
+        }
+
+        function initializeArticles() {
+            const sampleArticles = [
+                {
+                    id: '1',
+                    title: 'How AI Tools Assist in Literature Review for Dissertations',
+                    author: 'Research Team',
+                    category: 'Research',
+                    tags: 'AI, Literature Review, Dissertation, Academic Writing',
+                    content: 'Crafting a comprehensive literature review is often one of the most demanding phases of writing a dissertation...',
+                    publishDate: new Date('2024-12-15').toISOString(),
+                    status: 'published'
+                },
+                {
+                    id: '2',
+                    title: 'Grant Writing Best Practices for Academic Researchers',
+                    author: 'Dr. Sarah Johnson',
+                    category: 'Grant Writing',
+                    tags: 'Grants, Funding, Academic Research, Proposal Writing',
+                    content: 'Securing funding for academic research requires more than just a good idea...',
+                    publishDate: new Date('2024-12-10').toISOString(),
+                    status: 'published'
+                },
+                {
+                    id: '3',
+                    title: 'The Future of Academic Publishing in the Digital Age',
+                    author: 'Prof. Michael Chen',
+                    category: 'Academic Publishing',
+                    tags: 'Publishing, Digital, Open Access, Academic Journals',
+                    content: 'The landscape of academic publishing is undergoing a dramatic transformation...',
+                    publishDate: new Date('2024-12-05').toISOString(),
+                    status: 'published'
+                },
+                {
+                    id: '4',
+                    title: '2025年最佳AI学术写作工具完整指南',
+                    author: 'AI研究团队',
+                    category: 'AI Tools',
+                    tags: 'AI写作工具, 学术写作, 人工智能, 研究效率',
+                    content: '在数字化时代，人工智能正在革命性地改变学术写作的方式...',
+                    publishDate: new Date('2024-12-14').toISOString(),
+                    status: 'published'
+                },
+                {
+                    id: '5',
+                    title: '文献综述写作完整攻略',
+                    author: '学术写作专家',
+                    category: 'Academic Writing',
+                    tags: '文献综述, 学术写作, 研究方法',
+                    content: '文献综述是学术研究的重要组成部分...',
+                    publishDate: new Date('2024-12-13').toISOString(),
+                    status: 'published'
+                },
+                {
+                    id: '6',
+                    title: '研究方法选择指南',
+                    author: '研究方法学专家',
+                    category: 'Research Methods',
+                    tags: '研究方法, 定量研究, 定性研究',
+                    content: '选择合适的研究方法是成功完成学术研究的关键...',
+                    publishDate: new Date('2024-12-12').toISOString(),
+                    status: 'published'
+                },
+                {
+                    id: '7',
+                    title: '学术论文写作技巧大全',
+                    author: '写作指导专家',
+                    category: 'Academic Writing',
+                    tags: '学术写作, 论文写作, 写作技巧',
+                    content: '学术论文写作是每个研究者必须掌握的核心技能...',
+                    publishDate: new Date('2024-12-11').toISOString(),
+                    status: 'published'
+                }
+            ];
+
+            localStorage.setItem('blogArticles', JSON.stringify(sampleArticles));
+            showStatus(`成功初始化 ${sampleArticles.length} 篇文章`, 'success');
+            showOutput(JSON.stringify(sampleArticles, null, 2));
+        }
+
+        function goToBlog() {
+            window.location.href = 'index.html';
+        }
+
+        // 页面加载时自动检查
+        window.onload = function() {
+            checkStorage();
+        };
+    </script>
+</body>
+</html>
