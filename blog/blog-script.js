@@ -6,6 +6,7 @@ let currentCategory = 'all';
 let postsPerPage = 6;
 let currentPage = 1;
 let currentLanguage = 'zh'; // 默认语言 / Default language
+let articleAPI; // 文章API实例
 
 // 自动语言检测和设置功能 / Auto Language Detection and Setup
 function detectAndSetLanguage() {
@@ -336,6 +337,182 @@ function setupEventListeners() {
 }
 
 // 加载文章数据
+// 页面加载完成后初始化
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('博客页面已加载');
+    
+    // 初始化文章API
+    articleAPI = new ArticleAPI();
+    
+    loadPosts();
+    setupEventListeners();
+});
+
+// 加载文章数据
+async function loadPosts() {
+    try {
+        // 使用新的API加载文章
+        await articleAPI.loadArticles();
+        allPosts = articleAPI.getAllArticles();
+        
+        // 如果没有文章，添加默认文章
+        if (allPosts.length === 0) {
+            await addDefaultArticles();
+            allPosts = articleAPI.getAllArticles();
+        }
+        
+        // 显示文章
+        displayPosts();
+        
+    } catch (error) {
+        console.error('加载文章失败:', error);
+        // 如果API加载失败，使用备用方法
+        loadPostsFromLocalStorage();
+    }
+}
+
+// 添加默认文章
+async function addDefaultArticles() {
+    const defaultPosts = [
+        {
+            title: {
+                zh: "学术写作完全指南",
+                en: "Complete Guide to Academic Writing"
+            },
+            excerpt: {
+                zh: "掌握学术写作的艺术，包括研究方法、论文结构和常见陷阱，避免学术发表失败。",
+                en: "Master the art of writing academic papers, including research methods, paper structure, and common pitfalls to avoid for improved publication success."
+            },
+            content: "这是一篇关于学术写作的详细指南，涵盖了从研究设计到论文发表的全过程。学术写作不仅仅是表达思想，更是一种严谨的学术交流方式。",
+            category: "writing-tips",
+            categoryName: {
+                zh: "写作技巧",
+                en: "Writing Tips"
+            },
+            author: {
+                zh: "AI Grant Writer",
+                en: "AI Grant Writer"
+            },
+            date: "2024-01-15",
+            readTime: {
+                zh: "8分钟",
+                en: "8 min read"
+            },
+            tags: ["学术写作", "研究方法", "论文发表"],
+            icon: "fas fa-pen-fancy",
+            url: "complete-guide-to-academic-writing.html"
+        },
+        {
+            title: {
+                zh: "定性研究方法完整指南",
+                en: "Complete Guide to Qualitative Research Methods"
+            },
+            excerpt: {
+                zh: "探索定性研究方法，包括访谈技巧、数据分析和结果呈现，适用于科学研究项目。",
+                en: "Explore qualitative research methodologies, including interview techniques, data analysis, and result presentation for scientific research projects."
+            },
+            content: "定性研究是一种重要的研究方法，它通过深入了解研究对象的行为、态度和观点来获得丰富的数据。本指南将详细介绍定性研究的各个方面。",
+            category: "research-methods",
+            categoryName: {
+                zh: "研究方法",
+                en: "Research Methods"
+            },
+            author: {
+                zh: "AI Grant Writer",
+                en: "AI Grant Writer"
+            },
+            date: "2024-01-01",
+            readTime: {
+                zh: "10分钟",
+                en: "10 min read"
+            },
+            tags: ["定性研究", "访谈技巧", "数据分析"],
+            icon: "fas fa-microscope",
+            url: "complete-guide-to-qualitative-research.html"
+        },
+        {
+            title: {
+                zh: "2024年AI写作工具完整指南",
+                en: "2024 Complete Guide to AI Writing Tools"
+            },
+            excerpt: {
+                zh: "发现最新的AI写作工具如何革命性地改变学术写作过程，同时保持学术诚信和提高效率。",
+                en: "Discover how the latest AI writing tools are revolutionizing academic writing processes while maintaining academic integrity and improving efficiency."
+            },
+            content: "AI写作工具正在改变我们的写作方式。从语法检查到内容生成，这些工具为学术写作提供了前所未有的支持。但是，如何在使用这些工具的同时保持学术诚信呢？",
+            category: "ai-tools",
+            categoryName: {
+                zh: "AI工具",
+                en: "AI Tools"
+            },
+            author: {
+                zh: "AI Grant Writer",
+                en: "AI Grant Writer"
+            },
+            date: "2024-01-01",
+            readTime: {
+                zh: "12分钟",
+                en: "12 min read"
+            },
+            tags: ["AI工具", "写作效率", "学术诚信"],
+            icon: "fas fa-robot",
+            url: "2024-complete-guide-to-ai-writing-tools.html"
+        }
+    ];
+
+    // 添加默认文章到API
+    for (const post of defaultPosts) {
+        await articleAPI.addArticle(post);
+    }
+}
+
+// 备用方法：从localStorage加载文章
+function loadPostsFromLocalStorage() {
+    console.log('使用备用方法加载文章');
+    
+    // 默认文章数据
+    const defaultPosts = [
+        {
+            id: 1,
+            title: {
+                zh: "学术写作完全指南",
+                en: "Complete Guide to Academic Writing"
+            },
+            excerpt: {
+                zh: "掌握学术写作的艺术，包括研究方法、论文结构和常见陷阱，避免学术发表失败。",
+                en: "Master the art of writing academic papers, including research methods, paper structure, and common pitfalls to avoid for improved publication success."
+            },
+            content: "这是一篇关于学术写作的详细指南...",
+            category: "writing-tips",
+            categoryName: {
+                zh: "写作技巧",
+                en: "Writing Tips"
+            },
+            author: {
+                zh: "AI Grant Writer",
+                en: "AI Grant Writer"
+            },
+            date: "2024-01-15",
+            readTime: {
+                zh: "8分钟",
+                en: "8 min read"
+            },
+            tags: ["学术写作", "研究方法", "论文发表"],
+            icon: "fas fa-pen-fancy",
+            url: "complete-guide-to-academic-writing.html"
+        }
+    ];
+
+    // 加载用户发布的文章
+    const userArticles = loadUserArticlesFromStorage();
+    
+    // 合并默认文章和用户文章
+    allPosts = [...userArticles, ...defaultPosts];
+    
+    // 显示文章
+    displayPosts();
+}
+
 function loadPosts() {
     // 示例文章数据 - 实际使用时可以从API或JSON文件加载
     const defaultPosts = [
@@ -601,12 +778,12 @@ function displayPosts() {
     console.log('当前语言:', currentLanguage);
     console.log('allPosts内容:', allPosts);
     
-    const postsGrid = document.getElementById('postsGrid');
+    const postsGrid = document.getElementById('articlesGrid');
     if (!postsGrid) {
-        console.error('错误：未找到postsGrid元素');
+        console.error('错误：未找到articlesGrid元素');
         return;
     }
-    console.log('成功找到postsGrid元素:', postsGrid);
+    console.log('成功找到articlesGrid元素:', postsGrid);
 
     // 隐藏加载指示器
     const loadingIndicator = postsGrid.querySelector('.loading-indicator');
