@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客测试 - 工作版本</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="blog-styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="blog-header">
+            <h1>AI Grant Writer 博客</h1>
+            <p>分享学术写作技巧与AI工具应用</p>
+        </header>
+
+        <main class="blog-main">
+            <div class="posts-grid" id="postsGrid">
+                <div class="loading-indicator">
+                    <div class="loading-spinner"></div>
+                    <p>正在加载文章...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 简化的博客脚本
+        let allPosts = [];
+        let currentLanguage = 'zh';
+
+        // 示例文章数据
+        const samplePosts = [
+            {
+                id: 1,
+                title: {
+                    zh: "如何撰写高质量的学术论文",
+                    en: "How to Write High-Quality Academic Papers"
+                },
+                excerpt: {
+                    zh: "学术论文写作是研究工作的重要组成部分，本文将介绍撰写高质量学术论文的关键要素和实用技巧。",
+                    en: "Academic paper writing is an essential part of research work. This article introduces key elements and practical tips for writing high-quality academic papers."
+                },
+                category: "academic-writing",
+                categoryName: {
+                    zh: "学术写作",
+                    en: "Academic Writing"
+                },
+                author: {
+                    zh: "AI Grant Writer 团队",
+                    en: "AI Grant Writer Team"
+                },
+                date: "2024-01-15",
+                readTime: {
+                    zh: "8分钟",
+                    en: "8 min read"
+                },
+                icon: "fas fa-file-alt"
+            },
+            {
+                id: 2,
+                title: {
+                    zh: "AI工具在学术研究中的应用",
+                    en: "Applications of AI Tools in Academic Research"
+                },
+                excerpt: {
+                    zh: "人工智能技术正在革命性地改变学术研究的方式，从文献综述到数据分析，AI工具为研究者提供了强大的支持。",
+                    en: "Artificial intelligence technology is revolutionizing the way academic research is conducted, providing powerful support for researchers from literature review to data analysis."
+                },
+                category: "ai-tools",
+                categoryName: {
+                    zh: "AI工具",
+                    en: "AI Tools"
+                },
+                author: {
+                    zh: "Dr. 李明",
+                    en: "Dr. Li Ming"
+                },
+                date: "2024-01-10",
+                readTime: {
+                    zh: "6分钟",
+                    en: "6 min read"
+                },
+                icon: "fas fa-robot"
+            },
+            {
+                id: 3,
+                title: {
+                    zh: "研究资助申请的成功策略",
+                    en: "Successful Strategies for Research Grant Applications"
+                },
+                excerpt: {
+                    zh: "获得研究资助是学术生涯的重要里程碑。本文分享申请研究资助的实用策略和注意事项。",
+                    en: "Obtaining research funding is an important milestone in academic careers. This article shares practical strategies and considerations for applying for research grants."
+                },
+                category: "grant-writing",
+                categoryName: {
+                    zh: "资助申请",
+                    en: "Grant Writing"
+                },
+                author: {
+                    zh: "Prof. 张华",
+                    en: "Prof. Zhang Hua"
+                },
+                date: "2024-01-05",
+                readTime: {
+                    zh: "10分钟",
+                    en: "10 min read"
+                },
+                icon: "fas fa-money-bill-wave"
+            }
+        ];
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('zh-CN');
+        }
+
+        function createPostCard(post) {
+            const card = document.createElement('div');
+            card.className = 'post-card';
+
+            const title = post.title[currentLanguage] || post.title.zh;
+            const excerpt = post.excerpt[currentLanguage] || post.excerpt.zh;
+            const categoryName = post.categoryName[currentLanguage] || post.categoryName.zh;
+            const author = post.author[currentLanguage] || post.author.zh;
+            const readTime = post.readTime[currentLanguage] || post.readTime.zh;
+
+            card.innerHTML = `
+                <div class="post-image">
+                    <i class="${post.icon}"></i>
+                </div>
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="post-category">${categoryName}</span>
+                        <span class="post-date">
+                            <i class="fas fa-calendar"></i>
+                            ${formatDate(post.date)}
+                        </span>
+                    </div>
+                    <h3 class="post-title">${title}</h3>
+                    <p class="post-excerpt">${excerpt}</p>
+                    <div class="post-footer">
+                        <div class="post-author">
+                            <i class="fas fa-user"></i>
+                            ${author}
+                        </div>
+                        <div class="post-read-time">
+                            <i class="fas fa-clock"></i>
+                            ${readTime}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function displayPosts() {
+            console.log('开始显示文章，文章数量:', allPosts.length);
+            
+            const postsGrid = document.getElementById('postsGrid');
+            if (!postsGrid) {
+                console.error('未找到postsGrid元素');
+                return;
+            }
+
+            // 隐藏加载指示器
+            const loadingIndicator = postsGrid.querySelector('.loading-indicator');
+            if (loadingIndicator) {
+                loadingIndicator.remove();
+            }
+
+            // 清空现有内容
+            postsGrid.innerHTML = '';
+
+            if (allPosts.length === 0) {
+                postsGrid.innerHTML = `
+                    <div class="no-posts-message">
+                        <div class="no-posts-content">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>暂无文章</h3>
+                            <p>还没有发布任何文章。</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // 生成文章卡片
+            allPosts.forEach(post => {
+                const postCard = createPostCard(post);
+                postsGrid.appendChild(postCard);
+            });
+
+            console.log('文章显示完成');
+        }
+
+        function loadPosts() {
+            console.log('开始加载文章...');
+            allPosts = samplePosts;
+            console.log('文章加载完成，共', allPosts.length, '篇');
+            displayPosts();
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('页面加载完成，开始初始化博客...');
+            loadPosts();
+        });
+    </script>
+</body>
+</html>

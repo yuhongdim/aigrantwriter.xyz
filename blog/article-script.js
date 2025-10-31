@@ -1259,10 +1259,21 @@ function initializeArticle() {
     const urlParams = new URLSearchParams(window.location.search);
     const articleId = urlParams.get('id');
     
+    let article = null;
+    
+    // 首先检查预定义的文章数据
     if (articleId && articleData[articleId]) {
-        loadArticle(articleData[articleId]);
+        article = articleData[articleId];
+    } else if (articleId) {
+        // 检查用户发布的文章
+        const userArticles = JSON.parse(localStorage.getItem('userArticles') || '[]');
+        article = userArticles.find(a => a.id === articleId);
+    }
+    
+    if (article) {
+        loadArticle(article);
         generateTableOfContents();
-        loadRelatedArticles(articleData[articleId].category, articleId);
+        loadRelatedArticles(article.category, articleId);
         setupScrollSpy();
     } else {
         showArticleNotFound();
@@ -1279,10 +1290,30 @@ function loadArticle(article) {
     
     // 加载文章内容
     const contentWrapper = document.getElementById('articleContent');
-    contentWrapper.innerHTML = article.content;
+    
+    // 获取当前语言
+    const currentLang = localStorage.getItem('language') || 'zh';
+    
+    // 根据语言选择内容，优先使用对应语言的内容
+    let content = '';
+    if (currentLang === 'en' && article.contentEn) {
+        content = article.contentEn;
+    } else if (currentLang === 'zh' && article.content) {
+        content = article.content;
+    } else {
+        // 如果没有对应语言的内容，使用默认内容
+        content = article.content || article.contentEn || '';
+    }
+    
+    // 如果内容为空，显示默认消息
+    if (!content) {
+        content = '<p>文章内容正在加载中...</p>';
+    }
+    
+    contentWrapper.innerHTML = content;
     
     // 更新文章标签
-    updateArticleTags(article.tags);
+    updateArticleTags(article.tags || article.tagsEn || []);
     
     // 更新结构化数据
     updateStructuredData(article);

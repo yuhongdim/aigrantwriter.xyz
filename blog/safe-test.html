@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安全测试页面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #856404;
+        }
+        
+        .warning-box h3 {
+            margin-bottom: 10px;
+            color: #856404;
+        }
+        
+        .safe-section {
+            background: #d4edda;
+            border: 2px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #155724;
+        }
+        
+        .safe-section h3 {
+            margin-bottom: 10px;
+            color: #155724;
+        }
+        
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .status-display {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .navigation {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ 安全测试页面</h1>
+            <p>安全地测试博客功能，不会意外删除您的数据</p>
+        </div>
+        
+        <div class="warning-box">
+            <h3>⚠️ 重要提醒</h3>
+            <p>此页面专为安全测试设计，不会删除或修改您现有的文章数据。所有测试操作都是只读的，确保您的数据安全。</p>
+        </div>
+        
+        <div class="safe-section">
+            <h3>✅ 安全测试功能</h3>
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="checkDataStatus()">检查数据状态</button>
+                <button class="btn btn-success" onclick="testArticleDisplay()">测试文章显示</button>
+                <button class="btn btn-warning" onclick="validateStorage()">验证存储结构</button>
+            </div>
+            <div id="testResults" class="status-display"></div>
+        </div>
+        
+        <div class="safe-section">
+            <h3>🔗 安全导航</h3>
+            <div class="button-group">
+                <a href="index.html" class="btn btn-primary">返回博客首页</a>
+                <a href="data-recovery.html" class="btn btn-success">数据恢复工具</a>
+                <a href="publish-article.html" class="btn btn-warning">发布新文章</a>
+            </div>
+        </div>
+        
+        <div class="warning-box">
+            <h3>🚫 已替换的危险页面</h3>
+            <p>以下页面可能会意外删除您的数据，建议避免使用：</p>
+            <ul style="margin-top: 10px; padding-left: 20px;">
+                <li><strong>test-buttons.html</strong> - 包含清理localStorage的功能</li>
+                <li><strong>clear-storage.html</strong> - 专门用于清理存储数据</li>
+                <li><strong>debug-storage-check.html</strong> - 包含localStorage.clear()功能</li>
+            </ul>
+            <p style="margin-top: 10px;"><strong>建议：</strong>使用此安全测试页面代替上述页面进行测试。</p>
+        </div>
+    </div>
+
+    <script>
+        // 安全的数据状态检查（只读）
+        function checkDataStatus() {
+            const newArticles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+            const publishedArticles = JSON.parse(localStorage.getItem('publishedArticles') || '[]');
+            
+            let statusHtml = `
+                <h4>📊 数据状态报告</h4>
+                <p><strong>新文章数量：</strong> ${newArticles.length} 篇</p>
+                <p><strong>已发布文章：</strong> ${publishedArticles.length} 篇</p>
+                <p><strong>总文章数量：</strong> ${newArticles.length + publishedArticles.length} 篇</p>
+            `;
+            
+            if (newArticles.length === 0 && publishedArticles.length === 0) {
+                statusHtml += `
+                    <div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                        <strong>⚠️ 警告：</strong>没有找到任何文章数据！建议使用数据恢复工具。
+                    </div>
+                `;
+            } else {
+                statusHtml += `
+                    <div style="background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                        <strong>✅ 状态良好：</strong>数据完整，功能正常。
+                    </div>
+                `;
+            }
+            
+            document.getElementById('testResults').innerHTML = statusHtml;
+        }
+        
+        // 测试文章显示功能（只读）
+        function testArticleDisplay() {
+            const newArticles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+            
+            let displayHtml = `<h4>📝 文章显示测试</h4>`;
+            
+            if (newArticles.length > 0) {
+                displayHtml += `<p><strong>最新文章预览：</strong></p>`;
+                newArticles.slice(0, 3).forEach((article, index) => {
+                    displayHtml += `
+                        <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-radius: 5px; border-left: 3px solid #667eea;">
+                            <strong>${index + 1}. ${article.title}</strong><br>
+                            <small>${article.categoryName} • ${article.date} • ${article.readTime}</small>
+                        </div>
+                    `;
+                });
+                
+                displayHtml += `
+                    <div style="background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                        <strong>✅ 测试通过：</strong>文章显示功能正常。
+                    </div>
+                `;
+            } else {
+                displayHtml += `
+                    <div style="background: #fff3cd; color: #856404; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                        <strong>⚠️ 提示：</strong>暂无文章数据可供显示测试。
+                    </div>
+                `;
+            }
+            
+            document.getElementById('testResults').innerHTML = displayHtml;
+        }
+        
+        // 验证存储结构（只读）
+        function validateStorage() {
+            let validationHtml = `<h4>🔍 存储结构验证</h4>`;
+            
+            const requiredKeys = ['newArticles', 'publishedArticles'];
+            const optionalKeys = ['articleBackups', 'autoBackupEnabled'];
+            
+            validationHtml += `<p><strong>必需的存储键：</strong></p>`;
+            requiredKeys.forEach(key => {
+                const exists = localStorage.getItem(key) !== null;
+                const status = exists ? '✅' : '❌';
+                const color = exists ? '#155724' : '#721c24';
+                validationHtml += `<p style="color: ${color};">${status} ${key}</p>`;
+            });
+            
+            validationHtml += `<p><strong>可选的存储键：</strong></p>`;
+            optionalKeys.forEach(key => {
+                const exists = localStorage.getItem(key) !== null;
+                const status = exists ? '✅' : '⚪';
+                const color = exists ? '#155724' : '#6c757d';
+                validationHtml += `<p style="color: ${color};">${status} ${key}</p>`;
+            });
+            
+            // 检查数据完整性
+            try {
+                const newArticles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+                const publishedArticles = JSON.parse(localStorage.getItem('publishedArticles') || '[]');
+                
+                const isValidNewArticles = Array.isArray(newArticles);
+                const isValidPublishedArticles = Array.isArray(publishedArticles);
+                
+                if (isValidNewArticles && isValidPublishedArticles) {
+                    validationHtml += `
+                        <div style="background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                            <strong>✅ 验证通过：</strong>存储结构完整且有效。
+                        </div>
+                    `;
+                } else {
+                    validationHtml += `
+                        <div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                            <strong>❌ 验证失败：</strong>存储数据格式异常。
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                validationHtml += `
+                    <div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                        <strong>❌ 验证错误：</strong>无法解析存储数据。
+                    </div>
+                `;
+            }
+            
+            document.getElementById('testResults').innerHTML = validationHtml;
+        }
+        
+        // 页面加载时显示欢迎信息
+        window.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('testResults').innerHTML = `
+                <h4>🎯 欢迎使用安全测试页面</h4>
+                <p>选择上方的测试功能开始安全测试。所有操作都是只读的，不会修改您的数据。</p>
+            `;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>存储检查工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .btn.danger {
+            background: #dc3545;
+        }
+        .btn.danger:hover {
+            background: #c82333;
+        }
+        .data-display {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .article-item {
+            background: #e9ecef;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        .article-item.new {
+            border-left-color: #28a745;
+        }
+        .article-item.old {
+            border-left-color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>存储数据检查工具</h1>
+        <p>检查localStorage中的文章数据，分析可能的删除原因</p>
+        
+        <div>
+            <button class="btn" onclick="checkAllStorage()">检查所有存储数据</button>
+            <button class="btn" onclick="checkNewArticles()">检查新文章</button>
+            <button class="btn" onclick="checkPublishedArticles()">检查已发布文章</button>
+            <button class="btn danger" onclick="clearAllStorage()">清空所有存储</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>存储数据详情</h2>
+        <div id="storageDetails" class="data-display">点击上方按钮查看存储数据...</div>
+    </div>
+
+    <div class="container">
+        <h2>文章列表</h2>
+        <div id="articlesList"></div>
+    </div>
+
+    <div class="container">
+        <h2>操作日志</h2>
+        <div id="operationLog" class="data-display"></div>
+    </div>
+
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('operationLog');
+            const timestamp = new Date().toLocaleString();
+            logDiv.textContent += `[${timestamp}] ${message}\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function checkAllStorage() {
+            log('开始检查所有localStorage数据...');
+            const storageDetails = document.getElementById('storageDetails');
+            let output = '=== localStorage 完整数据 ===\n\n';
+            
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key);
+                output += `键: ${key}\n`;
+                output += `值: ${value}\n`;
+                output += `长度: ${value.length} 字符\n`;
+                output += '---\n\n';
+            }
+            
+            if (localStorage.length === 0) {
+                output += '没有找到任何localStorage数据\n';
+            }
+            
+            storageDetails.textContent = output;
+            log(`检查完成，找到 ${localStorage.length} 个存储项`);
+        }
+
+        function checkNewArticles() {
+            log('检查新文章数据...');
+            const newArticles = localStorage.getItem('newArticles');
+            const storageDetails = document.getElementById('storageDetails');
+            
+            if (newArticles) {
+                try {
+                    const articles = JSON.parse(newArticles);
+                    let output = `=== 新文章数据 (${articles.length} 篇) ===\n\n`;
+                    articles.forEach((article, index) => {
+                        output += `文章 ${index + 1}:\n`;
+                        output += `ID: ${article.id}\n`;
+                        output += `标题: ${article.title}\n`;
+                        output += `分类: ${article.category}\n`;
+                        output += `日期: ${article.date}\n`;
+                        output += `内容长度: ${article.content ? article.content.length : 0} 字符\n`;
+                        output += '---\n\n';
+                    });
+                    storageDetails.textContent = output;
+                    displayArticlesList(articles, 'new');
+                    log(`找到 ${articles.length} 篇新文章`);
+                } catch (e) {
+                    storageDetails.textContent = '新文章数据解析错误: ' + e.message;
+                    log('新文章数据解析失败: ' + e.message);
+                }
+            } else {
+                storageDetails.textContent = '没有找到新文章数据';
+                log('没有找到新文章数据');
+            }
+        }
+
+        function checkPublishedArticles() {
+            log('检查已发布文章数据...');
+            const publishedArticles = localStorage.getItem('publishedArticles');
+            const storageDetails = document.getElementById('storageDetails');
+            
+            if (publishedArticles) {
+                try {
+                    const articles = JSON.parse(publishedArticles);
+                    let output = `=== 已发布文章数据 (${articles.length} 篇) ===\n\n`;
+                    articles.forEach((article, index) => {
+                        output += `文章 ${index + 1}:\n`;
+                        output += `ID: ${article.id}\n`;
+                        output += `标题: ${article.title}\n`;
+                        output += `分类: ${article.category}\n`;
+                        output += `日期: ${article.date}\n`;
+                        output += `内容长度: ${article.content ? article.content.length : 0} 字符\n`;
+                        output += '---\n\n';
+                    });
+                    storageDetails.textContent = output;
+                    displayArticlesList(articles, 'old');
+                    log(`找到 ${articles.length} 篇已发布文章`);
+                } catch (e) {
+                    storageDetails.textContent = '已发布文章数据解析错误: ' + e.message;
+                    log('已发布文章数据解析失败: ' + e.message);
+                }
+            } else {
+                storageDetails.textContent = '没有找到已发布文章数据';
+                log('没有找到已发布文章数据');
+            }
+        }
+
+        function displayArticlesList(articles, type) {
+            const articlesList = document.getElementById('articlesList');
+            articlesList.innerHTML = '';
+            
+            articles.forEach(article => {
+                const div = document.createElement('div');
+                div.className = `article-item ${type}`;
+                div.innerHTML = `
+                    <strong>${article.title}</strong><br>
+                    <small>ID: ${article.id} | 分类: ${article.category} | 日期: ${article.date}</small>
+                `;
+                articlesList.appendChild(div);
+            });
+        }
+
+        function clearAllStorage() {
+            if (confirm('确定要清空所有localStorage数据吗？这个操作不可撤销！')) {
+                localStorage.clear();
+                log('已清空所有localStorage数据');
+                document.getElementById('storageDetails').textContent = 'localStorage已清空';
+                document.getElementById('articlesList').innerHTML = '';
+            }
+        }
+
+        // 页面加载时自动检查
+        window.onload = function() {
+            log('页面加载完成，开始自动检查...');
+            checkAllStorage();
+        };
+    </script>
+</body>
+</html>

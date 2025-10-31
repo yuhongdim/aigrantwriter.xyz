@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试按钮功能</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        button { margin: 5px; padding: 10px 15px; }
+        .article-card { border: 1px solid #ccc; padding: 15px; margin: 10px 0; position: relative; }
+        .article-actions { position: absolute; top: 10px; right: 10px; }
+        .edit-btn, .delete-btn { margin-left: 5px; padding: 5px 8px; border: none; border-radius: 3px; cursor: pointer; }
+        .edit-btn { background: #28a745; color: white; }
+        .delete-btn { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <h1>测试删除和编辑按钮功能</h1>
+    
+    <div class="test-section">
+        <h2>1. 清理并添加测试数据</h2>
+        <button onclick="clearAndAddTest()">清理并添加测试文章</button>
+        <div id="step1-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. 查看localStorage数据</h2>
+        <button onclick="showStorageData()">显示localStorage数据</button>
+        <div id="step2-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. 模拟文章卡片</h2>
+        <div id="article-container"></div>
+        <button onclick="createTestCard()">创建测试文章卡片</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. 测试按钮功能</h2>
+        <button onclick="window.location.href='index.html'">前往博客页面</button>
+    </div>
+    
+    <script>
+        function clearAndAddTest() {
+            // 清理旧数据
+            localStorage.removeItem('newArticles');
+            localStorage.removeItem('publishedArticles');
+            
+            // 添加测试文章
+            const testArticle = {
+                id: 'new_test-article-with-management-buttons',
+                title: '测试文章 - 带管理按钮',
+                excerpt: '这是一篇测试文章，用于验证删除和编辑按钮的显示和功能。',
+                category: 'writing',
+                categoryName: 'Writing Techniques',
+                date: new Date().toISOString().split('T')[0],
+                readTime: '3 min read',
+                icon: '🧪',
+                url: 'test-article.html',
+                content: '这是测试文章的完整内容。包含足够的文字来测试编辑功能。用户应该能够看到删除和编辑按钮，并且能够正常使用这些功能。',
+                tags: ['测试', '按钮', '管理'],
+                author: 'AI Grant Writer'
+            };
+            
+            localStorage.setItem('newArticles', JSON.stringify([testArticle]));
+            document.getElementById('step1-result').innerHTML = '<p style="color: green;">✅ 测试数据已添加</p>';
+        }
+        
+        function showStorageData() {
+            const newArticles = localStorage.getItem('newArticles');
+            const publishedArticles = localStorage.getItem('publishedArticles');
+            
+            let html = '<h3>localStorage 数据:</h3>';
+            html += '<h4>newArticles:</h4><pre>' + (newArticles || '空') + '</pre>';
+            html += '<h4>publishedArticles:</h4><pre>' + (publishedArticles || '空') + '</pre>';
+            
+            document.getElementById('step2-result').innerHTML = html;
+        }
+        
+        function createTestCard() {
+            const articles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+            const container = document.getElementById('article-container');
+            
+            if (articles.length === 0) {
+                container.innerHTML = '<p style="color: red;">没有找到测试文章，请先执行步骤1</p>';
+                return;
+            }
+            
+            const article = articles[0];
+            const cardHtml = `
+                <div class="article-card" style="border: 1px solid #ddd; border-radius: 12px; overflow: hidden; max-width: 400px;">
+                    <div class="article-header-actions" style="display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px 8px 16px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-bottom: 1px solid #dee2e6;">
+                        <button class="edit-btn" onclick="editArticle('${article.id}')" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border: none; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white;">
+                            ✏️ 编辑
+                        </button>
+                        <button class="delete-btn" onclick="deleteArticle('${article.id}')" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border: none; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%); color: white;">
+                            🗑️ 删除
+                        </button>
+                    </div>
+                    <div style="padding: 15px;">
+                        <h3>${article.title}</h3>
+                        <p>${article.excerpt}</p>
+                        <small>ID: ${article.id}</small>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = cardHtml;
+        }
+        
+        function deleteArticle(articleId) {
+            if (confirm('确定要删除这篇文章吗？')) {
+                const articles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+                const updatedArticles = articles.filter(article => article.id !== articleId);
+                localStorage.setItem('newArticles', JSON.stringify(updatedArticles));
+                alert('文章已删除！');
+                createTestCard(); // 重新创建卡片
+            }
+        }
+        
+        function editArticle(articleId) {
+            const articles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+            const article = articles.find(a => a.id === articleId);
+            if (article) {
+                sessionStorage.setItem('editingArticle', JSON.stringify(article));
+                alert('文章数据已保存到sessionStorage，即将跳转到编辑页面');
+                window.location.href = 'publish-article.html?edit=true';
+            }
+        }
+    </script>
+</body>
+</html>

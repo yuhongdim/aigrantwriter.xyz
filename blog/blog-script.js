@@ -7,6 +7,125 @@ let postsPerPage = 6;
 let currentPage = 1;
 let currentLanguage = 'zh'; // 默认语言 / Default language
 
+// 自动语言检测和设置功能 / Auto Language Detection and Setup
+function detectAndSetLanguage() {
+    console.log('开始自动语言检测...');
+    
+    // 1. 检查URL路径中的语言标识符
+    const currentPath = window.location.pathname;
+    const currentSearch = window.location.search;
+    
+    // 检查URL参数中的语言设置
+    const urlParams = new URLSearchParams(currentSearch);
+    const urlLang = urlParams.get('lang');
+    
+    // 检查路径中的语言标识符
+    let detectedLang = null;
+    
+    if (urlLang && (urlLang === 'zh' || urlLang === 'en')) {
+        detectedLang = urlLang;
+        console.log('从URL参数检测到语言:', detectedLang);
+    } else if (currentPath.includes('/cn/') || currentPath.includes('/zh/')) {
+        detectedLang = 'zh';
+        console.log('从URL路径检测到中文区域');
+    } else if (currentPath.includes('/en/')) {
+        detectedLang = 'en';
+        console.log('从URL路径检测到英文区域');
+    } else {
+        // 2. 如果URL中没有语言标识符，检查浏览器语言偏好
+        const browserLang = navigator.language || navigator.userLanguage;
+        console.log('浏览器语言:', browserLang);
+        
+        // 3. 检查本地存储的语言偏好
+        const savedLang = localStorage.getItem('preferred-language');
+        console.log('本地存储的语言偏好:', savedLang);
+        
+        if (savedLang && (savedLang === 'zh' || savedLang === 'en')) {
+            detectedLang = savedLang;
+            console.log('使用本地存储的语言偏好:', detectedLang);
+        } else if (browserLang.startsWith('zh')) {
+            detectedLang = 'zh';
+            console.log('根据浏览器语言设置为中文');
+        } else {
+            detectedLang = 'en';
+            console.log('默认设置为英文');
+        }
+    }
+    
+    // 4. 应用检测到的语言
+    if (detectedLang && detectedLang !== currentLanguage) {
+        console.log('切换语言从', currentLanguage, '到', detectedLang);
+        currentLanguage = detectedLang;
+        switchLanguage(detectedLang);
+    } else {
+        console.log('保持当前语言:', currentLanguage);
+        // 确保页面显示正确的语言
+        switchLanguage(currentLanguage);
+    }
+}
+
+// 智能语言重定向功能 / Smart Language Redirect
+function setupSmartLanguageRedirect() {
+    // 监听语言切换按钮点击，更新URL参数
+    const langButtons = document.querySelectorAll('.lang-btn');
+    langButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const targetLang = this.getAttribute('data-lang');
+            
+            // 更新URL参数而不刷新页面
+            const currentUrl = new URL(window.location);
+            currentUrl.searchParams.set('lang', targetLang);
+            
+            // 使用pushState更新URL，不刷新页面
+            window.history.pushState({}, '', currentUrl.toString());
+            
+            console.log('URL已更新为:', currentUrl.toString());
+        });
+    });
+}
+
+// 翻译API功能 / Translation API Functions
+async function translateText(text, targetLang) {
+    try {
+        // 使用免费的翻译API (MyMemory)
+        const sourceLang = targetLang === 'zh' ? 'en' : 'zh';
+        const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${sourceLang}|${targetLang}`);
+        const data = await response.json();
+        
+        if (data.responseStatus === 200) {
+            return data.responseData.translatedText;
+        } else {
+            throw new Error('Translation failed');
+        }
+    } catch (error) {
+        console.error('Translation error:', error);
+        // 如果翻译失败，返回原文
+        return text;
+    }
+}
+
+// 批量翻译函数
+async function translateContent(content, targetLang) {
+    const result = {};
+    
+    for (const [key, value] of Object.entries(content)) {
+        if (typeof value === 'string' && value.trim()) {
+            try {
+                result[key] = await translateText(value, targetLang);
+                // 添加延迟避免API限制
+                await new Promise(resolve => setTimeout(resolve, 100));
+            } catch (error) {
+                console.error(`Translation failed for ${key}:`, error);
+                result[key] = value; // 保留原文
+            }
+        } else {
+            result[key] = value;
+        }
+    }
+    
+    return result;
+}
+
 // 语言文本配置 / Language text configuration
 const translations = {
     zh: {
@@ -29,7 +148,12 @@ const translations = {
         },
         quickLinks: '快速链接',
         needHelp: '需要帮助?',
-        contactSupport: '联系客服'
+        contactSupport: '联系客服',
+        editArticle: '编辑',
+        deleteArticle: '删除',
+        confirmDelete: '确定要删除这篇文章吗？',
+        articleDeleted: '文章已删除',
+        deleteError: '删除文章失败'
     },
     en: {
         searchPlaceholder: 'Search articles...',
@@ -51,7 +175,12 @@ const translations = {
         },
         quickLinks: 'Quick Links',
         needHelp: 'Need Help?',
-        contactSupport: 'Contact Support'
+        contactSupport: 'Contact Support',
+        editArticle: 'Edit',
+        deleteArticle: 'Delete',
+        confirmDelete: 'Are you sure you want to delete this article?',
+        articleDeleted: 'Article deleted',
+        deleteError: 'Failed to delete article'
     }
 };
 
@@ -67,18 +196,52 @@ function getText(key) {
 
 // 语言切换功能 / Language switching function
 function switchLanguage(lang) {
+    console.log('switchLanguage 被调用，语言:', lang);
+    
     currentLanguage = lang;
     document.documentElement.setAttribute('data-lang', lang);
     
     // 更新所有双语元素 / Update all bilingual elements
-    const bilingualElements = document.querySelectorAll('[data-zh][data-en]');
-    bilingualElements.forEach(element => {
+    // 处理格式1: <span data-zh="..." data-en="...">内容</span>
+    const spanBilingualElements = document.querySelectorAll('span[data-zh][data-en]');
+    console.log('找到span双语元素数量:', spanBilingualElements.length);
+    
+    spanBilingualElements.forEach(element => {
         const text = lang === 'zh' ? element.getAttribute('data-zh') : element.getAttribute('data-en');
         element.textContent = text;
     });
     
+    // 处理格式2: <h1 data-zh="..." data-en="...">内容</h1> (直接在元素上)
+    const directBilingualElements = document.querySelectorAll('[data-zh][data-en]:not(span)');
+    console.log('找到直接双语元素数量:', directBilingualElements.length);
+    
+    directBilingualElements.forEach(element => {
+        const text = lang === 'zh' ? element.getAttribute('data-zh') : element.getAttribute('data-en');
+        
+        // 检查是否有嵌套的双语元素（如strong标签）
+        const nestedBilingualElements = element.querySelectorAll('[data-zh][data-en]');
+        
+        if (nestedBilingualElements.length > 0) {
+            // 先设置外层元素的内容
+            element.innerHTML = text;
+            
+            // 然后处理嵌套的双语元素
+            const newNestedElements = element.querySelectorAll('[data-zh][data-en]');
+            newNestedElements.forEach(nestedElement => {
+                const nestedText = lang === 'zh' ? nestedElement.getAttribute('data-zh') : nestedElement.getAttribute('data-en');
+                nestedElement.textContent = nestedText;
+            });
+        } else {
+            // 没有嵌套元素，直接设置内容
+            element.innerHTML = text;
+        }
+    });
+    
     // 更新语言按钮状态 / Update language button states
-    document.querySelectorAll('.lang-btn').forEach(btn => {
+    const langButtons = document.querySelectorAll('.lang-btn');
+    console.log('找到语言按钮数量:', langButtons.length);
+    
+    langButtons.forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
     
@@ -97,18 +260,34 @@ function switchLanguage(lang) {
 
 // 初始化博客 / Initialize blog
 document.addEventListener('DOMContentLoaded', function() {
-    // 加载保存的语言偏好 / Load saved language preference
-    const savedLanguage = localStorage.getItem('preferredLanguage') || 'zh';
-    switchLanguage(savedLanguage);
+    console.log('博客脚本已加载');
+    
+    // 首先执行自动语言检测
+    detectAndSetLanguage();
+    
+    // 设置智能语言重定向
+    setupSmartLanguageRedirect();
     
     initializeBlog();
     setupEventListeners();
+    
+    // 设置搜索框回车事件
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchArticles();
+            }
+        });
+    }
 });
 
 // 初始化博客功能 / Initialize blog functions
 function initializeBlog() {
+    console.log('初始化博客功能...');
     loadPosts();
     setupCategoryFilter();
+    console.log('博客初始化完成，文章数量:', allPosts.length);
 }
 
 // 设置事件监听器 / Setup event listeners
@@ -144,9 +323,13 @@ function setupEventListeners() {
     
     // 语言切换按钮 / Language switch buttons
     const langButtons = document.querySelectorAll('.lang-btn');
+    console.log('设置语言按钮事件监听器，按钮数量:', langButtons.length);
+    
     langButtons.forEach(button => {
+        console.log('为按钮添加事件监听器:', button.getAttribute('data-lang'));
         button.addEventListener('click', function() {
             const lang = this.getAttribute('data-lang');
+            console.log('语言按钮被点击:', lang);
             switchLanguage(lang);
         });
     });
@@ -155,7 +338,7 @@ function setupEventListeners() {
 // 加载文章数据
 function loadPosts() {
     // 示例文章数据 - 实际使用时可以从API或JSON文件加载
-    allPosts = [
+    const defaultPosts = [
         {
             id: 1,
             title: {
@@ -401,32 +584,84 @@ function loadPosts() {
         }
     ];
 
+    // 加载用户发布的文章
+    const userPosts = loadUserArticlesFromStorage();
+    
+    // 合并默认文章和用户文章（用户文章在前）
+    allPosts = [...userPosts, ...defaultPosts];
+
     displayPosts();
 }
 
 // 显示文章
 function displayPosts() {
+    console.log('=== displayPosts 函数开始执行 ===');
+    console.log('当前文章数量:', allPosts.length);
+    console.log('当前分类:', currentCategory);
+    console.log('当前语言:', currentLanguage);
+    console.log('allPosts内容:', allPosts);
+    
     const postsGrid = document.getElementById('postsGrid');
-    if (!postsGrid) return;
+    if (!postsGrid) {
+        console.error('错误：未找到postsGrid元素');
+        return;
+    }
+    console.log('成功找到postsGrid元素:', postsGrid);
+
+    // 隐藏加载指示器
+    const loadingIndicator = postsGrid.querySelector('.loading-indicator');
+    if (loadingIndicator) {
+        loadingIndicator.style.display = 'none';
+        console.log('隐藏了加载指示器');
+    } else {
+        console.log('未找到加载指示器元素');
+    }
 
     // 筛选文章
     let filteredPosts = currentCategory === 'all' 
         ? allPosts 
         : allPosts.filter(post => post.category === currentCategory);
 
+    console.log('筛选后的文章数量:', filteredPosts.length, '当前分类:', currentCategory);
+
     // 分页
     const startIndex = (currentPage - 1) * postsPerPage;
     const endIndex = startIndex + postsPerPage;
     const postsToShow = filteredPosts.slice(0, endIndex);
 
+    console.log('要显示的文章数量:', postsToShow.length);
+
     // 清空现有内容
     postsGrid.innerHTML = '';
 
+    // 如果没有文章，显示提示信息
+    if (postsToShow.length === 0) {
+        const noPostsMessage = document.createElement('div');
+        noPostsMessage.className = 'no-posts-message';
+        noPostsMessage.innerHTML = `
+            <div class="no-posts-content">
+                <i class="fas fa-file-alt"></i>
+                <h3>${currentLanguage === 'zh' ? '暂无文章' : 'No Articles'}</h3>
+                <p>${currentLanguage === 'zh' ? '还没有发布任何文章，点击上方按钮发布第一篇文章吧！' : 'No articles published yet. Click the button above to publish your first article!'}</p>
+            </div>
+        `;
+        postsGrid.appendChild(noPostsMessage);
+        return;
+    }
+
     // 生成文章卡片
-    postsToShow.forEach(post => {
-        const postCard = createPostCard(post);
-        postsGrid.appendChild(postCard);
+    console.log('开始生成文章卡片...');
+    postsToShow.forEach((post, index) => {
+        console.log(`创建第 ${index + 1} 篇文章:`, post.title);
+        try {
+            const postCard = createPostCard(post);
+            postsGrid.appendChild(postCard);
+            console.log(`成功添加第 ${index + 1} 篇文章到网格`);
+        } catch (error) {
+            console.error(`创建第 ${index + 1} 篇文章时出错:`, error);
+        }
     });
+    console.log('文章卡片生成完成');
 
     // 更新加载更多按钮
     updateLoadMoreButton(filteredPosts.length, endIndex);
@@ -438,6 +673,8 @@ function displayPosts() {
             card.classList.add('fade-in');
         }, index * 100);
     });
+    
+    console.log('文章显示完成');
 }
 
 // 创建文章卡片
@@ -470,10 +707,23 @@ function createPostCard(post) {
         ? (currentLanguage === 'zh' ? post.readTime.zh : post.readTime.en)
         : post.readTime;
 
+    // 检查是否为用户发布的文章
+    const isUserArticle = post.publishLanguage || post.isUserGenerated;
+    
     card.innerHTML = `
         <div class="post-image">
             <i class="${post.icon}"></i>
             ${post.isNew ? '<span class="new-badge">新</span>' : ''}
+            ${isUserArticle ? `
+                <div class="article-actions" onclick="event.stopPropagation()">
+                    <button class="action-btn edit-btn" onclick="editArticle(${post.id})" title="${getText('editArticle')}">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="action-btn delete-btn" onclick="confirmDeleteArticle(${post.id})" title="${getText('deleteArticle')}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            ` : ''}
         </div>
         <div class="post-content">
             <div class="post-meta">
@@ -657,6 +907,22 @@ function showPublishForm() {
                 </div>
                 <div class="publish-modal-body">
                     <form class="publish-form" id="publishForm">
+                        <!-- 写作语言选择 -->
+                        <div class="form-group">
+                            <label>${currentLanguage === 'zh' ? '写作语言' : 'Writing Language'}</label>
+                            <div class="language-selector">
+                                <label class="radio-label">
+                                    <input type="radio" name="writingLang" value="zh" ${currentLanguage === 'zh' ? 'checked' : ''}>
+                                    ${currentLanguage === 'zh' ? '中文写作（自动翻译成英文）' : 'Chinese (Auto-translate to English)'}
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="writingLang" value="en" ${currentLanguage === 'en' ? 'checked' : ''}>
+                                    ${currentLanguage === 'zh' ? '英文写作（自动翻译成中文）' : 'English (Auto-translate to Chinese)'}
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- 文章标题 -->
                         <div class="form-group">
                             <label for="articleTitle">${currentLanguage === 'zh' ? '文章标题' : 'Article Title'} *</label>
                             <input type="text" id="articleTitle" name="title" required 
@@ -664,67 +930,39 @@ function showPublishForm() {
                         </div>
                         
                         <div class="form-group">
-                            <label for="articleExcerpt">${currentLanguage === 'zh' ? '文章摘要' : 'Article Excerpt'} *</label>
-                            <textarea id="articleExcerpt" name="excerpt" rows="3" required 
-                                      placeholder="${currentLanguage === 'zh' ? '请输入文章摘要，建议100-200字...' : 'Enter article excerpt, 100-200 words recommended...'}"></textarea>
+                            <label for="articleKeywords">${currentLanguage === 'zh' ? 'SEO关键词' : 'SEO Keywords'} *</label>
+                            <input type="text" id="articleKeywords" name="keywords" required
+                                   placeholder="${currentLanguage === 'zh' ? '用逗号分隔，如：AI写作,学术论文,研究方法' : 'Comma separated, e.g., AI writing, academic paper, research method'}">
                         </div>
                         
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="articleCategory">${currentLanguage === 'zh' ? '文章分类' : 'Category'} *</label>
-                                <select id="articleCategory" name="category" required>
-                                    <option value="">${currentLanguage === 'zh' ? '选择分类' : 'Select Category'}</option>
-                                    <option value="ai-tools">${currentLanguage === 'zh' ? 'AI工具' : 'AI Tools'}</option>
-                                    <option value="writing-tips">${currentLanguage === 'zh' ? '写作技巧' : 'Writing Tips'}</option>
-                                    <option value="research-methods">${currentLanguage === 'zh' ? '研究方法' : 'Research Methods'}</option>
-                                    <option value="academic-resources">${currentLanguage === 'zh' ? '学术资源' : 'Academic Resources'}</option>
-                                    <option value="publication">${currentLanguage === 'zh' ? '发表指导' : 'Publication'}</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="articleAuthor">${currentLanguage === 'zh' ? '作者' : 'Author'} *</label>
-                                <input type="text" id="articleAuthor" name="author" required 
-                                       placeholder="${currentLanguage === 'zh' ? '作者姓名' : 'Author name'}">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="articleReadTime">${currentLanguage === 'zh' ? '阅读时间' : 'Read Time'}</label>
-                                <input type="text" id="articleReadTime" name="readTime" 
-                                       placeholder="${currentLanguage === 'zh' ? '如：5分钟' : 'e.g., 5 min'}">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="articleIcon">${currentLanguage === 'zh' ? '图标' : 'Icon'}</label>
-                                <select id="articleIcon" name="icon">
-                                    <option value="fas fa-robot">🤖 Robot</option>
-                                    <option value="fas fa-pen-fancy">✒️ Pen</option>
-                                    <option value="fas fa-microscope">🔬 Microscope</option>
-                                    <option value="fas fa-database">💾 Database</option>
-                                    <option value="fas fa-graduation-cap">🎓 Graduation</option>
-                                    <option value="fas fa-book">📚 Book</option>
-                                    <option value="fas fa-chart-line">📈 Chart</option>
-                                </select>
-                            </div>
-                        </div>
-                        
+                        <!-- 文章内容 -->
                         <div class="form-group">
                             <label for="articleContent">${currentLanguage === 'zh' ? '文章内容' : 'Article Content'} *</label>
                             <textarea id="articleContent" name="content" rows="10" required 
                                       placeholder="${currentLanguage === 'zh' ? '请输入文章正文内容...' : 'Enter article content...'}"></textarea>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="articleKeywords">${currentLanguage === 'zh' ? '关键词' : 'Keywords'}</label>
-                            <input type="text" id="articleKeywords" name="keywords" 
-                                   placeholder="${currentLanguage === 'zh' ? '用逗号分隔，如：AI写作,学术论文,研究方法' : 'Comma separated, e.g., AI writing, academic paper, research method'}">
+                        <!-- 翻译预览区域 -->
+                        <div class="form-group" id="translationPreview" style="display: none;">
+                            <label>${currentLanguage === 'zh' ? '翻译预览' : 'Translation Preview'}</label>
+                            <div class="translation-container">
+                                <div class="translation-item">
+                                    <strong>${currentLanguage === 'zh' ? '翻译后标题：' : 'Translated Title:'}</strong>
+                                    <div id="translatedTitle" class="translation-text"></div>
+                                </div>
+                                <div class="translation-item">
+                                    <strong>${currentLanguage === 'zh' ? '翻译后内容：' : 'Translated Content:'}</strong>
+                                    <div id="translatedContent" class="translation-text"></div>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="form-actions">
                             <button type="button" class="btn btn-secondary" onclick="closePublishForm()">
                                 ${currentLanguage === 'zh' ? '取消' : 'Cancel'}
+                            </button>
+                            <button type="button" class="btn btn-info" id="previewTranslation">
+                                ${currentLanguage === 'zh' ? '预览翻译' : 'Preview Translation'}
                             </button>
                             <button type="submit" class="btn btn-primary">
                                 ${currentLanguage === 'zh' ? '发布文章' : 'Publish Article'}
@@ -741,88 +979,436 @@ function showPublishForm() {
     
     // 添加表单提交事件
     document.getElementById('publishForm').addEventListener('submit', handlePublishSubmit);
+    
+    // 添加预览翻译事件
+    document.getElementById('previewTranslation').addEventListener('click', previewTranslation);
 }
 
 // 关闭发布表单 / Close publish form
+// 预览翻译功能
+async function previewTranslation() {
+    const title = document.getElementById('articleTitle').value.trim();
+    const content = document.getElementById('articleContent').value.trim();
+    const writingLang = document.querySelector('input[name="writingLang"]:checked').value;
+    
+    if (!title || !content) {
+        showNotification(
+            currentLanguage === 'zh' ? '请先填写标题和内容' : 'Please fill in title and content first',
+            'warning'
+        );
+        return;
+    }
+    
+    const previewBtn = document.getElementById('previewTranslation');
+    const originalText = previewBtn.textContent;
+    previewBtn.textContent = currentLanguage === 'zh' ? '翻译中...' : 'Translating...';
+    previewBtn.disabled = true;
+    
+    try {
+        const targetLang = writingLang === 'zh' ? 'en' : 'zh';
+        
+        // 翻译标题和内容
+        const translatedTitle = await translateText(title, targetLang);
+        const translatedContent = await translateText(content, targetLang);
+        
+        // 显示翻译结果
+        document.getElementById('translatedTitle').textContent = translatedTitle;
+        document.getElementById('translatedContent').textContent = translatedContent;
+        document.getElementById('translationPreview').style.display = 'block';
+        
+        showNotification(
+            currentLanguage === 'zh' ? '翻译预览已生成' : 'Translation preview generated',
+            'success'
+        );
+    } catch (error) {
+        console.error('Translation preview error:', error);
+        showNotification(
+            currentLanguage === 'zh' ? '翻译预览失败，请稍后重试' : 'Translation preview failed, please try again',
+            'error'
+        );
+    } finally {
+        previewBtn.textContent = originalText;
+        previewBtn.disabled = false;
+    }
+}
+
 function closePublishForm() {
     const modal = document.getElementById('publishModal');
     if (modal) {
+        // 清除编辑模式状态
+        const form = modal.querySelector('form');
+        if (form) {
+            delete form.dataset.editingId;
+        }
+        
         modal.remove();
         document.body.style.overflow = 'auto';
     }
 }
 
 // 处理表单提交 / Handle form submission
-function handlePublishSubmit(event) {
+async function handlePublishSubmit(event) {
     event.preventDefault();
     
     const formData = new FormData(event.target);
-    const articleData = {
-        title: formData.get('title'),
-        excerpt: formData.get('excerpt'),
-        category: formData.get('category'),
-        author: formData.get('author'),
-        readTime: formData.get('readTime') || '5分钟',
-        icon: formData.get('icon') || 'fas fa-file-alt',
-        content: formData.get('content'),
-        keywords: formData.get('keywords'),
-        date: new Date().toISOString().split('T')[0],
-        id: Date.now() // 简单的ID生成
-    };
+    const form = event.target;
+    
+    // 检查是否为编辑模式
+    const editingId = form.dataset.editingId;
+    const isEditing = !!editingId;
+    
+    // 获取表单数据
+    const userTitle = formData.get('title');
+    const userContent = formData.get('content');
+    const userKeywords = formData.get('keywords');
+    const writingLang = formData.get('writingLang');
     
     // 验证必填字段
-    if (!articleData.title || !articleData.excerpt || !articleData.category || !articleData.author || !articleData.content) {
+    if (!userTitle || !userContent || !userKeywords || !writingLang) {
         const message = currentLanguage === 'zh' ? '请填写所有必填字段' : 'Please fill in all required fields';
         showNotification(message, 'error');
         return;
     }
     
-    // 生成文件名
-    const fileName = generateFileName(articleData.title);
+    // 显示翻译中消息
+    const translatingMessage = currentLanguage === 'zh' ? '正在翻译内容...' : 'Translating content...';
+    showNotification(translatingMessage, 'info');
     
-    // 显示处理中消息
-    const processingMessage = currentLanguage === 'zh' ? 
-        '正在处理文章发布...' : 'Processing article publication...';
-    showNotification(processingMessage, 'info');
-    
-    // 模拟文章发布过程
-    setTimeout(() => {
-        // 将文章添加到当前会话的文章列表中（临时显示）
-        const newPost = {
-            id: articleData.id,
-            title: articleData.title,
-            excerpt: articleData.excerpt,
-            category: articleData.category,
-            categoryName: getCategoryName(articleData.category),
-            author: articleData.author,
-            date: articleData.date,
-            readTime: articleData.readTime,
-            icon: articleData.icon,
-            url: `${fileName}.html`,
-            isNew: true // 标记为新文章
+    try {
+        // 确定目标翻译语言
+        const targetLang = writingLang === 'zh' ? 'en' : 'zh';
+        
+        // 翻译标题和内容
+        const translatedTitle = await translateText(userTitle, targetLang);
+        const translatedContent = await translateText(userContent, targetLang);
+        
+        // 根据写作语言分配中英文内容
+        const titleZh = writingLang === 'zh' ? userTitle : translatedTitle;
+        const titleEn = writingLang === 'zh' ? translatedTitle : userTitle;
+        const contentZh = writingLang === 'zh' ? userContent : translatedContent;
+        const contentEn = writingLang === 'zh' ? translatedContent : userContent;
+        
+        // 自动生成双语摘要（取内容前150个字符）
+        const autoExcerptZh = contentZh.length > 150 ? 
+            contentZh.substring(0, 150) + '...' : 
+            contentZh;
+        const autoExcerptEn = contentEn.length > 150 ? 
+            contentEn.substring(0, 150) + '...' : 
+            contentEn;
+        
+        // 根据关键词自动分类
+        const autoCategory = getAutoCategory(userKeywords);
+        
+        // 创建双语格式的文章数据
+        const articleData = {
+            title: {
+                zh: titleZh,
+                en: titleEn
+            },
+            excerpt: {
+                zh: autoExcerptZh,
+                en: autoExcerptEn
+            },
+            category: autoCategory,
+            categoryName: getCategoryName(autoCategory),
+            author: {
+                zh: 'AI学术助手',
+                en: 'AI Academic Assistant'
+            },
+            readTime: {
+                zh: Math.ceil(Math.max(contentZh.length, contentEn.length) / 200) + ' 分钟阅读',
+                en: Math.ceil(Math.max(contentZh.length, contentEn.length) / 200) + ' min read'
+            },
+            icon: 'fas fa-file-alt',
+            content: {
+                zh: contentZh,
+                en: contentEn
+            },
+            keywords: userKeywords,
+            writingLanguage: writingLang, // 记录原始写作语言
+            date: isEditing ? 
+                (function() {
+                    // 编辑模式：保持原有日期
+                    const userArticles = JSON.parse(localStorage.getItem('userArticles') || '[]');
+                    const existingArticle = userArticles.find(a => a.id == editingId);
+                    return existingArticle ? existingArticle.date : new Date().toISOString().split('T')[0];
+                })() : 
+                new Date().toISOString().split('T')[0],
+            id: isEditing ? parseInt(editingId) : Date.now(),
+            filename: isEditing ? 
+                (function() {
+                    const userArticles = JSON.parse(localStorage.getItem('userArticles') || '[]');
+                    const existingArticle = userArticles.find(a => a.id == editingId);
+                    return existingArticle ? existingArticle.filename : generateFileName(titleEn);
+                })() : 
+                generateFileName(titleEn),
+            isUserGenerated: true
         };
         
-        // 添加到文章列表开头
-        allPosts.unshift(newPost);
+        // 显示处理中消息
+        const processingMessage = isEditing ?
+            (currentLanguage === 'zh' ? '正在更新文章...' : 'Updating article...') :
+            (currentLanguage === 'zh' ? '正在发布文章...' : 'Publishing article...');
+        showNotification(processingMessage, 'info');
         
-        // 重新显示文章列表
+        // 模拟文章发布/更新过程
+        setTimeout(() => {
+            try {
+                if (isEditing) {
+                    updateArticleInStorage(articleData);
+                } else {
+                    saveArticleToStorage(articleData);
+                }
+                
+                // 重新加载和显示文章列表
+                loadAndDisplayArticles();
+                
+                // 显示成功消息
+                const successMessage = isEditing 
+                    ? (currentLanguage === 'zh' ? '文章更新成功！已自动翻译为双语版本。' : 'Article updated successfully! Auto-translated to bilingual version.')
+                    : (currentLanguage === 'zh' ? '文章发布成功！已自动翻译为双语版本。' : 'Article published successfully! Auto-translated to bilingual version.');
+                
+                showNotification(successMessage, 'success');
+                
+                // 关闭表单并滚动到顶部
+                closePublishForm();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (error) {
+                console.error('Error saving article:', error);
+                showNotification(
+                    currentLanguage === 'zh' ? '发布失败，请重试' : 'Publishing failed, please try again',
+                    'error'
+                );
+            }
+        }, 1000);
+        
+    } catch (error) {
+        console.error('Translation error:', error);
+        showNotification(
+            currentLanguage === 'zh' ? '翻译失败，请检查网络连接后重试' : 'Translation failed, please check network and try again',
+            'error'
+        );
+    }
+}
+
+// 重新加载并显示文章列表
+function loadAndDisplayArticles() {
+    loadPosts();
+    displayPosts();
+}
+
+// 保存文章到本地存储 / Save article to local storage
+function saveArticleToStorage(article) {
+    try {
+        // 获取现有的用户文章
+        let userArticles = JSON.parse(localStorage.getItem('userArticles') || '[]');
+        
+        // 检查是否已存在相同ID的文章
+        const existingIndex = userArticles.findIndex(a => a.id === article.id);
+        if (existingIndex !== -1) {
+            userArticles[existingIndex] = article; // 更新现有文章
+        } else {
+            userArticles.unshift(article); // 添加新文章到开头
+        }
+        
+        // 限制最多保存50篇用户文章
+        if (userArticles.length > 50) {
+            userArticles = userArticles.slice(0, 50);
+        }
+        
+        // 保存到localStorage
+        localStorage.setItem('userArticles', JSON.stringify(userArticles));
+        
+        console.log('文章已保存到本地存储:', article.title);
+    } catch (error) {
+        console.error('保存文章到本地存储失败:', error);
+        const errorMessage = currentLanguage === 'zh' ? 
+            '文章保存失败，请检查浏览器存储权限' : 
+            'Failed to save article, please check browser storage permissions';
+        showNotification(errorMessage, 'error');
+    }
+}
+
+// 更新本地存储中的文章 / Update article in local storage
+function updateArticleInStorage(article) {
+    try {
+        // 获取现有的用户文章
+        let userArticles = JSON.parse(localStorage.getItem('userArticles') || '[]');
+        
+        // 查找要更新的文章
+        const existingIndex = userArticles.findIndex(a => a.id === article.id);
+        if (existingIndex !== -1) {
+            userArticles[existingIndex] = article; // 更新现有文章
+            
+            // 保存到localStorage
+            localStorage.setItem('userArticles', JSON.stringify(userArticles));
+            
+            console.log('文章已更新到本地存储:', article.title);
+        } else {
+            console.error('未找到要更新的文章:', article.id);
+            const errorMessage = currentLanguage === 'zh' ? 
+                '未找到要更新的文章' : 
+                'Article to update not found';
+            showNotification(errorMessage, 'error');
+        }
+    } catch (error) {
+        console.error('更新文章到本地存储失败:', error);
+        const errorMessage = currentLanguage === 'zh' ? 
+            '文章更新失败，请检查浏览器存储权限' : 
+            'Failed to update article, please check browser storage permissions';
+        showNotification(errorMessage, 'error');
+    }
+}
+
+// 从本地存储加载用户文章 / Load user articles from local storage
+function loadUserArticlesFromStorage() {
+    try {
+        const userArticles = JSON.parse(localStorage.getItem('userArticles') || '[]');
+        return userArticles;
+    } catch (error) {
+        console.error('从本地存储加载用户文章失败:', error);
+        return [];
+    }
+}
+
+// 删除用户文章 / Delete user article
+function deleteUserArticle(articleId) {
+    try {
+        let userArticles = JSON.parse(localStorage.getItem('userArticles') || '[]');
+        userArticles = userArticles.filter(article => article.id !== articleId);
+        localStorage.setItem('userArticles', JSON.stringify(userArticles));
+        
+        // 从当前显示列表中移除
+        allPosts = allPosts.filter(post => post.id !== articleId);
         displayPosts();
         
-        // 显示成功消息和说明
-        const successMessage = currentLanguage === 'zh' ? 
-            `文章发布成功！\n\n您的文章"${articleData.title}"已添加到博客列表中。\n\n注意：这是演示版本，文章仅在当前会话中可见。\n如需永久保存，请联系管理员或按照开发文档进行配置。` :
-            `Article published successfully!\n\nYour article "${articleData.title}" has been added to the blog list.\n\nNote: This is a demo version, the article is only visible in the current session.\nFor permanent storage, please contact the administrator or follow the development documentation.`;
+        const message = getText('articleDeleted');
+        showNotification(message, 'success');
+    } catch (error) {
+        console.error('删除文章失败:', error);
+        const errorMessage = getText('deleteError');
+        showNotification(errorMessage, 'error');
+    }
+}
+
+// 确认删除文章
+function confirmDeleteArticle(articleId) {
+    const confirmMessage = getText('confirmDelete');
+    if (confirm(confirmMessage)) {
+        deleteUserArticle(articleId);
+    }
+}
+
+// 编辑文章
+function editArticle(articleId) {
+    try {
+        // 查找要编辑的文章
+        const userArticles = JSON.parse(localStorage.getItem('userArticles') || '[]');
+        const article = userArticles.find(a => a.id === articleId);
         
-        showNotification(successMessage, 'success');
-        closePublishForm();
+        if (!article) {
+            const errorMessage = currentLanguage === 'zh' ? '找不到要编辑的文章' : 'Article not found';
+            showNotification(errorMessage, 'error');
+            return;
+        }
         
-        // 滚动到页面顶部显示新文章
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // 显示发布表单并填充数据
+        showPublishForm();
         
-    }, 1500); // 1.5秒延迟模拟处理时间
+        // 填充表单数据
+        setTimeout(() => {
+            const titleInput = document.getElementById('articleTitle');
+            const contentInput = document.getElementById('articleContent');
+            const keywordsInput = document.getElementById('articleKeywords');
+            const writingLangSelect = document.getElementById('writingLang');
+            
+            if (titleInput && contentInput && keywordsInput && writingLangSelect) {
+                // 确定原始写作语言和内容
+                const writingLang = article.writingLanguage || 'zh'; // 默认为中文
+                let originalTitle, originalContent;
+                
+                if (writingLang === 'zh') {
+                    // 原文是中文
+                    originalTitle = article.title?.zh || article.title || '';
+                    originalContent = article.content?.zh || article.content || '';
+                } else {
+                    // 原文是英文
+                    originalTitle = article.title?.en || article.title || '';
+                    originalContent = article.content?.en || article.content || '';
+                }
+                
+                // 填充表单
+                titleInput.value = originalTitle;
+                contentInput.value = originalContent;
+                keywordsInput.value = article.keywords || '';
+                writingLangSelect.value = writingLang;
+                
+                // 设置编辑模式标识
+                const form = document.getElementById('publishForm');
+                if (form) {
+                    form.dataset.editingId = articleId;
+                }
+                
+                // 更新语言选择提示
+                const langHint = document.querySelector('.lang-hint');
+                if (langHint) {
+                    if (writingLang === 'zh') {
+                        langHint.textContent = currentLanguage === 'zh' ? 
+                            '将自动翻译为英文' : 'Will auto-translate to English';
+                    } else {
+                        langHint.textContent = currentLanguage === 'zh' ? 
+                            '将自动翻译为中文' : 'Will auto-translate to Chinese';
+                    }
+                }
+            }
+        }, 100);
+        
+    } catch (error) {
+        console.error('编辑文章失败:', error);
+        const errorMessage = currentLanguage === 'zh' ? '编辑文章失败' : 'Failed to edit article';
+        showNotification(errorMessage, 'error');
+    }
 }
 
 // 获取分类名称 / Get category name
+// 根据关键词自动分类 / Auto categorize based on keywords
+function getAutoCategory(keywords) {
+    if (!keywords) return 'academic-resources';
+    
+    const keywordsLower = keywords.toLowerCase();
+    
+    // AI工具相关关键词
+    if (keywordsLower.includes('ai') || keywordsLower.includes('人工智能') || 
+        keywordsLower.includes('chatgpt') || keywordsLower.includes('机器学习') ||
+        keywordsLower.includes('artificial intelligence') || keywordsLower.includes('machine learning')) {
+        return 'ai-tools';
+    }
+    
+    // 写作技巧相关关键词
+    if (keywordsLower.includes('写作') || keywordsLower.includes('论文') || 
+        keywordsLower.includes('writing') || keywordsLower.includes('essay') ||
+        keywordsLower.includes('academic writing') || keywordsLower.includes('学术写作')) {
+        return 'writing-tips';
+    }
+    
+    // 研究方法相关关键词
+    if (keywordsLower.includes('研究') || keywordsLower.includes('方法') || 
+        keywordsLower.includes('research') || keywordsLower.includes('methodology') ||
+        keywordsLower.includes('数据分析') || keywordsLower.includes('data analysis')) {
+        return 'research-methods';
+    }
+    
+    // 发表指导相关关键词
+    if (keywordsLower.includes('发表') || keywordsLower.includes('期刊') || 
+        keywordsLower.includes('publication') || keywordsLower.includes('journal') ||
+        keywordsLower.includes('投稿') || keywordsLower.includes('submission')) {
+        return 'publication';
+    }
+    
+    // 默认分类
+    return 'academic-resources';
+}
+
 function getCategoryName(category) {
     const categoryNames = {
         'ai-tools': currentLanguage === 'zh' ? 'AI工具' : 'AI Tools',
@@ -881,17 +1467,6 @@ ${data.content}`;
 }
 
 // 添加回车键搜索功能
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchArticles();
-            }
-        });
-    }
-});
-
 // 导出功能供其他脚本使用
 window.blogFunctions = {
     searchPosts,

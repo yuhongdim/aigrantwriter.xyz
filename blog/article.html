@@ -1,302 +1,562 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="articleTitle">文章标题 - AI学术写作助手</title>
-    <meta name="description" id="articleDescription" content="专业的学术写作指导和研究方法分享">
-    <meta name="keywords" id="articleKeywords" content="学术写作,论文写作,研究方法,AI工具">
-    
-    <!-- Open Graph Tags -->
-    <meta property="og:title" id="ogTitle" content="文章标题 - AI学术写作助手">
-    <meta property="og:description" id="ogDescription" content="专业的学术写作指导和研究方法分享">
-    <meta property="og:type" content="article">
-    <meta property="og:url" id="ogUrl" content="">
-    <meta property="og:site_name" content="AI学术写作助手">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" id="twitterTitle" content="文章标题 - AI学术写作助手">
-    <meta name="twitter:description" id="twitterDescription" content="专业的学术写作指导和研究方法分享">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="blog-styles.css">
-    
+    <title>Article - AI Grant Writer</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        .back-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: #6366f1;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            text-decoration: none;
-            z-index: 1000;
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .article-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            color: #6b7280;
             font-size: 0.9rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+            flex-wrap: wrap;
         }
-        .back-btn:hover {
-            background: #5855eb;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        
+        .article-category {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
         }
-        .back-btn i {
-            margin-right: 0.5rem;
+        
+        .article-content {
+            margin-top: 2rem;
+            line-height: 1.8;
+            color: #374151;
+        }
+        
+        .article-content h2 {
+            color: #1f2937;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .article-content h3 {
+            color: #1f2937;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+        
+        .article-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .article-content ul, .article-content ol {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+        }
+        
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #667eea;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .back-button:hover {
+            color: #764ba2;
+        }
+        
+        .error-message {
+            text-align: center;
+            color: #ef4444;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #6b7280;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .article-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .article-title {
+                font-size: 2rem;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
         }
     </style>
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json" id="structuredData">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "文章标题",
-        "description": "文章描述",
-        "author": {
-            "@type": "Person",
-            "name": "作者姓名"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "AI学术写作助手",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://aigrantwriter.xyz/logo.png"
-            }
-        },
-        "datePublished": "",
-        "dateModified": "",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": ""
-        }
-    }
-    </script>
 </head>
 <body>
-    <a href="../index.html" class="back-btn">
-        <i class="fas fa-arrow-left"></i> 返回首页
-    </a>
-
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="../index.html">
-                    <i class="fas fa-graduation-cap"></i>
-                    AI学术写作助手
-                </a>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="../index.html" class="nav-link">首页</a>
-                </li>
-                <li class="nav-item">
-                    <a href="../grant-proposal.html" class="nav-link">申请书生成器</a>
-                </li>
-                <li class="nav-item">
-                    <a href="../literature-review.html" class="nav-link">文献综述</a>
-                </li>
-                <li class="nav-item">
-                    <a href="../writing-optimization.html" class="nav-link">写作优化</a>
-                </li>
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link active">博客</a>
-                </li>
-            </ul>
-            <div class="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Article Header -->
-    <header class="article-header">
-        <div class="container">
-            <nav class="breadcrumb">
-                <a href="../index.html">首页</a>
-                <span>/</span>
-                <a href="index.html">博客</a>
-                <span>/</span>
-                <span id="breadcrumbCategory">分类</span>
-                <span>/</span>
-                <span>当前文章</span>
-            </nav>
-            
-            <div class="article-meta">
-                <span class="article-category" id="articleCategory">分类</span>
-                <span class="article-date" id="articleDate">
-                    <i class="fas fa-calendar"></i>
-                    发布日期
-                </span>
-                <span class="article-read-time" id="articleReadTime">
-                    <i class="fas fa-clock"></i>
-                    阅读时间
-                </span>
+    <div class="container">
+        <a href="index.html" class="back-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Blog
+        </a>
+        
+        <div class="article-container">
+            <div id="loading" class="loading">
+                Loading article...
             </div>
             
-            <h1 class="article-title" id="mainTitle">文章标题</h1>
-            <p class="article-excerpt" id="mainExcerpt">文章摘要</p>
+            <div id="article-content" style="display: none;">
+                <div class="article-header">
+                    <div class="article-icon" id="article-icon"></div>
+                    <h1 class="article-title" id="article-title"></h1>
+                    <div class="article-meta">
+                        <span class="article-category" id="article-category"></span>
+                        <span id="article-date"></span>
+                        <span id="article-read-time"></span>
+                    </div>
+                </div>
+                
+                <div class="article-content" id="article-body">
+                    <!-- Article content will be loaded here -->
+                </div>
+            </div>
             
-            <div class="article-author">
-                <div class="author-info">
-                    <i class="fas fa-user-circle author-avatar"></i>
-                    <div class="author-details">
-                        <span class="author-name" id="authorName">作者姓名</span>
-                        <span class="author-title" id="authorTitle">作者职位</span>
-                    </div>
-                </div>
-                <div class="article-actions">
-                    <button class="action-btn" onclick="shareArticle()">
-                        <i class="fas fa-share-alt"></i>
-                        分享
-                    </button>
-                    <button class="action-btn" onclick="bookmarkArticle()">
-                        <i class="fas fa-bookmark"></i>
-                        收藏
-                    </button>
-                </div>
+            <div id="error-message" class="error-message" style="display: none;">
+                Article not found. Please check the URL or return to the blog homepage.
             </div>
         </div>
-    </header>
+    </div>
 
-    <!-- Article Content -->
-    <main class="article-main">
-        <div class="container">
-            <div class="article-layout">
-                <!-- Article Content -->
-                <article class="article-content">
-                    <div class="content-wrapper" id="articleContent">
-                        <!-- 文章内容将通过JavaScript动态加载 -->
-                        <div class="loading-placeholder">
-                            <i class="fas fa-spinner fa-spin"></i>
-                            <p>正在加载文章内容...</p>
-                        </div>
-                    </div>
+    <script>
+        // Get article ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = urlParams.get('id');
+        
+        // Article data (same as in new-blog-script.js)
+        const articles = [
+            {
+                id: 'academic-abstract-writing-guide',
+                title: 'Complete Guide to Academic Abstract Writing',
+                excerpt: 'Master the art of writing academic abstracts, including structure, key elements, and common pitfalls to avoid for improved publication success.',
+                category: 'writing',
+                categoryName: 'Writing Tips',
+                date: '2024-01-15',
+                readTime: '8 min read',
+                icon: '📝',
+                content: `
+                    <h2>Introduction</h2>
+                    <p>Academic abstracts are crucial components of research papers, serving as the first impression for readers and reviewers. A well-written abstract can determine whether your work gets read, cited, or accepted for publication.</p>
                     
-                    <!-- Article Tags -->
-                    <div class="article-tags" id="articleTags">
-                        <!-- 标签将通过JavaScript动态加载 -->
-                    </div>
-                    
-                    <!-- Article Navigation -->
-                    <div class="article-navigation">
-                        <div class="nav-prev" id="prevArticle">
-                            <span class="nav-label">上一篇</span>
-                            <span class="nav-title">文章标题</span>
-                        </div>
-                        <div class="nav-next" id="nextArticle">
-                            <span class="nav-label">下一篇</span>
-                            <span class="nav-title">文章标题</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Sidebar -->
-                <aside class="article-sidebar">
-                    <!-- Table of Contents -->
-                    <div class="sidebar-widget">
-                        <h3 class="widget-title">目录</h3>
-                        <div class="table-of-contents" id="tableOfContents">
-                            <!-- 目录将通过JavaScript自动生成 -->
-                        </div>
-                    </div>
-                    
-                    <!-- Related Articles -->
-                    <div class="sidebar-widget">
-                        <h3 class="widget-title">相关文章</h3>
-                        <div class="related-articles" id="relatedArticles">
-                            <!-- 相关文章将通过JavaScript动态加载 -->
-                        </div>
-                    </div>
-                    
-                    <!-- Newsletter Subscription -->
-                    <div class="sidebar-widget newsletter-widget">
-                        <h3 class="widget-title">订阅更新</h3>
-                        <p>获取最新的学术写作技巧和研究方法</p>
-                        <div class="newsletter-form">
-                            <input type="email" id="sidebarEmailInput" placeholder="输入您的邮箱">
-                            <button onclick="subscribeNewsletter('sidebar')" class="subscribe-btn">
-                                订阅
-                            </button>
-                        </div>
-                    </div>
-                </aside>
-            </div>
-        </div>
-    </main>
-
-    <!-- Comments Section (Optional) -->
-    <section class="comments-section">
-        <div class="container">
-            <h3 class="comments-title">评论讨论</h3>
-            <div class="comments-placeholder">
-                <p>评论功能即将上线，敬请期待！</p>
-                <p>如有问题或建议，请通过邮件联系我们。</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>AI学术写作助手</h3>
-                    <p>专业的学术写作工具和指导，助力您的研究之路</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>工具</h4>
+                    <h2>Structure of an Academic Abstract</h2>
+                    <p>An effective academic abstract typically follows this structure:</p>
                     <ul>
-                        <li><a href="../grant-proposal.html">申请书生成器</a></li>
-                        <li><a href="../literature-review.html">文献综述工具</a></li>
-                        <li><a href="../writing-optimization.html">写作优化</a></li>
+                        <li><strong>Background/Context:</strong> Brief overview of the research problem</li>
+                        <li><strong>Objective:</strong> Clear statement of research goals</li>
+                        <li><strong>Methods:</strong> Summary of research methodology</li>
+                        <li><strong>Results:</strong> Key findings and outcomes</li>
+                        <li><strong>Conclusion:</strong> Implications and significance</li>
                     </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>资源</h4>
+                    
+                    <h2>Key Elements to Include</h2>
+                    <p>Every academic abstract should contain these essential elements:</p>
                     <ul>
-                        <li><a href="index.html">博客文章</a></li>
-                        <li><a href="#" onclick="showNotification('功能开发中', 'info')">写作指南</a></li>
-                        <li><a href="#" onclick="showNotification('功能开发中', 'info')">模板下载</a></li>
+                        <li>Clear research question or hypothesis</li>
+                        <li>Methodology used in the study</li>
+                        <li>Main findings or results</li>
+                        <li>Significance of the research</li>
+                        <li>Keywords for searchability</li>
                     </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>联系我们</h4>
+                    
+                    <h2>Common Pitfalls to Avoid</h2>
+                    <p>Avoid these common mistakes when writing abstracts:</p>
                     <ul>
-                        <li><i class="fas fa-envelope"></i> contact@aigrantwriter.xyz</li>
-                        <li><i class="fas fa-phone"></i> +86 400-123-4567</li>
+                        <li>Including citations or references</li>
+                        <li>Using jargon without explanation</li>
+                        <li>Exceeding word limits</li>
+                        <li>Being too vague about results</li>
+                        <li>Including information not in the main paper</li>
                     </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 AI学术写作助手. 保留所有权利.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="../script.js"></script>
-    <script src="blog-script.js"></script>
-    <script src="article-script.js"></script>
-    <script src="article-data-extended.js"></script>
+                    
+                    <h2>Tips for Success</h2>
+                    <p>Follow these tips to improve your abstract writing:</p>
+                    <ul>
+                        <li>Write the abstract after completing your paper</li>
+                        <li>Use active voice when possible</li>
+                        <li>Be specific about your contributions</li>
+                        <li>Proofread carefully for errors</li>
+                        <li>Get feedback from colleagues</li>
+                    </ul>
+                `
+            },
+            {
+                id: 'qualitative-research-methods',
+                title: 'Complete Guide to Qualitative Research Methods',
+                excerpt: 'Explore core qualitative research methodologies, including interview techniques, data analysis, and result presentation for scientific research projects.',
+                category: 'research',
+                categoryName: 'Research Methods',
+                date: '2024-01-12',
+                readTime: '12 min read',
+                icon: '🔍',
+                content: `
+                    <h2>Introduction to Qualitative Research</h2>
+                    <p>Qualitative research methods are essential tools for understanding complex social phenomena, human behavior, and subjective experiences. Unlike quantitative research, qualitative methods focus on depth rather than breadth.</p>
+                    
+                    <h2>Core Qualitative Research Methods</h2>
+                    <h3>1. In-Depth Interviews</h3>
+                    <p>Semi-structured and unstructured interviews allow researchers to explore participants' perspectives in detail.</p>
+                    <ul>
+                        <li>Prepare open-ended questions</li>
+                        <li>Create a comfortable environment</li>
+                        <li>Practice active listening</li>
+                        <li>Allow for follow-up questions</li>
+                    </ul>
+                    
+                    <h3>2. Focus Groups</h3>
+                    <p>Group discussions that reveal collective perspectives and social dynamics.</p>
+                    <ul>
+                        <li>Select diverse participants</li>
+                        <li>Facilitate balanced participation</li>
+                        <li>Manage group dynamics</li>
+                        <li>Record interactions carefully</li>
+                    </ul>
+                    
+                    <h3>3. Participant Observation</h3>
+                    <p>Immersive fieldwork that provides insights into natural behaviors and contexts.</p>
+                    
+                    <h2>Data Analysis Techniques</h2>
+                    <h3>Thematic Analysis</h3>
+                    <p>Identify patterns and themes across qualitative data:</p>
+                    <ul>
+                        <li>Familiarize yourself with the data</li>
+                        <li>Generate initial codes</li>
+                        <li>Search for themes</li>
+                        <li>Review and refine themes</li>
+                        <li>Define and name themes</li>
+                    </ul>
+                    
+                    <h3>Grounded Theory</h3>
+                    <p>Develop theory from data through systematic analysis and constant comparison.</p>
+                    
+                    <h2>Ensuring Quality and Rigor</h2>
+                    <ul>
+                        <li><strong>Credibility:</strong> Use multiple data sources and member checking</li>
+                        <li><strong>Transferability:</strong> Provide rich, detailed descriptions</li>
+                        <li><strong>Dependability:</strong> Maintain detailed audit trails</li>
+                        <li><strong>Confirmability:</strong> Acknowledge researcher bias and reflexivity</li>
+                    </ul>
+                `
+            },
+            {
+                id: 'ai-academic-writing-guide-2024',
+                title: '2024 Complete Guide to AI Academic Writing Tools',
+                excerpt: 'Discover how the latest AI writing tools are revolutionizing academic writing processes while maintaining academic integrity and improving efficiency.',
+                category: 'tools',
+                categoryName: 'AI Tools',
+                date: '2024-01-10',
+                readTime: '10 min read',
+                icon: '🤖',
+                content: `
+                    <h2>The AI Revolution in Academic Writing</h2>
+                    <p>Artificial Intelligence is transforming academic writing, offering powerful tools to enhance productivity while maintaining scholarly standards. This guide explores the latest AI tools and best practices for 2024.</p>
+                    
+                    <h2>Top AI Writing Tools for Academics</h2>
+                    <h3>1. Grammar and Style Checkers</h3>
+                    <ul>
+                        <li><strong>Grammarly:</strong> Advanced grammar, style, and tone suggestions</li>
+                        <li><strong>ProWritingAid:</strong> Comprehensive writing analysis</li>
+                        <li><strong>Hemingway Editor:</strong> Readability and clarity improvements</li>
+                    </ul>
+                    
+                    <h3>2. Research and Citation Tools</h3>
+                    <ul>
+                        <li><strong>Zotero with AI plugins:</strong> Automated citation management</li>
+                        <li><strong>Semantic Scholar:</strong> AI-powered research discovery</li>
+                        <li><strong>Connected Papers:</strong> Visual research mapping</li>
+                    </ul>
+                    
+                    <h3>3. Content Generation Assistants</h3>
+                    <ul>
+                        <li><strong>Claude:</strong> Research assistance and draft generation</li>
+                        <li><strong>GPT-4:</strong> Versatile writing support</li>
+                        <li><strong>Jasper AI:</strong> Academic content creation</li>
+                    </ul>
+                    
+                    <h2>Maintaining Academic Integrity</h2>
+                    <p>While AI tools offer significant benefits, it's crucial to use them ethically:</p>
+                    <ul>
+                        <li>Always disclose AI assistance when required</li>
+                        <li>Use AI for enhancement, not replacement of original thinking</li>
+                        <li>Verify all AI-generated information and citations</li>
+                        <li>Maintain your unique voice and perspective</li>
+                        <li>Follow institutional guidelines on AI use</li>
+                    </ul>
+                    
+                    <h2>Best Practices for AI-Assisted Writing</h2>
+                    <h3>1. Planning and Outlining</h3>
+                    <p>Use AI to help structure your arguments and organize ideas, but ensure the logic and flow reflect your understanding.</p>
+                    
+                    <h3>2. Draft Enhancement</h3>
+                    <p>Leverage AI for improving clarity, coherence, and style while preserving your original insights.</p>
+                    
+                    <h3>3. Fact-Checking and Verification</h3>
+                    <p>Always verify AI-generated facts, statistics, and citations through primary sources.</p>
+                    
+                    <h2>Future Trends</h2>
+                    <p>The future of AI in academic writing includes:</p>
+                    <ul>
+                        <li>More sophisticated plagiarism detection</li>
+                        <li>Personalized writing assistants</li>
+                        <li>Real-time collaboration tools</li>
+                        <li>Advanced research synthesis capabilities</li>
+                    </ul>
+                `
+            },
+            {
+                id: 'academic-collaboration-tips',
+                title: 'Academic Collaboration and Team Research Guide',
+                excerpt: 'Learn how to build effective academic partnerships, manage interdisciplinary teams, and achieve success in collaborative research projects.',
+                category: 'academic',
+                categoryName: 'Academic Guidance',
+                date: '2024-01-08',
+                readTime: '9 min read',
+                icon: '🤝',
+                content: `
+                    <h2>The Importance of Academic Collaboration</h2>
+                    <p>Academic collaboration has become increasingly important in today's research landscape. Interdisciplinary partnerships can lead to breakthrough discoveries and innovative solutions to complex problems.</p>
+                    
+                    <h2>Building Effective Partnerships</h2>
+                    <h3>1. Identifying Potential Collaborators</h3>
+                    <ul>
+                        <li>Attend academic conferences and networking events</li>
+                        <li>Use academic social networks like ResearchGate</li>
+                        <li>Reach out to researchers citing your work</li>
+                        <li>Participate in interdisciplinary workshops</li>
+                    </ul>
+                    
+                    <h3>2. Establishing Clear Expectations</h3>
+                    <ul>
+                        <li>Define roles and responsibilities early</li>
+                        <li>Establish communication protocols</li>
+                        <li>Agree on publication and authorship guidelines</li>
+                        <li>Set realistic timelines and milestones</li>
+                    </ul>
+                    
+                    <h2>Managing Team Dynamics</h2>
+                    <p>Successful collaborative research requires careful attention to team dynamics:</p>
+                    <ul>
+                        <li><strong>Regular Communication:</strong> Schedule consistent check-ins</li>
+                        <li><strong>Conflict Resolution:</strong> Address disagreements promptly and professionally</li>
+                        <li><strong>Shared Resources:</strong> Establish protocols for data and resource sharing</li>
+                        <li><strong>Cultural Sensitivity:</strong> Be aware of different academic cultures and practices</li>
+                    </ul>
+                    
+                    <h2>Tools for Collaboration</h2>
+                    <h3>Project Management</h3>
+                    <ul>
+                        <li>Slack or Microsoft Teams for communication</li>
+                        <li>Trello or Asana for task management</li>
+                        <li>Google Workspace for document collaboration</li>
+                        <li>Zoom or similar for virtual meetings</li>
+                    </ul>
+                    
+                    <h3>Research Tools</h3>
+                    <ul>
+                        <li>Shared reference managers (Zotero, Mendeley)</li>
+                        <li>Collaborative data analysis platforms</li>
+                        <li>Version control systems for code (Git)</li>
+                        <li>Cloud storage for secure file sharing</li>
+                    </ul>
+                    
+                    <h2>Overcoming Common Challenges</h2>
+                    <ul>
+                        <li><strong>Time Zone Differences:</strong> Use scheduling tools and asynchronous communication</li>
+                        <li><strong>Different Methodologies:</strong> Establish common standards early</li>
+                        <li><strong>Funding Disparities:</strong> Discuss resource allocation transparently</li>
+                        <li><strong>Publication Pressure:</strong> Agree on publication strategies in advance</li>
+                    </ul>
+                `
+            },
+            {
+                id: 'academic-presentation-guide',
+                title: 'Academic Presentation and Conference Speaking Skills',
+                excerpt: 'Master the art of academic presentations, from PowerPoint creation to live delivery, ensuring your research gets the best possible showcase.',
+                category: 'academic',
+                categoryName: 'Academic Guidance',
+                date: '2024-01-05',
+                readTime: '11 min read',
+                icon: '🎤',
+                content: `
+                    <h2>The Art of Academic Presentation</h2>
+                    <p>Effective academic presentations are crucial for sharing research, building professional networks, and advancing your career. This guide covers everything from slide design to delivery techniques.</p>
+                    
+                    <h2>Preparing Your Presentation</h2>
+                    <h3>1. Understanding Your Audience</h3>
+                    <ul>
+                        <li>Research the conference and attendees</li>
+                        <li>Adjust technical depth accordingly</li>
+                        <li>Consider cultural and linguistic diversity</li>
+                        <li>Prepare for different levels of expertise</li>
+                    </ul>
+                    
+                    <h3>2. Structuring Your Content</h3>
+                    <p>A well-structured presentation follows this framework:</p>
+                    <ul>
+                        <li><strong>Introduction:</strong> Hook, context, and objectives</li>
+                        <li><strong>Literature Review:</strong> Brief background and gaps</li>
+                        <li><strong>Methodology:</strong> Clear explanation of approach</li>
+                        <li><strong>Results:</strong> Key findings with visual support</li>
+                        <li><strong>Discussion:</strong> Implications and limitations</li>
+                        <li><strong>Conclusion:</strong> Summary and future directions</li>
+                    </ul>
+                    
+                    <h2>Slide Design Best Practices</h2>
+                    <h3>Visual Design Principles</h3>
+                    <ul>
+                        <li>Use consistent fonts and colors</li>
+                        <li>Limit text to key points only</li>
+                        <li>Include high-quality visuals and charts</li>
+                        <li>Ensure readability from the back of the room</li>
+                        <li>Use white space effectively</li>
+                    </ul>
+                    
+                    <h3>Content Guidelines</h3>
+                    <ul>
+                        <li>One main idea per slide</li>
+                        <li>Use bullet points sparingly</li>
+                        <li>Include slide numbers and your name</li>
+                        <li>Prepare backup slides for questions</li>
+                    </ul>
+                    
+                    <h2>Delivery Techniques</h2>
+                    <h3>Before Your Presentation</h3>
+                    <ul>
+                        <li>Practice multiple times out loud</li>
+                        <li>Time your presentation accurately</li>
+                        <li>Prepare for technical difficulties</li>
+                        <li>Arrive early to test equipment</li>
+                    </ul>
+                    
+                    <h3>During Your Presentation</h3>
+                    <ul>
+                        <li>Make eye contact with the audience</li>
+                        <li>Use gestures and movement purposefully</li>
+                        <li>Speak clearly and at appropriate pace</li>
+                        <li>Engage with questions confidently</li>
+                        <li>Stay within time limits</li>
+                    </ul>
+                    
+                    <h2>Handling Questions and Discussion</h2>
+                    <p>The Q&A session is often the most valuable part of your presentation:</p>
+                    <ul>
+                        <li>Listen carefully to each question</li>
+                        <li>Repeat or rephrase questions for clarity</li>
+                        <li>Admit when you don't know something</li>
+                        <li>Offer to continue discussions offline</li>
+                        <li>Thank questioners for their input</li>
+                    </ul>
+                    
+                    <h2>Virtual Presentation Tips</h2>
+                    <p>With the rise of online conferences, virtual presentation skills are essential:</p>
+                    <ul>
+                        <li>Test your technology beforehand</li>
+                        <li>Ensure good lighting and audio quality</li>
+                        <li>Maintain eye contact with the camera</li>
+                        <li>Use interactive features when available</li>
+                        <li>Have a backup plan for technical issues</li>
+                    </ul>
+                `
+            }
+        ];
+        
+        function loadArticle() {
+            if (!articleId) {
+                showError();
+                return;
+            }
+            
+            // Load articles from both localStorage keys and merge with default articles
+            const publishedArticles = JSON.parse(localStorage.getItem('publishedArticles') || '[]');
+            const newArticles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+            const allArticles = [...newArticles, ...publishedArticles, ...articles];
+            
+            console.log('Looking for article with ID:', articleId);
+            console.log('New articles:', newArticles.map(a => a.id));
+            console.log('Published articles:', publishedArticles.map(a => a.id));
+            console.log('Default articles:', articles.map(a => a.id));
+            console.log('All available articles:', allArticles.map(a => a.id));
+            
+            const article = allArticles.find(a => a.id === articleId);
+            
+            if (!article) {
+                console.log('Article not found in any storage');
+                showError();
+                return;
+            }
+            
+            // Update page title
+            document.title = `${article.title} - AI Grant Writer`;
+            
+            // Populate article content
+            document.getElementById('article-icon').textContent = article.icon;
+            document.getElementById('article-title').textContent = article.title;
+            document.getElementById('article-category').textContent = article.categoryName;
+            document.getElementById('article-date').textContent = article.date;
+            document.getElementById('article-read-time').textContent = article.readTime;
+            document.getElementById('article-body').innerHTML = article.content;
+            
+            // Show article content
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('article-content').style.display = 'block';
+        }
+        
+        function showError() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error-message').style.display = 'block';
+        }
+        
+        // Load article when page loads
+        document.addEventListener('DOMContentLoaded', loadArticle);
+    </script>
 </body>
 </html>

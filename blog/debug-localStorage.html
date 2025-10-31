@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug localStorage</title>
+</head>
+<body>
+    <h1>Debug localStorage</h1>
+    <div id="output"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const output = document.getElementById('output');
+            
+            // Check localStorage
+            const publishedArticles = localStorage.getItem('publishedArticles');
+            
+            output.innerHTML = `
+                <h2>localStorage Data:</h2>
+                <pre>${publishedArticles || 'No data found'}</pre>
+                
+                <h2>Parsed Data:</h2>
+                <pre>${publishedArticles ? JSON.stringify(JSON.parse(publishedArticles), null, 2) : 'No data to parse'}</pre>
+                
+                <button onclick="clearStorage()">Clear localStorage</button>
+            `;
+        });
+        
+        function clearStorage() {
+            localStorage.removeItem('publishedArticles');
+            location.reload();
+        }
+    </script>
+</body>
+</html>

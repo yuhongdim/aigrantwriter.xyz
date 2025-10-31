@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调试按钮显示</title>
+</head>
+<body>
+    <h1>调试localStorage中的文章数据</h1>
+    <div id="debug-info"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const debugDiv = document.getElementById('debug-info');
+            
+            // 检查localStorage中的数据
+            const newArticles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+            const publishedArticles = JSON.parse(localStorage.getItem('publishedArticles') || '[]');
+            
+            debugDiv.innerHTML = `
+                <h2>localStorage数据:</h2>
+                <h3>newArticles (${newArticles.length}篇):</h3>
+                <pre>${JSON.stringify(newArticles, null, 2)}</pre>
+                
+                <h3>publishedArticles (${publishedArticles.length}篇):</h3>
+                <pre>${JSON.stringify(publishedArticles, null, 2)}</pre>
+                
+                <h3>文章ID检查:</h3>
+                ${newArticles.map(article => `
+                    <p>ID: ${article.id} - 是否以'new_'开头: ${article.id && article.id.toString().startsWith('new_')}</p>
+                `).join('')}
+            `;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清理localStorage</title>
+</head>
+<body>
+    <h1>清理localStorage数据</h1>
+    <button onclick="clearStorage()">清理所有文章数据</button>
+    <button onclick="addTestArticle()">添加测试文章</button>
+    <div id="result"></div>
+    
+    <script>
+        function clearStorage() {
+            localStorage.removeItem('newArticles');
+            localStorage.removeItem('publishedArticles');
+            document.getElementById('result').innerHTML = '<p style="color: green;">localStorage已清理</p>';
+        }
+        
+        function addTestArticle() {
+            const testArticle = {
+                id: 'new_test-article-with-buttons',
+                title: '测试文章标题',
+                excerpt: '这是一篇测试文章，用于验证删除和编辑按钮是否正常显示。',
+                category: 'writing',
+                categoryName: 'Writing Techniques',
+                date: new Date().toISOString().split('T')[0],
+                readTime: '3 min read',
+                icon: '📝',
+                url: 'test-article.html',
+                content: '这是测试文章的完整内容。用于验证删除和编辑功能是否正常工作。',
+                tags: ['测试', '按钮'],
+                author: 'AI Grant Writer'
+            };
+            
+            const articles = [testArticle];
+            localStorage.setItem('newArticles', JSON.stringify(articles));
+            document.getElementById('result').innerHTML = '<p style="color: blue;">测试文章已添加</p>';
+        }
+    </script>
+</body>
+</html>

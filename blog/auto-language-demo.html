@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自动语言检测演示 - Auto Language Detection Demo</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="blog-styles.css">
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .demo-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+        }
+        .demo-links {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .demo-link {
+            display: block;
+            padding: 1rem;
+            background: #f3f4f6;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #374151;
+            transition: all 0.3s ease;
+        }
+        .demo-link:hover {
+            background: #e5e7eb;
+            transform: translateY(-2px);
+        }
+        .demo-link code {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1 data-zh="自动语言检测功能演示" data-en="Auto Language Detection Feature Demo">自动语言检测功能演示</h1>
+        
+        <div class="demo-section">
+            <h2 data-zh="功能说明" data-en="Feature Description">功能说明</h2>
+            <p data-zh="现在博客支持根据URL参数自动设置语言，无需手动点击语言切换按钮。" data-en="The blog now supports automatic language setting based on URL parameters, without manually clicking language switch buttons.">现在博客支持根据URL参数自动设置语言，无需手动点击语言切换按钮。</p>
+        </div>
+
+        <div class="demo-section">
+            <h2 data-zh="使用方法" data-en="Usage Methods">使用方法</h2>
+            <p data-zh="在任何博客页面的URL后添加语言参数：" data-en="Add language parameters to any blog page URL:">在任何博客页面的URL后添加语言参数：</p>
+            
+            <div class="demo-links">
+                <a href="?lang=zh" class="demo-link">
+                    <strong data-zh="中文模式" data-en="Chinese Mode">中文模式</strong><br>
+                    <code>?lang=zh</code>
+                    <span data-zh="- 页面将自动显示为中文" data-en="- Page will automatically display in Chinese"> - 页面将自动显示为中文</span>
+                </a>
+                
+                <a href="?lang=en" class="demo-link">
+                    <strong data-zh="英文模式" data-en="English Mode">英文模式</strong><br>
+                    <code>?lang=en</code>
+                    <span data-zh="- 页面将自动显示为英文" data-en="- Page will automatically display in English"> - 页面将自动显示为英文</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2 data-zh="实际示例" data-en="Real Examples">实际示例</h2>
+            <p data-zh="点击下面的链接测试自动语言切换：" data-en="Click the links below to test automatic language switching:">点击下面的链接测试自动语言切换：</p>
+            
+            <div class="demo-links">
+                <a href="index.html?lang=zh" class="demo-link">
+                    <strong data-zh="博客首页 - 中文" data-en="Blog Homepage - Chinese">博客首页 - 中文</strong><br>
+                    <code>blog/index.html?lang=zh</code>
+                </a>
+                
+                <a href="index.html?lang=en" class="demo-link">
+                    <strong data-zh="博客首页 - 英文" data-en="Blog Homepage - English">博客首页 - 英文</strong><br>
+                    <code>blog/index.html?lang=en</code>
+                </a>
+                
+                <a href="sci-journal-submission-guide.html?lang=zh" class="demo-link">
+                    <strong data-zh="期刊投稿指南 - 中文" data-en="Journal Submission Guide - Chinese">期刊投稿指南 - 中文</strong><br>
+                    <code>sci-journal-submission-guide.html?lang=zh</code>
+                </a>
+                
+                <a href="sci-journal-submission-guide.html?lang=en" class="demo-link">
+                    <strong data-zh="期刊投稿指南 - 英文" data-en="Journal Submission Guide - English">期刊投稿指南 - 英文</strong><br>
+                    <code>sci-journal-submission-guide.html?lang=en</code>
+                </a>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2 data-zh="智能检测规则" data-en="Smart Detection Rules">智能检测规则</h2>
+            <ol>
+                <li data-zh="优先级1：URL参数 (?lang=zh 或 ?lang=en)" data-en="Priority 1: URL parameters (?lang=zh or ?lang=en)">优先级1：URL参数 (?lang=zh 或 ?lang=en)</li>
+                <li data-zh="优先级2：本地存储的语言偏好" data-en="Priority 2: Locally stored language preference">优先级2：本地存储的语言偏好</li>
+                <li data-zh="优先级3：浏览器语言设置" data-en="Priority 3: Browser language settings">优先级3：浏览器语言设置</li>
+                <li data-zh="默认：中文" data-en="Default: Chinese">默认：中文</li>
+            </ol>
+        </div>
+
+        <div class="demo-section">
+            <h2 data-zh="发布文章建议" data-en="Article Publishing Suggestions">发布文章建议</h2>
+            <p data-zh="发布文章时，可以创建两个链接：" data-en="When publishing articles, you can create two links:">发布文章时，可以创建两个链接：</p>
+            <ul>
+                <li data-zh="中文版：文章链接 + ?lang=zh" data-en="Chinese version: Article link + ?lang=zh">中文版：文章链接 + ?lang=zh</li>
+                <li data-zh="英文版：文章链接 + ?lang=en" data-en="English version: Article link + ?lang=en">英文版：文章链接 + ?lang=en</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 语言切换按钮 -->
+    <div class="language-switcher">
+        <button class="lang-btn" data-lang="zh">中</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+
+    <script src="blog-script.js"></script>
+</body>
+</html>

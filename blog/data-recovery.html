@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客数据恢复工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .status-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .status-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .status-display {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .article-list {
+            max-height: 300px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .article-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .article-item:last-child {
+            border-bottom: none;
+        }
+        
+        .backup-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .backup-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .form-group {
+            margin: 15px 0;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .navigation {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 博客数据恢复工具</h1>
+            <p>检查、备份和恢复您的博客文章数据</p>
+        </div>
+        
+        <!-- 数据状态检查 -->
+        <div class="status-section">
+            <h3>📊 数据状态检查</h3>
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="checkDataStatus()">检查当前数据</button>
+                <button class="btn btn-success" onclick="autoBackup()">自动备份数据</button>
+            </div>
+            <div id="dataStatus" class="status-display"></div>
+        </div>
+        
+        <!-- 数据恢复 -->
+        <div class="status-section">
+            <h3>🔄 数据恢复</h3>
+            <div class="button-group">
+                <button class="btn btn-success" onclick="addSampleArticles()">添加示例文章</button>
+                <button class="btn btn-warning" onclick="showBackupList()">查看备份列表</button>
+                <button class="btn btn-primary" onclick="showManualAdd()">手动添加文章</button>
+            </div>
+            <div id="backupList" class="backup-list hidden"></div>
+            <div id="manualAddForm" class="hidden">
+                <div class="form-group">
+                    <label>文章标题</label>
+                    <input type="text" id="articleTitle" placeholder="输入文章标题">
+                </div>
+                <div class="form-group">
+                    <label>文章摘要</label>
+                    <textarea id="articleExcerpt" rows="3" placeholder="输入文章摘要"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>文章分类</label>
+                    <select id="articleCategory">
+                        <option value="writing">Writing Tips</option>
+                        <option value="research">Research Methods</option>
+                        <option value="tools">AI Tools</option>
+                        <option value="guidance">Academic Guidance</option>
+                    </select>
+                </div>
+                <button class="btn btn-success" onclick="addManualArticle()">添加文章</button>
+            </div>
+        </div>
+        
+        <!-- 预防措施 -->
+        <div class="status-section">
+            <h3>🛡️ 数据保护</h3>
+            <div class="button-group">
+                <button class="btn btn-warning" onclick="enableAutoBackup()">启用自动备份</button>
+                <button class="btn btn-danger" onclick="showDangerousPages()">查看危险页面</button>
+            </div>
+            <div id="protectionStatus" class="status-display"></div>
+        </div>
+        
+        <!-- 文章列表 -->
+        <div class="status-section">
+            <h3>📝 当前文章列表</h3>
+            <div id="articleList" class="article-list"></div>
+        </div>
+        
+        <div class="navigation">
+            <a href="index.html" class="btn btn-primary">返回博客首页</a>
+            <a href="publish-article.html" class="btn btn-success">发布新文章</a>
+        </div>
+    </div>
+
+    <script>
+        // 数据状态检查
+        function checkDataStatus() {
+            const newArticles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+            const publishedArticles = JSON.parse(localStorage.getItem('publishedArticles') || '[]');
+            
+            let statusHtml = `
+                <div class="alert alert-${newArticles.length > 0 ? 'success' : 'warning'}">
+                    <strong>新文章数据:</strong> ${newArticles.length} 篇文章
+                </div>
+                <div class="alert alert-${publishedArticles.length > 0 ? 'success' : 'warning'}">
+                    <strong>已发布文章:</strong> ${publishedArticles.length} 篇文章
+                </div>
+            `;
+            
+            if (newArticles.length === 0 && publishedArticles.length === 0) {
+                statusHtml += `
+                    <div class="alert alert-danger">
+                        <strong>⚠️ 警告:</strong> 没有找到任何文章数据！这可能是因为：
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>数据被意外清除</li>
+                            <li>访问了测试页面并触发了清理功能</li>
+                            <li>浏览器隐私设置清除了存储数据</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('dataStatus').innerHTML = statusHtml;
+            updateArticleList();
+        }
+        
+        // 自动备份
+        function autoBackup() {
+            const newArticles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+            const publishedArticles = JSON.parse(localStorage.getItem('publishedArticles') || '[]');
+            
+            const backup = {
+                timestamp: new Date().toISOString(),
+                newArticles: newArticles,
+                publishedArticles: publishedArticles,
+                totalCount: newArticles.length + publishedArticles.length
+            };
+            
+            const backups = JSON.parse(localStorage.getItem('articleBackups') || '[]');
+            backups.unshift(backup);
+            
+            // 只保留最近10个备份
+            if (backups.length > 10) {
+                backups.splice(10);
+            }
+            
+            localStorage.setItem('articleBackups', JSON.stringify(backups));
+            
+            document.getElementById('dataStatus').innerHTML = `
+                <div class="alert alert-success">
+                    <strong>✅ 备份成功!</strong> 已备份 ${backup.totalCount} 篇文章
+                    <br>备份时间: ${new Date(backup.timestamp).toLocaleString()}
+                </div>
+            `;
+        }
+        
+        // 添加示例文章
+        function addSampleArticles() {
+            const sampleArticles = [
+                {
+                    id: 'sample-academic-writing-guide',
+                    title: '学术写作完整指南',
+                    excerpt: '掌握学术写作的核心技巧，从论文结构到引用格式，全面提升您的学术写作能力。',
+                    category: 'writing',
+                    categoryName: 'Writing Tips',
+                    date: new Date().toISOString().split('T')[0],
+                    readTime: '8 min read',
+                    icon: '📝',
+                    url: 'academic-writing-guide.html'
+                },
+                {
+                    id: 'sample-research-methods',
+                    title: '研究方法论精要',
+                    excerpt: '探索定性和定量研究方法，学习如何设计严谨的研究方案和数据分析策略。',
+                    category: 'research',
+                    categoryName: 'Research Methods',
+                    date: new Date().toISOString().split('T')[0],
+                    readTime: '12 min read',
+                    icon: '🔬',
+                    url: 'research-methods.html'
+                },
+                {
+                    id: 'sample-ai-tools-guide',
+                    title: 'AI工具在学术写作中的应用',
+                    excerpt: '了解如何有效利用AI工具提升学术写作效率，同时保持学术诚信和原创性。',
+                    category: 'tools',
+                    categoryName: 'AI Tools',
+                    date: new Date().toISOString().split('T')[0],
+                    readTime: '10 min read',
+                    icon: '🤖',
+                    url: 'ai-tools-guide.html'
+                }
+            ];
+            
+            const existingArticles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+            const mergedArticles = [...sampleArticles, ...existingArticles];
+            
+            localStorage.setItem('newArticles', JSON.stringify(mergedArticles));
+            
+            document.getElementById('dataStatus').innerHTML = `
+                <div class="alert alert-success">
+                    <strong>✅ 示例文章添加成功!</strong> 已添加 ${sampleArticles.length} 篇示例文章
+                </div>
+            `;
+            
+            updateArticleList();
+        }
+        
+        // 显示备份列表
+        function showBackupList() {
+            const backups = JSON.parse(localStorage.getItem('articleBackups') || '[]');
+            const backupListDiv = document.getElementById('backupList');
+            
+            if (backups.length === 0) {
+                backupListDiv.innerHTML = `
+                    <div class="alert alert-warning">
+                        没有找到任何备份数据
+                    </div>
+                `;
+            } else {
+                let backupHtml = '<h4>可用备份列表:</h4>';
+                backups.forEach((backup, index) => {
+                    backupHtml += `
+                        <div class="backup-item">
+                            <div>
+                                <strong>备份 ${index + 1}</strong><br>
+                                时间: ${new Date(backup.timestamp).toLocaleString()}<br>
+                                文章数: ${backup.totalCount} 篇
+                            </div>
+                            <button class="btn btn-success" onclick="restoreFromBackup(${index})">恢复此备份</button>
+                        </div>
+                    `;
+                });
+                backupListDiv.innerHTML = backupHtml;
+            }
+            
+            backupListDiv.classList.toggle('hidden');
+        }
+        
+        // 从备份恢复
+        function restoreFromBackup(index) {
+            const backups = JSON.parse(localStorage.getItem('articleBackups') || '[]');
+            if (backups[index]) {
+                const backup = backups[index];
+                localStorage.setItem('newArticles', JSON.stringify(backup.newArticles));
+                localStorage.setItem('publishedArticles', JSON.stringify(backup.publishedArticles));
+                
+                document.getElementById('dataStatus').innerHTML = `
+                    <div class="alert alert-success">
+                        <strong>✅ 数据恢复成功!</strong> 已恢复 ${backup.totalCount} 篇文章
+                        <br>恢复时间: ${new Date(backup.timestamp).toLocaleString()}
+                    </div>
+                `;
+                
+                updateArticleList();
+                document.getElementById('backupList').classList.add('hidden');
+            }
+        }
+        
+        // 显示手动添加表单
+        function showManualAdd() {
+            document.getElementById('manualAddForm').classList.toggle('hidden');
+        }
+        
+        // 手动添加文章
+        function addManualArticle() {
+            const title = document.getElementById('articleTitle').value.trim();
+            const excerpt = document.getElementById('articleExcerpt').value.trim();
+            const category = document.getElementById('articleCategory').value;
+            
+            if (!title || !excerpt) {
+                alert('请填写文章标题和摘要');
+                return;
+            }
+            
+            const categoryNames = {
+                'writing': 'Writing Tips',
+                'research': 'Research Methods',
+                'tools': 'AI Tools',
+                'guidance': 'Academic Guidance'
+            };
+            
+            const newArticle = {
+                id: 'manual-' + Date.now(),
+                title: title,
+                excerpt: excerpt,
+                category: category,
+                categoryName: categoryNames[category],
+                date: new Date().toISOString().split('T')[0],
+                readTime: '5 min read',
+                icon: '📄',
+                url: 'manual-article.html'
+            };
+            
+            const existingArticles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+            existingArticles.unshift(newArticle);
+            localStorage.setItem('newArticles', JSON.stringify(existingArticles));
+            
+            // 清空表单
+            document.getElementById('articleTitle').value = '';
+            document.getElementById('articleExcerpt').value = '';
+            document.getElementById('manualAddForm').classList.add('hidden');
+            
+            document.getElementById('dataStatus').innerHTML = `
+                <div class="alert alert-success">
+                    <strong>✅ 文章添加成功!</strong> "${title}" 已添加到博客
+                </div>
+            `;
+            
+            updateArticleList();
+        }
+        
+        // 启用自动备份
+        function enableAutoBackup() {
+            localStorage.setItem('autoBackupEnabled', 'true');
+            document.getElementById('protectionStatus').innerHTML = `
+                <div class="alert alert-success">
+                    <strong>✅ 自动备份已启用!</strong> 系统将定期备份您的文章数据
+                </div>
+            `;
+        }
+        
+        // 显示危险页面警告
+        function showDangerousPages() {
+            document.getElementById('protectionStatus').innerHTML = `
+                <div class="alert alert-danger">
+                    <strong>⚠️ 危险页面警告:</strong>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li><strong>test-buttons.html</strong> - 包含清理localStorage的功能</li>
+                        <li><strong>clear-storage.html</strong> - 专门用于清理存储数据</li>
+                        <li><strong>debug-storage-check.html</strong> - 包含localStorage.clear()功能</li>
+                        <li><strong>debug-localStorage.html</strong> - 可能删除已发布文章</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>建议:</strong> 避免访问这些页面，或在访问前先备份数据</p>
+                </div>
+            `;
+        }
+        
+        // 更新文章列表
+        function updateArticleList() {
+            const newArticles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+            const publishedArticles = JSON.parse(localStorage.getItem('publishedArticles') || '[]');
+            const allArticles = [...newArticles, ...publishedArticles];
+            
+            const listDiv = document.getElementById('articleList');
+            
+            if (allArticles.length === 0) {
+                listDiv.innerHTML = `
+                    <div class="alert alert-warning">
+                        暂无文章数据
+                    </div>
+                `;
+                return;
+            }
+            
+            let listHtml = '';
+            allArticles.forEach((article, index) => {
+                listHtml += `
+                    <div class="article-item">
+                        <div>
+                            <strong>${article.title}</strong><br>
+                            <small>${article.categoryName} • ${article.date} • ${article.readTime}</small>
+                        </div>
+                        <div>
+                            <button class="btn btn-danger" onclick="deleteArticle('${article.id}', ${index < newArticles.length ? 'true' : 'false'})">删除</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            listDiv.innerHTML = listHtml;
+        }
+        
+        // 删除文章
+        function deleteArticle(articleId, isNew) {
+            if (!confirm('确定要删除这篇文章吗？')) return;
+            
+            const storageKey = isNew === 'true' ? 'newArticles' : 'publishedArticles';
+            const articles = JSON.parse(localStorage.getItem(storageKey) || '[]');
+            const filteredArticles = articles.filter(article => article.id !== articleId);
+            localStorage.setItem(storageKey, JSON.stringify(filteredArticles));
+            
+            updateArticleList();
+        }
+        
+        // 页面加载时检查数据状态
+        window.addEventListener('DOMContentLoaded', function() {
+            checkDataStatus();
+        });
+    </script>
+</body>
+</html>
