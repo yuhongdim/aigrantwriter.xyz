@@ -397,6 +397,11 @@ document.addEventListener('click', function(e) {
         return; // 不阻止，让链接正常工作
     }
     
+    // 如果点击的是导航链接，不做任何处理，让浏览器正常跳转
+    if (e.target.closest('.nav-link') || e.target.closest('nav a')) {
+        return; // 不阻止，让链接正常工作
+    }
+    
     if (e.target.closest('.action-btn')) {
         const btn = e.target.closest('.action-btn');
         const icon = btn.querySelector('i');

@@ -1825,14 +1825,14 @@ function showArticleNotFound() {
     contentWrapper.innerHTML = `
         <div class="article-not-found">
             <i class="fas fa-exclamation-triangle"></i>
-            <h2>文章未找到</h2>
-            <p>抱歉，您访问的文章不存在或已被删除。</p>
-            <a href="index.html" class="back-to-blog">返回博客首页</a>
+            <h2>Article Not Found</h2>
+            <p>Sorry, the article you are looking for does not exist or has been deleted.</p>
+            <a href="seo-articles.html" class="back-to-blog">Back to Blog</a>
         </div>
     `;
     
-    document.getElementById('mainTitle').textContent = '文章未找到';
-    document.getElementById('mainExcerpt').textContent = '您访问的文章不存在';
+    document.getElementById('mainTitle').textContent = 'Article Not Found';
+    document.getElementById('mainExcerpt').textContent = 'The article you are looking for does not exist';
 }
 
 // 分享文章

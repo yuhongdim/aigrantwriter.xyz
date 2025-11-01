@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Details - AI Grant Writer</title>
+    <link rel="stylesheet" href="blog-styles.css">
+    <style>
+        .article-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .article-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+        
+        .article-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #f3f4f6;
+            position: relative;
+        }
+        
+        .article-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            color: #6b7280;
+            font-size: 0.95rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-category {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .article-category:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .article-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .article-reading-time {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f0f9ff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid #bae6fd;
+            color: #0369a1;
+        }
+        
+        .article-summary {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 5px solid #667eea;
+            margin-bottom: 2.5rem;
+            font-style: italic;
+            color: #4b5563;
+            line-height: 1.7;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .article-summary::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+            font-size: 3rem;
+            color: #667eea;
+            opacity: 0.3;
+            font-family: serif;
+        }
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .article-content {
+            margin-top: 2rem;
+            line-height: 1.8;
+            color: #374151;
+            font-size: 1.1rem;
+        }
+        
+        .article-content h1 {
+            color: #1f2937;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .article-content h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+        
+        .article-content h2 {
+            color: #1f2937;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            font-size: 1.7rem;
+            font-weight: 600;
+            position: relative;
+            padding-left: 1rem;
+        }
+        
+        .article-content h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+        
+        .article-content h3 {
+            color: #1f2937;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            position: relative;
+            padding-left: 0.8rem;
+        }
+        
+        .article-content h3::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 0.8rem;
+        }
+        
+        .article-content h4 {
+            color: #374151;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 0.3rem;
+        }
+        
+        .article-content p {
+            margin-bottom: 1.4rem;
+            text-align: justify;
+        }
+        
+        .article-content ul, .article-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        
+        .article-content li {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+        
+        .article-content ul li::before {
+            content: '•';
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            left: -1.2rem;
+            font-size: 1.2rem;
+        }
+        
+        .article-content ol li {
+            counter-increment: list-counter;
+        }
+        
+        .article-content ol {
+            counter-reset: list-counter;
+        }
+        
+        .article-content ol li::before {
+            content: counter(list-counter);
+            color: white;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: -2.2rem;
+            top: 0.1rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .article-content blockquote {
+            border-left: 5px solid #667eea;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #4b5563;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .article-content blockquote::before {
+            content: '"';
+            position: absolute;
+            top: 0.5rem;
+            left: 1rem;
+            font-size: 2.5rem;
+            color: #667eea;
+            opacity: 0.3;
+            font-family: serif;
+        }
+        
+        .article-content code {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #dc2626;
+            border: 1px solid #d1d5db;
+        }
+        
+        .article-content pre {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: #f9fafb;
+            padding: 2rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 2rem 0;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid #374151;
+        }
+        
+        .article-content pre::before {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 12px;
+            height: 12px;
+            background: #ef4444;
+            border-radius: 50%;
+            box-shadow: 20px 0 0 #f59e0b, 40px 0 0 #10b981;
+        }
+        
+        .article-content pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+            border: none;
+        }
+        
+        /* 表格样式 */
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .article-content th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .article-content td {
+            padding: 1rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .article-content tr:hover {
+            background: #f8fafc;
+        }
+        
+        /* 强调文本样式 */
+        .article-content strong {
+            color: #1f2937;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+        }
+        
+        .article-content em {
+            color: #667eea;
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        .article-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #f3f4f6;
+        }
+        
+        .share-section {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .share-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .share-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        
+        .share-btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .copy-link-btn {
+            background: #667eea;
+            color: white;
+        }
+        
+        .copy-link-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+        
+        .copy-link-btn.copied {
+            background: #10b981;
+        }
+        
+        .social-btn {
+            background: white;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+        
+        .social-btn:hover {
+            background: #f3f4f6;
+            transform: translateY(-1px);
+        }
+        
+        .wechat-btn:hover { background: #07c160; color: white; }
+        .qq-btn:hover { background: #12b7f5; color: white; }
+        .weibo-btn:hover { background: #e6162d; color: white; }
+        
+        .url-display {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 0.75rem;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #6b7280;
+            word-break: break-all;
+            margin-top: 1rem;
+        }
+        
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .edit-btn {
+            background: #667eea;
+            color: white;
+        }
+        
+        .edit-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+        
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .delete-btn:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #667eea;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+        
+        .back-button:hover {
+            color: #764ba2;
+            background: #e2e8f0;
+        }
+        
+        .error-message {
+            text-align: center;
+            color: #ef4444;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #6b7280;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+        }
+        
+        /* 目录导航样式 */
+        .table-of-contents {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            max-width: 250px;
+            max-height: 60vh;
+            overflow-y: auto;
+            z-index: 1000;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .table-of-contents.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-50%) translateX(100%);
+        }
+        
+        .toc-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f3f4f6;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .toc-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .toc-link {
+            display: block;
+            color: #6b7280;
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .toc-link:hover {
+            background: #f8fafc;
+            color: #667eea;
+            border-left-color: #667eea;
+        }
+        
+        .toc-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-left-color: #764ba2;
+        }
+        
+        .toc-link.level-2 {
+            padding-left: 1.2rem;
+        }
+        
+        .toc-link.level-3 {
+            padding-left: 1.6rem;
+            font-size: 0.8rem;
+        }
+        
+        .toc-toggle {
+            position: fixed;
+            right: 2rem;
+            bottom: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .toc-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* 阅读进度条 */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #f3f4f6;
+            z-index: 1002;
+        }
+        
+        .reading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        @media (max-width: 1024px) {
+            .table-of-contents {
+                display: none;
+            }
+            
+            .toc-toggle {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .article-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .article-title {
+                font-size: 2rem;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            
+            .article-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .article-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .article-content h3 {
+                font-size: 1.3rem;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .share-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .article-container {
+                margin: 0.5rem;
+                padding: 1rem;
+            }
+            
+            .article-title {
+                font-size: 1.8rem;
+                line-height: 1.3;
+            }
+            
+            .article-meta {
+                font-size: 0.85rem;
+            }
+            
+            .article-content {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+    
+    <!-- 目录导航 -->
+    <div class="table-of-contents hidden" id="table-of-contents">
+        <div class="toc-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="6" x2="21" y2="6"/>
+                <line x1="8" y1="12" x2="21" y2="12"/>
+                <line x1="8" y1="18" x2="21" y2="18"/>
+                <line x1="3" y1="6" x2="3.01" y2="6"/>
+                <line x1="3" y1="12" x2="3.01" y2="12"/>
+                <line x1="3" y1="18" x2="3.01" y2="18"/>
+            </svg>
+            目录
+        </div>
+        <ul class="toc-list" id="toc-list">
+            <!-- 目录项将通过JavaScript动态生成 -->
+        </ul>
+    </div>
+    
+    <!-- 目录切换按钮 -->
+    <button class="toc-toggle" id="toc-toggle" title="显示/隐藏目录">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+        </svg>
+    </button>
+
+    <div class="container">
+        <a href="index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Blog
+        </a>
+        
+        <div class="article-container">
+            <div id="loading" class="loading">
+                Loading article...
+            </div>
+            
+            <div id="article-content" style="display: none;">
+                <div class="article-header">
+                    <h1 class="article-title" id="article-title"></h1>
+                    <div class="article-meta">
+                        <span class="article-category" id="article-category"></span>
+                        <span class="article-date" id="article-date">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                            <span id="article-date-text"></span>
+                        </span>
+                        <span class="article-reading-time" id="article-read-time">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12,6 12,12 16,14"/>
+                            </svg>
+                            <span id="article-read-time-text"></span>
+                        </span>
+                    </div>
+                    <div class="article-summary" id="article-summary" style="display: none;"></div>
+                </div>
+                
+                <div class="article-content" id="article-body">
+                    <!-- Article content will be loaded here -->
+                </div>
+                
+                <!-- Share Section -->
+                <div class="share-section">
+                    <div class="share-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="18" cy="5" r="3"/>
+                            <circle cx="6" cy="12" r="3"/>
+                            <circle cx="18" cy="19" r="3"/>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                        </svg>
+                        分享这篇文章
+                    </div>
+                    <div class="share-buttons">
+                        <button class="share-btn copy-link-btn" id="copy-link-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                            </svg>
+                            <span id="copy-btn-text">复制链接</span>
+                        </button>
+                        <a href="#" class="share-btn social-btn wechat-btn" id="wechat-share">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.162 4.203 2.97 5.498L2.098 17.5l3.201-1.607c.778.129 1.588.195 2.392.195 4.8 0 8.691-3.288 8.691-7.342 0-4.054-3.891-7.342-8.691-7.342zm-2.46 5.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm4.92 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                                <path d="M15.743 9.91c-.69 0-1.353.09-1.975.24 1.161 1.221 1.975 2.721 1.975 4.43 0 .315-.024.624-.067.927.24.06.49.09.743.09.69 0 1.353-.09 1.975-.24l2.4 1.2-.6-2.4c1.35-.96 2.25-2.43 2.25-4.08 0-3.04-2.76-5.5-6.15-5.5z"/>
+                            </svg>
+                            微信
+                        </a>
+                        <a href="#" class="share-btn social-btn qq-btn" id="qq-share">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 14.5c-1.5 0-2.7-1.2-2.7-2.7s1.2-2.7 2.7-2.7 2.7 1.2 2.7 2.7-1.2 2.7-2.7 2.7zm-9 0c-1.5 0-2.7-1.2-2.7-2.7s1.2-2.7 2.7-2.7 2.7 1.2 2.7 2.7-1.2 2.7-2.7 2.7z"/>
+                            </svg>
+                            QQ
+                        </a>
+                        <a href="#" class="share-btn social-btn weibo-btn" id="weibo-share">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9.31 8.17c-2.36.23-4.27 2.23-4.27 4.67 0 2.55 2.07 4.62 4.62 4.62 2.55 0 4.62-2.07 4.62-4.62 0-1.36-.59-2.58-1.53-3.42L9.31 8.17zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                            </svg>
+                            微博
+                        </a>
+                    </div>
+                    <div class="url-display" id="article-url">
+                        <!-- Current article URL will be displayed here -->
+                    </div>
+                </div>
+                
+                <div class="article-actions">
+                    <a href="#" class="action-btn edit-btn" id="edit-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        </svg>
+                        Edit Article
+                    </a>
+                    <button class="action-btn delete-btn" id="delete-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3,6 5,6 21,6"/>
+                            <path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2V6"/>
+                            <line x1="10" y1="11" x2="10" y2="17"/>
+                            <line x1="14" y1="11" x2="14" y2="17"/>
+                        </svg>
+                        Delete Article
+                    </button>
+                </div>
+            </div>
+            
+            <div id="error-message" class="error-message" style="display: none;">
+                Article not found. Please check the URL or return to the blog homepage.
+            </div>
+        </div>
+    </div>
+
+    <script src="load-articles.js"></script>
+    <script>
+        // Get article ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = urlParams.get('id');
+        
+        // Load and display article
+        async function loadAndDisplayArticle() {
+            try {
+                const articles = await loadArticlesFromJSON('en');
+                const article = articles.find(article => article.id === articleId);
+                
+                if (article) {
+                    displayArticle(article);
+                } else {
+                    displayNotFound();
+                }
+            } catch (error) {
+                console.error('Error loading article:', error);
+                displayError();
+            }
+        }
+        
+        function displayArticle(article) {
+            // Update page title
+            document.title = `${article.title} - AI Grant Writer`;
+            
+            // Hide loading and show content
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('article-content').style.display = 'block';
+            
+            // Update article content using correct IDs
+            document.getElementById('article-title').textContent = article.title;
+            document.getElementById('article-date-text').textContent = new Date(article.date).toLocaleDateString();
+            document.getElementById('article-read-time-text').textContent = article.readTime || '5 min read';
+            
+            // Update category if element exists and article has category
+            const categoryElement = document.getElementById('article-category');
+            if (categoryElement) {
+                categoryElement.textContent = article.category || 'Academic Writing';
+            }
+            
+            // Update article content
+            const contentElement = document.getElementById('article-body');
+            contentElement.innerHTML = formatArticleContent(article.content);
+            
+            // Update keywords/tags if container exists
+            const tagsContainer = document.querySelector('.article-tags');
+            if (tagsContainer && article.keywords) {
+                // Handle both array and string formats for keywords
+                const keywordsArray = Array.isArray(article.keywords) 
+                    ? article.keywords 
+                    : article.keywords.split(',');
+                
+                const tags = keywordsArray.map(tag => 
+                    `<span class="tag">${tag.trim()}</span>`
+                ).join('');
+                tagsContainer.innerHTML = tags;
+            }
+            
+            // Initialize share functionality
+            initializeShareFunctions(article);
+        }
+        
+        function formatArticleContent(content) {
+            // Convert line breaks to paragraphs and format the content
+            return content
+                .split('\n\n')
+                .map(paragraph => {
+                    if (paragraph.trim().startsWith('##')) {
+                        return `<h2>${paragraph.replace('##', '').trim()}</h2>`;
+                    } else if (paragraph.trim().startsWith('#')) {
+                        return `<h1>${paragraph.replace('#', '').trim()}</h1>`;
+                    } else if (paragraph.trim().startsWith('**') && paragraph.trim().endsWith('**')) {
+                        return `<h3>${paragraph.replace(/\*\*/g, '').trim()}</h3>`;
+                    } else if (paragraph.trim().startsWith('-')) {
+                        const items = paragraph.split('\n').map(item => 
+                            item.trim().startsWith('-') ? `<li>${item.substring(1).trim()}</li>` : item
+                        ).join('');
+                        return `<ul>${items}</ul>`;
+                    } else {
+                        return `<p>${paragraph.trim()}</p>`;
+                    }
+                })
+                .join('');
+        }
+        
+        function displayNotFound() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('article-content').style.display = 'block';
+            document.getElementById('article-title').textContent = '😔 Article Not Found';
+            
+            const helpfulContent = `
+                <div style="text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 12px; margin: 2rem 0;">
+                    <h3 style="color: #6c757d; margin-bottom: 1rem;">Sorry, the article you're looking for doesn't exist</h3>
+                    <p style="color: #6c757d; margin-bottom: 2rem;">The link might be incorrect or the article may have been moved</p>
+                    
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
+                        <a href="/blog/" style="background: #007bff; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 500;">
+                            🏠 Back to Blog Home
+                        </a>
+                        <a href="/blog/seo-articles.html" style="background: #28a745; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 500;">
+                            📚 Browse All Articles
+                        </a>
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <h4 style="color: #333; margin-bottom: 1rem;">🔥 推荐热门文章</h4>
+                    <div id="recommended-articles" style="display: grid; gap: 1rem;">
+                        <div class="loading-recommendations">正在加载推荐文章...</div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('article-body').innerHTML = helpfulContent;
+            
+            // 加载推荐文章
+            loadRecommendedArticles();
+        }
+        
+        function displayError() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('article-content').style.display = 'block';
+            document.getElementById('article-title').textContent = '⚠️ 加载出错了';
+            
+            const errorContent = `
+                <div style="text-align: center; padding: 2rem; background: #fff3cd; border-radius: 12px; margin: 2rem 0; border: 1px solid #ffeaa7;">
+                    <h3 style="color: #856404; margin-bottom: 1rem;">网络连接似乎有问题</h3>
+                    <p style="color: #856404; margin-bottom: 2rem;">请检查您的网络连接，然后重试</p>
+                    
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button onclick="location.reload()" style="background: #ffc107; color: #212529; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 500;">
+                            🔄 重新加载
+                        </button>
+                        <a href="/blog/" style="background: #6c757d; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 500;">
+                            🏠 返回首页
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('article-body').innerHTML = errorContent;
+        }
+        
+        // 加载推荐文章函数
+        async function loadRecommendedArticles() {
+            try {
+                const articles = getAllArticles();
+                const recommendedArticles = articles.slice(0, 3); // 获取前3篇文章作为推荐
+                
+                const recommendedContainer = document.getElementById('recommended-articles');
+                if (recommendedContainer && recommendedArticles.length > 0) {
+                    recommendedContainer.innerHTML = recommendedArticles.map(article => `
+                        <div style="border: 1px solid #e9ecef; border-radius: 8px; padding: 1rem; transition: transform 0.2s;">
+                            <h5 style="margin: 0 0 0.5rem 0; color: #007bff;">
+                                <a href="/blog/article.html?id=${article.id}" style="text-decoration: none; color: inherit;">
+                                    ${article.title}
+                                </a>
+                            </h5>
+                            <p style="margin: 0; color: #6c757d; font-size: 0.9rem;">
+                                ${article.content.substring(0, 100)}...
+                            </p>
+                            <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #adb5bd;">
+                                📅 ${new Date(article.date).toLocaleDateString()} | ⏱️ ${article.readTime || '5分钟阅读'}
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading recommended articles:', error);
+                const recommendedContainer = document.getElementById('recommended-articles');
+                if (recommendedContainer) {
+                    recommendedContainer.innerHTML = '<p style="color: #6c757d;">暂时无法加载推荐文章</p>';
+                }
+            }
+        }
+        
+        // Share functionality
+        function initializeShareFunctions(article) {
+            const currentUrl = window.location.href;
+            const articleTitle = article.title;
+            const articleDescription = article.content.substring(0, 100) + '...';
+            
+            // Display current URL
+            document.getElementById('article-url').textContent = currentUrl;
+            
+            // Copy link functionality
+            const copyBtn = document.getElementById('copy-link-btn');
+            const copyBtnText = document.getElementById('copy-btn-text');
+            
+            copyBtn.addEventListener('click', async () => {
+                try {
+                    await navigator.clipboard.writeText(currentUrl);
+                    copyBtn.classList.add('copied');
+                    copyBtnText.textContent = '已复制!';
+                    
+                    setTimeout(() => {
+                        copyBtn.classList.remove('copied');
+                        copyBtnText.textContent = '复制链接';
+                    }, 2000);
+                } catch (err) {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = currentUrl;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    copyBtn.classList.add('copied');
+                    copyBtnText.textContent = '已复制!';
+                    
+                    setTimeout(() => {
+                        copyBtn.classList.remove('copied');
+                        copyBtnText.textContent = '复制链接';
+                    }, 2000);
+                }
+            });
+            
+            // Social media sharing
+            const wechatBtn = document.getElementById('wechat-share');
+            const qqBtn = document.getElementById('qq-share');
+            const weiboBtn = document.getElementById('weibo-share');
+            
+            // WeChat sharing (opens QR code or sharing interface)
+            wechatBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                // For WeChat, we'll show an alert with instructions
+                alert('请复制链接后在微信中分享：\n' + currentUrl);
+            });
+            
+            // QQ sharing
+            qqBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const qqShareUrl = `https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(currentUrl)}&title=${encodeURIComponent(articleTitle)}&summary=${encodeURIComponent(articleDescription)}`;
+                window.open(qqShareUrl, '_blank', 'width=600,height=400');
+            });
+            
+            // Weibo sharing
+            weiboBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const weiboShareUrl = `https://service.weibo.com/share/share.php?url=${encodeURIComponent(currentUrl)}&title=${encodeURIComponent(articleTitle + ' - ' + articleDescription)}`;
+                window.open(weiboShareUrl, '_blank', 'width=600,height=400');
+            });
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAndDisplayArticle();
+            initializeTableOfContents();
+            initializeReadingProgress();
+        });
+        
+        // 目录导航功能
+        function initializeTableOfContents() {
+            const tocToggle = document.getElementById('toc-toggle');
+            const tocContainer = document.getElementById('table-of-contents');
+            const tocList = document.getElementById('toc-list');
+            
+            // 切换目录显示/隐藏
+            tocToggle.addEventListener('click', function() {
+                tocContainer.classList.toggle('hidden');
+            });
+            
+            // 点击页面其他地方隐藏目录
+            document.addEventListener('click', function(e) {
+                if (!tocContainer.contains(e.target) && !tocToggle.contains(e.target)) {
+                    tocContainer.classList.add('hidden');
+                }
+            });
+            
+            // 生成目录
+            setTimeout(generateTableOfContents, 1000); // 延迟执行，确保文章内容已加载
+        }
+        
+        function generateTableOfContents() {
+            const tocList = document.getElementById('toc-list');
+            const headings = document.querySelectorAll('#article-body h1, #article-body h2, #article-body h3');
+            
+            if (headings.length === 0) {
+                document.getElementById('toc-toggle').style.display = 'none';
+                return;
+            }
+            
+            tocList.innerHTML = '';
+            
+            headings.forEach((heading, index) => {
+                // 为标题添加ID
+                const headingId = `heading-${index}`;
+                heading.id = headingId;
+                
+                // 创建目录项
+                const tocItem = document.createElement('li');
+                tocItem.className = 'toc-item';
+                
+                const tocLink = document.createElement('a');
+                tocLink.href = `#${headingId}`;
+                tocLink.className = `toc-link level-${heading.tagName.toLowerCase().replace('h', '')}`;
+                tocLink.textContent = heading.textContent;
+                
+                // 平滑滚动到对应标题
+                tocLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    heading.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // 更新活跃状态
+                    document.querySelectorAll('.toc-link').forEach(link => link.classList.remove('active'));
+                    tocLink.classList.add('active');
+                    
+                    // 隐藏目录
+                    document.getElementById('table-of-contents').classList.add('hidden');
+                });
+                
+                tocItem.appendChild(tocLink);
+                tocList.appendChild(tocItem);
+            });
+            
+            // 监听滚动，更新活跃的目录项
+            window.addEventListener('scroll', updateActiveTocItem);
+        }
+        
+        function updateActiveTocItem() {
+            const headings = document.querySelectorAll('#article-body h1, #article-body h2, #article-body h3');
+            const tocLinks = document.querySelectorAll('.toc-link');
+            
+            let activeIndex = -1;
+            const scrollTop = window.pageYOffset;
+            
+            headings.forEach((heading, index) => {
+                const rect = heading.getBoundingClientRect();
+                if (rect.top <= 100) {
+                    activeIndex = index;
+                }
+            });
+            
+            tocLinks.forEach((link, index) => {
+                link.classList.toggle('active', index === activeIndex);
+            });
+        }
+        
+        // 阅读进度条功能
+        function initializeReadingProgress() {
+            const progressBar = document.getElementById('reading-progress-bar');
+            
+            window.addEventListener('scroll', function() {
+                const articleContent = document.getElementById('article-body');
+                if (!articleContent) return;
+                
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                
+                progressBar.style.width = Math.min(scrollPercent, 100) + '%';
+            });
+        }
+    </script>
+    
+    <!-- Include ArticleAPI for dynamic article management -->
+    <script src="article-api.js"></script>
+</body>
+</html>

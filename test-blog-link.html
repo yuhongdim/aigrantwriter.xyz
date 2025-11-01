@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Link Test</title>
+</head>
+<body>
+    <h1>Blog Link Test</h1>
+    
+    <p>Testing different blog links:</p>
+    
+    <ul>
+        <li><a href="blog/blog.html">Relative: blog/blog.html</a></li>
+        <li><a href="/blog/blog.html">Absolute: /blog/blog.html</a></li>
+        <li><a href="http://localhost:8000/blog/blog.html">Full URL: http://localhost:8000/blog/blog.html</a></li>
+    </ul>
+    
+    <script>
+        console.log('Test page loaded');
+        
+        // 检查所有链接
+        document.querySelectorAll('a').forEach((link, index) => {
+            console.log(`Link ${index + 1}:`, {
+                href: link.href,
+                getAttribute: link.getAttribute('href'),
+                pathname: link.pathname
+            });
+            
+            link.addEventListener('click', function(e) {
+                console.log('Link clicked:', this.href);
+            });
+        });
+    </script>
+</body>
+</html>

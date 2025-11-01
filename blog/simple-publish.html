@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publish Article - AI Academic Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #4f46e5;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .form-container {
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #4f46e5;
+        }
+        
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+        
+        .btn {
+            background: #4f46e5;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-right: 10px;
+        }
+        
+        .btn:hover {
+            background: #3730a3;
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        .success-message {
+            background: #10b981;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .articles-list {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 2px solid #e5e7eb;
+        }
+        
+        .article-item {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4f46e5;
+        }
+        
+        .article-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+        
+        .article-meta {
+            color: #6b7280;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 Publish New Article</h1>
+            <p>Share your academic insights with the world</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="success-message" id="successMessage">
+                ✅ Article published successfully!
+            </div>
+            
+            <form id="articleForm">
+                <div class="form-group">
+                    <label for="title">Article Title</label>
+                    <input type="text" id="title" name="title" required placeholder="Enter your article title...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select a category</option>
+                        <option value="Academic Writing">Academic Writing</option>
+                        <option value="Research Methods">Research Methods</option>
+                        <option value="Literature Review">Literature Review</option>
+                        <option value="Data Analysis">Data Analysis</option>
+                        <option value="PhD Tips">PhD Tips</option>
+                        <option value="Grant Writing">Grant Writing</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" id="author" name="author" required placeholder="Your name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="summary">Summary</label>
+                    <textarea id="summary" name="summary" required placeholder="Brief summary of your article..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="content">Article Content</label>
+                    <textarea id="content" name="content" required placeholder="Write your article content here..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="keywords">Keywords (comma separated)</label>
+                    <input type="text" id="keywords" name="keywords" placeholder="academic writing, research, tips">
+                </div>
+                
+                <button type="submit" class="btn">Publish Article</button>
+                <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
+                <button type="button" class="btn btn-secondary" onclick="viewBlog()">View Blog</button>
+            </form>
+            
+            <div class="articles-list">
+                <h3>📚 Published Articles</h3>
+                <div id="articlesList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load existing articles
+        function loadArticles() {
+            const articles = JSON.parse(localStorage.getItem('blogArticles') || '[]');
+            const articlesList = document.getElementById('articlesList');
+            
+            if (articles.length === 0) {
+                articlesList.innerHTML = '<p style="color: #6b7280;">No articles published yet.</p>';
+                return;
+            }
+            
+            articlesList.innerHTML = articles.map(article => `
+                <div class="article-item">
+                    <div class="article-title">${article.title}</div>
+                    <div class="article-meta">
+                        By ${article.author} • ${article.category} • ${new Date(article.publishDate).toLocaleDateString()}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Handle form submission
+        document.getElementById('articleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const article = {
+                id: 'article-' + Date.now(),
+                title: formData.get('title'),
+                category: formData.get('category'),
+                author: formData.get('author'),
+                summary: formData.get('summary'),
+                content: formData.get('content'),
+                keywords: formData.get('keywords').split(',').map(k => k.trim()).filter(k => k),
+                publishDate: new Date().toISOString(),
+                readingTime: Math.ceil(formData.get('content').split(' ').length / 200) + ' min read',
+                status: 'published'
+            };
+            
+            // Save to localStorage
+            const articles = JSON.parse(localStorage.getItem('blogArticles') || '[]');
+            articles.unshift(article);
+            localStorage.setItem('blogArticles', JSON.stringify(articles));
+            
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 3000);
+            
+            // Clear form and reload articles
+            clearForm();
+            loadArticles();
+        });
+        
+        function clearForm() {
+            document.getElementById('articleForm').reset();
+        }
+        
+        function viewBlog() {
+            window.open('/blog/index.html', '_blank');
+        }
+        
+        // Load articles on page load
+        loadArticles();
+    </script>
+</body>
+</html>

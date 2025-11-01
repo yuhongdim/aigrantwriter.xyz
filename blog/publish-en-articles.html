@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publish English Articles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .btn.success {
+            background: #28a745;
+        }
+        .btn.danger {
+            background: #dc3545;
+        }
+        .status {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .article-list {
+            margin-top: 20px;
+        }
+        .article-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        .article-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .article-meta {
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Publish English Articles to Blog System</h1>
+        
+        <div id="status"></div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="btn" onclick="checkCurrentArticles()">📋 Check Current Articles</button>
+            <button class="btn success" onclick="publishEnglishArticles()">✅ Publish English Articles</button>
+            <button class="btn danger" onclick="clearAllArticles()">🗑️ Clear All Articles</button>
+        </div>
+        
+        <div id="articlesList" class="article-list"></div>
+    </div>
+
+    <script>
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function checkCurrentArticles() {
+            const articles = JSON.parse(localStorage.getItem('blogArticles') || '[]');
+            showStatus(`Found ${articles.length} articles in blog system`, 'info');
+            displayArticles(articles);
+        }
+
+        function displayArticles(articles) {
+            const listDiv = document.getElementById('articlesList');
+            if (articles.length === 0) {
+                listDiv.innerHTML = '<p style="text-align: center; color: #666;">No articles found</p>';
+                return;
+            }
+
+            listDiv.innerHTML = articles.map(article => `
+                <div class="article-item">
+                    <div class="article-title">${article.title}</div>
+                    <div class="article-meta">
+                        ID: ${article.id} | Category: ${article.category} | 
+                        Date: ${article.date} | Status: ${article.status}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function publishEnglishArticles() {
+            try {
+                showStatus('Loading English articles data...', 'info');
+                
+                // Load English articles data
+                const response = await fetch('./articles-data-en.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load English articles data');
+                }
+                
+                const data = await response.json();
+                const englishArticles = data.articles || [];
+                
+                if (englishArticles.length === 0) {
+                    showStatus('No English articles found to publish', 'error');
+                    return;
+                }
+
+                // Get existing articles
+                const existingArticles = JSON.parse(localStorage.getItem('blogArticles') || '[]');
+                
+                // Check for duplicates and add new articles
+                let addedCount = 0;
+                const updatedArticles = [...existingArticles];
+                
+                englishArticles.forEach(enArticle => {
+                    const exists = existingArticles.find(article => article.id === enArticle.id);
+                    if (!exists) {
+                        // Convert to blog system format
+                        const blogArticle = {
+                            id: enArticle.id,
+                            title: enArticle.title,
+                            content: enArticle.content,
+                            excerpt: enArticle.excerpt,
+                            category: enArticle.category,
+                            author: enArticle.author,
+                            date: enArticle.date,
+                            readTime: enArticle.readTime,
+                            status: enArticle.status || 'published',
+                            createdAt: enArticle.createdAt || new Date().toISOString(),
+                            keywords: enArticle.keywords || [],
+                            views: Math.floor(Math.random() * 500) + 100, // Random view count
+                            likes: Math.floor(Math.random() * 50) + 10 // Random like count
+                        };
+                        updatedArticles.push(blogArticle);
+                        addedCount++;
+                    }
+                });
+
+                // Save to localStorage
+                localStorage.setItem('blogArticles', JSON.stringify(updatedArticles));
+                
+                showStatus(`Successfully published ${addedCount} English articles! Total articles: ${updatedArticles.length}`, 'success');
+                displayArticles(updatedArticles);
+                
+            } catch (error) {
+                console.error('Error publishing articles:', error);
+                showStatus(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        function clearAllArticles() {
+            if (confirm('Are you sure you want to clear all articles? This action cannot be undone.')) {
+                localStorage.removeItem('blogArticles');
+                showStatus('All articles have been cleared', 'info');
+                displayArticles([]);
+            }
+        }
+
+        // Initialize page
+        window.onload = function() {
+            checkCurrentArticles();
+        };
+    </script>
+</body>
+</html>

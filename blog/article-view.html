@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -496,6 +496,41 @@
                     .replace(/$/, '</p>')
                     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                     .replace(/\*(.*?)\*/g, '<em>$1</em>');
+            }
+
+            createSampleData() {
+                return [
+                    {
+                        id: '1',
+                        title: 'How AI Tools Assist in Literature Review for Dissertations',
+                        author: 'Research Team',
+                        category: 'Research',
+                        tags: 'AI, Literature Review, Dissertation, Academic Writing',
+                        content: 'Crafting a comprehensive literature review is often one of the most demanding phases of writing a dissertation. It requires extensive reading, systematic analysis, and the ability to synthesize vast amounts of information into a coherent narrative. Fortunately, artificial intelligence tools are revolutionizing this process, making it more efficient and thorough.\n\nTraditional literature review processes involve manually searching through databases, reading countless papers, taking notes, and organizing findings. This approach is time-consuming and prone to human error, often resulting in missed relevant studies or inconsistent analysis.\n\nModern AI tools can scan thousands of academic papers in minutes, identifying relevant studies based on your research questions. These tools use natural language processing to understand context and relevance, ensuring you don\'t miss important research in your field.',
+                        publishDate: new Date('2024-12-15').toISOString(),
+                        status: 'published'
+                    },
+                    {
+                        id: '2',
+                        title: 'Grant Writing Best Practices for Academic Researchers',
+                        author: 'Dr. Sarah Johnson',
+                        category: 'Grant Writing',
+                        tags: 'Grants, Funding, Academic Research, Proposal Writing',
+                        content: 'Securing funding for academic research requires more than just a good idea. It demands strategic thinking, clear communication, and a deep understanding of what funding agencies are looking for. This comprehensive guide will walk you through the essential elements of successful grant writing.\n\nThe foundation of any successful grant proposal is a compelling research question. Your question should be significant, feasible, and aligned with the funding agency\'s priorities. Take time to thoroughly research the agency\'s mission, recent awards, and review criteria before you begin writing.\n\nA well-structured proposal typically includes an executive summary, statement of need, project description, methodology, evaluation plan, and budget justification. Each section should build upon the previous one, creating a cohesive narrative that demonstrates your project\'s value and feasibility.',
+                        publishDate: new Date('2024-12-10').toISOString(),
+                        status: 'published'
+                    },
+                    {
+                        id: '3',
+                        title: 'The Future of Academic Publishing in the Digital Age',
+                        author: 'Prof. Michael Chen',
+                        category: 'Academic Publishing',
+                        tags: 'Publishing, Digital, Open Access, Academic Journals',
+                        content: 'The landscape of academic publishing is undergoing a dramatic transformation. Traditional publishing models are being challenged by open access initiatives, preprint servers, and new digital platforms that promise to make research more accessible and collaborative.\n\nOpen access publishing has gained significant momentum in recent years, with many funding agencies now requiring researchers to make their work freely available. This shift is democratizing access to knowledge and accelerating the pace of scientific discovery.\n\nPreprint servers like arXiv and bioRxiv have revolutionized how researchers share their work, allowing for rapid dissemination of findings before formal peer review. This model enables faster feedback and collaboration while maintaining the integrity of the peer review process for final publication.',
+                        publishDate: new Date('2024-12-05').toISOString(),
+                        status: 'published'
+                    }
+                ];
             }
 
             showError(message) {

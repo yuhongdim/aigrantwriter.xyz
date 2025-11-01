@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的博客</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .nav {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .blog-stats {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: #666;
+        }
+
+        .articles-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .article-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: white;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+
+        .article-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .article-summary {
+            color: #718096;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #a0aec0;
+        }
+
+        .article-date {
+            font-weight: 500;
+        }
+
+        .article-author {
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .no-articles {
+            text-align: center;
+            padding: 3rem;
+            color: #718096;
+        }
+
+        .no-articles h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .no-articles p {
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .blog-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📝 我的博客</h1>
+        <p>分享想法，记录生活</p>
+    </div>
+
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="#" onclick="loadArticles()">🏠 首页</a>
+                <a href="write.html">✏️ 写文章</a>
+                <a href="#" onclick="showAbout()">ℹ️ 关于</a>
+            </div>
+            <div>
+                <span id="currentTime"></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="blog-stats">
+            <div class="stat-item">
+                <h3 id="totalArticles">0</h3>
+                <p>总文章数</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="totalViews">0</h3>
+                <p>总阅读量</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="lastUpdate">--</h3>
+                <p>最后更新</p>
+            </div>
+        </div>
+
+        <div class="articles-section">
+            <div class="section-header">
+                <h2 class="section-title">📚 最新文章</h2>
+                <a href="write.html" class="btn">+ 写新文章</a>
+            </div>
+
+            <div class="articles-grid" id="articlesGrid">
+                <!-- 文章列表将在这里显示 -->
+            </div>
+
+            <div class="no-articles" id="noArticles" style="display: none;">
+                <h3>🎯 还没有文章</h3>
+                <p>开始写你的第一篇文章吧！</p>
+                <a href="write.html" class="btn">立即开始写作</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 博客数据存储
+        let blogData = {
+            articles: JSON.parse(localStorage.getItem('blogArticles') || '[]'),
+            views: JSON.parse(localStorage.getItem('blogViews') || '{}')
+        };
+
+        // 更新时间显示
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = 
+                now.toLocaleString('zh-CN', { 
+                    year: 'numeric', 
+                    month: '2-digit', 
+                    day: '2-digit', 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+        }
+
+        // 加载文章列表
+        function loadArticles() {
+            const articles = blogData.articles;
+            const articlesGrid = document.getElementById('articlesGrid');
+            const noArticles = document.getElementById('noArticles');
+
+            // 更新统计数据
+            updateStats();
+
+            if (articles.length === 0) {
+                articlesGrid.innerHTML = '';
+                noArticles.style.display = 'block';
+                return;
+            }
+
+            noArticles.style.display = 'none';
+            
+            // 按时间排序，最新的在前面
+            articles.sort((a, b) => new Date(b.createTime) - new Date(a.createTime));
+
+            articlesGrid.innerHTML = articles.map(article => `
+                <div class="article-card" onclick="openArticle('${article.id}')">
+                    <h3 class="article-title">${article.title}</h3>
+                    <p class="article-summary">${article.summary || article.content.substring(0, 100) + '...'}</p>
+                    <div class="article-meta">
+                        <span class="article-date">${new Date(article.createTime).toLocaleDateString('zh-CN')}</span>
+                        <span class="article-author">${article.author || '匿名'}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 更新统计数据
+        function updateStats() {
+            const articles = blogData.articles;
+            const views = blogData.views;
+            
+            document.getElementById('totalArticles').textContent = articles.length;
+            
+            const totalViews = Object.values(views).reduce((sum, count) => sum + count, 0);
+            document.getElementById('totalViews').textContent = totalViews;
+            
+            if (articles.length > 0) {
+                const lastArticle = articles.reduce((latest, article) => 
+                    new Date(article.createTime) > new Date(latest.createTime) ? article : latest
+                );
+                document.getElementById('lastUpdate').textContent = 
+                    new Date(lastArticle.createTime).toLocaleDateString('zh-CN');
+            }
+        }
+
+        // 打开文章
+        function openArticle(articleId) {
+            // 增加阅读量
+            if (!blogData.views[articleId]) {
+                blogData.views[articleId] = 0;
+            }
+            blogData.views[articleId]++;
+            localStorage.setItem('blogViews', JSON.stringify(blogData.views));
+            
+            // 跳转到文章页面
+            window.open(`read.html?id=${articleId}`, '_blank');
+        }
+
+        // 显示关于信息
+        function showAbout() {
+            alert('这是一个简单的个人博客系统\n\n功能：\n- 写文章\n- 保存文章\n- 阅读文章\n- 统计数据\n\n所有数据保存在浏览器本地存储中');
+        }
+
+        // 初始化
+        function init() {
+            updateTime();
+            setInterval(updateTime, 60000); // 每分钟更新时间
+            loadArticles();
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

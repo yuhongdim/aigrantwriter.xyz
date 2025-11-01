@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Blog Link</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-link { display: block; margin: 10px 0; padding: 10px; background: #f0f0f0; text-decoration: none; color: #333; }
+        .test-link:hover { background: #e0e0e0; }
+        .log { background: #000; color: #0f0; padding: 10px; margin: 10px 0; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>Debug Blog Link</h1>
+    
+    <div id="log" class="log">Console Log:</div>
+    
+    <h2>Test Links:</h2>
+    <a href="blog/blog.html" class="test-link nav-link" id="blog-link">Academic Blog (blog/blog.html)</a>
+    <a href="/blog/blog.html" class="test-link">Academic Blog (/blog/blog.html)</a>
+    <a href="http://localhost:8000/blog/blog.html" class="test-link">Academic Blog (full URL)</a>
+    
+    <h2>Current Page Info:</h2>
+    <div id="page-info"></div>
+    
+    <script src="script-ultra-clean.js"></script>
+    <script>
+        const log = document.getElementById('log');
+        const pageInfo = document.getElementById('page-info');
+        
+        function addLog(message) {
+            log.innerHTML += '<br>' + new Date().toLocaleTimeString() + ': ' + message;
+            console.log(message);
+        }
+        
+        addLog('Page loaded');
+        addLog('Current URL: ' + window.location.href);
+        
+        // 显示页面信息
+        pageInfo.innerHTML = `
+            <p>Location: ${window.location.href}</p>
+            <p>Pathname: ${window.location.pathname}</p>
+            <p>Host: ${window.location.host}</p>
+        `;
+        
+        // 监听所有链接点击
+        document.querySelectorAll('a').forEach((link, index) => {
+            addLog(`Link ${index + 1}: ${link.href}`);
+            
+            link.addEventListener('click', function(e) {
+                addLog(`Link clicked: ${this.href}`);
+                addLog(`Default prevented: ${e.defaultPrevented}`);
+                
+                // 不阻止默认行为，让链接正常工作
+            });
+        });
+        
+        // 检查是否有其他事件监听器
+        addLog('Script loaded successfully');
+    </script>
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 25px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e1e5e9;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .stats {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .stats h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .stats-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .articles-container {
+            display: grid;
+            gap: 25px;
+        }
+        
+        .article-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: #667eea;
+            background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+        }
+        
+        .article-content {
+            flex: 1;
+        }
+        
+        .article-content:hover {
+            cursor: pointer;
+        }
+        
+        .article-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .delete-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            height: 40px;
+        }
+        
+        .delete-btn:hover {
+            background: #ff3742;
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+        }
+        
+        .delete-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .article-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.3;
+            transition: color 0.3s ease;
+        }
+        
+        .article-card:hover .article-title {
+            color: #667eea;
+        }
+        
+        .article-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 0.95em;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .article-content {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        
+        .article-content p {
+            margin-bottom: 15px;
+        }
+        
+        .no-articles {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 60px;
+            text-align: center;
+        }
+        
+        .no-articles h3 {
+            color: #666;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        .no-articles p {
+            color: #999;
+            margin-bottom: 25px;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+            
+            .header-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .article-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 My Blog</h1>
+            <p>Recording life, sharing thoughts</p>
+            <div class="header-actions">
+                <a href="write.html" class="btn btn-primary">✏️ Write New Article</a>
+                <button onclick="clearAllArticles()" class="btn btn-secondary">🗑️ Clear All Articles</button>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <h3>📊 Article Statistics</h3>
+            <div class="stats-number" id="articleCount">0</div>
+            <p>Articles</p>
+        </div>
+        
+        <div class="articles-container" id="articlesContainer">
+            <div class="no-articles">
+                <h3>🌟 No Articles Yet</h3>
+                <p>Start writing your first article!</p>
+                <a href="write.html" class="btn btn-primary">Start Writing Now</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load articles from localStorage
+        function loadArticles() {
+            // Get existing articles from localStorage
+            let articles = JSON.parse(localStorage.getItem('blogArticles')) || [];
+            
+            // If no articles exist, show sample articles for demonstration
+            if (articles.length === 0) {
+                // Only show sample articles if no user articles exist
+                articles = [
+                    {
+                        id: 1,
+                        title: "How to Write High-Quality Academic Papers: A Complete Guide from Conception to Publication",
+                        author: "Prof. Zhang",
+                        content: "Academic paper writing is an essential skill for every researcher. This article provides detailed guidance from topic selection, literature review, research methods, data analysis to paper writing. First, choosing a valuable and feasible research topic is crucial. Second, conducting a comprehensive literature review helps you understand the current research status and identify research gaps. In the research methods section, you should describe your research design, data collection and analysis methods in detail. Finally, the paper structure should be clear, logic should be rigorous, and language should be accurate. Remember, good academic papers should not only be innovative but also have practical value.",
+                        date: "2024-12-10",
+                        time: "10:30",
+                        publishDate: "2024-12-10",
+                        category: "Academic Writing",
+                        tags: "Academic Papers, Writing Skills, Research Methods"
+                    },
+                    {
+                        id: 2,
+                        title: "AI Tools in Academic Research: Intelligent Assistants for Efficiency Enhancement",
+                        author: "Dr. Li",
+                        content: "Artificial intelligence technology is revolutionarily changing the way academic research is conducted. From literature search to data analysis, from paper writing to peer review, AI tools can provide powerful support. For example, AI can help researchers quickly screen relevant literature, identify research trends, and even assist in generating research hypotheses. In data analysis, machine learning algorithms can process large-scale datasets and discover patterns that are difficult for humans to detect. However, we must also pay attention to the limitations of AI tools, maintain critical thinking, and ensure research originality and academic integrity. Proper use of AI tools can make our research more efficient and in-depth.",
+                        date: "2024-12-08",
+                        time: "14:20",
+                        publishDate: "2024-12-08",
+                        category: "AI Applications",
+                        tags: "Artificial Intelligence, Academic Research, Efficiency Enhancement"
+                    },
+                    {
+                        id: 3,
+                        title: "How Graduate Students Can Overcome Writing Blocks: Practical Strategies and Psychological Adjustment",
+                        author: "Prof. Wang",
+                        content: "Writing blocks are a common challenge faced by many graduate students. This distress not only affects academic progress but may also lead to anxiety and self-doubt. Overcoming writing blocks requires multi-faceted strategies: First, establish regular writing habits, write at fixed times daily, and persist even if only writing a few hundred words. Second, break large tasks into small goals to avoid being overwhelmed by massive writing tasks. Third, find a suitable writing environment and reduce distracting factors. Psychologically, accept the imperfection of first drafts and value the importance of revision. Meanwhile, maintain communication with supervisors and classmates to get feedback and support. Remember, writing is a process that requires time and practice to improve.",
+                        date: "2024-12-05",
+                        time: "09:15",
+                        publishDate: "2024-12-05",
+                        category: "Learning Methods",
+                        tags: "Writing Blocks, Graduate Students, Psychological Adjustment"
+                    },
+                    {
+                        id: 4,
+                        title: "Academic Conference Presentation Skills: How to Confidently Present Your Research Results",
+                        author: "Prof. Chen",
+                        content: "Presenting at academic conferences is an important part of a researcher's career. A successful academic presentation requires careful preparation and practice. First, clarify the core message of your presentation to ensure the most important content is conveyed within limited time. PPT design should be concise and clear, avoid too much text, and use more charts and visual elements. During presentation, maintain a confident posture, make eye contact with the audience, speak at an appropriate pace, and have a clear voice. A well-prepared Q&A session is equally important; anticipate possible questions and prepare answers. Finally, practice is key - you can rehearse in front of colleagues, get feedback, and continuously improve. Remember, every presentation is an opportunity for learning and growth.",
+                        date: "2024-12-03",
+                        time: "16:45",
+                        publishDate: "2024-12-03",
+                        category: "Academic Communication",
+                        tags: "Academic Presentations, Conference Publications, Presentation Skills"
+                    },
+                    {
+                        id: 5,
+                        title: "The Art of Literature Review: How to Systematically Organize and Analyze Research Status",
+                        author: "Dr. Liu",
+                        content: "Literature review is the foundation of academic research and an important indicator of a researcher's academic literacy. An excellent literature review should not only comprehensively collect relevant literature but also conduct in-depth analysis and critical thinking. First, develop a clear search strategy, use multiple databases and keyword combinations to ensure comprehensive literature collection. Second, establish reasonable literature screening criteria, focusing on literature quality and relevance. In the analysis phase, identify the evolution trends of research topics, methods, and findings, and find research gaps and controversial points. Finally, evaluate existing research from a critical perspective to provide a basis for your own research positioning. Remember, literature review is not simply piling up literature, but deep thinking and systematic organization of the research field.",
+                        date: "2024-12-01",
+                        time: "11:30",
+                        publishDate: "2024-12-01",
+                        category: "Research Methods",
+                        tags: "Literature Review, Research Methods, Critical Thinking"
+                    }
+                ];
+                
+                // Don't save sample articles to localStorage, just display them
+            }
+            
+            displayArticles(articles);
+        }
+        
+        // Display articles in the container
+        function displayArticles(articles) {
+            const container = document.getElementById('articlesContainer');
+            const countElement = document.getElementById('articleCount');
+            
+            // 更新文章数量
+            countElement.textContent = articles.length;
+            
+            if (articles.length === 0) {
+                container.innerHTML = `
+                    <div class="no-articles">
+                        <h3>🌟 No Articles Yet</h3>
+                        <p>Start writing your first article!</p>
+                        <a href="write.html" class="btn btn-primary">Start Writing Now</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 显示文章列表
+            container.innerHTML = articles.map((article) => `
+                <div class="article-card">
+                    <div class="article-content" onclick="viewArticle(${article.id})" style="cursor: pointer; flex: 1;">
+                        <div class="article-title">${escapeHtml(article.title)}</div>
+                        <div class="article-meta">
+                            <div class="meta-item">
+                                <span>👤</span>
+                                <span>${escapeHtml(article.author)}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>📅</span>
+                                <span>${article.date}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>🕒</span>
+                                <span>${article.time}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="article-actions">
+                        <button class="delete-btn" onclick="deleteArticle(${article.id})" title="Delete Article">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // View article details
+        function viewArticle(articleId) {
+            // Navigate to article detail page with article ID
+            window.location.href = `article-view.html?id=${articleId}`;
+        }
+        
+        // Format article content
+        function formatContent(content) {
+            // Convert line breaks to paragraphs
+            const paragraphs = content.split('\n').filter(p => p.trim());
+            return paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+        }
+        
+        // HTML escape
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Delete single article
+        function deleteArticle(articleId) {
+            // Prevent event bubbling to avoid triggering viewArticle
+            event.stopPropagation();
+            
+            let articles = JSON.parse(localStorage.getItem('blogArticles') || '[]');
+            const articleToDelete = articles.find(article => article.id == articleId);
+            
+            if (!articleToDelete) {
+                alert('Article not found!');
+                return;
+            }
+            
+            // Show confirmation dialog with article title
+            const confirmMessage = `Are you sure you want to delete this article?\n\n"${articleToDelete.title}"\n\nThis action cannot be undone!`;
+            
+            if (confirm(confirmMessage)) {
+                // Remove the article from the array
+                articles = articles.filter(article => article.id != articleId);
+                
+                // Save updated articles back to localStorage
+                localStorage.setItem('blogArticles', JSON.stringify(articles));
+                
+                // Reload the articles display
+                loadArticles();
+                
+                alert('Article deleted successfully!');
+            }
+        }
+        
+        // Clear all articles
+        function clearAllArticles() {
+            const articles = JSON.parse(localStorage.getItem('blogArticles') || '[]');
+            if (articles.length === 0) {
+                alert('No articles to delete!');
+                return;
+            }
+            
+            if (confirm(`Are you sure you want to delete all ${articles.length} articles? This action cannot be undone!`)) {
+                localStorage.removeItem('blogArticles');
+                loadArticles();
+                alert('All articles have been successfully deleted!');
+            }
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadArticles();
+        });
+        
+        // Listen for storage changes to update article list in real time
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'blogArticles') {
+                loadArticles();
+            }
+        });
+    </script>
+</body>
+</html>
