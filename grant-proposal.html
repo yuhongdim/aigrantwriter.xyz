@@ -225,9 +225,17 @@
                 console.log('Using fallback generator...');
                 const fallbackProposal = generateProposal(data);
                 outputContent.innerHTML = `
-                    <div class="notice" style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; margin-bottom: 20px; border-radius: 8px;">
-                        <p><strong>注意：</strong>AI服务暂时不可用，已为您生成基础提案模板。您可以基于此模板进行修改和完善。</p>
-                        <p><strong>错误信息：</strong>${error.message}</p>
+                    <div class="notice" style="background: #e8f5e8; border: 1px solid #4caf50; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <h4 style="color: #2e7d32; margin: 0 0 10px 0; display: flex; align-items: center;">
+                            <span style="margin-right: 8px;">🤖</span>
+                            AI服务暂时不可用
+                        </h4>
+                        <p style="margin: 8px 0; color: #2e7d32;">我们已为您生成了一个专业的提案模板，包含完整的提案结构和内容。</p>
+                        <p style="margin: 8px 0; color: #2e7d32;"><strong>提示：</strong>请向下滚动查看完整的提案内容，您可以基于此模板进行修改和完善。</p>
+                        <details style="margin-top: 10px;">
+                            <summary style="color: #666; cursor: pointer; font-size: 0.9em;">查看技术详情</summary>
+                            <p style="margin: 8px 0; color: #666; font-size: 0.9em;">${error.message}</p>
+                        </details>
                     </div>
                     ${formatProposalContent(fallbackProposal, data)}
                 `;
@@ -289,22 +297,28 @@
         }
         const API_CONFIGS = [
             {
-                name: 'Primary API',
-                baseURL: 'https://api.openai.com/v1/chat/completions',
-                apiKey: 'your-openai-api-key-here',
-                model: 'gpt-3.5-turbo'
+                name: 'Free API Service 1',
+                baseURL: 'https://api.deepseek.com/v1/chat/completions',
+                apiKey: 'free-api-key',
+                model: 'deepseek-chat'
             },
             {
-                name: 'Backup API 1',
-                baseURL: 'https://api.anthropic.com/v1/messages',
-                apiKey: 'your-anthropic-api-key-here',
-                model: 'claude-3-haiku-20240307'
+                name: 'Free API Service 2', 
+                baseURL: 'https://api.siliconflow.cn/v1/chat/completions',
+                apiKey: 'free-api-key',
+                model: 'Qwen/Qwen2.5-7B-Instruct'
             },
             {
-                name: 'Backup API 2',
+                name: 'WenWen AI',
                 baseURL: 'https://breakout.wenwen-ai.com/v1/chat/completions',
                 apiKey: 'sk-6ogS4COJPVLfLclruLQ6h59IxyvcN61nGuvgpr71VNL3ARsN',
                 model: 'gpt-3.5-turbo'
+            },
+            {
+                name: 'Local Fallback',
+                baseURL: 'local',
+                apiKey: 'local',
+                model: 'local'
             }
         ];
 
@@ -339,9 +353,16 @@ Make it compelling, well-structured, and tailored to the specific funding agency
             for (let i = 0; i < API_CONFIGS.length; i++) {
                 const config = API_CONFIGS[i];
                 
+                // 如果是本地备用生成器，直接使用本地生成
+                if (config.baseURL === 'local') {
+                    console.log('Using local fallback generator...');
+                    showNotification('使用本地生成器创建提案模板', 'info');
+                    return formatProposalContent(generateLocalProposal(data), data);
+                }
+                
                 // 跳过没有有效API密钥的配置
-                if (config.apiKey.includes('your-') || config.apiKey.includes('here')) {
-                    console.log(`Skipping ${config.name}: No valid API key`);
+                if (config.apiKey.includes('your-') || config.apiKey.includes('here') || config.apiKey === 'free-api-key') {
+                    console.log(`Skipping ${config.name}: No valid API key or free service unavailable`);
                     continue;
                 }
                 
@@ -414,20 +435,385 @@ Make it compelling, well-structured, and tailored to the specific funding agency
         }
 
         function formatProposalContent(content, data) {
+            // 如果内容包含markdown格式，转换为HTML
+            if (content.includes('#') || content.includes('**') || content.includes('- ')) {
+                // 简单的markdown到HTML转换
+                let htmlContent = content
+                    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+                    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                    .replace(/^#### (.*$)/gm, '<h4>$1</h4>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/^\- (.*$)/gm, '<li>$1</li>')
+                    .replace(/^(\d+)\. (.*$)/gm, '<li>$1. $2</li>')
+                    .replace(/\n\n/g, '</p><p>')
+                    .replace(/\n/g, '<br>');
+                
+                // 包装列表项
+                htmlContent = htmlContent.replace(/(<li>.*?<\/li>)/gs, '<ul>$1</ul>');
+                htmlContent = htmlContent.replace(/<\/ul>\s*<ul>/g, '');
+                
+                // 包装段落
+                if (!htmlContent.startsWith('<h1>') && !htmlContent.startsWith('<p>')) {
+                    htmlContent = '<p>' + htmlContent + '</p>';
+                }
+                
+                return `
+                    <div class="proposal-header">
+                        <div class="project-info">
+                            <p><strong>Funding Agency:</strong> ${data.fundingAgency}</p>
+                            <p><strong>Research Area:</strong> ${data.researchArea}</p>
+                            <p><strong>Requested Amount:</strong> ${getBudgetText(data.budgetRange)}</p>
+                            <p><strong>Duration:</strong> ${data.duration}</p>
+                        </div>
+                    </div>
+                    <div class="proposal-content">
+                        ${htmlContent}
+                    </div>
+                    <div class="proposal-footer">
+                        <p><em>This proposal was generated using AI assistance. Please review and customize according to your specific requirements and funding agency guidelines.</em></p>
+                    </div>
+                `;
+            } else {
+                // 原有的简单格式处理
+                return `
+                    <div class="proposal-header">
+                        <h3>${data.projectTitle}</h3>
+                        <p><strong>Funding Agency:</strong> ${data.fundingAgency}</p>
+                        <p><strong>Research Area:</strong> ${data.researchArea}</p>
+                        <p><strong>Requested Amount:</strong> ${getBudgetText(data.budgetRange)}</p>
+                        <p><strong>Duration:</strong> ${data.duration}</p>
+                    </div>
+                    <div class="proposal-content">
+                        ${content.replace(/\n/g, '<br>')}
+                    </div>
+                    <div class="proposal-footer">
+                        <p><em>This proposal was generated using AI assistance. Please review and customize according to your specific requirements and funding agency guidelines.</em></p>
+                    </div>
+                `;
+            }
+        }
+
+        // 改进的本地生成器，生成更专业的内容
+        function generateLocalProposal(data) {
+            const researchArea = data.researchArea || 'interdisciplinary research';
+            const projectTitle = data.projectTitle || 'Research Project';
+            const projectDescription = data.projectDescription || 'This project aims to advance knowledge in the field through innovative research methods and comprehensive analysis.';
+            const fundingAgency = data.fundingAgency || 'Research Foundation';
+            const duration = data.duration || '12 months';
+            
             return `
-                <div class="proposal-header">
-                    <h3>${data.projectTitle}</h3>
-                    <p><strong>Funding Agency:</strong> ${data.fundingAgency}</p>
-                    <p><strong>Research Area:</strong> ${data.researchArea}</p>
-                    <p><strong>Requested Amount:</strong> ${getBudgetText(data.budgetRange)}</p>
-                    <p><strong>Duration:</strong> ${data.duration}</p>
-                </div>
-                <div class="proposal-content">
-                    ${content.replace(/\n/g, '<br>')}
-                </div>
-                <div class="proposal-footer">
-                    <p><em>This proposal was generated using AI assistance. Please review and customize according to your specific requirements and funding agency guidelines.</em></p>
-                </div>
+# ${projectTitle}
+
+## Executive Summary
+
+This comprehensive research proposal outlines a groundbreaking study in ${researchArea} that will significantly advance our understanding of key challenges in the field. The project, titled "${projectTitle}", represents a critical investigation that addresses current knowledge gaps and provides innovative solutions to pressing research questions.
+
+**Project Overview:**
+${projectDescription}
+
+**Research Significance:**
+This study will contribute to the academic community by providing new theoretical frameworks, empirical evidence, and practical applications that can inform future research and policy decisions. The interdisciplinary approach ensures broad impact across multiple domains.
+
+**Expected Outcomes:**
+- Publication of 3-5 high-impact research papers
+- Development of new methodological approaches
+- Training of graduate students and early-career researchers
+- Establishment of collaborative networks with international partners
+
+## Project Description and Significance
+
+### Research Background
+
+The field of ${researchArea} has experienced significant developments in recent years, yet several critical questions remain unanswered. Current research has primarily focused on traditional approaches, leaving substantial gaps in our understanding of emerging challenges and opportunities.
+
+### Research Problem
+
+The central problem this project addresses is the need for comprehensive analysis and innovative solutions in ${researchArea}. Existing studies have limitations in scope, methodology, or theoretical framework, creating an urgent need for more robust research approaches.
+
+### Innovation and Significance
+
+This project introduces several innovative elements:
+
+1. **Methodological Innovation**: Implementation of cutting-edge research methods that combine quantitative and qualitative approaches
+2. **Theoretical Contribution**: Development of new theoretical frameworks that bridge existing knowledge gaps
+3. **Practical Applications**: Direct relevance to real-world challenges and policy implications
+4. **Interdisciplinary Approach**: Integration of multiple disciplines to provide comprehensive insights
+
+## Literature Review and Theoretical Framework
+
+### Current State of Knowledge
+
+Recent scholarship in ${researchArea} has established important foundations for understanding key phenomena. However, several areas require further investigation:
+
+- **Theoretical Gaps**: Limited integration of emerging theories with established frameworks
+- **Methodological Limitations**: Need for more sophisticated analytical approaches
+- **Empirical Evidence**: Insufficient data to support comprehensive conclusions
+- **Practical Applications**: Limited translation of research findings to practice
+
+### Theoretical Framework
+
+This study employs a comprehensive theoretical framework that integrates:
+
+1. **Primary Theoretical Foundation**: Core theories relevant to ${researchArea}
+2. **Supporting Frameworks**: Complementary theoretical perspectives
+3. **Innovative Synthesis**: Novel integration of existing theories
+4. **Practical Applications**: Framework for real-world implementation
+
+## Research Objectives and Hypotheses
+
+### Primary Objectives
+
+1. **Objective 1**: Conduct comprehensive analysis of current challenges in ${researchArea}
+2. **Objective 2**: Develop innovative methodological approaches for data collection and analysis
+3. **Objective 3**: Create new theoretical frameworks that advance understanding
+4. **Objective 4**: Validate findings through rigorous empirical testing
+5. **Objective 5**: Disseminate results to academic and practitioner communities
+
+### Research Questions
+
+1. What are the primary factors influencing outcomes in ${researchArea}?
+2. How can innovative methodologies improve research quality and impact?
+3. What theoretical frameworks best explain observed phenomena?
+4. How can research findings be effectively translated to practice?
+
+### Hypotheses
+
+- **H1**: Implementation of innovative methodologies will yield more comprehensive insights
+- **H2**: New theoretical frameworks will better explain complex relationships
+- **H3**: Research findings will have significant practical applications
+- **H4**: Interdisciplinary approaches will enhance research impact
+
+## Methodology and Research Design
+
+### Research Design
+
+This study employs a mixed-methods research design that combines:
+
+1. **Quantitative Analysis**: Statistical analysis of large datasets
+2. **Qualitative Investigation**: In-depth interviews and case studies
+3. **Comparative Analysis**: Cross-sectional and longitudinal comparisons
+4. **Experimental Components**: Controlled studies where appropriate
+
+### Data Collection Methods
+
+**Primary Data Collection:**
+- Structured surveys and questionnaires
+- Semi-structured interviews with key stakeholders
+- Focus groups and workshops
+- Observational studies
+
+**Secondary Data Sources:**
+- Academic databases and repositories
+- Government and institutional reports
+- Industry publications and statistics
+- International comparative data
+
+### Analytical Framework
+
+**Quantitative Analysis:**
+- Descriptive and inferential statistics
+- Multivariate regression analysis
+- Structural equation modeling
+- Time series analysis
+
+**Qualitative Analysis:**
+- Thematic analysis of interview data
+- Content analysis of documents
+- Grounded theory approach
+- Narrative analysis
+
+## Timeline and Milestones
+
+### Phase 1: Project Initiation (Months 1-3)
+- Literature review completion
+- Methodology refinement
+- Team assembly and training
+- Ethical approval and permits
+
+**Key Milestones:**
+- ✅ Comprehensive literature review
+- ✅ Methodology protocol finalization
+- ✅ Research team establishment
+- ✅ Ethical clearance obtained
+
+### Phase 2: Data Collection (Months 4-8)
+- Primary data collection activities
+- Secondary data compilation
+- Preliminary analysis
+- Mid-term progress review
+
+**Key Milestones:**
+- 📊 50% of data collection completed
+- 📋 Preliminary findings report
+- 🔄 Methodology adjustments if needed
+- 📈 Mid-term progress presentation
+
+### Phase 3: Analysis and Synthesis (Months 9-11)
+- Comprehensive data analysis
+- Results interpretation
+- Theoretical framework development
+- Draft manuscript preparation
+
+**Key Milestones:**
+- 📊 Complete data analysis
+- 📝 First draft of findings
+- 🎯 Theoretical framework finalized
+- 📄 Manuscript drafts completed
+
+### Phase 4: Dissemination (Month 12)
+- Final report preparation
+- Academic publication submission
+- Conference presentations
+- Stakeholder engagement
+
+**Key Milestones:**
+- 📋 Final research report
+- 📚 Journal article submissions
+- 🎤 Conference presentations
+- 🤝 Stakeholder meetings
+
+## Budget Justification
+
+### Total Project Budget: ${getBudgetText(data.budgetRange)}
+
+**Personnel (45%)**
+- Principal Investigator: 20% effort
+- Research Associates: 2 FTE
+- Graduate Research Assistants: 3 positions
+- Administrative Support: 0.5 FTE
+
+**Equipment and Technology (20%)**
+- Data collection software licenses
+- Statistical analysis software
+- Computer hardware and peripherals
+- Specialized research equipment
+
+**Travel and Dissemination (15%)**
+- Conference attendance and presentations
+- Data collection travel
+- Stakeholder meetings
+- International collaboration visits
+
+**Materials and Supplies (10%)**
+- Research materials and supplies
+- Printing and publication costs
+- Communication and utilities
+- Office supplies and materials
+
+**Indirect Costs (10%)**
+- Institutional overhead
+- Administrative support
+- Facility costs
+- Insurance and legal fees
+
+## Expected Outcomes and Impact
+
+### Academic Impact
+
+**Publications:**
+- 3-5 peer-reviewed journal articles in top-tier publications
+- 1 edited volume or monograph
+- Multiple conference presentations
+- Policy briefs and white papers
+
+**Theoretical Contributions:**
+- New theoretical frameworks for ${researchArea}
+- Methodological innovations
+- Empirical evidence for theory testing
+- Cross-disciplinary insights
+
+### Practical Impact
+
+**Policy Implications:**
+- Evidence-based policy recommendations
+- Best practice guidelines
+- Implementation frameworks
+- Evaluation metrics
+
+**Industry Applications:**
+- Practical tools and resources
+- Training materials and programs
+- Consultation and advisory services
+- Technology transfer opportunities
+
+### Educational Impact
+
+**Capacity Building:**
+- Training of graduate students
+- Postdoctoral researcher development
+- Early-career researcher mentoring
+- International collaboration networks
+
+**Curriculum Development:**
+- New course materials
+- Case studies and examples
+- Teaching resources
+- Online learning modules
+
+## Risk Management and Contingency Plans
+
+### Identified Risks
+
+1. **Data Collection Challenges**
+   - Mitigation: Multiple data sources and collection methods
+   - Contingency: Alternative sampling strategies
+
+2. **Timeline Delays**
+   - Mitigation: Built-in buffer time and flexible scheduling
+   - Contingency: Priority-based task resequencing
+
+3. **Resource Constraints**
+   - Mitigation: Careful budget monitoring and cost control
+   - Contingency: Alternative funding sources and partnerships
+
+4. **Technical Difficulties**
+   - Mitigation: Expert consultation and technical support
+   - Contingency: Alternative analytical approaches
+
+## Quality Assurance and Evaluation
+
+### Quality Control Measures
+
+- Regular progress monitoring and evaluation
+- Peer review of methodologies and findings
+- External advisory board oversight
+- Compliance with ethical standards
+
+### Evaluation Criteria
+
+- Achievement of research objectives
+- Quality of academic outputs
+- Impact on field and practice
+- Stakeholder satisfaction
+
+## Conclusion
+
+This research project represents a significant opportunity to advance knowledge in ${researchArea} through innovative research approaches and comprehensive analysis. The proposed study addresses critical gaps in current understanding while providing practical solutions to real-world challenges.
+
+**Project Strengths:**
+- Experienced and qualified research team
+- Innovative and rigorous methodology
+- Strong theoretical foundation
+- Clear practical applications
+- Comprehensive dissemination plan
+
+**Success Factors:**
+- Robust project management framework
+- Adequate resource allocation
+- Strong institutional support
+- Established collaboration networks
+- Clear quality assurance measures
+
+We respectfully request support from ${fundingAgency} for this important research initiative. The project will generate significant academic and practical contributions while training the next generation of researchers in ${researchArea}. The expected outcomes will have lasting impact on the field and contribute to evidence-based policy and practice.
+
+**Timeline:** ${duration}
+**Total Budget:** ${getBudgetText(data.budgetRange)}
+**Expected Publications:** 3-5 peer-reviewed articles
+**Students Trained:** 2-3 graduate students
+**International Collaborations:** Multiple partnerships
+
+This comprehensive proposal demonstrates our commitment to excellence in research and our capacity to deliver significant contributions to ${researchArea}. We look forward to the opportunity to advance knowledge and create positive impact through this important research initiative.
             `;
         }
 
