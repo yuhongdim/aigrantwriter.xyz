@@ -272,6 +272,7 @@ function showNotification(message, type = 'info') {
     document.body.appendChild(notification);
     
     // 3秒后自动移除
+    // Auto-remove after 3 seconds
     setTimeout(() => {
         notification.remove();
     }, 3000);
@@ -376,10 +377,11 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
-
 // 工具卡片点击事件已移除，现在使用onclick属性直接调用openTool函数
+// Tool card click events removed, now using onclick attribute to directly call openTool function
 
 // 添加高亮动画
+// Add highlight animation
 const highlightStyle = document.createElement('style');
 highlightStyle.textContent = `
     @keyframes highlight {
@@ -694,6 +696,7 @@ async function generatePhdContent() {
 
     if (!topic.trim() || !field || !chapter) {
         alert('请填写所有必填字段');
+        alert('Please fill in all required fields');
         return;
     }
 
@@ -717,10 +720,24 @@ async function generatePhdContent() {
 
 字数要求：2000-3000字`;
 
+        const prompt = `As a PhD dissertation writing expert, please generate ${chapter} chapter content for the following research topic:
+
+Research Topic: ${topic}
+Research Field: ${field}
+Specific Requirements: ${requirements}
+
+Please generate professional and detailed ${chapter} content, including:
+1. Clear chapter structure
+2. Academic language standards
+3. Rigorous logic
+4. Compliance with PhD dissertation standards
+
+Word count requirement: 2000-3000 words`;
         const result = await callAI(prompt);
         displayResult(output, result);
     } catch (error) {
         alert('生成失败，请重试');
+        alert('Generation failed, please try again');
         console.error(error);
     } finally {
         toggleLoading(btn, false);
@@ -728,6 +745,7 @@ async function generatePhdContent() {
 }
 
 // 文献综述生成器功能
+// Literature Review Generator Function
 async function generateLiteratureReview() {
     const topic = document.getElementById('lit-topic').value;
     const keywords = document.getElementById('lit-keywords').value;
@@ -736,6 +754,7 @@ async function generateLiteratureReview() {
 
     if (!topic.trim() || !keywords.trim()) {
         alert('请填写研究主题和关键词');
+        alert('Please fill in research topic and keywords');
         return;
     }
 
@@ -750,6 +769,12 @@ async function generateLiteratureReview() {
         'recent10': '近10年',
         'recent15': '近15年',
         'all': '不限时间'
+        };
+        const timeframeText = {
+            'recent5': 'Recent 5 years',
+        'recent10': 'Recent 10 years',
+        'recent15': 'Recent 15 years',
+        'all': 'No time limit'
         }[timeframe];
 
         const prompt = `作为学术研究专家，请为以下主题生成文献综述：
@@ -772,7 +797,26 @@ async function generateLiteratureReview() {
 - 引用权威文献
 - 客观分析评价
 - 字数：2500-3500字`;
+        const prompt = `As an academic research expert, please generate a literature review for the following topic:
 
+Research Topic: ${topic}
+Keywords: ${keywords}
+Time Frame: ${timeframeText}
+Review Focus: ${focus}
+
+Please generate a literature review containing the following content:
+1. Research background and significance
+2. Domestic and international research status
+3. Main theoretical viewpoints
+4. Research methodology summary
+5. Research trend analysis
+6. Research gaps and prospects
+
+Requirements:
+- Clear structure and rigorous logic
+- Cite authoritative literature
+- Objective analysis and evaluation
+- Word count: 2500-3500 words`;
         const result = await callAI(prompt);
         displayResult(output, result);
     } catch (error) {
@@ -791,6 +835,7 @@ async function generateResearchMethod() {
 
     if (!topic.trim() || !type || !objectives.trim()) {
         alert('请填写所有必填字段');
+        alert('Please fill in all required fields');
         return;
     }
 
@@ -821,11 +866,32 @@ async function generateResearchMethod() {
 - 步骤详细具体
 - 符合学术规范
 - 字数：2000-2800字`;
+        const prompt = `As a research methodology expert, please design detailed research methods for the following study:
 
+Research Topic: ${topic}
+Research Type: ${type}
+Research Objectives: ${objectives}
+
+Please generate research methods containing the following content:
+1. Research design
+2. Research subjects and samples
+3. Data collection methods
+4. Data analysis methods
+5. Research tools and techniques
+6. Research process
+7. Quality control measures
+8. Ethical considerations
+
+Requirements:
+- Scientifically feasible methods
+- Detailed and specific steps
+- Compliance with academic standards
+- Word count: 2000-2800 words`;
         const result = await callAI(prompt);
         displayResult(output, result);
     } catch (error) {
         alert('生成失败，请重试');
+        alert('Generation failed, please try again');
         console.error(error);
     } finally {
         toggleLoading(btn, false);
@@ -833,6 +899,7 @@ async function generateResearchMethod() {
 }
 
 // 研究问题生成器功能
+// Research Question Generator Function
 async function generateResearchQuestion() {
     const field = document.getElementById('question-field').value;
     const interest = document.getElementById('question-interest').value;
@@ -840,6 +907,7 @@ async function generateResearchQuestion() {
 
     if (!field || !interest.trim()) {
         alert('请填写研究领域和研究兴趣');
+        alert('Please fill in research field and research interest');
         return;
     }
 
@@ -869,6 +937,25 @@ async function generateResearchQuestion() {
 - 可操作性强
 - 符合学术规范`;
 
+        const prompt = `As an academic research expert, please generate innovative research questions based on the following information:
+
+Research Field: ${field}
+Research Interest: ${interest}
+Research Gap: ${gap}
+
+Please generate:
+1. 3-5 specific research questions
+2. Research value analysis for each question
+3. Feasibility assessment
+4. Expected contributions
+5. Related research hypotheses
+6. Research significance explanation
+
+Requirements:
+- Questions should be innovative
+- Clear research value
+- Strong operability
+- Compliance with academic standards`;
         const result = await callAI(prompt);
         displayResult(output, result);
     } catch (error) {
@@ -880,6 +967,7 @@ async function generateResearchQuestion() {
 }
 
 // AI降重工具功能
+// AI Text Reduction Tool Function
 async function generateReducedText() {
     const text = document.getElementById('reducer-text').value;
     const level = document.getElementById('reducer-level').value;
@@ -887,6 +975,7 @@ async function generateReducedText() {
 
     if (!text.trim()) {
         alert('请输入需要降重的文本');
+        alert('Please enter text that needs to be reduced');
         return;
     }
 
@@ -900,13 +989,23 @@ async function generateReducedText() {
             'light': '轻度降重：保持原意，微调表达',
         'medium': '中度降重：改写句式，同义词替换',
         'heavy': '深度降重：重组结构，全面改写'
-        }[level];
+        };
+        const levelText = {
+            'light': 'Light reduction: Maintain original meaning, fine-tune expression',
+        'medium': 'Medium reduction: Rewrite sentence structure, synonym replacement',
+        'heavy': 'Deep reduction: Restructure organization, comprehensive rewriting'
+        };
 
         const styleText = {
             'academic': '学术风格',
         'formal': '正式风格',
         'natural': '自然风格'
-        }[style];
+        };
+        const styleText = {
+            'academic': 'Academic style',
+        'formal': 'Formal style',
+        'natural': 'Natural style'
+        };
 
         const prompt = `作为专业的文本改写专家，请对以下文本进行降重处理：
 
@@ -924,8 +1023,24 @@ ${text}
 5. 保持逻辑连贯性
 6. 符合${styleText}要求
 
-请直接输出改写后的文本，无需额外说明。`;
+请输出改写后的文本，无需额外说明。`;
+        const prompt = `As a professional text rewriting expert, please perform text reduction on the following text:
 
+Original Text:
+${text}
+
+Reduction Requirements: ${levelText}
+Writing Style: ${styleText}
+
+Please follow these principles:
+1. Maintain the core meaning of the original text
+2. Change sentence structure and expression
+3. Use synonym replacement
+4. Adjust paragraph organization
+5. Maintain logical coherence
+6. Meet ${styleText} requirements
+
+Please output the rewritten text directly without additional explanation.`;
         const result = await callAI(prompt);
         
         // 显示结果和统计信息
@@ -934,6 +1049,7 @@ ${text}
         
     } catch (error) {
         alert('文本降重失败，请重试');
+        alert('Text reduction failed, please try again');
         console.error(error);
     } finally {
         toggleLoading(btn, false);
@@ -941,17 +1057,21 @@ ${text}
 }
 
 // 更新降重统计信息
+// Update reduction statistics
 function updateReductionStats(originalText, reducedText) {
     document.getElementById('original-count').textContent = originalText.length;
     document.getElementById('reduced-count').textContent = reducedText.length;
     
     // 简单的相似度估算（实际应用中可以使用更复杂的算法）
+    // Simple similarity estimation (more complex algorithms can be used in actual applications)
     const similarity = calculateSimilarity(originalText, reducedText);
     const reduction = Math.max(0, Math.round((1 - similarity) * 100));
     document.getElementById('similarity-reduction').textContent = `约 ${reduction}%`;
+    document.getElementById('similarity-reduction').textContent = `About ${reduction}%`;
 }
 
 // 简单的文本相似度计算
+// Simple text similarity calculation
 function calculateSimilarity(text1, text2) {
     const words1 = text1.toLowerCase().split(/\s+/);
     const words2 = text2.toLowerCase().split(/\s+/);
@@ -963,6 +1083,7 @@ function calculateSimilarity(text1, text2) {
 }
 
 // 通用AI调用函数
+// Universal AI calling function
 async function callAI(prompt) {
     const response = await fetch(API_CONFIG.baseURL, {
         method: 'POST',
@@ -976,6 +1097,7 @@ async function callAI(prompt) {
                 {
                     role: 'system',
                     content: '你是一个专业的学术写作助手，擅长生成高质量的学术内容。'
+                    content: 'You are a professional academic writing assistant, skilled at generating high-quality academic content.'
                 },
                 {
                     role: 'user',
@@ -996,6 +1118,7 @@ async function callAI(prompt) {
 }
 
 // 显示结果
+// Display results
 function displayResult(outputElement, content) {
     outputElement.style.display = 'block';
     const contentDiv = outputElement.querySelector('.output-content');
@@ -1003,6 +1126,7 @@ function displayResult(outputElement, content) {
 }
 
 // 切换加载状态
+// Toggle loading state
 function toggleLoading(button, isLoading) {
     const btnText = button.querySelector('.btn-text');
     const spinner = button.querySelector('.loading-spinner');
@@ -1019,12 +1143,14 @@ function toggleLoading(button, isLoading) {
 }
 
 // 复制到剪贴板功能（更新版本）
+// Copy to clipboard function (updated version)
 function copyToClipboard(outputId) {
     const outputElement = document.getElementById(outputId);
     const content = outputElement.querySelector('.output-content').textContent;
     
     navigator.clipboard.writeText(content).then(() => {
         showNotification('内容已复制到剪贴板');
+        showNotification('Content copied to clipboard');
     }).catch(() => {
         // 降级方案
         const textArea = document.createElement('textarea');
@@ -1034,5 +1160,6 @@ function copyToClipboard(outputId) {
         document.execCommand('copy');
         document.body.removeChild(textArea);
         showNotification('内容已复制到剪贴板');
+        showNotification('Content copied to clipboard');
     });
 }

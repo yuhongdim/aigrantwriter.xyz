@@ -1,73 +1,76 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简单卡片测试</title>
+    <title>Simple Card Test</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f5f5f5;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
         }
-        .test-card {
+        .card {
             background: white;
-            border: 2px solid #ddd;
             border-radius: 10px;
             padding: 20px;
-            margin: 20px;
+            margin: 10px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             cursor: pointer;
             transition: all 0.3s ease;
-            max-width: 300px;
         }
-        .test-card:hover {
-            border-color: #3b82f6;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
         }
-        .debug-info {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 20px;
+        h1 { color: #333; }
+        h3 { color: #666; }
+        p { color: #888; }
+        .status { 
+            padding: 10px; 
+            margin: 10px 0; 
+            border-radius: 5px; 
+            background: #e3f2fd; 
         }
     </style>
 </head>
 <body>
-    <h1>卡片点击测试</h1>
+    <h1>Card Click Test</h1>
     
-    <div class="debug-info">
-        <h3>测试说明：</h3>
-        <p>点击下面的卡片应该跳转到对应页面。打开浏览器控制台查看调试信息。</p>
+    <div class="status">
+        <h3>Test Instructions:</h3>
+        <p>Click the cards below to navigate to corresponding pages. Open browser console to view debug information.</p>
     </div>
 
-    <div class="test-card" onclick="testClick('grant-proposal.html')">
-        <h3>Grant Proposal AI</h3>
-        <p>点击跳转到 grant-proposal.html</p>
+    <div class="card" onclick="testNavigation('grant-proposal.html')">
+        <h3>Grant Proposal Generator</h3>
+        <p>Click to navigate to grant-proposal.html</p>
     </div>
 
-    <div class="test-card" onclick="testClick('dissertation-writer.html')">
+    <div class="card" onclick="testNavigation('dissertation-writer.html')">
         <h3>Dissertation Writer</h3>
-        <p>点击跳转到 dissertation-writer.html</p>
+        <p>Click to navigate to dissertation-writer.html</p>
     </div>
 
     <script>
-        function testClick(url) {
-            console.log('测试点击，跳转到:', url);
-            alert('即将跳转到: ' + url);
+        function testNavigation(url) {
+            console.log('Test click, navigating to:', url);
+            alert('About to navigate to: ' + url);
             window.location.href = url;
         }
 
-        // 测试原始的navigation.js逻辑
+        // Test original navigation.js logic
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('页面加载完成');
+            console.log('Page loaded');
             
-            // 模拟原始卡片结构的测试
+            // Simulate original card structure test
             const originalCards = document.querySelectorAll('.tool-card');
-            console.log('找到原始卡片数量:', originalCards.length);
+            console.log('Found original cards count:', originalCards.length);
             
             if (originalCards.length === 0) {
-                console.log('没有找到.tool-card元素，这是正常的，因为这是测试页面');
+                console.log('No .tool-card elements found, this is normal as this is a test page');
             }
         });
     </script>

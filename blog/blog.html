@@ -280,8 +280,25 @@
     </div>
 
     <script>
+        // Force clear any old Chinese articles on page load
+        function clearOldChineseArticles() {
+            let articles = JSON.parse(localStorage.getItem('blogArticles')) || [];
+            // Check if any article has Chinese characters in title
+            let hasChineseArticles = articles.some(article => 
+                /[\u4e00-\u9fff]/.test(article.title)
+            );
+            
+            if (hasChineseArticles) {
+                localStorage.removeItem('blogArticles');
+                console.log('Cleared old Chinese articles from localStorage');
+            }
+        }
+
         // Load articles from localStorage
         function loadArticles() {
+            // First clear any old Chinese articles
+            clearOldChineseArticles();
+            
             // Get existing articles from localStorage
             let articles = JSON.parse(localStorage.getItem('blogArticles')) || [];
             

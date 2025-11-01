@@ -1,7 +1,9 @@
 // 干净的JavaScript文件 - 不干扰链接导航
+// Clean JavaScript file - Does not interfere with link navigation
 console.log('Clean script loaded');
 
 // 滚动效果
+// Scroll effects
 window.addEventListener('scroll', function() {
     const navbar = document.querySelector('.navbar');
     if (navbar) {
@@ -14,6 +16,7 @@ window.addEventListener('scroll', function() {
 });
 
 // 移动端导航切换
+// Mobile navigation toggle
 document.addEventListener('DOMContentLoaded', function() {
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
@@ -26,10 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 平滑滚动到锚点 - 只处理页面内锚点链接
+    // Smooth scroll to anchor - Only handle in-page anchor links
     document.querySelectorAll('a[href^="#"]:not(.tool-card-link)').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
             // 只处理真正的锚点链接（以#开头且不是空的）
+            // Only handle real anchor links (starting with # and not empty)
             if (href && href.length > 1) {
                 e.preventDefault();
                 const target = document.querySelector(href);
@@ -43,16 +48,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // 记录工具卡片链接但不干扰它们
+    // Log tool card links but don't interfere with them
     const toolCardLinks = document.querySelectorAll('.tool-card-link');
     console.log('找到工具卡片链接数量:', toolCardLinks.length);
+    console.log('Found tool card links count:', toolCardLinks.length);
     
     toolCardLinks.forEach((link, index) => {
         console.log(`链接 ${index + 1}: ${link.href}`);
+        console.log(`Link ${index + 1}: ${link.href}`);
         // 不添加任何事件监听器，让浏览器原生处理
+        // Don't add any event listeners, let the browser handle natively
     });
 });
 
 // 滚动到生成器部分
+// Scroll to generator section
 function scrollToGenerator() {
     const toolsSection = document.getElementById('tools');
     if (toolsSection) {
@@ -63,12 +73,14 @@ function scrollToGenerator() {
 }
 
 // API配置
+// API Configuration
 const API_CONFIG = {
     baseURL: 'https://breakout.wenwen-ai.com/v1/chat/completions',
     apiKey: 'sk-6ogS4COJPVLfLclruLQ6h59IxyvcN61nGuvgpr71VNL3ARsN'
 };
 
 // 通知系统
+// Notification system
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
@@ -110,17 +122,22 @@ function showNotification(message, type = 'info') {
 }
 
 // 复制到剪贴板功能
+// Copy to clipboard function
 async function copyToClipboard(text) {
     try {
         await navigator.clipboard.writeText(text);
         showNotification('内容已复制到剪贴板', 'success');
+        showNotification('Content copied to clipboard', 'success');
     } catch (err) {
         console.error('复制失败:', err);
+        console.error('Copy failed:', err);
         showNotification('复制失败，请手动复制', 'error');
+        showNotification('Copy failed, please copy manually', 'error');
     }
 }
 
 // 样式注入
+// Style injection
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideIn {
