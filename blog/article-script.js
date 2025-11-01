@@ -1551,7 +1551,7 @@ function updateStructuredData(article) {
             "name": "AI学术写作助手",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://aigrantwriter.xyz/logo.png"
+                "url": "https://aigrantwriter.xyz/logo.svg"
             }
         },
         "datePublished": article.date,
