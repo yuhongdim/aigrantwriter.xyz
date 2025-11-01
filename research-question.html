@@ -130,10 +130,10 @@
                     <textarea 
                         id="research-topic" 
                         name="research-topic" 
-                        placeholder="Describe your research topic or area of interest (e.g., Application of artificial intelligence in medical diagnosis)"
+                        placeholder="Describe your research topic or area of interest in detail. Include the specific field, context, and any preliminary ideas you have. For example: 'Application of machine learning algorithms in early detection of cardiovascular diseases using wearable sensor data from diverse patient populations.'"
                         required
-                        rows="6"
-                        style="min-height: 120px; resize: vertical;"
+                        rows="8"
+                        style="min-height: 180px; resize: vertical; font-size: 16px; line-height: 1.5; padding: 15px;"
                     ></textarea>
                 </div>
 
@@ -180,8 +180,8 @@
                         type="text" 
                         id="keywords" 
                         name="keywords" 
-                        placeholder="Enter relevant keywords, separated by commas (e.g., machine learning, deep learning, neural networks)"
-                        style="min-height: 50px; padding: 15px;"
+                        placeholder="Enter relevant keywords, separated by commas. Be specific and include both broad and narrow terms (e.g., machine learning, deep learning, neural networks, cardiovascular disease, wearable sensors, health monitoring, predictive analytics)"
+                        style="min-height: 60px; padding: 15px; font-size: 16px; line-height: 1.4;"
                     >
                 </div>
 
@@ -193,9 +193,9 @@
                     <textarea 
                         id="research-objective" 
                         name="research-objective" 
-                        placeholder="Describe the goals you hope to achieve through your research or the problems you want to solve"
-                        rows="5"
-                        style="min-height: 100px; resize: vertical;"
+                        placeholder="Describe the specific goals you hope to achieve through your research or the problems you want to solve. Include both theoretical contributions and practical applications. For example: 'To develop and validate a machine learning model that can predict cardiovascular events 48 hours in advance using real-time wearable sensor data, potentially reducing emergency room visits by 30% and improving patient outcomes.'"
+                        rows="7"
+                        style="min-height: 160px; resize: vertical; font-size: 16px; line-height: 1.5; padding: 15px;"
                     ></textarea>
                 </div>
 
@@ -413,30 +413,48 @@
         }
 
         function getSampleQuestion(field, topic, type, questionType, index) {
-            // Generate sample questions based on field and type
+            // Generate sample questions based on field and type with US academic standards
             const samples = {
+                'computer-science': [
+                    'What are the current security vulnerabilities in cloud-based machine learning systems and their impact on data privacy?',
+                    'How does quantum computing performance compare to classical computing in solving NP-complete optimization problems?',
+                    'What is the relationship between algorithm transparency and user trust in AI-driven healthcare applications?',
+                    'Does implementing federated learning significantly improve data privacy while maintaining model accuracy in distributed systems?'
+                ],
+                'medicine': [
+                    'What are the clinical outcomes of telemedicine interventions for chronic disease management in rural populations?',
+                    'How does personalized medicine effectiveness compare to standard treatment protocols in cancer therapy?',
+                    'What is the correlation between genetic markers and treatment response in patients with autoimmune disorders?',
+                    'Does early intervention with AI-assisted diagnosis lead to improved patient outcomes in emergency medicine?'
+                ],
                 'psychology': [
-                    'What are the psychological factors that influence decision-making in high-stress environments?',
-                    'How does cognitive behavioral therapy compare to traditional counseling in treating anxiety disorders?',
-                    'What is the relationship between social media usage and self-esteem among adolescents?',
-                    'Does mindfulness meditation cause significant improvements in attention span and focus?'
+                    'What are the psychological factors that influence decision-making in high-stress academic environments among college students?',
+                    'How does cognitive behavioral therapy compare to mindfulness-based interventions in treating academic anxiety?',
+                    'What is the relationship between social media usage patterns and mental health outcomes in emerging adults?',
+                    'Does implementation of peer support programs significantly reduce depression rates among first-year university students?'
                 ],
                 'education': [
-                    'What are the current challenges faced by teachers in implementing technology-enhanced learning?',
-                    'How does project-based learning compare to lecture-based instruction in student engagement?',
-                    'What is the correlation between parental involvement and student academic achievement?',
-                    'Does gamification in education lead to improved learning outcomes and retention?'
+                    'What are the current challenges faced by educators in implementing inclusive teaching practices in STEM fields?',
+                    'How does active learning methodology compare to traditional lecture-based instruction in undergraduate retention rates?',
+                    'What is the correlation between faculty diversity and student academic achievement in higher education institutions?',
+                    'Does integration of virtual reality technology in classroom instruction lead to improved learning outcomes in complex subjects?'
                 ],
                 'business': [
-                    'What are the key factors driving digital transformation in small and medium enterprises?',
-                    'How does remote work productivity compare to traditional office-based work arrangements?',
-                    'What is the relationship between employee satisfaction and organizational performance?',
-                    'Does implementing sustainable business practices result in improved financial performance?'
+                    'What are the key organizational factors driving successful digital transformation in Fortune 500 companies?',
+                    'How does remote work productivity compare to hybrid work arrangements in knowledge-intensive industries?',
+                    'What is the relationship between corporate social responsibility initiatives and long-term financial performance?',
+                    'Does implementation of AI-driven decision support systems result in improved strategic planning outcomes?'
+                ],
+                'engineering': [
+                    'What are the structural integrity challenges in designing sustainable infrastructure for climate change adaptation?',
+                    'How does additive manufacturing efficiency compare to traditional manufacturing processes in aerospace applications?',
+                    'What is the relationship between renewable energy integration and grid stability in smart city systems?',
+                    'Does implementation of IoT sensors in civil infrastructure lead to improved predictive maintenance outcomes?'
                 ]
             };
             
             const fieldSamples = samples[field] || samples['psychology'];
-            return fieldSamples[index - 1] || `How does ${topic} impact the field of ${field}?`;
+            return fieldSamples[index - 1] || `How does ${topic} influence current practices and future developments in ${field}?`;
         }
 
         function copyQuestion(index) {
