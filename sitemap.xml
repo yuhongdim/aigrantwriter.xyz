@@ -1,187 +1,177 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-    <!-- Homepage -->
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- Homepage -->
+  <url>
+    <loc>https://aigrantwriter.xyz/</loc>
+    <lastmod>2024-10-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- Main index page -->
+  <url>
+    <loc>https://aigrantwriter.xyz/index.html</loc>
+    <lastmod>2024-10-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- Blue Ocean Landing Pages -->
+  <url>
+    <loc>https://aigrantwriter.xyz/dissertation-ai.html</loc>
+    <lastmod>2024-10-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://aigrantwriter.xyz/grant-proposal-generator.html</loc>
+    <lastmod>2024-10-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://aigrantwriter.xyz/literature-review-ai.html</loc>
+    <lastmod>2024-10-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- AI Humanizer / Plagiarism Reducer -->
+  <url>
+    <loc>https://aigrantwriter.xyz/ai-text-reducer.html</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Research Question Generator -->
+  <url>
+    <loc>https://aigrantwriter.xyz/research-question.html</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Literature Review Generator -->
+  <url>
+    <loc>https://aigrantwriter.xyz/literature-review.html</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Research Methodology Generator -->
+  <url>
+    <loc>https://aigrantwriter.xyz/research-method.html</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- PhD Assistant -->
+  <url>
+    <loc>https://aigrantwriter.xyz/phd-assistant.html</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Writing Optimization Tool -->
+  <url>
+    <loc>https://aigrantwriter.xyz/writing-optimization.html</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Data Analysis Assistant -->
+  <url>
+    <loc>https://aigrantwriter.xyz/data-analysis.html</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Blog Section -->
+  <url>
+    <loc>https://aigrantwriter.xyz/blog/index.html</loc>
+    <lastmod>2024-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Blog Articles -->
+  <url>
+    <loc>https://aigrantwriter.xyz/blog/ai-academic-writing-guide-2024.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aigrantwriter.xyz/blog/academic-abstract-writing-guide.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aigrantwriter.xyz/blog/academic-collaboration-tips.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aigrantwriter.xyz/blog/academic-databases-guide.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aigrantwriter.xyz/blog/academic-presentation-guide.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aigrantwriter.xyz/blog/ai-tools-academic-writing-future.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aigrantwriter.xyz/blog/ai-tools-academic-writing.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aigrantwriter.xyz/blog/qualitative-research-methods.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aigrantwriter.xyz/blog/research-ethics-guide.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aigrantwriter.xyz/blog/sci-journal-submission-guide.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aigrantwriter.xyz/blog/spss-tutorial-guide.html</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url xmlns="">
+    <loc>https://aigrantwriter.xyz/blog/test-deploy-abstract.html</loc>
+    <lastmod>2025-11-02</lastmod>
+  </url>
+  <url xmlns="">
+    <loc>https://aigrantwriter.xyz/blog/test-deploy-presentation.html</loc>
+    <lastmod>2025-11-02</lastmod>
+  </url>
+  <url xmlns="">
+    <loc>https://aigrantwriter.xyz/blog/test-deploy-ethics.html</loc>
+    <lastmod>2025-11-02</lastmod>
+  </url>
     <url>
-        <loc>https://aigrantwriter.xyz/</loc>
-        <lastmod>2024-10-30</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-
-    <!-- Main index page -->
-    <url>
-        <loc>https://aigrantwriter.xyz/index.html</loc>
-        <lastmod>2024-10-30</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-
-    <!-- Blue Ocean Landing Pages -->
-    <url>
-        <loc>https://aigrantwriter.xyz/dissertation-ai.html</loc>
-        <lastmod>2024-10-30</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
-    </url>
-
-    <url>
-        <loc>https://aigrantwriter.xyz/grant-proposal-generator.html</loc>
-        <lastmod>2024-10-30</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
-    </url>
-
-    <url>
-        <loc>https://aigrantwriter.xyz/literature-review-ai.html</loc>
-        <lastmod>2024-10-30</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
-    </url>
-
-    <!-- AI Humanizer / Plagiarism Reducer -->
-    <url>
-        <loc>https://aigrantwriter.xyz/ai-text-reducer.html</loc>
-        <lastmod>2024-01-15</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.9</priority>
-    </url>
-
-    <!-- Research Question Generator -->
-    <url>
-        <loc>https://aigrantwriter.xyz/research-question.html</loc>
-        <lastmod>2024-01-15</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <!-- Literature Review Generator -->
-    <url>
-        <loc>https://aigrantwriter.xyz/literature-review.html</loc>
-        <lastmod>2024-01-15</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <!-- Research Methodology Generator -->
-    <url>
-        <loc>https://aigrantwriter.xyz/research-method.html</loc>
-        <lastmod>2024-01-15</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <!-- PhD Assistant -->
-    <url>
-        <loc>https://aigrantwriter.xyz/phd-assistant.html</loc>
-        <lastmod>2024-01-15</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <!-- Writing Optimization Tool -->
-    <url>
-        <loc>https://aigrantwriter.xyz/writing-optimization.html</loc>
-        <lastmod>2024-01-15</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <!-- Data Analysis Assistant -->
-    <url>
-        <loc>https://aigrantwriter.xyz/data-analysis.html</loc>
-        <lastmod>2024-01-15</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <!-- Blog Section -->
-    <url>
-        <loc>https://aigrantwriter.xyz/blog/index.html</loc>
-        <lastmod>2024-11-02</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <!-- Blog Articles -->
-    <url>
-        <loc>https://aigrantwriter.xyz/blog/ai-academic-writing-guide-2024.html</loc>
+        <loc>https://www.aigrantwriter.xyz/blog/ai-tools-for-dissertation-literature-review-outline-streamlining-your-research.html</loc>
         <lastmod>2025-11-02</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
-
-    <url>
-        <loc>https://aigrantwriter.xyz/blog/academic-abstract-writing-guide.html</loc>
-        <lastmod>2025-11-02</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://aigrantwriter.xyz/blog/academic-collaboration-tips.html</loc>
-        <lastmod>2025-11-02</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://aigrantwriter.xyz/blog/academic-databases-guide.html</loc>
-        <lastmod>2025-11-02</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://aigrantwriter.xyz/blog/academic-presentation-guide.html</loc>
-        <lastmod>2025-11-02</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://aigrantwriter.xyz/blog/ai-tools-academic-writing-future.html</loc>
-        <lastmod>2025-11-02</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://aigrantwriter.xyz/blog/ai-tools-academic-writing.html</loc>
-        <lastmod>2025-11-02</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://aigrantwriter.xyz/blog/qualitative-research-methods.html</loc>
-        <lastmod>2025-11-02</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://aigrantwriter.xyz/blog/research-ethics-guide.html</loc>
-        <lastmod>2025-11-02</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://aigrantwriter.xyz/blog/sci-journal-submission-guide.html</loc>
-        <lastmod>2025-11-02</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <url>
-        <loc>https://aigrantwriter.xyz/blog/spss-tutorial-guide.html</loc>
-        <lastmod>2025-11-02</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
 </urlset>

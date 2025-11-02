@@ -455,8 +455,39 @@ class ArticlePublisher {
     }
 
     showSuccessMessage(data) {
+        // Immediate preview uses object URL
         this.viewArticleLink.href = this.lastPublishedUrl || '#';
         this.viewArticleLink.download = `${data.slug}.html`;
+
+        // Build static production URL for Google submission
+        const origin = (window.location && window.location.origin) ? window.location.origin : 'https://aigrantwriter.xyz';
+        const base = origin.includes('localhost') ? 'https://aigrantwriter.xyz' : origin;
+        const staticLink = `${base}/blog/${data.slug}.html`;
+
+        // Populate copyable input and bind copy action
+        const input = document.getElementById('staticLinkInput');
+        const copyBtn = document.getElementById('copyStaticLinkBtn');
+        if (input) input.value = staticLink;
+        if (copyBtn) {
+            copyBtn.onclick = () => {
+                try {
+                    if (input) {
+                        input.select();
+                        input.setSelectionRange(0, input.value.length);
+                    }
+                    navigator.clipboard.writeText(staticLink).then(() => {
+                        copyBtn.textContent = 'Copied!';
+                        setTimeout(() => { copyBtn.textContent = 'Copy Link'; }, 1500);
+                    }).catch(() => {
+                        // Fallback if clipboard API fails
+                        document.execCommand('copy');
+                    });
+                } catch (err) {
+                    console.warn('Copy failed:', err);
+                }
+            };
+        }
+
         this.successMessage.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }

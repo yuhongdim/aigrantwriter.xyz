@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成静态文章</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .article-preview { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 生成静态文章工具</h1>
+        
+        <div class="status info">
+            <strong>目标文章ID:</strong> mhhtjrhc80kursa47dv<br>
+            <strong>预期静态链接:</strong> ai-tools-for-dissertation-literature-review-outline-streamlining-your-research.html
+        </div>
+
+        <div>
+            <button onclick="checkArticleData()">1. 检查文章数据</button>
+            <button onclick="generateStaticFile()">2. 生成静态文件</button>
+            <button onclick="downloadStaticFile()">3. 下载静态文件</button>
+        </div>
+
+        <div id="output"></div>
+        <div id="articlePreview"></div>
+    </div>
+
+    <script>
+        const targetArticleId = 'mhhtjrhc80kursa47dv';
+        let foundArticle = null;
+
+        function log(message, type = 'info') {
+            const output = document.getElementById('output');
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.innerHTML = message;
+            output.appendChild(div);
+        }
+
+        function checkArticleData() {
+            log('🔍 检查文章数据...', 'info');
+            
+            // 检查 newArticles
+            const newArticles = JSON.parse(localStorage.getItem('newArticles') || '[]');
+            log(`新文章数量: ${newArticles.length}`, 'info');
+            
+            // 检查 publishedArticles  
+            const publishedArticles = JSON.parse(localStorage.getItem('publishedArticles') || '[]');
+            log(`已发布文章数量: ${publishedArticles.length}`, 'info');
+            
+            // 合并所有文章
+            const allArticles = [...newArticles, ...publishedArticles];
+            
+            // 查找目标文章
+            foundArticle = allArticles.find(article => article.id === targetArticleId);
+            
+            if (foundArticle) {
+                log(`✅ 找到文章: ${foundArticle.title}`, 'success');
+                
+                // 显示文章预览
+                const preview = document.getElementById('articlePreview');
+                preview.innerHTML = `
+                    <div class="article-preview">
+                        <h3>📄 文章预览</h3>
+                        <p><strong>标题:</strong> ${foundArticle.title}</p>
+                        <p><strong>分类:</strong> ${foundArticle.categoryName || foundArticle.category}</p>
+                        <p><strong>日期:</strong> ${foundArticle.date}</p>
+                        <p><strong>阅读时间:</strong> ${foundArticle.readTime}</p>
+                        <p><strong>内容长度:</strong> ${foundArticle.content ? foundArticle.content.length : 0} 字符</p>
+                    </div>
+                `;
+            } else {
+                log(`❌ 未找到ID为 ${targetArticleId} 的文章`, 'error');
+                
+                // 显示所有可用文章ID
+                if (allArticles.length > 0) {
+                    const articleIds = allArticles.map(a => `${a.id} - ${a.title}`).join('\n');
+                    log(`可用文章列表:\n${articleIds}`, 'info');
+                }
+            }
+        }
+
+        function generateStaticFile() {
+            if (!foundArticle) {
+                log('❌ 请先检查文章数据', 'error');
+                return;
+            }
+
+            log('🔨 生成静态HTML文件...', 'info');
+
+            // 生成文件名
+            const slug = foundArticle.title
+                .toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .trim();
+            
+            const fileName = `${slug}.html`;
+            
+            // 生成HTML内容
+            const htmlContent = generateArticleHTML(foundArticle);
+            
+            // 创建下载链接
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            // 存储到全局变量供下载使用
+            window.generatedFile = { url, fileName, content: htmlContent };
+            
+            log(`✅ 静态文件已生成: ${fileName}`, 'success');
+            log(`文件大小: ${(htmlContent.length / 1024).toFixed(2)} KB`, 'info');
+        }
+
+        function downloadStaticFile() {
+            if (!window.generatedFile) {
+                log('❌ 请先生成静态文件', 'error');
+                return;
+            }
+
+            const { url, fileName } = window.generatedFile;
+            
+            // 创建下载链接
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            log(`📥 文件已下载: ${fileName}`, 'success');
+            log('💡 下载完成后，自动部署脚本会检测到文件并上传到网站', 'info');
+        }
+
+        function generateArticleHTML(article) {
+            const slug = article.title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
+            
+            return '<!DOCTYPE html>\n' +
+'<html lang="zh-CN">\n' +
+'<head>\n' +
+'    <meta charset="UTF-8">\n' +
+'    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+'    <title>' + article.title + ' - AI Grant Writer</title>\n' +
+'    <meta name="description" content="' + article.title + ' - 专业的学术写作指南和AI工具推荐">\n' +
+'    <meta name="keywords" content="AI工具,学术写作,文献综述,论文写作,研究方法">\n' +
+'    <meta name="author" content="AI Grant Writer">\n' +
+'    <meta name="robots" content="index, follow">\n' +
+'    <link rel="canonical" href="https://www.aigrantwriter.xyz/blog/' + slug + '.html">\n' +
+'    \n' +
+'    <!-- Open Graph -->\n' +
+'    <meta property="og:title" content="' + article.title + '">\n' +
+'    <meta property="og:description" content="' + article.title + ' - 专业的学术写作指南">\n' +
+'    <meta property="og:type" content="article">\n' +
+'    <meta property="og:url" content="https://www.aigrantwriter.xyz/blog/' + slug + '.html">\n' +
+'    <meta property="og:site_name" content="AI Grant Writer">\n' +
+'    \n' +
+'    <!-- JSON-LD 结构化数据 -->\n' +
+'    <script type="application/ld+json">\n' +
+'    {\n' +
+'        "@context": "https://schema.org",\n' +
+'        "@type": "Article",\n' +
+'        "headline": "' + article.title + '",\n' +
+'        "author": {\n' +
+'            "@type": "Organization",\n' +
+'            "name": "AI Grant Writer"\n' +
+'        },\n' +
+'        "publisher": {\n' +
+'            "@type": "Organization",\n' +
+'            "name": "AI Grant Writer",\n' +
+'            "url": "https://www.aigrantwriter.xyz"\n' +
+'        },\n' +
+'        "datePublished": "' + article.date + '",\n' +
+'        "dateModified": "' + article.date + '",\n' +
+'        "description": "' + article.title + ' - 专业的学术写作指南",\n' +
+'        "mainEntityOfPage": {\n' +
+'            "@type": "WebPage",\n' +
+'            "@id": "https://www.aigrantwriter.xyz/blog/' + slug + '.html"\n' +
+'        }\n' +
+'    }\n' +
+'    </script>\n' +
+'    \n' +
+'    <link rel="stylesheet" href="../styles.css">\n' +
+'    <link rel="stylesheet" href="article-styles.css">\n' +
+'    <link rel="icon" href="../favicon.svg" type="image/svg+xml">\n' +
+'</head>\n' +
+'<body>\n' +
+'    <!-- Navigation -->\n' +
+'    <nav class="navbar">\n' +
+'        <div class="nav-container">\n' +
+'            <div class="nav-logo">\n' +
+'                <a href="../index.html">\n' +
+'                    <img src="../logo.svg" alt="AI Grant Writer" class="logo">\n' +
+'                    AI Grant Writer\n' +
+'                </a>\n' +
+'            </div>\n' +
+'            <div class="nav-menu">\n' +
+'                <a href="../index.html" class="nav-link">首页</a>\n' +
+'                <a href="index.html" class="nav-link">博客</a>\n' +
+'                <a href="../ai-tools.html" class="nav-link">AI工具</a>\n' +
+'                <a href="../academic-templates.html" class="nav-link">学术模板</a>\n' +
+'            </div>\n' +
+'        </div>\n' +
+'    </nav>\n' +
+'\n' +
+'    <!-- Article Content -->\n' +
+'    <main class="article-main">\n' +
+'        <div class="container">\n' +
+'            <article class="article">\n' +
+'                <header class="article-header">\n' +
+'                    <div class="article-meta">\n' +
+'                        <span class="article-category">' + (article.categoryName || article.category) + '</span>\n' +
+'                        <span class="article-date">' + article.date + '</span>\n' +
+'                        <span class="article-read-time">' + article.readTime + '</span>\n' +
+'                    </div>\n' +
+'                    <h1 class="article-title">' + article.title + '</h1>\n' +
+'                </header>\n' +
+'                \n' +
+'                <div class="article-content">\n' +
+'                    ' + (article.content || '<p>文章内容正在加载中...</p>') + '\n' +
+'                </div>\n' +
+'                \n' +
+'                <footer class="article-footer">\n' +
+'                    <div class="article-tags">\n' +
+'                        <span class="tag">AI工具</span>\n' +
+'                        <span class="tag">学术写作</span>\n' +
+'                        <span class="tag">文献综述</span>\n' +
+'                    </div>\n' +
+'                    <div class="article-share">\n' +
+'                        <a href="../index.html" class="btn btn-primary">返回首页</a>\n' +
+'                        <a href="index.html" class="btn btn-secondary">更多文章</a>\n' +
+'                    </div>\n' +
+'                </footer>\n' +
+'            </article>\n' +
+'        </div>\n' +
+'    </main>\n' +
+'\n' +
+'    <!-- Footer -->\n' +
+'    <footer class="footer">\n' +
+'        <div class="container">\n' +
+'            <p>&copy; 2024 AI Grant Writer. All rights reserved.</p>\n' +
+'        </div>\n' +
+'    </footer>\n' +
+'</body>\n' +
+'</html>';
+        }
+
+        // 页面加载时自动检查
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(checkArticleData, 500);
+        });
+    </script>
+</body>
+</html>

@@ -155,6 +155,10 @@
                         <span id="article-date"></span>
                         <span id="article-read-time"></span>
                     </div>
+                    <div class="copy-google-link">
+                        <input id="googleLinkInput" type="text" readonly placeholder="Google收录链接将生成于此" />
+                        <button id="copyGoogleLinkBtn">复制谷歌收录链接</button>
+                    </div>
                 </div>
                 
                 <div class="article-content" id="article-body">
@@ -169,6 +173,21 @@
     </div>
 
     <script>
+        // Ensure dynamic detail page isn't indexed to avoid soft 404
+        (function setNoIndex() {
+            try {
+                var robots = document.querySelector('meta[name="robots"]');
+                if (!robots) {
+                    robots = document.createElement('meta');
+                    robots.setAttribute('name', 'robots');
+                    robots.setAttribute('content', 'noindex, nofollow');
+                    document.head.appendChild(robots);
+                } else {
+                    robots.setAttribute('content', 'noindex, nofollow');
+                }
+            } catch(e) { /* noop */ }
+        })();
+
         // Get article ID from URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const articleId = urlParams.get('id');
@@ -545,6 +564,49 @@
             document.getElementById('article-read-time').textContent = article.readTime;
             document.getElementById('article-body').innerHTML = article.content;
             
+            // Build static, Google-indexable URL from title and expose copy UI
+            try {
+                const slug = (article.title || '')
+                    .toLowerCase()
+                    .replace(/[^a-z0-9\u4e00-\u9fa5\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+                const origin = (location && location.origin) ? location.origin : 'https://aigrantwriter.xyz';
+                const base = origin.includes('localhost') ? 'https://aigrantwriter.xyz' : origin;
+                const staticLink = `${base}/blog/${slug}.html`;
+
+                // Inject canonical pointing to static link
+                let canonical = document.querySelector('link[rel="canonical"]');
+                if (!canonical) {
+                    canonical = document.createElement('link');
+                    canonical.setAttribute('rel', 'canonical');
+                    document.head.appendChild(canonical);
+                }
+                canonical.setAttribute('href', staticLink);
+
+                // Populate copy field and bind copy action
+                const input = document.getElementById('googleLinkInput');
+                const copyBtn = document.getElementById('copyGoogleLinkBtn');
+                if (input) input.value = staticLink;
+                if (copyBtn) {
+                    copyBtn.onclick = function() {
+                        try {
+                            if (input) {
+                                input.select();
+                                input.setSelectionRange(0, input.value.length);
+                            }
+                            navigator.clipboard.writeText(staticLink).then(() => {
+                                copyBtn.textContent = '已复制！';
+                                setTimeout(() => { copyBtn.textContent = '复制谷歌收录链接'; }, 1500);
+                            }).catch(() => {
+                                document.execCommand('copy');
+                            });
+                        } catch(err) { /* noop */ }
+                    };
+                }
+            } catch(e) { /* noop */ }
+
             // Show article content
             document.getElementById('loading').style.display = 'none';
             document.getElementById('article-content').style.display = 'block';

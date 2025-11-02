@@ -109,17 +109,20 @@ class SitemapGenerator {
 
             // 1) 收录通过发布表单生成的新文章
             newArticles.forEach(article => {
-                if (article.slug && article.publishImmediately) {
-                    const articleUrl = `${this.baseUrl}/blog/${article.slug}.html`;
-                    if (!added.has(articleUrl)) {
-                        this.addUrl(
-                            articleUrl,
-                            article.publishDate || new Date().toISOString(),
-                            'monthly',
-                            '0.8'
-                        );
-                        added.add(articleUrl);
-                    }
+                // 优先使用现有的url；若无则使用动态详情页
+                let urlPart = article.url;
+                if (!urlPart) {
+                    urlPart = `article.html?id=${article.id}`;
+                }
+                const articleUrl = `${this.baseUrl}/blog/${urlPart}`;
+                if (!added.has(articleUrl)) {
+                    this.addUrl(
+                        articleUrl,
+                        article.publishDate || new Date().toISOString(),
+                        'monthly',
+                        '0.8'
+                    );
+                    added.add(articleUrl);
                 }
             });
 

@@ -789,13 +789,21 @@ function formatDate(dateString) {
 function openPost(postId) {
     // 查找对应的文章
     const post = allPosts.find(p => p.id === postId);
-    if (post && post.url) {
-        // 如果文章有自定义URL，使用自定义URL并传递语言参数
-        // 由于文章文件在同一目录下，直接使用相对路径
+    if (!post) {
+        return;
+    }
+
+    // 对用户发布的文章始终使用动态详情页，避免指向不存在的静态文件
+    if (post.isUserGenerated || post.publishLanguage) {
+        window.location.href = `article.html?id=${postId}&lang=${currentLanguage}`;
+        return;
+    }
+
+    // 其他文章优先使用配置的自定义URL，否则回退到动态详情页
+    if (post.url) {
         const url = `${post.url}?lang=${currentLanguage}`;
         window.location.href = url;
     } else {
-        // 否则使用默认的文章页面并传递语言参数
         window.location.href = `article.html?id=${postId}&lang=${currentLanguage}`;
     }
 }

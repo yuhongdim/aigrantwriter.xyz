@@ -243,6 +243,12 @@ You can use Markdown formatting:
             <div class="success-icon">✅</div>
             <h3>Article Published Successfully!</h3>
             <p>Your article has been published and is now live on the website.</p>
+            <div class="success-copy">
+                <label for="staticLinkInput" style="display:block;margin-top:8px;">Copy static URL to submit to Google:</label>
+                <input id="staticLinkInput" type="text" readonly style="width:100%;margin:8px 0;" />
+                <button id="copyStaticLinkBtn" class="btn btn-secondary" style="width:100%;">Copy Link</button>
+                <div style="margin-top:8px;color:#666;font-size:12px;">Tip: Keep the auto-deploy helper running. Once the downloaded HTML is deployed to <code>/blog/</code>, submit the above URL in Google.</div>
+            </div>
             <div class="success-actions">
                 <a id="viewArticle" href="#" class="btn btn-primary">View Article</a>
                 <button id="publishAnother" class="btn btn-secondary">Publish Another</button>

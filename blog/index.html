@@ -679,34 +679,47 @@
             return Date.now().toString(36) + Math.random().toString(36).substr(2);
         }
 
-        // 创建文章HTML文件
+        // 创建并下载文章HTML文件（用于部署静态文件，便于Google收录）
         function createArticleFile(article) {
             let structuredData = {};
-            let metaTags = '';
-            
+            let metaConfig = null;
+            const origin = window.location.origin || 'https://aigrantwriter.xyz';
+
             try {
                 if (seoHelper && typeof seoHelper.generateArticleStructuredData === 'function') {
                     structuredData = seoHelper.generateArticleStructuredData(article);
                 }
                 if (seoHelper && typeof seoHelper.generateMetaTags === 'function') {
-                    metaTags = seoHelper.generateMetaTags(article);
+                    metaConfig = seoHelper.generateMetaTags(article);
                 }
             } catch (error) {
                 console.log('SEO helper not available, using defaults');
             }
-            
+
             // HTML转义函数
             function escapeHtml(text) {
                 const div = document.createElement('div');
                 div.textContent = text;
                 return div.innerHTML;
             }
-            
+
             const safeTitle = escapeHtml(article.title);
             const safeExcerpt = escapeHtml(article.excerpt);
             const safeKeywords = escapeHtml(article.keywords || '');
             const safeContent = article.content; // 内容保持原样，因为可能包含HTML
-            
+
+            // 生成基础meta标签字符串
+            const metaTags = metaConfig ? `
+        <link rel="canonical" href="${origin}/blog/${article.url}">
+        <meta property="og:title" content="${escapeHtml(metaConfig.ogTitle || article.title)}">
+        <meta property="og:description" content="${escapeHtml(metaConfig.ogDescription || article.excerpt)}">
+        <meta property="og:url" content="${origin}/blog/${article.url}">
+        <meta property="og:type" content="article">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="${escapeHtml(metaConfig.twitterTitle || article.title)}">
+        <meta name="twitter:description" content="${escapeHtml(metaConfig.twitterDescription || article.excerpt)}">
+            ` : '';
+
             const articleHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -832,8 +845,20 @@
     ${structuredData ? '<script type="application/ld+json">' + JSON.stringify(structuredData) + '<\\/script>' : ''}
 </body>
 </html>`;
-            // Do not auto-download. We use dynamic viewer page to open articles.
-            console.log('Article HTML prepared for deployment/export if needed.');
+            // 自动下载静态HTML文件，便于你将其加入 /blog/ 目录后部署
+            try {
+                const blob = new Blob([articleHtml], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = article.url || (article.slug ? (article.slug + '.html') : 'article.html');
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (err) {
+                console.warn('Failed to auto-download article HTML:', err);
+            }
         }
 
         // 更新统计信息
@@ -937,14 +962,22 @@
             e.preventDefault();
             
             const formData = new FormData(publishForm);
+            const rawContent = formData.get('content') || '';
+            const words = rawContent.trim().split(/\s+/).filter(Boolean).length;
+            const slugFile = generateArticleUrl(formData.get('title'));
             const article = {
                 id: generateId(),
                 title: formData.get('title'),
                 excerpt: formData.get('excerpt'),
-                content: formData.get('content'),
+                content: rawContent,
                 keywords: formData.get('keywords'),
                 date: new Date().toLocaleDateString('en-US'),
-                url: generateArticleUrl(formData.get('title'))
+                url: slugFile,
+                slug: slugFile.replace(/\.html$/,'') ,
+                readTime: Math.max(1, Math.ceil(words / 200)) + ' min read',
+                icon: '📝',
+                categoryName: 'Blog',
+                isUserGenerated: true
             };
 
             // 保存文章
@@ -953,13 +986,13 @@
             // 创建文章HTML文件
             createArticleFile(article);
             
-            // 添加到sitemap
-            const articleUrl = `/blog/${article.url}`;
+            // 添加到sitemap（使用静态详情页，保证可被Google收录）
             if (sitemapGenerator && typeof sitemapGenerator.addUrl === 'function') {
                 // 正确传递参数：url, lastmod, changefreq, priority
                 const base = (sitemapGenerator && sitemapGenerator.baseUrl) ? sitemapGenerator.baseUrl : window.location.origin;
+                const staticUrl = `${base}/blog/${article.url}`;
                 sitemapGenerator.addUrl(
-                    `${base}${articleUrl}`,
+                    staticUrl,
                     new Date().toISOString(),
                     'weekly',
                     '0.8'
@@ -967,8 +1000,33 @@
                 // 不在发布时自动下载或提交Google，避免弹出保存窗口
             }
             
-            // 显示成功消息
+            // 显示成功消息并提供复制静态链接
+            const origin = window.location.origin || (sitemapGenerator && sitemapGenerator.baseUrl) || 'https://aigrantwriter.xyz';
+            const staticLink = `${origin}/blog/${article.url}`;
+            successMessage.innerHTML = `发布成功！已下载静态文件。<br>复制提交到谷歌的链接：<br>
+                <input id="staticLinkInput" type="text" value="${staticLink}" readonly style="width:100%;margin:8px 0;" />
+                <button id="copyStaticLinkBtn" class="btn btn-secondary" style="width:100%;">复制链接</button>
+                <div style="margin-top:8px;color:#666;font-size:12px;">提示：将已下载的 HTML 文件放入仓库的 /blog/ 并部署到线上后，再提交上述链接到 Google。</div>`;
             successMessage.style.display = 'block';
+            const copyBtn = document.getElementById('copyStaticLinkBtn');
+            if (copyBtn) {
+                copyBtn.onclick = function() {
+                    const input = document.getElementById('staticLinkInput');
+                    if (input) {
+                        input.select();
+                        try { document.execCommand('copy'); } catch (err) {}
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(input.value).then(() => {
+                                alert('链接已复制');
+                            }).catch(() => {
+                                alert('已选中文本，请手动复制');
+                            });
+                        } else {
+                            alert('已选中文本，请手动复制');
+                        }
+                    }
+                };
+            }
             
             // 重新渲染文章列表和更新统计
             renderArticles();
@@ -980,6 +1038,11 @@
                 publishForm.reset();
                 successMessage.style.display = 'none';
             }, 3000);
+
+            // 1.2秒后自动打开文章详情页（动态页，立即可读）
+            setTimeout(() => {
+                window.location.href = `article.html?id=${article.id}`;
+            }, 1200);
         };
 
         // 初始化sitemap
@@ -993,8 +1056,10 @@
                 // 添加所有本地文章到sitemap（包含多入口发布的文章）
                 const articles = getAllLocalArticles();
                 articles.forEach(article => {
+                    // 对用户生成文章使用动态详情页；其他使用其已有静态URL
+                    const urlPart = article.isUserGenerated ? `article.html?id=${article.id}` : (article.url || `article.html?id=${article.id}`);
                     sitemapGenerator.addUrl(
-                        `${origin}/blog/${article.url}`,
+                        `${origin}/blog/${urlPart}`,
                         new Date().toISOString(),
                         'weekly',
                         '0.8'
