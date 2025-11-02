@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing Enhancement Tool - Academic Text Improvement</title>
-    <meta name="description" content="Improve your academic writing quality with AI-powered suggestions for clarity, conciseness, and academic style enhancement.">
+    <title>AI Text Reducer - Plagiarism & AI Detection Reduction</title>
+    <meta name="description" content="Advanced AI-powered text reduction tool to reduce plagiarism rates and AI detection scores while maintaining content quality.">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -305,28 +305,28 @@
 
     <div class="tool-container">
         <div class="tool-header">
-            <h1><i class="fas fa-edit"></i> Writing Enhancement Tool</h1>
-            <p>Improve your academic writing with AI-powered suggestions for clarity, conciseness, and style</p>
+            <h1><i class="fas fa-magic"></i> AI Text Reducer</h1>
+            <p>Advanced plagiarism and AI detection reduction with intelligent text transformation</p>
         </div>
 
         <!-- Mode Selection -->
         <div class="tool-modes">
-            <div class="mode-card active" onclick="selectMode('clarity')" data-mode="clarity">
+            <div class="mode-card active" onclick="selectMode('plagiarism')" data-mode="plagiarism">
                 <div class="mode-icon">
-                    <i class="fas fa-lightbulb"></i>
+                    <i class="fas fa-copy"></i>
                 </div>
-                <div class="mode-title">Clarity Enhancement</div>
+                <div class="mode-title">Plagiarism Reduction</div>
                 <div class="mode-description">
-                    Improve sentence structure, word choice, and overall readability while maintaining your original ideas and voice.
+                    Reduce similarity scores while maintaining original meaning and academic integrity. Perfect for research papers and academic writing.
                 </div>
             </div>
-            <div class="mode-card" onclick="selectMode('conciseness')" data-mode="conciseness">
+            <div class="mode-card" onclick="selectMode('ai-detection')" data-mode="ai-detection">
                 <div class="mode-icon">
-                    <i class="fas fa-compress-alt"></i>
+                    <i class="fas fa-robot"></i>
                 </div>
-                <div class="mode-title">Conciseness Improvement</div>
+                <div class="mode-title">AI Detection Reduction</div>
                 <div class="mode-description">
-                    Reduce wordiness and eliminate redundancy to meet word count requirements while strengthening your arguments.
+                    Humanize AI-generated content to bypass AI detection tools while preserving quality and coherence.
                 </div>
             </div>
         </div>
@@ -445,28 +445,6 @@
             <button class="btn btn-secondary" onclick="clearAll()">
                 <i class="fas fa-trash"></i> Clear All
             </button>
-        </div>
-
-        <!-- Academic Integrity Notice -->
-        <div style="margin: 2rem 0; padding: 1.5rem; background: linear-gradient(135deg, #e3f2fd, #f3e5f5); border-left: 4px solid #2196f3; border-radius: 8px;">
-            <h4 style="color: #1976d2; margin-bottom: 1rem; display: flex; align-items: center;">
-                <svg width="20" height="20" style="margin-right: 8px;" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
-                Academic Writing Guidelines
-            </h4>
-            <p style="margin-bottom: 1rem; color: #424242; line-height: 1.6;">
-                This tool helps improve your writing <strong>clarity and style</strong>. Use it to:
-            </p>
-            <ul style="color: #424242; line-height: 1.6; margin-left: 1.5rem;">
-                <li>Enhance readability and flow of your original work</li>
-                <li>Improve sentence structure and word choice</li>
-                <li>Maintain academic tone and integrity</li>
-                <li>Polish drafts while preserving your ideas</li>
-            </ul>
-            <p style="margin-top: 1rem; color: #d32f2f; font-weight: 500;">
-                ⚠️ Always ensure your work represents your own ideas and follows academic integrity standards.
-            </p>
         </div>
 
         <!-- Feature Highlights -->

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自动化文献综述 - AI学术写作助手 | aigrantwriter.xyz</title>
+    <meta name="description" content="AI自动搜索、筛选和整理相关学术文献，生成专业的文献综述章节">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI学术写作</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="index.html#tools">工具</a></li>
+                <li><a href="index.html#features">特性</a></li>
+                <li><a href="index.html#contact">联系</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="tool-header">
+        <div class="container">
+            <div class="tool-header-content">
+                <div class="tool-icon-large">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h1>自动化文献综述</h1>
+                <p>AI自动搜索、筛选和整理相关学术文献，生成专业的文献综述章节</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能特色 -->
+    <section class="tool-features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>智能文献搜索</h3>
+                    <p>AI自动搜索相关学术文献，覆盖多个学术数据库</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3>自动筛选分类</h3>
+                    <p>智能筛选高质量文献，按主题自动分类整理</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <h3>自动引用格式</h3>
+                    <p>支持APA、MLA、Chicago等多种引用格式</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>文献关系分析</h3>
+                    <p>分析文献间的关联性，构建知识图谱</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 文献综述生成器 -->
+    <section class="tool-generator-section">
+        <div class="container">
+            <div class="generator-card">
+                <h2>
+                    <i class="fas fa-magic"></i>
+                    文献综述生成器
+                </h2>
+                <p>输入您的研究主题，AI将为您生成专业的文献综述</p>
+                
+                <form class="generator-form">
+                    <div class="form-group">
+                        <label for="research-topic">研究主题</label>
+                        <input type="text" id="research-topic" placeholder="请输入您的研究主题，例如：人工智能在教育中的应用">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="research-field">研究领域</label>
+                        <select id="research-field">
+                            <option value="">选择研究领域</option>
+                            <option value="computer-science">计算机科学</option>
+                            <option value="education">教育学</option>
+                            <option value="psychology">心理学</option>
+                            <option value="medicine">医学</option>
+                            <option value="engineering">工程学</option>
+                            <option value="business">商学</option>
+                            <option value="social-science">社会科学</option>
+                            <option value="natural-science">自然科学</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="review-type">综述类型</label>
+                        <select id="review-type">
+                            <option value="systematic">系统性综述</option>
+                            <option value="narrative">叙述性综述</option>
+                            <option value="meta-analysis">元分析</option>
+                            <option value="scoping">范围综述</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="time-range">时间范围</label>
+                        <select id="time-range">
+                            <option value="recent-5">近5年</option>
+                            <option value="recent-10">近10年</option>
+                            <option value="recent-15">近15年</option>
+                            <option value="all">不限制</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="language-preference">语言偏好</label>
+                        <select id="language-preference">
+                            <option value="chinese">中文</option>
+                            <option value="english">英文</option>
+                            <option value="both">中英文</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-large">
+                        <i class="fas fa-rocket"></i>
+                        生成文献综述
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 使用步骤 -->
+    <section class="steps-section">
+        <div class="container">
+            <h2 class="section-title">使用步骤</h2>
+            <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <h3>输入研究主题</h3>
+                    <p>详细描述您的研究主题和关键词</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <h3>设置参数</h3>
+                    <p>选择研究领域、综述类型和时间范围</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <h3>AI搜索分析</h3>
+                    <p>AI自动搜索、筛选和分析相关文献</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <h3>生成综述</h3>
+                    <p>获得结构化的专业文献综述</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>AI学术写作</span>
+                    </div>
+                    <p>专业的AI驱动学术写作助手，助力您的研究成功</p>
+                </div>
+                <div class="footer-section">
+                    <h4>工具</h4>
+                    <ul>
+                        <li><a href="phd-assistant.html">博士论文助手</a></li>
+                        <li><a href="literature-review.html">文献综述</a></li>
+                        <li><a href="research-method.html">研究方法</a></li>
+                        <li><a href="research-question.html">研究问题</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>功能</h4>
+                    <ul>
+                        <li><a href="writing-optimization.html">写作优化</a></li>
+                        <li><a href="data-analysis.html">数据分析</a></li>
+                        <li><a href="ai-reducer.html">AI降重</a></li>
+                        <li><a href="index.html#contact">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>联系方式</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@aigrantwriter.xyz</li>
+                        <li><i class="fas fa-globe"></i> www.aigrantwriter.xyz</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AI学术写作助手. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="navigation.js"></script>
+</body>
+</html>

@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grant Proposal AI - Professional Grant Writing Assistant</title>
+    <meta name="description" content="Generate winning grant proposals with AI assistance. Professional grant writing tool for researchers and institutions.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.min.css">
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 100px;
+        }
+        .tool-form {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .generate-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 100%;
+        }
+        .generate-btn:hover {
+            transform: translateY(-2px);
+        }
+        .output-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+        .output-content {
+            line-height: 1.8;
+            color: #333;
+        }
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> 返回首页
+    </a>
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-money-bill-wave"></i> Grant Proposal AI</h1>
+            <p>Generate professional grant proposals with AI assistance</p>
+        </div>
+
+        <div class="tool-form">
+            <form id="grantForm">
+                <div class="form-group">
+                    <label for="projectTitle">Project Title</label>
+                    <input type="text" id="projectTitle" name="projectTitle" placeholder="Enter your project title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fundingAgency">Funding Agency</label>
+                    <select id="fundingAgency" name="fundingAgency" required>
+                        <option value="">Select funding agency</option>
+                        <option value="nsf">National Science Foundation (NSF)</option>
+                        <option value="nih">National Institutes of Health (NIH)</option>
+                        <option value="doe">Department of Energy (DOE)</option>
+                        <option value="nasa">NASA</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="researchArea">Research Area</label>
+                    <input type="text" id="researchArea" name="researchArea" placeholder="e.g., Artificial Intelligence, Climate Science" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectDescription">Project Description</label>
+                    <textarea id="projectDescription" name="projectDescription" placeholder="Provide a brief description of your research project, objectives, and methodology" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="budgetRange">Budget Range</label>
+                    <select id="budgetRange" name="budgetRange" required>
+                        <option value="">Select budget range</option>
+                        <option value="small">$1,000 - $10,000</option>
+                        <option value="medium">$10,000 - $50,000</option>
+                        <option value="large">$50,000 - $200,000</option>
+                        <option value="xlarge">$200,000+</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="duration">Project Duration</label>
+                    <select id="duration" name="duration" required>
+                        <option value="">Select duration</option>
+                        <option value="6months">6 months</option>
+                        <option value="1year">1 year</option>
+                        <option value="2years">2 years</option>
+                        <option value="3years">3 years</option>
+                        <option value="5years">5 years</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="generate-btn">
+                    <i class="fas fa-magic"></i> Generate Grant Proposal
+                </button>
+            </form>
+        </div>
+
+        <div id="outputSection" class="output-section">
+            <h3><i class="fas fa-file-alt"></i> Generated Grant Proposal</h3>
+            <div id="outputContent" class="output-content"></div>
+            <button onclick="downloadProposal()" class="generate-btn" style="margin-top: 1rem;">
+                <i class="fas fa-download"></i> Download Proposal
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('grantForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading
+            const outputSection = document.getElementById('outputSection');
+            const outputContent = document.getElementById('outputContent');
+            
+            outputSection.style.display = 'block';
+            outputContent.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>AI is generating your grant proposal...</p>
+                </div>
+            `;
+            
+            try {
+                // Generate AI proposal
+                const proposal = await generateAIProposal(data);
+                outputContent.innerHTML = proposal;
+            } catch (error) {
+                console.error('AI generation failed:', error);
+                
+                // 显示详细错误信息
+                showNotification(`AI生成失败: ${error.message}`, 'error');
+                
+                // 使用备用生成器
+                console.log('Using fallback generator...');
+                const fallbackProposal = generateProposal(data);
+                outputContent.innerHTML = `
+                    <div class="notice" style="background: #e8f5e8; border: 1px solid #4caf50; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <h4 style="color: #2e7d32; margin: 0 0 10px 0; display: flex; align-items: center;">
+                            <span style="margin-right: 8px;">🤖</span>
+                            AI服务暂时不可用
+                        </h4>
+                        <p style="margin: 8px 0; color: #2e7d32;">我们已为您生成了一个专业的提案模板，包含完整的提案结构和内容。</p>
+                        <p style="margin: 8px 0; color: #2e7d32;"><strong>提示：</strong>请向下滚动查看完整的提案内容，您可以基于此模板进行修改和完善。</p>
+                        <details style="margin-top: 10px;">
+                            <summary style="color: #666; cursor: pointer; font-size: 0.9em;">查看技术详情</summary>
+                            <p style="margin: 8px 0; color: #666; font-size: 0.9em;">${error.message}</p>
+                        </details>
+                    </div>
+                    ${formatProposalContent(fallbackProposal, data)}
+                `;
+                
+                showNotification('已使用备用生成器创建提案模板', 'info');
+            }
+        });
+
+        // 通知系统
+        function showNotification(message, type = 'info') {
+            // 移除现有通知
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+
+            // 创建新通知
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" style="background: none; border: none; color: inherit; font-size: 18px; cursor: pointer; margin-left: 10px;">&times;</button>
+            `;
+
+            // 添加样式
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 5px;
+                color: white;
+                font-weight: bold;
+                z-index: 1000;
+                max-width: 400px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            `;
+
+            // 根据类型设置颜色
+            if (type === 'error') {
+                notification.style.backgroundColor = '#e74c3c';
+            } else if (type === 'success') {
+                notification.style.backgroundColor = '#27ae60';
+            } else {
+                notification.style.backgroundColor = '#3498db';
+            }
+
+            document.body.appendChild(notification);
+
+            // 5秒后自动移除
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+        const API_CONFIGS = [
+            {
+                name: 'Free API Service 1',
+                baseURL: 'https://api.deepseek.com/v1/chat/completions',
+                apiKey: 'free-api-key',
+                model: 'deepseek-chat'
+            },
+            {
+                name: 'Free API Service 2', 
+                baseURL: 'https://api.siliconflow.cn/v1/chat/completions',
+                apiKey: 'free-api-key',
+                model: 'Qwen/Qwen2.5-7B-Instruct'
+            },
+            {
+                name: 'WenWen AI',
+                baseURL: 'https://breakout.wenwen-ai.com/v1/chat/completions',
+                apiKey: 'sk-6ogS4COJPVLfLclruLQ6h59IxyvcN61nGuvgpr71VNL3ARsN',
+                model: 'gpt-3.5-turbo'
+            },
+            {
+                name: 'Local Fallback',
+                baseURL: 'local',
+                apiKey: 'local',
+                model: 'local'
+            }
+        ];
+
+        // 当前使用的API配置索引
+        let currentAPIIndex = 0;
+
+        async function generateAIProposal(data) {
+            const prompt = `Generate a comprehensive grant proposal for the following project:
+
+Project Title: ${data.projectTitle}
+Funding Agency: ${data.fundingAgency}
+Research Area: ${data.researchArea}
+Project Description: ${data.projectDescription}
+Budget Range: ${getBudgetText(data.budgetRange)}
+Duration: ${data.duration}
+
+Please create a detailed, professional grant proposal that includes:
+1. Executive Summary
+2. Project Description and Significance
+3. Literature Review and Background
+4. Research Objectives and Hypotheses
+5. Methodology and Approach
+6. Timeline and Milestones
+7. Budget Justification
+8. Expected Outcomes and Impact
+9. Evaluation and Dissemination Plan
+10. Conclusion
+
+Make it compelling, well-structured, and tailored to the specific funding agency requirements. Use professional academic language and ensure all sections are comprehensive and detailed.`;
+
+            // 尝试所有可用的API配置
+            for (let i = 0; i < API_CONFIGS.length; i++) {
+                const config = API_CONFIGS[i];
+                
+                // 如果是本地备用生成器，直接使用本地生成
+                if (config.baseURL === 'local') {
+                    console.log('Using local fallback generator...');
+                    showNotification('使用本地生成器创建提案模板', 'info');
+                    return formatProposalContent(generateLocalProposal(data), data);
+                }
+                
+                // 跳过没有有效API密钥的配置
+                if (config.apiKey.includes('your-') || config.apiKey.includes('here') || config.apiKey === 'free-api-key') {
+                    console.log(`Skipping ${config.name}: No valid API key or free service unavailable`);
+                    continue;
+                }
+                
+                try {
+                    console.log(`Trying ${config.name}...`);
+                    
+                    const response = await fetch(config.baseURL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${config.apiKey}`,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            model: config.model,
+                            messages: [
+                                {
+                                    role: 'system',
+                                    content: 'You are a professional grant writing expert with extensive experience in securing research funding. Generate comprehensive, compelling grant proposals that meet funding agency requirements.'
+                                },
+                                {
+                                    role: 'user',
+                                    content: prompt
+                                }
+                            ],
+                            max_tokens: 4000,
+                            temperature: 0.7
+                        }),
+                        signal: AbortSignal.timeout(30000) // 30秒超时
+                    });
+
+                    console.log(`${config.name} Response Status:`, response.status);
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error(`${config.name} Error Response:`, errorText);
+                        
+                        // 如果是503错误，继续尝试下一个API
+                        if (response.status === 503) {
+                            console.log(`${config.name} is unavailable (503), trying next API...`);
+                            continue;
+                        }
+                        
+                        throw new Error(`${config.name} request failed: ${response.status} ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    console.log(`${config.name} Success:`, result);
+                    
+                    if (result.choices && result.choices[0] && result.choices[0].message) {
+                        showNotification(`成功使用 ${config.name} 生成提案`, 'success');
+                        return formatProposalContent(result.choices[0].message.content, data);
+                    } else {
+                        console.error(`${config.name} Invalid response structure:`, result);
+                        continue;
+                    }
+                } catch (error) {
+                    console.error(`${config.name} Error:`, error);
+                    
+                    // 如果是网络错误或超时，继续尝试下一个API
+                    if (error.name === 'AbortError' || error.message.includes('fetch')) {
+                        console.log(`${config.name} network error, trying next API...`);
+                        continue;
+                    }
+                }
+            }
+            
+            // 所有API都失败了
+            throw new Error('所有AI服务都暂时不可用，请稍后再试或使用本地生成器');
+        }
+
+        function formatProposalContent(content, data) {
+            // 如果内容包含markdown格式，转换为HTML
+            if (content.includes('#') || content.includes('**') || content.includes('- ')) {
+                // 简单的markdown到HTML转换
+                let htmlContent = content
+                    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+                    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                    .replace(/^#### (.*$)/gm, '<h4>$1</h4>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/^\- (.*$)/gm, '<li>$1</li>')
+                    .replace(/^(\d+)\. (.*$)/gm, '<li>$1. $2</li>')
+                    .replace(/\n\n/g, '</p><p>')
+                    .replace(/\n/g, '<br>');
+                
+                // 包装列表项
+                htmlContent = htmlContent.replace(/(<li>.*?<\/li>)/gs, '<ul>$1</ul>');
+                htmlContent = htmlContent.replace(/<\/ul>\s*<ul>/g, '');
+                
+                // 包装段落
+                if (!htmlContent.startsWith('<h1>') && !htmlContent.startsWith('<p>')) {
+                    htmlContent = '<p>' + htmlContent + '</p>';
+                }
+                
+                return `
+                    <div class="proposal-header">
+                        <div class="project-info">
+                            <p><strong>Funding Agency:</strong> ${data.fundingAgency}</p>
+                            <p><strong>Research Area:</strong> ${data.researchArea}</p>
+                            <p><strong>Requested Amount:</strong> ${getBudgetText(data.budgetRange)}</p>
+                            <p><strong>Duration:</strong> ${data.duration}</p>
+                        </div>
+                    </div>
+                    <div class="proposal-content">
+                        ${htmlContent}
+                    </div>
+                    <div class="proposal-footer">
+                        <p><em>This proposal was generated using AI assistance. Please review and customize according to your specific requirements and funding agency guidelines.</em></p>
+                    </div>
+                `;
+            } else {
+                // 原有的简单格式处理
+                return `
+                    <div class="proposal-header">
+                        <h3>${data.projectTitle}</h3>
+                        <p><strong>Funding Agency:</strong> ${data.fundingAgency}</p>
+                        <p><strong>Research Area:</strong> ${data.researchArea}</p>
+                        <p><strong>Requested Amount:</strong> ${getBudgetText(data.budgetRange)}</p>
+                        <p><strong>Duration:</strong> ${data.duration}</p>
+                    </div>
+                    <div class="proposal-content">
+                        ${content.replace(/\n/g, '<br>')}
+                    </div>
+                    <div class="proposal-footer">
+                        <p><em>This proposal was generated using AI assistance. Please review and customize according to your specific requirements and funding agency guidelines.</em></p>
+                    </div>
+                `;
+            }
+        }
+
+        // 改进的本地生成器，生成更专业的内容
+        function generateLocalProposal(data) {
+            const researchArea = data.researchArea || 'interdisciplinary research';
+            const projectTitle = data.projectTitle || 'Research Project';
+            const projectDescription = data.projectDescription || 'This project aims to advance knowledge in the field through innovative research methods and comprehensive analysis.';
+            const fundingAgency = data.fundingAgency || 'Research Foundation';
+            const duration = data.duration || '12 months';
+            
+            return `
+# ${projectTitle}
+
+## Executive Summary
+
+This comprehensive research proposal outlines a groundbreaking study in ${researchArea} that will significantly advance our understanding of key challenges in the field. The project, titled "${projectTitle}", represents a critical investigation that addresses current knowledge gaps and provides innovative solutions to pressing research questions.
+
+**Project Overview:**
+${projectDescription}
+
+**Research Significance:**
+This study will contribute to the academic community by providing new theoretical frameworks, empirical evidence, and practical applications that can inform future research and policy decisions. The interdisciplinary approach ensures broad impact across multiple domains.
+
+**Expected Outcomes:**
+- Publication of 3-5 high-impact research papers
+- Development of new methodological approaches
+- Training of graduate students and early-career researchers
+- Establishment of collaborative networks with international partners
+
+## Project Description and Significance
+
+### Research Background
+
+The field of ${researchArea} has experienced significant developments in recent years, yet several critical questions remain unanswered. Current research has primarily focused on traditional approaches, leaving substantial gaps in our understanding of emerging challenges and opportunities.
+
+### Research Problem
+
+The central problem this project addresses is the need for comprehensive analysis and innovative solutions in ${researchArea}. Existing studies have limitations in scope, methodology, or theoretical framework, creating an urgent need for more robust research approaches.
+
+### Innovation and Significance
+
+This project introduces several innovative elements:
+
+1. **Methodological Innovation**: Implementation of cutting-edge research methods that combine quantitative and qualitative approaches
+2. **Theoretical Contribution**: Development of new theoretical frameworks that bridge existing knowledge gaps
+3. **Practical Applications**: Direct relevance to real-world challenges and policy implications
+4. **Interdisciplinary Approach**: Integration of multiple disciplines to provide comprehensive insights
+
+## Literature Review and Theoretical Framework
+
+### Current State of Knowledge
+
+Recent scholarship in ${researchArea} has established important foundations for understanding key phenomena. However, several areas require further investigation:
+
+- **Theoretical Gaps**: Limited integration of emerging theories with established frameworks
+- **Methodological Limitations**: Need for more sophisticated analytical approaches
+- **Empirical Evidence**: Insufficient data to support comprehensive conclusions
+- **Practical Applications**: Limited translation of research findings to practice
+
+### Theoretical Framework
+
+This study employs a comprehensive theoretical framework that integrates:
+
+1. **Primary Theoretical Foundation**: Core theories relevant to ${researchArea}
+2. **Supporting Frameworks**: Complementary theoretical perspectives
+3. **Innovative Synthesis**: Novel integration of existing theories
+4. **Practical Applications**: Framework for real-world implementation
+
+## Research Objectives and Hypotheses
+
+### Primary Objectives
+
+1. **Objective 1**: Conduct comprehensive analysis of current challenges in ${researchArea}
+2. **Objective 2**: Develop innovative methodological approaches for data collection and analysis
+3. **Objective 3**: Create new theoretical frameworks that advance understanding
+4. **Objective 4**: Validate findings through rigorous empirical testing
+5. **Objective 5**: Disseminate results to academic and practitioner communities
+
+### Research Questions
+
+1. What are the primary factors influencing outcomes in ${researchArea}?
+2. How can innovative methodologies improve research quality and impact?
+3. What theoretical frameworks best explain observed phenomena?
+4. How can research findings be effectively translated to practice?
+
+### Hypotheses
+
+- **H1**: Implementation of innovative methodologies will yield more comprehensive insights
+- **H2**: New theoretical frameworks will better explain complex relationships
+- **H3**: Research findings will have significant practical applications
+- **H4**: Interdisciplinary approaches will enhance research impact
+
+## Methodology and Research Design
+
+### Research Design
+
+This study employs a mixed-methods research design that combines:
+
+1. **Quantitative Analysis**: Statistical analysis of large datasets
+2. **Qualitative Investigation**: In-depth interviews and case studies
+3. **Comparative Analysis**: Cross-sectional and longitudinal comparisons
+4. **Experimental Components**: Controlled studies where appropriate
+
+### Data Collection Methods
+
+**Primary Data Collection:**
+- Structured surveys and questionnaires
+- Semi-structured interviews with key stakeholders
+- Focus groups and workshops
+- Observational studies
+
+**Secondary Data Sources:**
+- Academic databases and repositories
+- Government and institutional reports
+- Industry publications and statistics
+- International comparative data
+
+### Analytical Framework
+
+**Quantitative Analysis:**
+- Descriptive and inferential statistics
+- Multivariate regression analysis
+- Structural equation modeling
+- Time series analysis
+
+**Qualitative Analysis:**
+- Thematic analysis of interview data
+- Content analysis of documents
+- Grounded theory approach
+- Narrative analysis
+
+## Timeline and Milestones
+
+### Phase 1: Project Initiation (Months 1-3)
+- Literature review completion
+- Methodology refinement
+- Team assembly and training
+- Ethical approval and permits
+
+**Key Milestones:**
+- ✅ Comprehensive literature review
+- ✅ Methodology protocol finalization
+- ✅ Research team establishment
+- ✅ Ethical clearance obtained
+
+### Phase 2: Data Collection (Months 4-8)
+- Primary data collection activities
+- Secondary data compilation
+- Preliminary analysis
+- Mid-term progress review
+
+**Key Milestones:**
+- 📊 50% of data collection completed
+- 📋 Preliminary findings report
+- 🔄 Methodology adjustments if needed
+- 📈 Mid-term progress presentation
+
+### Phase 3: Analysis and Synthesis (Months 9-11)
+- Comprehensive data analysis
+- Results interpretation
+- Theoretical framework development
+- Draft manuscript preparation
+
+**Key Milestones:**
+- 📊 Complete data analysis
+- 📝 First draft of findings
+- 🎯 Theoretical framework finalized
+- 📄 Manuscript drafts completed
+
+### Phase 4: Dissemination (Month 12)
+- Final report preparation
+- Academic publication submission
+- Conference presentations
+- Stakeholder engagement
+
+**Key Milestones:**
+- 📋 Final research report
+- 📚 Journal article submissions
+- 🎤 Conference presentations
+- 🤝 Stakeholder meetings
+
+## Budget Justification
+
+### Total Project Budget: ${getBudgetText(data.budgetRange)}
+
+**Personnel (45%)**
+- Principal Investigator: 20% effort
+- Research Associates: 2 FTE
+- Graduate Research Assistants: 3 positions
+- Administrative Support: 0.5 FTE
+
+**Equipment and Technology (20%)**
+- Data collection software licenses
+- Statistical analysis software
+- Computer hardware and peripherals
+- Specialized research equipment
+
+**Travel and Dissemination (15%)**
+- Conference attendance and presentations
+- Data collection travel
+- Stakeholder meetings
+- International collaboration visits
+
+**Materials and Supplies (10%)**
+- Research materials and supplies
+- Printing and publication costs
+- Communication and utilities
+- Office supplies and materials
+
+**Indirect Costs (10%)**
+- Institutional overhead
+- Administrative support
+- Facility costs
+- Insurance and legal fees
+
+## Expected Outcomes and Impact
+
+### Academic Impact
+
+**Publications:**
+- 3-5 peer-reviewed journal articles in top-tier publications
+- 1 edited volume or monograph
+- Multiple conference presentations
+- Policy briefs and white papers
+
+**Theoretical Contributions:**
+- New theoretical frameworks for ${researchArea}
+- Methodological innovations
+- Empirical evidence for theory testing
+- Cross-disciplinary insights
+
+### Practical Impact
+
+**Policy Implications:**
+- Evidence-based policy recommendations
+- Best practice guidelines
+- Implementation frameworks
+- Evaluation metrics
+
+**Industry Applications:**
+- Practical tools and resources
+- Training materials and programs
+- Consultation and advisory services
+- Technology transfer opportunities
+
+### Educational Impact
+
+**Capacity Building:**
+- Training of graduate students
+- Postdoctoral researcher development
+- Early-career researcher mentoring
+- International collaboration networks
+
+**Curriculum Development:**
+- New course materials
+- Case studies and examples
+- Teaching resources
+- Online learning modules
+
+## Risk Management and Contingency Plans
+
+### Identified Risks
+
+1. **Data Collection Challenges**
+   - Mitigation: Multiple data sources and collection methods
+   - Contingency: Alternative sampling strategies
+
+2. **Timeline Delays**
+   - Mitigation: Built-in buffer time and flexible scheduling
+   - Contingency: Priority-based task resequencing
+
+3. **Resource Constraints**
+   - Mitigation: Careful budget monitoring and cost control
+   - Contingency: Alternative funding sources and partnerships
+
+4. **Technical Difficulties**
+   - Mitigation: Expert consultation and technical support
+   - Contingency: Alternative analytical approaches
+
+## Quality Assurance and Evaluation
+
+### Quality Control Measures
+
+- Regular progress monitoring and evaluation
+- Peer review of methodologies and findings
+- External advisory board oversight
+- Compliance with ethical standards
+
+### Evaluation Criteria
+
+- Achievement of research objectives
+- Quality of academic outputs
+- Impact on field and practice
+- Stakeholder satisfaction
+
+## Conclusion
+
+This research project represents a significant opportunity to advance knowledge in ${researchArea} through innovative research approaches and comprehensive analysis. The proposed study addresses critical gaps in current understanding while providing practical solutions to real-world challenges.
+
+**Project Strengths:**
+- Experienced and qualified research team
+- Innovative and rigorous methodology
+- Strong theoretical foundation
+- Clear practical applications
+- Comprehensive dissemination plan
+
+**Success Factors:**
+- Robust project management framework
+- Adequate resource allocation
+- Strong institutional support
+- Established collaboration networks
+- Clear quality assurance measures
+
+We respectfully request support from ${fundingAgency} for this important research initiative. The project will generate significant academic and practical contributions while training the next generation of researchers in ${researchArea}. The expected outcomes will have lasting impact on the field and contribute to evidence-based policy and practice.
+
+**Timeline:** ${duration}
+**Total Budget:** ${getBudgetText(data.budgetRange)}
+**Expected Publications:** 3-5 peer-reviewed articles
+**Students Trained:** 2-3 graduate students
+**International Collaborations:** Multiple partnerships
+
+This comprehensive proposal demonstrates our commitment to excellence in research and our capacity to deliver significant contributions to ${researchArea}. We look forward to the opportunity to advance knowledge and create positive impact through this important research initiative.
+            `;
+        }
+
+        function generateProposal(data) {
+            const currentDate = new Date().toLocaleDateString('zh-CN');
+            const projectDuration = data.duration || '12个月';
+            const budgetText = getBudgetText(data.budgetRange);
+            
+            return `
+                <div class="proposal-section">
+                    <h4>📋 Executive Summary</h4>
+                    <div class="section-content">
+                        <p><strong>Project Title:</strong> ${data.projectTitle}</p>
+                        <p><strong>Principal Investigator:</strong> [请填写您的姓名]</p>
+                        <p><strong>Institution:</strong> [请填写您的机构名称]</p>
+                        <p><strong>Funding Agency:</strong> ${data.fundingAgency}</p>
+                        <p><strong>Requested Amount:</strong> ${budgetText}</p>
+                        <p><strong>Project Duration:</strong> ${projectDuration}</p>
+                        <p><strong>Submission Date:</strong> ${currentDate}</p>
+                        
+                        <p><strong>Project Overview:</strong></p>
+                        <p>${data.projectDescription || '本项目旨在通过创新的研究方法和先进的技术手段，解决' + data.researchArea + '领域的关键问题，为学术界和社会带来重要贡献。'}</p>
+                    </div>
+                </div>
+
+                <div class="proposal-section">
+                    <h4>🎯 Project Description and Significance</h4>
+                    <div class="section-content">
+                        <p><strong>Research Background:</strong></p>
+                        <p>${data.projectDescription}</p>
+                        
+                        <p><strong>Research Significance:</strong></p>
+                        <ul>
+                            <li>填补${data.researchArea}领域的重要知识空白</li>
+                            <li>为相关理论发展提供实证支持</li>
+                            <li>具有重要的学术价值和实际应用前景</li>
+                            <li>推动${data.researchArea}领域的创新发展</li>
+                        </ul>
+                        
+                        <p><strong>Innovation Points:</strong></p>
+                        <ul>
+                            <li>采用创新的研究方法和技术路线</li>
+                            <li>跨学科的研究视角和方法</li>
+                            <li>具有前瞻性的研究思路</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="proposal-section">
+                    <h4>📚 Literature Review and Background</h4>
+                    <div class="section-content">
+                        <p><strong>Current State of Research:</strong></p>
+                        <p>在${data.researchArea}领域，现有研究主要集中在以下几个方面：</p>
+                        <ul>
+                            <li>理论基础研究：相关理论框架的建立和完善</li>
+                            <li>方法学研究：研究方法和技术手段的创新</li>
+                            <li>实证研究：具体问题的实证分析和验证</li>
+                            <li>应用研究：理论成果的实际应用和转化</li>
+                        </ul>
+                        
+                        <p><strong>Research Gaps:</strong></p>
+                        <p>尽管已有研究取得了重要进展，但仍存在以下不足：</p>
+                        <ul>
+                            <li>理论体系有待进一步完善</li>
+                            <li>研究方法需要创新和改进</li>
+                            <li>实证研究的深度和广度有限</li>
+                            <li>理论与实践的结合需要加强</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="proposal-section">
+                    <h4>🎯 Research Objectives and Hypotheses</h4>
+                    <div class="section-content">
+                        <p><strong>Primary Objectives:</strong></p>
+                        <ol>
+                            <li>深入研究${data.researchArea}领域的核心问题</li>
+                            <li>建立完善的理论框架和分析模型</li>
+                            <li>开发创新的研究方法和技术手段</li>
+                            <li>验证研究假设并得出科学结论</li>
+                        </ol>
+                        
+                        <p><strong>Research Hypotheses:</strong></p>
+                        <ul>
+                            <li>假设1：通过本研究的方法能够有效解决相关问题</li>
+                            <li>假设2：研究结果将对理论发展产生重要影响</li>
+                            <li>假设3：研究成果具有广泛的应用价值</li>
+                        </ul>
+                        
+                        <p><strong>Expected Outcomes:</strong></p>
+                        <ul>
+                            <li>发表高质量学术论文</li>
+                            <li>形成重要理论贡献</li>
+                            <li>培养优秀研究人才</li>
+                            <li>推动学科发展</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="proposal-section">
+                    <h4>🔬 Methodology and Approach</h4>
+                    <div class="section-content">
+                        <p><strong>Research Design:</strong></p>
+                        <p>本研究采用混合研究方法，结合定量和定性分析，确保研究结果的科学性和可靠性。</p>
+                        
+                        <p><strong>Research Methods:</strong></p>
+                        <ul>
+                            <li><strong>文献研究法：</strong>系统梳理相关理论和研究成果</li>
+                            <li><strong>实证分析法：</strong>收集和分析相关数据</li>
+                            <li><strong>比较研究法：</strong>进行横向和纵向比较分析</li>
+                            <li><strong>案例研究法：</strong>深入分析典型案例</li>
+                        </ul>
+                        
+                        <p><strong>Data Collection:</strong></p>
+                        <ul>
+                            <li>一手数据：通过调研、实验等方式收集</li>
+                            <li>二手数据：利用公开数据库和统计资料</li>
+                            <li>质量控制：确保数据的准确性和完整性</li>
+                        </ul>
+                        
+                        <p><strong>Analysis Framework:</strong></p>
+                        <ul>
+                            <li>建立科学的分析框架</li>
+                            <li>运用先进的分析工具和软件</li>
+                            <li>采用多种分析方法相互验证</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="proposal-section">
+                    <h4>📅 Timeline and Milestones</h4>
+                    <div class="section-content">
+                        <p><strong>Project Timeline (${projectDuration}):</strong></p>
+                        
+                        <div class="timeline-item">
+                            <strong>第1-3个月：项目启动阶段</strong>
+                            <ul>
+                                <li>完成文献调研和理论梳理</li>
+                                <li>制定详细研究计划</li>
+                                <li>建立研究团队</li>
+                                <li>完成前期准备工作</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <strong>第4-8个月：研究实施阶段</strong>
+                            <ul>
+                                <li>开展实证研究</li>
+                                <li>收集和整理数据</li>
+                                <li>进行初步分析</li>
+                                <li>完成中期报告</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <strong>第9-12个月：总结完善阶段</strong>
+                            <ul>
+                                <li>完成深入分析</li>
+                                <li>撰写研究报告</li>
+                                <li>发表学术论文</li>
+                                <li>项目验收和总结</li>
+                            </ul>
+                        </div>
+                        
+                        <p><strong>Key Milestones:</strong></p>
+                        <ul>
+                            <li>✅ 项目启动会议</li>
+                            <li>📊 中期进展报告</li>
+                            <li>📝 研究成果发表</li>
+                            <li>🎯 项目结题验收</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="proposal-section">
+                    <h4>💰 Budget Justification</h4>
+                    <div class="section-content">
+                        <p><strong>Total Budget: ${budgetText}</strong></p>
+                        
+                        <div class="budget-breakdown">
+                            <div class="budget-item">
+                                <strong>人员费用 (40%)</strong>
+                                <ul>
+                                    <li>主要研究人员工资</li>
+                                    <li>研究助理费用</li>
+                                    <li>专家咨询费</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="budget-item">
+                                <strong>设备费用 (25%)</strong>
+                                <ul>
+                                    <li>研究设备购置</li>
+                                    <li>软件许可费用</li>
+                                    <li>设备维护费用</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="budget-item">
+                                <strong>材料费用 (15%)</strong>
+                                <ul>
+                                    <li>实验材料</li>
+                                    <li>办公用品</li>
+                                    <li>数据购买费用</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="budget-item">
+                                <strong>差旅费用 (10%)</strong>
+                                <ul>
+                                    <li>学术会议参会</li>
+                                    <li>实地调研费用</li>
+                                    <li>合作交流费用</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="budget-item">
+                                <strong>其他费用 (10%)</strong>
+                                <ul>
+                                    <li>论文发表费用</li>
+                                    <li>知识产权费用</li>
+                                    <li>管理费用</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="proposal-section">
+                    <h4>🎯 Expected Outcomes and Impact</h4>
+                    <div class="section-content">
+                        <p><strong>Academic Outcomes:</strong></p>
+                        <ul>
+                            <li>发表高水平学术论文 3-5 篇</li>
+                            <li>参加国际学术会议并做报告</li>
+                            <li>形成重要理论贡献</li>
+                            <li>培养研究生 2-3 名</li>
+                        </ul>
+                        
+                        <p><strong>Practical Impact:</strong></p>
+                        <ul>
+                            <li>为政策制定提供科学依据</li>
+                            <li>推动行业技术进步</li>
+                            <li>产生经济和社会效益</li>
+                            <li>促进产学研合作</li>
+                        </ul>
+                        
+                        <p><strong>Long-term Vision:</strong></p>
+                        <ul>
+                            <li>建立长期研究合作关系</li>
+                            <li>形成可持续的研究方向</li>
+                            <li>培养优秀研究团队</li>
+                            <li>推动学科发展</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="proposal-section">
+                    <h4>📊 Evaluation and Dissemination Plan</h4>
+                    <div class="section-content">
+                        <p><strong>Evaluation Criteria:</strong></p>
+                        <ul>
+                            <li>研究目标完成度</li>
+                            <li>学术成果质量</li>
+                            <li>社会影响力</li>
+                            <li>人才培养效果</li>
+                        </ul>
+                        
+                        <p><strong>Dissemination Strategy:</strong></p>
+                        <ul>
+                            <li><strong>学术发表：</strong>在顶级期刊发表研究成果</li>
+                            <li><strong>会议报告：</strong>参加重要学术会议</li>
+                            <li><strong>媒体宣传：</strong>通过媒体扩大影响</li>
+                            <li><strong>政策建议：</strong>向相关部门提供政策建议</li>
+                        </ul>
+                        
+                        <p><strong>Knowledge Transfer:</strong></p>
+                        <ul>
+                            <li>与产业界建立合作关系</li>
+                            <li>开展技术转移活动</li>
+                            <li>提供咨询服务</li>
+                            <li>培训相关人员</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="proposal-section">
+                    <h4>🎯 Conclusion</h4>
+                    <div class="section-content">
+                        <p>本项目"${data.projectTitle}"具有重要的学术价值和实践意义。通过系统的研究设计和科学的研究方法，我们有信心在${data.duration}内完成预定的研究目标，产出高质量的研究成果。</p>
+                        
+                        <p><strong>项目优势：</strong></p>
+                        <ul>
+                            <li>研究团队具有丰富的相关经验</li>
+                            <li>研究方法科学可行</li>
+                            <li>预期成果具有重要价值</li>
+                            <li>资源配置合理有效</li>
+                        </ul>
+                        
+                        <p><strong>成功保障：</strong></p>
+                        <ul>
+                            <li>完善的项目管理机制</li>
+                            <li>充足的资源支持</li>
+                            <li>强有力的团队合作</li>
+                            <li>明确的质量控制标准</li>
+                        </ul>
+                        
+                        <p>我们恳请${data.fundingAgency}给予支持，相信本项目将为${data.researchArea}领域的发展做出重要贡献，产生显著的学术和社会影响。</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getBudgetText(range) {
+            const budgets = {
+                'small': '$1,000 - $10,000',
+                'medium': '$10,000 - $50,000',
+                'large': '$50,000 - $200,000',
+                'xlarge': '$200,000+'
+            };
+            return budgets[range] || 'Not specified';
+        }
+
+        function downloadProposal() {
+            const content = document.getElementById('outputContent').innerText;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'grant-proposal.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

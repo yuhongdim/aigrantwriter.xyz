@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>Debug Test</h1>
+    <div id="status">Loading...</div>
+    <button id="testBtn">Test Sitemap Generator</button>
+
+    <script src="sitemap-generator.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusDiv = document.getElementById('status');
+            const testBtn = document.getElementById('testBtn');
+            
+            try {
+                console.log('Testing SitemapGenerator...');
+                const generator = new SitemapGenerator('https://test.com');
+                console.log('SitemapGenerator created successfully');
+                
+                console.log('Testing SEOHelper...');
+                const seoHelper = new SEOHelper();
+                console.log('SEOHelper created successfully');
+                
+                statusDiv.innerHTML = 'All classes loaded successfully!';
+                statusDiv.style.color = 'green';
+                
+                testBtn.onclick = function() {
+                    generator.addUrl('/test', 'weekly', 0.8);
+                    alert('Test URL added to sitemap');
+                };
+                
+            } catch (error) {
+                console.error('Error:', error);
+                statusDiv.innerHTML = 'Error: ' + error.message;
+                statusDiv.style.color = 'red';
+            }
+        });
+    </script>
+</body>
+</html>

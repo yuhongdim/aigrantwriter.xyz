@@ -379,6 +379,41 @@ body {
     justify-content: center;
 }
 
+.pricing-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-4) var(--spacing-8);
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-size: var(--font-size-lg);
+    width: 100%;
+    justify-content: center;
+}
+
+.pricing-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.savings-badge {
+    background: var(--secondary-color);
+    color: var(--white);
+    padding: var(--spacing-1) var(--spacing-3);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    margin-top: var(--spacing-2);
+    display: inline-block;
+}
+
 /* Sections */
 .section-header {
     text-align: center;
@@ -611,6 +646,65 @@ body {
     gap: var(--spacing-3);
 }
 
+/* Student Testimonials Section */
+.student-testimonials {
+    padding: var(--spacing-20) 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--white);
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-8);
+    margin-top: var(--spacing-12);
+}
+
+.testimonial-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: var(--transition-normal);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.testimonial-content {
+    margin-bottom: var(--spacing-6);
+}
+
+.testimonial-content p {
+    font-size: var(--font-size-lg);
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.testimonial-author {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.author-info h4 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--spacing-1);
+}
+
+.author-info span {
+    font-size: var(--font-size-sm);
+    opacity: 0.8;
+}
+
+.rating {
+    font-size: var(--font-size-lg);
+}
+
 /* Pricing Section */
 .pricing {
     padding: var(--spacing-20) 0;
@@ -695,20 +789,6 @@ body {
     font-weight: 600;
 }
 
-.save-badge {
-    position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(135deg, #10b981, #059669);
-    color: var(--white);
-    padding: var(--spacing-2) var(--spacing-4);
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-}
-
 .pricing-features {
     list-style: none;
     margin-bottom: var(--spacing-8);
@@ -724,73 +804,6 @@ body {
 
 .pricing-features i {
     color: var(--secondary-color);
-}
-
-/* Comments Section */
-.comments {
-    padding: var(--spacing-20) 0;
-    background: var(--white);
-}
-
-.comments-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: var(--spacing-8);
-    margin-top: var(--spacing-12);
-}
-
-.comment-card {
-    background: var(--gray-50);
-    border-radius: var(--radius-xl);
-    padding: var(--spacing-8);
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition-normal);
-    border-left: 4px solid var(--primary-color);
-}
-
-.comment-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-}
-
-.comment-content {
-    margin-bottom: var(--spacing-6);
-}
-
-.comment-content p {
-    font-size: var(--font-size-lg);
-    line-height: 1.6;
-    color: var(--gray-700);
-    font-style: italic;
-    margin: 0;
-}
-
-.comment-author {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.author-info h4 {
-    font-size: var(--font-size-lg);
-    font-weight: 600;
-    color: var(--gray-900);
-    margin: 0 0 var(--spacing-1) 0;
-}
-
-.author-info span {
-    font-size: var(--font-size-sm);
-    color: var(--gray-600);
-}
-
-.rating {
-    display: flex;
-    gap: var(--spacing-1);
-}
-
-.rating i {
-    color: #fbbf24;
-    font-size: var(--font-size-sm);
 }
 
 /* Contact Section */

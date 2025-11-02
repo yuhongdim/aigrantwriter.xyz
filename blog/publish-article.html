@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Publish New Article - Academic Writing Blog</title>
+    <title>Publish New Article - AI Grant Writer Blog</title>
     <meta name="description" content="Publish new academic articles and research content to share with the community.">
     <link rel="icon" href="../favicon.svg" type="image/svg+xml">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -49,7 +49,15 @@
                         <label for="articleTitle">Article Title *</label>
                         <input type="text" id="articleTitle" name="title" required 
                                placeholder="Enter your article title...">
-                        <div class="field-hint">Make it descriptive and engaging</div>
+                        <div class="field-hint">Make it descriptive and engaging for SEO</div>
+                    </div>
+
+                    <!-- Article Slug -->
+                    <div class="form-group">
+                        <label for="articleSlug">URL Slug *</label>
+                        <input type="text" id="articleSlug" name="slug" required 
+                               placeholder="article-url-slug">
+                        <div class="field-hint">This will be the article's URL (auto-generated from title)</div>
                     </div>
 
                     <!-- Article Excerpt -->
@@ -57,7 +65,15 @@
                         <label for="articleExcerpt">Article Excerpt *</label>
                         <textarea id="articleExcerpt" name="excerpt" required rows="3"
                                   placeholder="Write a brief summary of your article..."></textarea>
-                        <div class="field-hint">This will appear in the article preview (150-200 characters recommended)</div>
+                        <div class="field-hint">This will appear in search results and social media (150-160 characters recommended)</div>
+                    </div>
+
+                    <!-- SEO Keywords -->
+                    <div class="form-group">
+                        <label for="seoKeywords">SEO Keywords</label>
+                        <input type="text" id="seoKeywords" name="keywords" 
+                               placeholder="academic writing, AI tools, research methods">
+                        <div class="field-hint">Comma-separated keywords for better search visibility</div>
                     </div>
 
                     <!-- Category Selection -->
@@ -69,6 +85,8 @@
                             <option value="research">Research Methods</option>
                             <option value="tools">AI Tools</option>
                             <option value="academic">Academic Guidance</option>
+                            <option value="tutorials">Tutorials</option>
+                            <option value="tips">Tips & Tricks</option>
                         </select>
                     </div>
 
@@ -148,54 +166,42 @@ You can use Markdown formatting:
 
 > Quote text
 
-```
-Code block
-```"></textarea>
-                        <div class="field-hint">
-                            <span class="word-count">Words: <span id="wordCount">0</span></span>
-                            <span>Supports Markdown formatting</span>
+```code block```"></textarea>
+                        <div class="word-counter">
+                            Words: <span id="wordCount">0</span> | 
+                            Characters: <span id="charCount">0</span>
                         </div>
                     </div>
 
-                    <!-- Tags -->
-                    <div class="form-group">
-                        <label for="articleTags">Tags</label>
-                        <input type="text" id="articleTags" name="tags" 
-                               placeholder="academic writing, research, methodology (comma-separated)">
-                        <div class="field-hint">Add relevant tags separated by commas</div>
-                    </div>
-
-                    <!-- Author Information -->
-                    <div class="form-group">
-                        <label for="authorName">Author Name</label>
-                        <input type="text" id="authorName" name="author" 
-                               placeholder="Your name" value="AI Grant Writer">
-                    </div>
-
-                    <!-- Publication Options -->
+                    <!-- Publish Options -->
                     <div class="form-group">
                         <label class="checkbox-label">
                             <input type="checkbox" id="publishImmediately" name="publishImmediately" checked>
                             <span class="checkmark"></span>
-                            Publish immediately
+                            Publish immediately and make searchable
                         </label>
+                        <div class="field-hint">Unchecked articles will be saved as drafts</div>
                     </div>
 
-                    <div class="form-group" id="scheduledDateGroup" style="display: none;">
-                        <label for="scheduledDate">Scheduled Publication Date</label>
-                        <input type="datetime-local" id="scheduledDate" name="scheduledDate">
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="submitToGoogle" name="submitToGoogle" checked>
+                            <span class="checkmark"></span>
+                            Submit to Google for indexing
+                        </label>
+                        <div class="field-hint">Automatically notify Google about the new article</div>
                     </div>
 
                     <!-- Form Actions -->
                     <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" id="previewBtn">
+                        <button type="button" id="previewBtn" class="btn btn-secondary">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                 <circle cx="12" cy="12" r="3"/>
                             </svg>
                             Preview
                         </button>
-                        <button type="button" class="btn btn-secondary" id="saveDraftBtn">
+                        <button type="button" id="saveDraftBtn" class="btn btn-outline">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
                                 <polyline points="17,21 17,13 7,13 7,21"/>
@@ -203,7 +209,7 @@ Code block
                             </svg>
                             Save Draft
                         </button>
-                        <button type="submit" class="btn btn-primary" id="publishBtn">
+                        <button type="submit" class="btn btn-primary">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 19l7-7 3 3-7 7-3-3z"/>
                                 <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
@@ -215,42 +221,35 @@ Code block
                     </div>
                 </form>
             </div>
-
-            <!-- Preview Modal -->
-            <div id="previewModal" class="modal" style="display: none;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>Article Preview</h3>
-                        <button type="button" class="close-btn" id="closePreview">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="18" y1="6" x2="6" y2="18"/>
-                                <line x1="6" y1="6" x2="18" y2="18"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="previewContent">
-                        <!-- Preview content will be inserted here -->
-                    </div>
-                </div>
-            </div>
         </div>
     </main>
 
-    <!-- Success Message -->
-    <div id="successMessage" class="success-message" style="display: none;">
-        <div class="success-content">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20,6 9,17 4,12"/>
-            </svg>
-            <h3>Article Published Successfully!</h3>
-            <p>Your article has been published and is now live on the blog.</p>
-            <div class="success-actions">
-                <a href="index.html" class="btn btn-primary">View Blog</a>
-                <button type="button" class="btn btn-secondary" id="publishAnother">Publish Another</button>
+    <!-- Preview Modal -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Article Preview</h3>
+                <button id="closePreview" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="previewContent"></div>
             </div>
         </div>
     </div>
 
-    <script src="publish-script.js"></script>
+    <!-- Success Message -->
+    <div id="successMessage" class="success-overlay">
+        <div class="success-content">
+            <div class="success-icon">✅</div>
+            <h3>Article Published Successfully!</h3>
+            <p>Your article has been published and is now live on the website.</p>
+            <div class="success-actions">
+                <a id="viewArticle" href="#" class="btn btn-primary">View Article</a>
+                <button id="publishAnother" class="btn btn-secondary">Publish Another</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="enhanced-publish-script.js"></script>
 </body>
 </html>

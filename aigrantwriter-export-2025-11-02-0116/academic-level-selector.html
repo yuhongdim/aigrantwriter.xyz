@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Level Selector - Customize Your Experience | US University Standards</title>
+    <meta name="description" content="Customize your academic writing experience based on your level: Undergraduate, Graduate, or PhD. Get tailored tools and resources for your academic journey.">
+    <link rel="stylesheet" href="styles.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .level-selector {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .level-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .level-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .level-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .level-card.selected {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #4CAF50;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+        }
+        
+        .level-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .level-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .level-description {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .level-features {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        
+        .level-features li {
+            padding: 8px 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .level-features li:before {
+            content: "✓ ";
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .continue-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .continue-btn.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .continue-btn:hover.active {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+        
+        .benefits-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .benefit-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">AI Grant Writer</a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Writing Tools</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Student Resources</a>
+                </li>
+                <li class="nav-item">
+                    <a href="citation-formats.html" class="nav-link">Citation Guide</a>
+                </li>
+                <li class="nav-item">
+                    <a href="academic-integrity.html" class="nav-link">Academic Integrity</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Level Selector Section -->
+    <section class="level-selector">
+        <div class="container">
+            <div class="text-center">
+                <h1>🎓 Choose Your Academic Level</h1>
+                <p class="lead">Get personalized tools and resources tailored to your academic journey in the US university system</p>
+            </div>
+            
+            <div class="level-cards">
+                <!-- Undergraduate -->
+                <div class="level-card" data-level="undergraduate">
+                    <span class="level-icon">🎒</span>
+                    <h3 class="level-title">Undergraduate</h3>
+                    <p class="level-description">Bachelor's degree student (Freshman - Senior)</p>
+                    <ul class="level-features">
+                        <li>Basic research paper assistance</li>
+                        <li>APA, MLA, Chicago citation help</li>
+                        <li>Essay structure guidance</li>
+                        <li>Plagiarism prevention tips</li>
+                        <li>Study group collaboration tools</li>
+                        <li>GPA improvement strategies</li>
+                    </ul>
+                </div>
+                
+                <!-- Graduate -->
+                <div class="level-card" data-level="graduate">
+                    <span class="level-icon">📚</span>
+                    <h3 class="level-title">Graduate (Master's)</h3>
+                    <p class="level-description">Master's degree student (MA, MS, MBA, etc.)</p>
+                    <ul class="level-features">
+                        <li>Advanced research methodologies</li>
+                        <li>Thesis proposal writing</li>
+                        <li>Literature review assistance</li>
+                        <li>Data analysis guidance</li>
+                        <li>Conference presentation prep</li>
+                        <li>Professional networking tools</li>
+                    </ul>
+                </div>
+                
+                <!-- PhD -->
+                <div class="level-card" data-level="phd">
+                    <span class="level-icon">🎓</span>
+                    <h3 class="level-title">PhD / Doctoral</h3>
+                    <p class="level-description">Doctoral student or Post-doc researcher</p>
+                    <ul class="level-features">
+                        <li>Dissertation chapter planning</li>
+                        <li>Grant proposal writing</li>
+                        <li>Publication manuscript prep</li>
+                        <li>Research collaboration tools</li>
+                        <li>Academic job market prep</li>
+                        <li>Peer review assistance</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button class="continue-btn" onclick="proceedWithLevel()">
+                    <i class="fas fa-arrow-right"></i>
+                    Continue with Selected Level
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="text-center">
+                <h2>Why Choose Your Academic Level?</h2>
+                <p class="lead">Personalized experience designed for US university standards</p>
+            </div>
+            
+            <div class="benefit-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-target benefit-icon"></i>
+                    <h4>Targeted Content</h4>
+                    <p>Get writing prompts, examples, and templates specific to your academic level and field of study.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <i class="fas fa-clock benefit-icon"></i>
+                    <h4>Time-Saving</h4>
+                    <p>Skip irrelevant features and focus on tools that matter for your current academic stage.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <i class="fas fa-graduation-cap benefit-icon"></i>
+                    <h4>Academic Standards</h4>
+                    <p>Ensure your work meets the specific requirements and expectations of your academic level.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <i class="fas fa-users benefit-icon"></i>
+                    <h4>Peer Connection</h4>
+                    <p>Connect with students and resources at your academic level for collaboration and support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let selectedLevel = null;
+        
+        // Level selection functionality
+        document.querySelectorAll('.level-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove previous selection
+                document.querySelectorAll('.level-card').forEach(c => c.classList.remove('selected'));
+                
+                // Add selection to clicked card
+                this.classList.add('selected');
+                selectedLevel = this.dataset.level;
+                
+                // Enable continue button
+                const continueBtn = document.querySelector('.continue-btn');
+                continueBtn.classList.add('active');
+            });
+        });
+        
+        function proceedWithLevel() {
+            if (!selectedLevel) {
+                alert('Please select your academic level first.');
+                return;
+            }
+            
+            // Store selection in localStorage
+            localStorage.setItem('academicLevel', selectedLevel);
+            
+            // Show confirmation and redirect
+            alert(`Great! Your academic level has been set to: ${selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1)}. You'll now see personalized content and tools.`);
+            
+            // Redirect to main page with level parameter
+            window.location.href = `index.html?level=${selectedLevel}`;
+        }
+        
+        // Check if level is already selected
+        window.addEventListener('load', function() {
+            const savedLevel = localStorage.getItem('academicLevel');
+            if (savedLevel) {
+                const levelCard = document.querySelector(`[data-level="${savedLevel}"]`);
+                if (levelCard) {
+                    levelCard.classList.add('selected');
+                    selectedLevel = savedLevel;
+                    document.querySelector('.continue-btn').classList.add('active');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

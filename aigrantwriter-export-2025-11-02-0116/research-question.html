@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研究问题生成器 - AI学术写作助手 | AI Grant Writer</title>
+    <meta name="description" content="AI驱动的研究问题生成器，专为学术写作设计。为论文、学位论文和研究报告创建创新的研究问题、假设和问题陈述。">
+    <meta name="keywords" content="研究问题生成器, 学术研究问题, 研究假设生成器, 论文问题, 学位论文研究问题, AI研究助手, 学术写作工具">
+    <meta name="author" content="AI Grant Writer">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="AI研究问题生成器 - 学术写作工具">
+    <meta property="og:description" content="通过AI辅助生成创新的研究问题和假设。完美适用于论文、学位论文和学术研究报告。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aigrantwriter.xyz/research-question.html">
+    <link rel="canonical" href="https://aigrantwriter.xyz/research-question.html">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "研究问题生成器",
+        "description": "AI驱动的学术研究问题和假设生成工具",
+        "url": "https://aigrantwriter.xyz/research-question.html",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web Browser"
+    }
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI学术助手</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="index.html#features">功能</a></li>
+                <li><a href="index.html#tools">工具</a></li>
+                <li><a href="index.html#pricing">价格</a></li>
+                <li><a href="index.html#contact">联系</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-title">
+                <i class="fas fa-question-circle"></i>
+                <h1>研究问题生成器</h1>
+                <p>AI驱动的工具，为学术卓越生成创新的研究问题和假设</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>创新性评估</h3>
+                    <p>使用AI驱动的分析评估研究问题的新颖性和原创性</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-search"></i>
+                    <h3>研究空白识别</h3>
+                    <p>发现您领域中的研究空白，制定解决未探索领域的问题</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-flask"></i>
+                    <h3>假设生成</h3>
+                    <p>创建与您的研究目标和方法论一致的可测试假设</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>可行性分析</h3>
+                    <p>评估研究问题的实用性和范围，确保成功完成</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Generator Section -->
+    <section class="generator-section">
+        <div class="container">
+            <div class="generator-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-magic"></i> 研究问题生成器</h2>
+                    <p>生成适合您学术领域和研究兴趣的引人注目的研究问题</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="research-field">研究领域</label>
+                    <select id="research-field">
+                        <option value="">选择您的研究领域</option>
+                        <option value="psychology">心理学</option>
+                        <option value="education">教育学</option>
+                        <option value="business">商业与管理</option>
+                        <option value="medicine">医学与健康科学</option>
+                        <option value="engineering">工程学</option>
+                        <option value="computer-science">计算机科学</option>
+                        <option value="social-sciences">社会科学</option>
+                        <option value="natural-sciences">自然科学</option>
+                        <option value="humanities">人文学科</option>
+                        <option value="law">法学</option>
+                        <option value="economics">经济学</option>
+                        <option value="environmental">环境研究</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="research-topic">研究主题/兴趣领域</label>
+                    <textarea id="research-topic" rows="3" placeholder="描述您的研究主题、兴趣领域或初步想法..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="research-type">研究类型</label>
+                    <select id="research-type">
+                        <option value="quantitative">定量研究</option>
+                        <option value="qualitative">定性研究</option>
+                        <option value="mixed-methods">混合方法</option>
+                        <option value="theoretical">理论/概念研究</option>
+                        <option value="experimental">实验研究</option>
+                        <option value="case-study">案例研究</option>
+                        <option value="systematic-review">系统综述</option>
+                        <option value="meta-analysis">元分析</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="research-level">学术水平</label>
+                    <select id="research-level">
+                        <option value="undergraduate">本科</option>
+                        <option value="masters">硕士学位</option>
+                        <option value="phd">博士/博士学位</option>
+                        <option value="postdoc">博士后</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="keywords">关键词（可选）</label>
+                    <input type="text" id="keywords" placeholder="输入相关关键词，用逗号分隔...">
+                </div>
+
+                <button class="generate-btn" onclick="generateResearchQuestions()">
+                    <i class="fas fa-cogs"></i>
+                    生成研究问题
+                </button>
+
+                <div id="output" class="output-section" style="display: none;">
+                    <div class="output-header">
+                        <h3>生成的研究问题</h3>
+                        <button class="copy-btn" onclick="copyToClipboard()">
+                            <i class="fas fa-copy"></i>
+                            复制全部
+                        </button>
+                    </div>
+                    <div id="questions-content" class="generated-content"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Question Types -->
+    <section class="question-types-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>我们生成的研究问题类型</h2>
+                <p>全面覆盖不同的研究问题类别</p>
+            </div>
+            <div class="types-grid">
+                <div class="type-card">
+                    <i class="fas fa-question"></i>
+                    <h3>描述性问题</h3>
+                    <p>描述现象、特征或当前状态的什么、何时、何地问题</p>
+                    <div class="example">
+                        <strong>示例：</strong> "财富500强公司远程工作采用的当前趋势是什么？"
+                    </div>
+                </div>
+                <div class="type-card">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>比较性问题</h3>
+                    <p>比较不同群体、方法或条件以识别差异的问题</p>
+                    <div class="example">
+                        <strong>示例：</strong> "在线学习效果与传统课堂教学相比如何？"
+                    </div>
+                </div>
+                <div class="type-card">
+                    <i class="fas fa-link"></i>
+                    <h3>关系性问题</h3>
+                    <p>探索变量之间关系、相关性或关联的问题</p>
+                    <div class="example">
+                        <strong>示例：</strong> "社交媒体使用与学术表现之间的关系是什么？"
+                    </div>
+                </div>
+                <div class="type-card">
+                    <i class="fas fa-arrow-right"></i>
+                    <h3>因果性问题</h3>
+                    <p>调查因果关系并确定因果性的问题</p>
+                    <div class="example">
+                        <strong>示例：</strong> "正念训练是否能减少工作压力并提高生产力？"
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Practices -->
+    <section class="best-practices-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>研究问题最佳实践</h2>
+                <p>制定有效研究问题的指导原则</p>
+            </div>
+            <div class="practices-grid">
+                <div class="practice-item">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>清晰具体</h3>
+                    <p>问题应该精确、明确，专注于研究主题的特定方面</p>
+                </div>
+                <div class="practice-item">
+                    <i class="fas fa-microscope"></i>
+                    <h3>可研究性</h3>
+                    <p>确保问题可以通过实证调查和可用的研究方法来回答</p>
+                </div>
+                <div class="practice-item">
+                    <i class="fas fa-star"></i>
+                    <h3>重要性</h3>
+                    <p>问题应该解决重要议题，对您的研究领域做出有意义的贡献</p>
+                </div>
+                <div class="practice-item">
+                    <i class="fas fa-clock"></i>
+                    <h3>可行性</h3>
+                    <p>在制定研究问题时考虑时间、资源和伦理约束</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>准备生成您的研究问题了吗？</h2>
+                <p>开始为您的学术项目创建创新且有影响力的研究问题</p>
+                <a href="#research-field" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    立即开始生成
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>AI学术助手</span>
+                    </div>
+                    <p>为全球研究人员提供专业的AI驱动学术写作助手。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>工具</h3>
+                    <ul>
+                        <li><a href="research-question.html">研究问题</a></li>
+                        <li><a href="literature-review.html">文献综述</a></li>
+                        <li><a href="research-method.html">研究方法</a></li>
+                        <li><a href="phd-assistant.html">博士助手</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>功能</h3>
+                    <ul>
+                        <li><a href="writing-optimization.html">写作优化</a></li>
+                        <li><a href="data-analysis.html">数据分析</a></li>
+                        <li><a href="ai-reducer.html">AI降重工具</a></li>
+                        <li><a href="index.html#pricing">价格</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@aigrantwriter.xyz</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AI学术助手. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function generateResearchQuestions() {
+            const field = document.getElementById('research-field').value;
+            const topic = document.getElementById('research-topic').value;
+            const type = document.getElementById('research-type').value;
+            const level = document.getElementById('research-level').value;
+            const keywords = document.getElementById('keywords').value;
+
+            if (!field || !topic.trim()) {
+                alert('Please select a research field and describe your topic.');
+                return;
+            }
+
+            // Show output section
+            const outputSection = document.getElementById('output');
+            const content = document.getElementById('questions-content');
+            
+            outputSection.style.display = 'block';
+            content.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Generating research questions...</div>';
+
+            // Simulate API call
+            setTimeout(() => {
+                const questions = generateSampleQuestions(field, topic, type, level);
+                content.innerHTML = questions;
+            }, 2000);
+        }
+
+        function generateSampleQuestions(field, topic, type, level) {
+            // This is a simulation - in real implementation, this would call an AI service
+            const questionTypes = [
+                'Descriptive Research Question',
+                'Comparative Research Question', 
+                'Relational Research Question',
+                'Causal Research Question'
+            ];
+
+            let html = '<div class="questions-list">';
+            
+            questionTypes.forEach((questionType, index) => {
+                html += `
+                    <div class="question-item">
+                        <div class="question-type">${questionType}</div>
+                        <div class="question-text">
+                            ${getSampleQuestion(field, topic, type, questionType, index + 1)}
+                        </div>
+                        <div class="question-actions">
+                            <button class="action-btn" onclick="copyQuestion(${index})">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <button class="action-btn" onclick="refineQuestion(${index})">
+                                <i class="fas fa-edit"></i> Refine
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            return html;
+        }
+
+        function getSampleQuestion(field, topic, type, questionType, index) {
+            // Generate sample questions based on field and type
+            const samples = {
+                'psychology': [
+                    'What are the psychological factors that influence decision-making in high-stress environments?',
+                    'How does cognitive behavioral therapy compare to traditional counseling in treating anxiety disorders?',
+                    'What is the relationship between social media usage and self-esteem among adolescents?',
+                    'Does mindfulness meditation cause significant improvements in attention span and focus?'
+                ],
+                'education': [
+                    'What are the current challenges faced by teachers in implementing technology-enhanced learning?',
+                    'How does project-based learning compare to lecture-based instruction in student engagement?',
+                    'What is the correlation between parental involvement and student academic achievement?',
+                    'Does gamification in education lead to improved learning outcomes and retention?'
+                ],
+                'business': [
+                    'What are the key factors driving digital transformation in small and medium enterprises?',
+                    'How does remote work productivity compare to traditional office-based work arrangements?',
+                    'What is the relationship between employee satisfaction and organizational performance?',
+                    'Does implementing sustainable business practices result in improved financial performance?'
+                ]
+            };
+            
+            const fieldSamples = samples[field] || samples['psychology'];
+            return fieldSamples[index - 1] || `How does ${topic} impact the field of ${field}?`;
+        }
+
+        function copyQuestion(index) {
+            const questionText = document.querySelectorAll('.question-text')[index].textContent;
+            navigator.clipboard.writeText(questionText).then(() => {
+                alert('Question copied to clipboard!');
+            });
+        }
+
+        function refineQuestion(index) {
+            alert('Question refinement feature coming soon!');
+        }
+
+        function copyToClipboard() {
+            const allQuestions = Array.from(document.querySelectorAll('.question-text'))
+                .map(el => el.textContent)
+                .join('\n\n');
+            
+            navigator.clipboard.writeText(allQuestions).then(() => {
+                alert('All questions copied to clipboard!');
+            });
+        }
+
+        // Navigation toggle
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

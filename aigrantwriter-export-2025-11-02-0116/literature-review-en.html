@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Literature Review Generator - Academic Writing Assistant</title>
+    <link rel="stylesheet" href="styles.min.css">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+        }
+        
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .output-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4facfe;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .notice {
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .notice.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .notice.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .review-content {
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        
+        .review-content h1,
+        .review-content h2,
+        .review-content h3 {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .citation-format {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #4facfe;
+        }
+        
+        .tips-section {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .tips-section h3 {
+            color: #0066cc;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 AI Literature Review Generator</h1>
+            <p>Comprehensive literature reviews following US academic standards</p>
+            <p><em>APA, MLA, Chicago citation formats supported</em></p>
+        </div>
+
+        <div class="tips-section">
+            <h3>💡 Tips for Effective Literature Reviews</h3>
+            <ul>
+                <li><strong>Scope:</strong> Define clear boundaries for your review</li>
+                <li><strong>Sources:</strong> Use peer-reviewed journals, books, and credible sources</li>
+                <li><strong>Organization:</strong> Group sources thematically or chronologically</li>
+                <li><strong>Critical Analysis:</strong> Don't just summarize - analyze and synthesize</li>
+                <li><strong>Citations:</strong> Follow your required citation style consistently</li>
+            </ul>
+        </div>
+
+        <div class="form-section">
+            <h2>📝 Literature Review Parameters</h2>
+            <form id="reviewForm">
+                <div class="form-group">
+                    <label for="researchTopic">Research Topic *</label>
+                    <input type="text" id="researchTopic" name="researchTopic" required 
+                           placeholder="e.g., Impact of Social Media on Mental Health in College Students">
+                </div>
+
+                <div class="form-group">
+                    <label for="discipline">Academic Discipline *</label>
+                    <select id="discipline" name="discipline" required>
+                        <option value="">Select your discipline</option>
+                        <option value="Psychology">Psychology</option>
+                        <option value="Sociology">Sociology</option>
+                        <option value="Education">Education</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Business">Business</option>
+                        <option value="Economics">Economics</option>
+                        <option value="Political Science">Political Science</option>
+                        <option value="History">History</option>
+                        <option value="Literature">Literature</option>
+                        <option value="Medicine">Medicine</option>
+                        <option value="Nursing">Nursing</option>
+                        <option value="Environmental Science">Environmental Science</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="citationStyle">Citation Style *</label>
+                    <select id="citationStyle" name="citationStyle" required>
+                        <option value="">Select citation style</option>
+                        <option value="APA">APA (American Psychological Association)</option>
+                        <option value="MLA">MLA (Modern Language Association)</option>
+                        <option value="Chicago">Chicago/Turabian</option>
+                        <option value="Harvard">Harvard</option>
+                        <option value="IEEE">IEEE</option>
+                        <option value="AMA">AMA (American Medical Association)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reviewScope">Review Scope *</label>
+                    <select id="reviewScope" name="reviewScope" required>
+                        <option value="">Select scope</option>
+                        <option value="Comprehensive">Comprehensive Review (50+ sources)</option>
+                        <option value="Focused">Focused Review (20-30 sources)</option>
+                        <option value="Brief">Brief Review (10-15 sources)</option>
+                        <option value="Systematic">Systematic Review</option>
+                        <option value="Meta-analysis">Meta-analysis</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="timeFrame">Time Frame *</label>
+                    <select id="timeFrame" name="timeFrame" required>
+                        <option value="">Select time frame</option>
+                        <option value="Last 5 years">Last 5 years (2019-2024)</option>
+                        <option value="Last 10 years">Last 10 years (2014-2024)</option>
+                        <option value="Last 15 years">Last 15 years (2009-2024)</option>
+                        <option value="Last 20 years">Last 20 years (2004-2024)</option>
+                        <option value="Historical">Historical perspective (all relevant years)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="researchQuestions">Research Questions/Objectives *</label>
+                    <textarea id="researchQuestions" name="researchQuestions" rows="4" required
+                              placeholder="List your main research questions or objectives that the literature review should address..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="keyTerms">Key Terms and Keywords</label>
+                    <input type="text" id="keyTerms" name="keyTerms" 
+                           placeholder="e.g., social media, mental health, college students, anxiety, depression">
+                </div>
+
+                <div class="form-group">
+                    <label for="specificFocus">Specific Focus Areas</label>
+                    <textarea id="specificFocus" name="specificFocus" rows="3"
+                              placeholder="Any specific aspects, populations, or methodologies you want to emphasize..."></textarea>
+                </div>
+
+                <button type="submit" class="generate-btn">
+                    📖 Generate Literature Review
+                </button>
+            </form>
+        </div>
+
+        <div id="outputSection" class="output-section" style="display: none;">
+            <h2>📄 Generated Literature Review</h2>
+            <div id="outputContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_CONFIGS = [
+            {
+                name: 'WenWen AI',
+                baseURL: 'https://breakout.wenwen-ai.com/v1/chat/completions',
+                apiKey: 'sk-6ogS4COJPVLfLclruLQ6h59IxyvcN61nGuvgpr71VNL3ARsN',
+                model: 'gpt-3.5-turbo'
+            },
+            {
+                name: 'Local Fallback',
+                baseURL: 'local',
+                apiKey: 'local',
+                model: 'local'
+            }
+        ];
+
+        document.getElementById('reviewForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Validate required fields
+            const requiredFields = ['researchTopic', 'discipline', 'citationStyle', 'reviewScope', 'timeFrame', 'researchQuestions'];
+            for (let field of requiredFields) {
+                if (!data[field]) {
+                    showNotification(`Please fill in the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`, 'error');
+                    return;
+                }
+            }
+            
+            const outputSection = document.getElementById('outputSection');
+            const outputContent = document.getElementById('outputContent');
+            
+            outputSection.style.display = 'block';
+            outputContent.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>📚 AI is generating your literature review...</p>
+                    <p><em>Analyzing current research and synthesizing findings...</em></p>
+                </div>
+            `;
+            
+            try {
+                const review = await generateAIReview(data);
+                outputContent.innerHTML = review;
+                showNotification('✅ Literature review generated successfully!', 'success');
+            } catch (error) {
+                console.error('AI generation failed:', error);
+                
+                showNotification('⚠️ AI service temporarily unavailable. Generated template review for you to customize.', 'error');
+                
+                const fallbackReview = generateLocalReview(data);
+                outputContent.innerHTML = formatReviewContent(fallbackReview, data);
+            }
+        });
+
+        async function generateAIReview(data) {
+            const prompt = `Generate a comprehensive literature review for a US academic paper with the following specifications:
+
+Research Topic: ${data.researchTopic}
+Academic Discipline: ${data.discipline}
+Citation Style: ${data.citationStyle}
+Review Scope: ${data.reviewScope}
+Time Frame: ${data.timeFrame}
+Research Questions: ${data.researchQuestions}
+Key Terms: ${data.keyTerms || 'Not specified'}
+Specific Focus: ${data.specificFocus || 'General overview'}
+
+Please create a professional literature review that follows US academic standards and includes:
+
+1. **Introduction and Background**
+   - Define the research topic and its significance
+   - Establish the scope and objectives of the review
+   - Present the research questions
+
+2. **Methodology** (for systematic reviews)
+   - Search strategy and databases used
+   - Inclusion and exclusion criteria
+   - Selection process
+
+3. **Thematic Organization**
+   - Organize literature into logical themes or categories
+   - Present chronological development where relevant
+   - Identify key theories and frameworks
+
+4. **Critical Analysis and Synthesis**
+   - Analyze strengths and limitations of existing research
+   - Identify patterns, trends, and contradictions
+   - Synthesize findings across studies
+   - Highlight research gaps
+
+5. **Current State of Knowledge**
+   - Summarize what is currently known
+   - Identify areas of consensus and debate
+   - Discuss methodological considerations
+
+6. **Future Research Directions**
+   - Suggest areas for future investigation
+   - Recommend methodological improvements
+   - Identify practical implications
+
+7. **Conclusion**
+   - Summarize key findings
+   - Restate significance of the topic
+   - Connect to research questions
+
+Requirements:
+- Use ${data.citationStyle} citation format consistently
+- Include realistic but representative citations
+- Follow US academic writing conventions
+- Maintain critical and analytical tone
+- Ensure logical flow and organization
+- Include transition sentences between sections
+- Use discipline-appropriate terminology
+
+Format the response in clean HTML with proper headings, paragraphs, and ${data.citationStyle} style citations.`;
+
+            for (let config of API_CONFIGS) {
+                if (config.baseURL === 'local') {
+                    return generateLocalReview(data);
+                }
+                
+                try {
+                    const response = await fetch(config.baseURL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${config.apiKey}`
+                        },
+                        body: JSON.stringify({
+                            model: config.model,
+                            messages: [
+                                {
+                                    role: 'user',
+                                    content: prompt
+                                }
+                            ],
+                            max_tokens: 4000,
+                            temperature: 0.7
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    if (result.choices && result.choices[0] && result.choices[0].message) {
+                        return formatReviewContent(result.choices[0].message.content, data);
+                    }
+                } catch (error) {
+                    console.error(`${config.name} Error:`, error);
+                    continue;
+                }
+            }
+            
+            throw new Error('All AI services are temporarily unavailable');
+        }
+
+        function generateLocalReview(data) {
+            const citationExample = getCitationExample(data.citationStyle);
+            
+            return `# Literature Review: ${data.researchTopic}
+
+## Introduction and Background
+
+The field of ${data.discipline.toLowerCase()} has increasingly recognized the importance of ${data.researchTopic.toLowerCase()}. This literature review examines current research within the ${data.timeFrame.toLowerCase()} timeframe, focusing on ${data.reviewScope.toLowerCase()} analysis of relevant studies.
+
+### Research Questions
+${data.researchQuestions}
+
+### Scope and Objectives
+This review aims to:
+- Synthesize current knowledge on ${data.researchTopic.toLowerCase()}
+- Identify key themes and patterns in the literature
+- Highlight research gaps and future directions
+- Provide a foundation for further research
+
+## Methodology
+
+### Search Strategy
+A comprehensive search was conducted using major academic databases including:
+- PubMed/MEDLINE
+- PsycINFO
+- Web of Science
+- Google Scholar
+- Discipline-specific databases
+
+### Inclusion Criteria
+- Peer-reviewed articles published ${data.timeFrame.toLowerCase()}
+- Studies focusing on ${data.researchTopic.toLowerCase()}
+- English language publications
+- Empirical research and theoretical papers
+
+## Thematic Analysis
+
+### Theme 1: Theoretical Foundations
+Recent theoretical developments in ${data.discipline.toLowerCase()} have provided new frameworks for understanding ${data.researchTopic.toLowerCase()}. ${citationExample.sample1} established foundational concepts that continue to influence current research approaches.
+
+Key theoretical contributions include:
+- **Framework A**: Provides comprehensive model for understanding [specific aspect]
+- **Theory B**: Explains mechanisms underlying [relevant process]
+- **Model C**: Integrates multiple perspectives on [research topic]
+
+### Theme 2: Empirical Findings
+Empirical research has revealed several important patterns:
+
+**Quantitative Studies**: Large-scale studies have demonstrated significant relationships between key variables. ${citationExample.sample2} found that [specific finding], while ${citationExample.sample3} reported contrasting results in different populations.
+
+**Qualitative Research**: In-depth qualitative investigations have provided rich insights into [specific aspects]. Thematic analysis reveals common experiences and perspectives among participants.
+
+### Theme 3: Methodological Considerations
+The literature reveals diverse methodological approaches:
+- **Experimental Designs**: Controlled studies examining causal relationships
+- **Longitudinal Studies**: Tracking changes over time
+- **Cross-sectional Surveys**: Examining relationships at single time points
+- **Mixed Methods**: Combining quantitative and qualitative approaches
+
+## Critical Analysis and Synthesis
+
+### Strengths of Current Research
+- **Methodological Rigor**: Many studies employ robust research designs
+- **Diverse Populations**: Research includes varied demographic groups
+- **Theoretical Grounding**: Studies are well-grounded in established theory
+- **Practical Relevance**: Findings have clear implications for practice
+
+### Limitations and Gaps
+Several limitations are evident in the current literature:
+- **Sample Limitations**: Many studies focus on specific populations
+- **Methodological Constraints**: Some designs limit causal inferences
+- **Measurement Issues**: Inconsistent operationalization of key variables
+- **Cultural Considerations**: Limited cross-cultural validation
+
+### Research Gaps
+Key areas requiring further investigation include:
+1. **Gap 1**: Limited understanding of [specific aspect]
+2. **Gap 2**: Insufficient longitudinal research on [topic]
+3. **Gap 3**: Need for intervention studies addressing [issue]
+
+## Current State of Knowledge
+
+### Areas of Consensus
+The literature demonstrates agreement on several key points:
+- [Consensus point 1 with supporting evidence]
+- [Consensus point 2 with supporting evidence]
+- [Consensus point 3 with supporting evidence]
+
+### Areas of Debate
+Ongoing debates in the field include:
+- **Debate 1**: Conflicting findings regarding [specific issue]
+- **Debate 2**: Theoretical disagreements about [concept]
+- **Debate 3**: Methodological controversies concerning [approach]
+
+## Future Research Directions
+
+### Methodological Recommendations
+- **Longitudinal Designs**: Track changes over extended periods
+- **Intervention Studies**: Test effectiveness of specific approaches
+- **Cross-cultural Research**: Examine generalizability across cultures
+- **Technology Integration**: Utilize new technologies for data collection
+
+### Theoretical Development
+- **Model Refinement**: Improve existing theoretical frameworks
+- **Integration**: Combine insights from multiple theoretical perspectives
+- **Innovation**: Develop new models addressing identified gaps
+
+### Practical Applications
+- **Implementation Research**: Study real-world application of findings
+- **Policy Implications**: Examine policy-relevant aspects
+- **Stakeholder Engagement**: Include diverse perspectives in research
+
+## Conclusion
+
+This literature review reveals a dynamic and evolving field with significant contributions to understanding ${data.researchTopic.toLowerCase()}. While substantial progress has been made, important gaps remain that offer opportunities for future research.
+
+### Key Findings
+- Current research provides strong foundation for understanding [topic]
+- Multiple theoretical frameworks offer complementary perspectives
+- Empirical evidence supports [key conclusions]
+- Methodological diversity strengthens overall knowledge base
+
+### Implications
+The findings have important implications for:
+- **Theory**: Advancing theoretical understanding of [topic]
+- **Practice**: Informing evidence-based interventions
+- **Policy**: Supporting policy development and implementation
+- **Future Research**: Guiding subsequent investigations
+
+### Final Thoughts
+As the field continues to evolve, researchers must address identified limitations while building on existing strengths. The integration of diverse methodological approaches and theoretical perspectives will be essential for advancing knowledge in this important area.
+
+---
+
+## References
+
+${citationExample.references}
+
+---
+
+*This literature review was generated using AI assistance and should be customized with actual citations and specific content relevant to your research topic. Please verify all citations and add additional sources as needed.*`;
+        }
+
+        function getCitationExample(style) {
+            switch(style) {
+                case 'APA':
+                    return {
+                        sample1: '(Smith & Johnson, 2023)',
+                        sample2: '(Brown et al., 2022)',
+                        sample3: '(Davis, 2021)',
+                        references: `Brown, A., Wilson, B., & Taylor, C. (2022). *Research methods in ${document.getElementById('discipline').value || 'social sciences'}*. Academic Press.
+
+Davis, M. (2021). Theoretical frameworks for understanding complex phenomena. *Journal of Research*, 45(3), 123-145.
+
+Smith, J., & Johnson, L. (2023). Contemporary approaches to literature review methodology. *Review of Educational Research*, 78(2), 234-256.`
+                    };
+                case 'MLA':
+                    return {
+                        sample1: '(Smith and Johnson 123)',
+                        sample2: '(Brown et al. 45)',
+                        sample3: '(Davis 78)',
+                        references: `Brown, Alice, et al. *Research Methods in Social Sciences*. Academic Press, 2022.
+
+Davis, Michael. "Theoretical Frameworks for Understanding Complex Phenomena." *Journal of Research*, vol. 45, no. 3, 2021, pp. 123-145.
+
+Smith, John, and Linda Johnson. "Contemporary Approaches to Literature Review Methodology." *Review of Educational Research*, vol. 78, no. 2, 2023, pp. 234-256.`
+                    };
+                case 'Chicago':
+                    return {
+                        sample1: '(Smith and Johnson 2023, 123)',
+                        sample2: '(Brown et al. 2022, 45)',
+                        sample3: '(Davis 2021, 78)',
+                        references: `Brown, Alice, Bob Wilson, and Carol Taylor. *Research Methods in Social Sciences*. Academic Press, 2022.
+
+Davis, Michael. "Theoretical Frameworks for Understanding Complex Phenomena." *Journal of Research* 45, no. 3 (2021): 123-145.
+
+Smith, John, and Linda Johnson. "Contemporary Approaches to Literature Review Methodology." *Review of Educational Research* 78, no. 2 (2023): 234-256.`
+                    };
+                default:
+                    return {
+                        sample1: '(Smith & Johnson, 2023)',
+                        sample2: '(Brown et al., 2022)',
+                        sample3: '(Davis, 2021)',
+                        references: 'Please format references according to your required citation style.'
+                    };
+            }
+        }
+
+        function formatReviewContent(content, data) {
+            // Convert markdown to HTML
+            if (content.includes('#') || content.includes('**') || content.includes('- ')) {
+                let htmlContent = content
+                    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+                    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                    .replace(/^#### (.*$)/gm, '<h4>$1</h4>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/^\- (.*$)/gm, '<li>$1</li>')
+                    .replace(/^(\d+)\. (.*$)/gm, '<li>$1. $2</li>')
+                    .replace(/\n\n/g, '</p><p>')
+                    .replace(/\n/g, '<br>');
+                
+                // Wrap list items
+                htmlContent = htmlContent.replace(/(<li>.*?<\/li>)/gs, '<ul>$1</ul>');
+                htmlContent = htmlContent.replace(/<\/ul>\s*<ul>/g, '');
+                
+                // Wrap paragraphs
+                if (!htmlContent.startsWith('<h1>') && !htmlContent.startsWith('<p>')) {
+                    htmlContent = '<p>' + htmlContent + '</p>';
+                }
+                
+                return `
+                    <div class="citation-format">
+                        <h4>📋 Citation Style: ${data.citationStyle}</h4>
+                        <p><strong>Discipline:</strong> ${data.discipline} | <strong>Scope:</strong> ${data.reviewScope} | <strong>Time Frame:</strong> ${data.timeFrame}</p>
+                    </div>
+                    <div class="review-content">
+                        ${htmlContent}
+                    </div>
+                    <div class="notice" style="background: #fff3cd; border: 1px solid #ffeaa7; margin-top: 20px;">
+                        <p><strong>Important:</strong> This is a template literature review. Please replace example citations with actual sources from your research and customize the content according to your specific topic and requirements.</p>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="citation-format">
+                        <h4>📋 Citation Style: ${data.citationStyle}</h4>
+                        <p><strong>Discipline:</strong> ${data.discipline} | <strong>Scope:</strong> ${data.reviewScope} | <strong>Time Frame:</strong> ${data.timeFrame}</p>
+                    </div>
+                    <div class="review-content">
+                        ${content.replace(/\n/g, '<br>')}
+                    </div>
+                `;
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notice ${type}`;
+            notification.innerHTML = message;
+            
+            const outputSection = document.getElementById('outputSection');
+            if (outputSection.style.display !== 'none') {
+                outputSection.insertBefore(notification, outputSection.firstChild);
+            } else {
+                document.querySelector('.form-section').appendChild(notification);
+            }
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

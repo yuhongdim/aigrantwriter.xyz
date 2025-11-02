@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Feedback & Grading System - Academic Improvement Tools | US Universities</title>
+    <meta name="description" content="Understand professor feedback, improve your grades, and enhance academic performance with our comprehensive feedback analysis and improvement tools designed for US university students.">
+    <link rel="stylesheet" href="styles.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .feedback-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .feedback-tools {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feedback-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid #667eea;
+        }
+        
+        .feedback-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .card-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .demo-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .feedback-demo {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .grade-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .grade-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .grade-score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .grade-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .improvement-suggestions {
+            background: #e8f5e8;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .suggestion-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+        
+        .suggestion-icon {
+            color: #4CAF50;
+            margin-right: 15px;
+            margin-top: 2px;
+        }
+        
+        .rubric-section {
+            background: #fff3cd;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .rubric-criteria {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .criteria-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .criteria-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .criteria-score {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .score-bar {
+            width: 100px;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .score-fill {
+            height: 100%;
+            background: #4CAF50;
+            transition: width 0.3s ease;
+        }
+        
+        .upload-feedback {
+            background: white;
+            border: 2px dashed #ddd;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin: 30px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-feedback:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: scale(1.05);
+        }
+        
+        .progress-tracker {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .progress-item {
+            text-align: center;
+        }
+        
+        .progress-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .progress-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">AI Grant Writer</a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="collaboration-tools.html" class="nav-link">Collaboration</a>
+                </li>
+                <li class="nav-item">
+                    <a href="academic-level-selector.html" class="nav-link">Academic Level</a>
+                </li>
+                <li class="nav-item">
+                    <a href="citation-formats.html" class="nav-link">Citation Guide</a>
+                </li>
+                <li class="nav-item">
+                    <a href="academic-integrity.html" class="nav-link">Academic Integrity</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="feedback-hero">
+        <div class="container">
+            <h1>📊 Professor Feedback & Grading System</h1>
+            <p class="lead">Transform professor feedback into actionable improvements</p>
+            <p>Understand grading rubrics, track academic progress, and boost your GPA with data-driven insights</p>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="feedback-tools">
+        <div class="container">
+            <div class="upload-feedback">
+                <i class="fas fa-file-upload upload-icon"></i>
+                <h3>Upload Your Graded Assignment</h3>
+                <p>Get AI-powered analysis of professor feedback and personalized improvement suggestions</p>
+                <button class="btn-primary" onclick="uploadAssignment()">
+                    <i class="fas fa-upload"></i> Upload Assignment
+                </button>
+                <p style="font-size: 0.8rem; color: #666; margin-top: 15px;">
+                    Supports: PDF, DOC, DOCX, Images (JPG, PNG) • Max 10MB • Your data is secure and private
+                </p>
+            </div>
+            
+            <!-- Tools Grid -->
+            <div class="tool-grid">
+                <div class="feedback-card">
+                    <i class="fas fa-chart-line card-icon"></i>
+                    <h4 class="card-title">Grade Trend Analysis</h4>
+                    <p class="card-description">Track your academic performance over time, identify patterns, and predict future grades based on current trajectory.</p>
+                    <button class="btn-primary" onclick="openGradeTrends()">View Trends</button>
+                </div>
+                
+                <div class="feedback-card">
+                    <i class="fas fa-lightbulb card-icon"></i>
+                    <h4 class="card-title">Feedback Decoder</h4>
+                    <p class="card-description">Understand what professors really mean in their comments and get specific action items for improvement.</p>
+                    <button class="btn-primary" onclick="openFeedbackDecoder()">Decode Feedback</button>
+                </div>
+                
+                <div class="feedback-card">
+                    <i class="fas fa-target card-icon"></i>
+                    <h4 class="card-title">Rubric Optimizer</h4>
+                    <p class="card-description">Analyze grading rubrics and get targeted suggestions to maximize points in each category.</p>
+                    <button class="btn-primary" onclick="openRubricOptimizer()">Optimize Rubric</button>
+                </div>
+                
+                <div class="feedback-card">
+                    <i class="fas fa-graduation-cap card-icon"></i>
+                    <h4 class="card-title">GPA Predictor</h4>
+                    <p class="card-description">Predict your semester and cumulative GPA based on current performance and upcoming assignments.</p>
+                    <button class="btn-primary" onclick="openGPAPredictor()">Predict GPA</button>
+                </div>
+                
+                <div class="feedback-card">
+                    <i class="fas fa-comments card-icon"></i>
+                    <h4 class="card-title">Office Hours Prep</h4>
+                    <p class="card-description">Prepare effective questions for professor meetings based on your feedback and areas needing clarification.</p>
+                    <button class="btn-primary" onclick="openOfficeHoursPrep()">Prepare Questions</button>
+                </div>
+                
+                <div class="feedback-card">
+                    <i class="fas fa-medal card-icon"></i>
+                    <h4 class="card-title">Improvement Tracker</h4>
+                    <p class="card-description">Set academic goals, track progress, and celebrate improvements in your academic performance.</p>
+                    <button class="btn-primary" onclick="openImprovementTracker()">Track Progress</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo-section">
+        <div class="container">
+            <div class="text-center">
+                <h2>📝 Sample Feedback Analysis</h2>
+                <p class="lead">See how our AI transforms professor feedback into actionable insights</p>
+            </div>
+            
+            <div class="feedback-demo">
+                <h3>📄 Research Paper: "Climate Change Policy Analysis"</h3>
+                <p><strong>Course:</strong> POLI 350 - Environmental Policy | <strong>Professor:</strong> Dr. Sarah Martinez</p>
+                
+                <!-- Grade Breakdown -->
+                <div class="grade-breakdown">
+                    <div class="grade-item">
+                        <div class="grade-score">B+</div>
+                        <div class="grade-label">Overall Grade</div>
+                    </div>
+                    <div class="grade-item">
+                        <div class="grade-score">87/100</div>
+                        <div class="grade-label">Total Points</div>
+                    </div>
+                    <div class="grade-item">
+                        <div class="grade-score">3.3</div>
+                        <div class="grade-label">GPA Impact</div>
+                    </div>
+                    <div class="grade-item">
+                        <div class="grade-score">Top 25%</div>
+                        <div class="grade-label">Class Ranking</div>
+                    </div>
+                </div>
+                
+                <!-- Rubric Analysis -->
+                <div class="rubric-section">
+                    <h4>📋 Rubric Breakdown</h4>
+                    <div class="rubric-criteria">
+                        <div class="criteria-item">
+                            <div class="criteria-title">Thesis & Argument (25%)</div>
+                            <div class="criteria-score">
+                                <span>22/25 points</span>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: 88%;"></div>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.8rem; color: #666;">Strong thesis, well-developed argument</p>
+                        </div>
+                        
+                        <div class="criteria-item">
+                            <div class="criteria-title">Research & Sources (25%)</div>
+                            <div class="criteria-score">
+                                <span>20/25 points</span>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: 80%;"></div>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.8rem; color: #666;">Good sources, need more recent studies</p>
+                        </div>
+                        
+                        <div class="criteria-item">
+                            <div class="criteria-title">Writing & Organization (25%)</div>
+                            <div class="criteria-score">
+                                <span>23/25 points</span>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: 92%;"></div>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.8rem; color: #666;">Clear writing, excellent flow</p>
+                        </div>
+                        
+                        <div class="criteria-item">
+                            <div class="criteria-title">Citations & Format (25%)</div>
+                            <div class="criteria-score">
+                                <span>22/25 points</span>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: 88%;"></div>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.8rem; color: #666;">Minor APA formatting issues</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI-Generated Improvements -->
+                <div class="improvement-suggestions">
+                    <h4>🚀 AI-Generated Improvement Suggestions</h4>
+                    
+                    <div class="suggestion-item">
+                        <i class="fas fa-calendar-alt suggestion-icon"></i>
+                        <div>
+                            <strong>Update Your Sources</strong><br>
+                            <span style="color: #666;">Add 3-4 studies from 2022-2024 to strengthen your research section. Focus on recent climate policy developments and their effectiveness.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="suggestion-item">
+                        <i class="fas fa-quote-right suggestion-icon"></i>
+                        <div>
+                            <strong>Fix APA Citations</strong><br>
+                            <span style="color: #666;">Review pages 3, 7, and 12 for proper in-text citation format. Use our Citation Guide for APA 7th edition examples.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="suggestion-item">
+                        <i class="fas fa-chart-bar suggestion-icon"></i>
+                        <div>
+                            <strong>Add Data Visualization</strong><br>
+                            <span style="color: #666;">Include 1-2 graphs or charts to support your policy analysis. Visual data can strengthen your argument significantly.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="suggestion-item">
+                        <i class="fas fa-users suggestion-icon"></i>
+                        <div>
+                            <strong>Expand Stakeholder Analysis</strong><br>
+                            <span style="color: #666;">Consider perspectives from industry, environmental groups, and local communities affected by the policies you discuss.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress Tracker -->
+                <div class="progress-tracker">
+                    <h4>📈 Your Academic Progress This Semester</h4>
+                    <div class="progress-stats">
+                        <div class="progress-item">
+                            <span class="progress-number">3.45</span>
+                            <span class="progress-label">Current GPA</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="progress-number">+0.2</span>
+                            <span class="progress-label">GPA Improvement</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="progress-number">85%</span>
+                            <span class="progress-label">Avg Assignment Score</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="progress-number">12/15</span>
+                            <span class="progress-label">Assignments Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function uploadAssignment() {
+            alert('📤 Upload Assignment\n\nFeatures:\n• AI-powered feedback analysis\n• Rubric breakdown and scoring\n• Personalized improvement suggestions\n• Grade prediction and trends\n\nThis feature is coming soon! Sign up for early access to be the first to try it.');
+        }
+        
+        function openGradeTrends() {
+            alert('📊 Grade Trend Analysis\n\nTrack your academic performance:\n• Semester-by-semester progress\n• Course-specific trends\n• GPA predictions\n• Performance comparisons\n\nComing soon!');
+        }
+        
+        function openFeedbackDecoder() {
+            alert('💡 Feedback Decoder\n\nUnderstand professor comments:\n• Plain English explanations\n• Specific action items\n• Priority improvements\n• Success strategies\n\nComing soon!');
+        }
+        
+        function openRubricOptimizer() {
+            alert('🎯 Rubric Optimizer\n\nMaximize your points:\n• Rubric analysis and breakdown\n• Point optimization strategies\n• Category-specific tips\n• Grade improvement predictions\n\nComing soon!');
+        }
+        
+        function openGPAPredictor() {
+            alert('🎓 GPA Predictor\n\nPlan your academic future:\n• Semester GPA predictions\n• Cumulative GPA tracking\n• Grade scenarios and planning\n• Academic goal setting\n\nComing soon!');
+        }
+        
+        function openOfficeHoursPrep() {
+            alert('💬 Office Hours Prep\n\nMake the most of professor meetings:\n• Targeted question generation\n• Feedback clarification points\n• Improvement discussion topics\n• Meeting agenda templates\n\nComing soon!');
+        }
+        
+        function openImprovementTracker() {
+            alert('🏆 Improvement Tracker\n\nTrack your academic growth:\n• Goal setting and monitoring\n• Progress celebrations\n• Skill development tracking\n• Achievement milestones\n\nComing soon!');
+        }
+    </script>
+</body>
+</html>

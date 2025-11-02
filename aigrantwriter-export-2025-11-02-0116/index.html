@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI学术写作助手 - 智能论文生成器 | aigrantwriter.xyz</title>
+    <meta name="description" content="专业的AI学术写作助手，提供论文生成、文献综述、研究方法、数据分析等全方位学术写作支持">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AI学术写作</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#tools">工具</a></li>
+                <li><a href="#features">特性</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主页横幅 -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">AI驱动的学术写作助手</span>
+                </h1>
+                <p class="hero-subtitle">
+                    专业的人工智能学术写作工具，助力您的研究成功。
+                    从论文生成到数据分析，我们为学者提供全方位的智能写作支持。
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-large">
+                        <i class="fas fa-rocket"></i>
+                        开始使用
+                    </button>
+                    <button class="btn btn-outline btn-large">
+                        <i class="fas fa-play"></i>
+                        观看演示
+                    </button>
+                </div>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">10,000+</div>
+                    <div class="stat-label">用户数量</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50,000+</div>
+                    <div class="stat-label">生成文档</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label">满意度</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工具部分 -->
+    <section id="tools" class="tools-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="gradient-text">专业学术工具</span>
+                </h2>
+                <p class="section-subtitle">全面的AI驱动学术写作工具集，满足您的各种研究需求</p>
+            </div>
+            
+            <div class="tools-grid">
+                <!-- AI论文生成器 -->
+                <div class="tool-card" data-tool="phd-assistant">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>AI论文生成器</h3>
+                    <p>智能生成论文章节，包括引言、文献综述、方法论、结果分析等完整结构</p>
+                    <ul class="tool-features">
+                        <li>博士论文助手</li>
+                        <li>硕士论文生成</li>
+                        <li>学术提案写作</li>
+                    </ul>
+                    <button class="btn btn-tool" onclick="openTool('phd-assistant')">
+                        <i class="fas fa-arrow-right"></i>
+                        立即使用
+                    </button>
+                </div>
+
+                <!-- 自动化文献综述 -->
+                <div class="tool-card" data-tool="literature-review">
+                    <div class="tool-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>自动化文献综述</h3>
+                    <p>AI自动搜索、筛选和整理相关学术文献，生成专业的文献综述章节</p>
+                    <ul class="tool-features">
+                        <li>智能文献搜索</li>
+                        <li>自动引用格式</li>
+                        <li>文献关系分析</li>
+                    </ul>
+                    <button class="btn btn-tool" onclick="openTool('literature-review')">
+                        <i class="fas fa-arrow-right"></i>
+                        立即使用
+                    </button>
+                </div>
+
+                <!-- 研究方法论生成 -->
+                <div class="tool-card" data-tool="research-method">
+                    <div class="tool-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>研究方法论生成</h3>
+                    <p>根据研究主题自动生成合适的研究方法、实验设计和数据分析方案</p>
+                    <ul class="tool-features">
+                        <li>定量研究方法</li>
+                        <li>定性研究设计</li>
+                        <li>混合研究方法</li>
+                    </ul>
+                    <button class="btn btn-tool" onclick="openTool('research-method')">
+                        <i class="fas fa-arrow-right"></i>
+                        立即使用
+                    </button>
+                </div>
+
+                <!-- 研究问题生成 -->
+                <div class="tool-card" data-tool="research-question">
+                    <div class="tool-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3>研究问题生成</h3>
+                    <p>AI帮助生成有价值的研究问题和假设，确保研究的创新性和可行性</p>
+                    <ul class="tool-features">
+                        <li>问题创新性评估</li>
+                        <li>研究假设生成</li>
+                        <li>可行性分析</li>
+                    </ul>
+                    <button class="btn btn-tool" onclick="openTool('research-question')">
+                        <i class="fas fa-arrow-right"></i>
+                        立即使用
+                    </button>
+                </div>
+
+                <!-- 学术写作优化 -->
+                <div class="tool-card" data-tool="writing-optimization">
+                    <div class="tool-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3>学术写作优化</h3>
+                    <p>智能优化学术写作风格，提升论文的逻辑性、连贯性和学术规范性</p>
+                    <ul class="tool-features">
+                        <li>语言风格优化</li>
+                        <li>逻辑结构调整</li>
+                        <li>学术规范检查</li>
+                    </ul>
+                    <button class="btn btn-tool" onclick="openTool('writing-optimization')">
+                        <i class="fas fa-arrow-right"></i>
+                        立即使用
+                    </button>
+                </div>
+
+                <!-- 数据分析助手 -->
+                <div class="tool-card" data-tool="data-analysis">
+                    <div class="tool-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>数据分析助手</h3>
+                    <p>协助进行统计分析，生成图表和结果解释，提升研究的科学性</p>
+                    <ul class="tool-features">
+                        <li>统计分析建议</li>
+                        <li>图表自动生成</li>
+                        <li>结果解释优化</li>
+                    </ul>
+                    <button class="btn btn-tool" onclick="openTool('data-analysis')">
+                        <i class="fas fa-arrow-right"></i>
+                        立即使用
+                    </button>
+                </div>
+
+                <!-- AI降重工具 -->
+                <div class="tool-card" data-tool="ai-reducer">
+                    <div class="tool-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>AI降重工具</h3>
+                    <p>智能重写和降重，保持原意的同时提高原创性，确保学术诚信</p>
+                    <ul class="tool-features">
+                        <li>智能改写</li>
+                        <li>原创性检测</li>
+                        <li>语义保持</li>
+                        <li>多种改写模式</li>
+                    </ul>
+                    <button class="btn btn-tool" onclick="openTool('ai-reducer')">
+                        <i class="fas fa-arrow-right"></i>
+                        立即使用
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特色功能 -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="gradient-text">为什么选择我们</span>
+                </h2>
+                <p class="section-subtitle">专业、高效、可靠的AI学术写作解决方案</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI智能引擎</h3>
+                    <p>基于最新的GPT技术，理解学术写作规范，提供专业建议</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>数据安全保护</h3>
+                    <p>严格的数据加密和隐私保护，确保您的研究内容安全</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>24/7 可用</h3>
+                    <p>随时随地访问，云端同步，支持多设备使用</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>专业团队支持</h3>
+                    <p>由学术专家和AI工程师组成的团队提供技术支持</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>开始您的学术写作之旅</h2>
+                    <p>加入数万名研究者的行列，体验AI驱动的学术写作</p>
+                    <div class="contact-buttons">
+                        <button class="btn btn-primary btn-large">
+                            <i class="fas fa-rocket"></i>
+                            免费试用
+                        </button>
+                        <button class="btn btn-outline btn-large">
+                            <i class="fas fa-envelope"></i>
+                            联系我们
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="contact-stats">
+                    <div class="contact-stat">
+                        <i class="fas fa-star"></i>
+                        <span>4.9/5 用户评分</span>
+                    </div>
+                    <div class="contact-stat">
+                        <i class="fas fa-check-circle"></i>
+                        <span>100% 安全可靠</span>
+                    </div>
+                    <div class="contact-stat">
+                        <i class="fas fa-headset"></i>
+                        <span>专业客服支持</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>AI学术写作</span>
+                    </div>
+                    <p>专业的AI驱动学术写作助手，助力您的研究成功</p>
+                </div>
+                <div class="footer-section">
+                    <h4>工具</h4>
+                    <ul>
+                        <li><a href="phd-assistant.html">博士论文助手</a></li>
+                        <li><a href="literature-review.html">文献综述</a></li>
+                        <li><a href="research-method.html">研究方法</a></li>
+                        <li><a href="research-question.html">研究问题</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>功能</h4>
+                    <ul>
+                        <li><a href="writing-optimization.html">写作优化</a></li>
+                        <li><a href="data-analysis.html">数据分析</a></li>
+                        <li><a href="ai-reducer.html">AI降重</a></li>
+                        <li><a href="#contact">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>联系方式</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@aigrantwriter.xyz</li>
+                        <li><i class="fas fa-globe"></i> www.aigrantwriter.xyz</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AI学术写作助手. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="navigation.js"></script>
+</body>
+</html>

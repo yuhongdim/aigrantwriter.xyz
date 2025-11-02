@@ -1,0 +1,78 @@
+# Netlify部署配置 - AI Grant Writer
+
+[build]
+  # 构建命令（静态网站无需构建）
+  command = ""
+  # 发布目录
+  publish = "."
+
+# 重定向规则
+[[redirects]]
+  # 强制HTTPS
+  from = "http://aigrantwriter.xyz/*"
+  to = "https://aigrantwriter.xyz/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  # WWW重定向
+  from = "https://www.aigrantwriter.xyz/*"
+  to = "https://aigrantwriter.xyz/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  # SPA路由支持
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# 头部设置
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # 安全头部
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://kit.fontawesome.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://ka-f.fontawesome.com; img-src 'self' data: https:; connect-src 'self';"
+
+# 缓存设置
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000" # 30天
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000" # 30天
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000" # 1年
+
+[[headers]]
+  for = "/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000" # 1年
+
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000" # 1年
+
+# 环境变量（如需要）
+[build.environment]
+  NODE_VERSION = "18"
+
+# 插件配置
+[[plugins]]
+  package = "netlify-plugin-minify-html"
+
+[[plugins]]
+  package = "netlify-plugin-sitemap"
+  [plugins.inputs]
+    baseUrl = "https://aigrantwriter.xyz"

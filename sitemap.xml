@@ -98,4 +98,90 @@
         <priority>0.7</priority>
     </url>
 
+    <!-- Blog Section -->
+    <url>
+        <loc>https://aigrantwriter.xyz/blog/index.html</loc>
+        <lastmod>2024-11-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Blog Articles -->
+    <url>
+        <loc>https://aigrantwriter.xyz/blog/ai-academic-writing-guide-2024.html</loc>
+        <lastmod>2025-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://aigrantwriter.xyz/blog/academic-abstract-writing-guide.html</loc>
+        <lastmod>2025-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://aigrantwriter.xyz/blog/academic-collaboration-tips.html</loc>
+        <lastmod>2025-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://aigrantwriter.xyz/blog/academic-databases-guide.html</loc>
+        <lastmod>2025-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://aigrantwriter.xyz/blog/academic-presentation-guide.html</loc>
+        <lastmod>2025-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://aigrantwriter.xyz/blog/ai-tools-academic-writing-future.html</loc>
+        <lastmod>2025-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://aigrantwriter.xyz/blog/ai-tools-academic-writing.html</loc>
+        <lastmod>2025-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://aigrantwriter.xyz/blog/qualitative-research-methods.html</loc>
+        <lastmod>2025-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://aigrantwriter.xyz/blog/research-ethics-guide.html</loc>
+        <lastmod>2025-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://aigrantwriter.xyz/blog/sci-journal-submission-guide.html</loc>
+        <lastmod>2025-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://aigrantwriter.xyz/blog/spss-tutorial-guide.html</loc>
+        <lastmod>2025-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
 </urlset>

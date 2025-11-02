@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Grant Proposal Generator - Academic Writing Assistant</title>
+    <link rel="stylesheet" href="styles.min.css">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+        }
+        
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .output-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .notice {
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .notice.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .notice.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .proposal-content {
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        
+        .proposal-content h1,
+        .proposal-content h2,
+        .proposal-content h3 {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .proposal-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .funding-agencies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .agency-option {
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .agency-option:hover {
+            background: #e9ecef;
+        }
+        
+        .agency-option.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 AI Grant Proposal Generator</h1>
+            <p>Professional grant proposals tailored for US academic institutions</p>
+            <p><em>Designed specifically for American university students and researchers</em></p>
+        </div>
+
+        <div class="form-section">
+            <h2>📝 Project Information</h2>
+            <form id="proposalForm">
+                <div class="form-group">
+                    <label for="projectTitle">Project Title *</label>
+                    <input type="text" id="projectTitle" name="projectTitle" required 
+                           placeholder="e.g., Machine Learning Applications in Climate Change Prediction">
+                </div>
+
+                <div class="form-group">
+                    <label for="fundingAgency">Funding Agency *</label>
+                    <select id="fundingAgency" name="fundingAgency" required>
+                        <option value="">Select a funding agency</option>
+                        <option value="NSF">National Science Foundation (NSF)</option>
+                        <option value="NIH">National Institutes of Health (NIH)</option>
+                        <option value="DOE">Department of Energy (DOE)</option>
+                        <option value="NASA">NASA</option>
+                        <option value="USDA">USDA</option>
+                        <option value="NEH">National Endowment for the Humanities (NEH)</option>
+                        <option value="NEA">National Endowment for the Arts (NEA)</option>
+                        <option value="Private Foundation">Private Foundation</option>
+                        <option value="University Internal">University Internal Funding</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="researchArea">Research Area *</label>
+                    <select id="researchArea" name="researchArea" required>
+                        <option value="">Select research area</option>
+                        <option value="Computer Science">Computer Science & AI</option>
+                        <option value="Biology">Biology & Life Sciences</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Physics">Physics & Astronomy</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Mathematics">Mathematics & Statistics</option>
+                        <option value="Psychology">Psychology</option>
+                        <option value="Sociology">Sociology & Anthropology</option>
+                        <option value="Economics">Economics</option>
+                        <option value="Political Science">Political Science</option>
+                        <option value="History">History</option>
+                        <option value="Literature">Literature & Languages</option>
+                        <option value="Education">Education</option>
+                        <option value="Medicine">Medicine & Health Sciences</option>
+                        <option value="Environmental Science">Environmental Science</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectDescription">Project Description *</label>
+                    <textarea id="projectDescription" name="projectDescription" rows="6" required
+                              placeholder="Provide a detailed description of your research project, including objectives, methodology, and expected outcomes..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="budgetRange">Budget Range *</label>
+                    <select id="budgetRange" name="budgetRange" required>
+                        <option value="">Select budget range</option>
+                        <option value="under-10k">Under $10,000</option>
+                        <option value="10k-50k">$10,000 - $50,000</option>
+                        <option value="50k-100k">$50,000 - $100,000</option>
+                        <option value="100k-500k">$100,000 - $500,000</option>
+                        <option value="500k-1m">$500,000 - $1,000,000</option>
+                        <option value="over-1m">Over $1,000,000</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="duration">Project Duration *</label>
+                    <select id="duration" name="duration" required>
+                        <option value="">Select duration</option>
+                        <option value="6 months">6 months</option>
+                        <option value="1 year">1 year</option>
+                        <option value="2 years">2 years</option>
+                        <option value="3 years">3 years</option>
+                        <option value="4 years">4 years</option>
+                        <option value="5 years">5 years</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="generate-btn">
+                    🚀 Generate Professional Grant Proposal
+                </button>
+            </form>
+        </div>
+
+        <div id="outputSection" class="output-section" style="display: none;">
+            <h2>📄 Generated Grant Proposal</h2>
+            <div id="outputContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration for US-focused services
+        const API_CONFIGS = [
+            {
+                name: 'WenWen AI',
+                baseURL: 'https://breakout.wenwen-ai.com/v1/chat/completions',
+                apiKey: 'sk-6ogS4COJPVLfLclruLQ6h59IxyvcN61nGuvgpr71VNL3ARsN',
+                model: 'gpt-3.5-turbo'
+            },
+            {
+                name: 'Local Fallback',
+                baseURL: 'local',
+                apiKey: 'local',
+                model: 'local'
+            }
+        ];
+
+        document.getElementById('proposalForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Validate required fields
+            const requiredFields = ['projectTitle', 'fundingAgency', 'researchArea', 'projectDescription', 'budgetRange', 'duration'];
+            for (let field of requiredFields) {
+                if (!data[field]) {
+                    showNotification(`Please fill in the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`, 'error');
+                    return;
+                }
+            }
+            
+            const outputSection = document.getElementById('outputSection');
+            const outputContent = document.getElementById('outputContent');
+            
+            outputSection.style.display = 'block';
+            outputContent.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>🤖 AI is generating your professional grant proposal...</p>
+                    <p><em>This may take 30-60 seconds for a comprehensive proposal</em></p>
+                </div>
+            `;
+            
+            try {
+                const proposal = await generateAIProposal(data);
+                outputContent.innerHTML = proposal;
+                showNotification('✅ Grant proposal generated successfully!', 'success');
+            } catch (error) {
+                console.error('AI generation failed:', error);
+                
+                showNotification('⚠️ AI service temporarily unavailable. Generated template proposal for you to customize.', 'error');
+                
+                const fallbackProposal = generateLocalProposal(data);
+                outputContent.innerHTML = formatProposalContent(fallbackProposal, data);
+            }
+        });
+
+        async function generateAIProposal(data) {
+            const prompt = `Generate a comprehensive, professional grant proposal for a US academic institution with the following specifications:
+
+Project Title: ${data.projectTitle}
+Funding Agency: ${data.fundingAgency}
+Research Area: ${data.researchArea}
+Project Description: ${data.projectDescription}
+Budget Range: ${getBudgetText(data.budgetRange)}
+Duration: ${data.duration}
+
+Please create a detailed, professional grant proposal that follows US academic standards and includes:
+
+1. **Executive Summary** (1 page)
+2. **Project Description and Significance** (2-3 pages)
+3. **Literature Review and Background** (2-3 pages)
+4. **Research Objectives and Hypotheses** (1 page)
+5. **Methodology and Approach** (2-3 pages)
+6. **Timeline and Milestones** (1 page)
+7. **Budget Justification** (1-2 pages)
+8. **Expected Outcomes and Impact** (1-2 pages)
+9. **Evaluation and Dissemination Plan** (1 page)
+10. **References** (as needed)
+
+Requirements:
+- Use professional academic language appropriate for US institutions
+- Follow standard US grant proposal formatting
+- Include specific, measurable objectives
+- Provide detailed methodology
+- Address potential challenges and mitigation strategies
+- Emphasize broader impact and societal benefits
+- Use proper academic tone and structure
+- Make it compelling and competitive
+
+Format the response in clean HTML with proper headings, paragraphs, and structure.`;
+
+            for (let config of API_CONFIGS) {
+                if (config.baseURL === 'local') {
+                    return generateLocalProposal(data);
+                }
+                
+                try {
+                    const response = await fetch(config.baseURL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${config.apiKey}`
+                        },
+                        body: JSON.stringify({
+                            model: config.model,
+                            messages: [
+                                {
+                                    role: 'user',
+                                    content: prompt
+                                }
+                            ],
+                            max_tokens: 4000,
+                            temperature: 0.7
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    if (result.choices && result.choices[0] && result.choices[0].message) {
+                        return formatProposalContent(result.choices[0].message.content, data);
+                    }
+                } catch (error) {
+                    console.error(`${config.name} Error:`, error);
+                    continue;
+                }
+            }
+            
+            throw new Error('All AI services are temporarily unavailable');
+        }
+
+        function generateLocalProposal(data) {
+            return `# ${data.projectTitle}
+
+## Executive Summary
+
+This ${data.duration} research project in ${data.researchArea} aims to address critical challenges in the field through innovative methodologies and comprehensive analysis. The proposed research will contribute significantly to our understanding of ${data.researchArea.toLowerCase()} and provide practical solutions with broad societal impact.
+
+**Project Overview:** ${data.projectDescription}
+
+**Funding Request:** ${getBudgetText(data.budgetRange)}
+**Duration:** ${data.duration}
+**Principal Investigator:** [Your Name]
+**Institution:** [Your University]
+
+## Project Description and Significance
+
+### Research Problem
+The proposed research addresses a significant gap in current ${data.researchArea.toLowerCase()} knowledge and practice. This project will investigate [specific research questions] through rigorous scientific methodology.
+
+### Research Significance
+- **Scientific Merit:** This research will advance theoretical understanding in ${data.researchArea.toLowerCase()}
+- **Broader Impact:** Results will benefit society through practical applications
+- **Innovation:** Novel approaches and methodologies will be developed
+- **Training:** Graduate and undergraduate students will receive valuable research experience
+
+### Research Questions
+1. What are the primary factors influencing [research topic]?
+2. How can we develop more effective approaches to [specific challenge]?
+3. What are the long-term implications of [research findings]?
+
+## Literature Review and Background
+
+### Current State of Research
+Recent studies in ${data.researchArea.toLowerCase()} have shown significant progress in understanding [relevant topics]. However, several critical gaps remain:
+
+- **Gap 1:** Limited understanding of [specific area]
+- **Gap 2:** Lack of comprehensive methodologies for [specific challenge]
+- **Gap 3:** Insufficient data on [relevant topic]
+
+### Theoretical Framework
+This research builds upon established theories in ${data.researchArea.toLowerCase()}, including:
+- [Theory 1]: Provides foundation for understanding [concept]
+- [Theory 2]: Explains mechanisms of [process]
+- [Theory 3]: Offers framework for [analysis]
+
+## Research Objectives and Hypotheses
+
+### Primary Objectives
+1. **Objective 1:** Investigate the relationship between [variables]
+2. **Objective 2:** Develop and validate new methodologies for [specific purpose]
+3. **Objective 3:** Assess the impact of [intervention/factor] on [outcome]
+
+### Hypotheses
+- **H1:** [Specific testable hypothesis]
+- **H2:** [Second hypothesis with clear predictions]
+- **H3:** [Third hypothesis addressing key research question]
+
+## Methodology and Approach
+
+### Research Design
+This study will employ a [mixed-methods/quantitative/qualitative] approach combining:
+- **Phase 1:** Literature review and theoretical framework development
+- **Phase 2:** Data collection and analysis
+- **Phase 3:** Results interpretation and validation
+
+### Data Collection Methods
+- **Primary Data:** [Surveys/Interviews/Experiments/Observations]
+- **Secondary Data:** [Existing datasets/Literature/Archives]
+- **Sample Size:** [Appropriate sample size with justification]
+
+### Analytical Approach
+- **Quantitative Analysis:** [Statistical methods and software]
+- **Qualitative Analysis:** [Coding and thematic analysis]
+- **Validation:** [Methods to ensure reliability and validity]
+
+## Timeline and Milestones
+
+### Year 1
+- **Months 1-3:** Literature review completion and methodology refinement
+- **Months 4-9:** Data collection phase 1
+- **Months 10-12:** Preliminary analysis and progress report
+
+### Year 2 (if applicable)
+- **Months 13-18:** Data collection phase 2 and analysis
+- **Months 19-24:** Results interpretation and manuscript preparation
+
+### Key Milestones
+- ✅ IRB approval and permits obtained
+- ✅ Data collection protocols established
+- ✅ Preliminary results available
+- ✅ Final report and publications submitted
+
+## Budget Justification
+
+### Personnel (60% of budget)
+- **Principal Investigator:** [Percentage] effort
+- **Graduate Research Assistant:** [Hours/week] for [duration]
+- **Undergraduate Assistants:** [Number] students for [hours]
+
+### Equipment and Supplies (25% of budget)
+- **Research Equipment:** [Specific items needed]
+- **Software Licenses:** [Required software]
+- **Laboratory Supplies:** [Consumables and materials]
+
+### Travel and Dissemination (10% of budget)
+- **Conference Presentations:** [Number] conferences
+- **Research Travel:** [Field work or collaboration visits]
+- **Publication Costs:** Open access fees
+
+### Administrative Costs (5% of budget)
+- **Institutional Overhead:** As per university guidelines
+- **Administrative Support:** [Specific needs]
+
+## Expected Outcomes and Impact
+
+### Scientific Contributions
+- **Publications:** 3-5 peer-reviewed articles in high-impact journals
+- **Presentations:** 4-6 conference presentations
+- **Methodological Advances:** New tools and techniques for the field
+
+### Broader Impact
+- **Educational Impact:** Training of [number] graduate and undergraduate students
+- **Societal Benefits:** [Specific ways research will benefit society]
+- **Policy Implications:** [Potential influence on policy and practice]
+- **Economic Impact:** [Potential economic benefits]
+
+### Dissemination Plan
+- **Academic Publications:** Target journals include [specific journals]
+- **Conference Presentations:** [Relevant conferences]
+- **Public Engagement:** [Outreach activities]
+- **Stakeholder Communication:** [Industry/government partnerships]
+
+## Evaluation and Assessment
+
+### Success Metrics
+- **Quantitative Measures:** [Specific measurable outcomes]
+- **Qualitative Indicators:** [Quality assessments]
+- **Timeline Adherence:** [Progress tracking methods]
+
+### Risk Management
+- **Potential Challenges:** [Identified risks and mitigation strategies]
+- **Contingency Plans:** [Alternative approaches if needed]
+- **Quality Assurance:** [Methods to ensure research quality]
+
+## Conclusion
+
+This research project represents a significant opportunity to advance knowledge in ${data.researchArea.toLowerCase()} while providing practical benefits to society. The proposed methodology is rigorous and appropriate, the timeline is realistic, and the expected outcomes are substantial.
+
+The research team is well-qualified to conduct this work, and the institutional support is strong. We are confident that this project will make important contributions to the field and provide excellent training opportunities for students.
+
+We respectfully request ${getBudgetText(data.budgetRange)} over ${data.duration} to support this important research initiative.
+
+---
+
+*This proposal was generated using AI assistance and should be customized according to specific funding agency requirements and institutional guidelines.*`;
+        }
+
+        function formatProposalContent(content, data) {
+            // Convert markdown to HTML
+            if (content.includes('#') || content.includes('**') || content.includes('- ')) {
+                let htmlContent = content
+                    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+                    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                    .replace(/^#### (.*$)/gm, '<h4>$1</h4>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/^\- (.*$)/gm, '<li>$1</li>')
+                    .replace(/^(\d+)\. (.*$)/gm, '<li>$1. $2</li>')
+                    .replace(/\n\n/g, '</p><p>')
+                    .replace(/\n/g, '<br>');
+                
+                // Wrap list items
+                htmlContent = htmlContent.replace(/(<li>.*?<\/li>)/gs, '<ul>$1</ul>');
+                htmlContent = htmlContent.replace(/<\/ul>\s*<ul>/g, '');
+                
+                // Wrap paragraphs
+                if (!htmlContent.startsWith('<h1>') && !htmlContent.startsWith('<p>')) {
+                    htmlContent = '<p>' + htmlContent + '</p>';
+                }
+                
+                return `
+                    <div class="proposal-header">
+                        <div class="project-info">
+                            <h3>${data.projectTitle}</h3>
+                            <p><strong>Funding Agency:</strong> ${data.fundingAgency}</p>
+                            <p><strong>Research Area:</strong> ${data.researchArea}</p>
+                            <p><strong>Requested Amount:</strong> ${getBudgetText(data.budgetRange)}</p>
+                            <p><strong>Duration:</strong> ${data.duration}</p>
+                        </div>
+                    </div>
+                    <div class="proposal-content">
+                        ${htmlContent}
+                    </div>
+                    <div class="proposal-footer">
+                        <p><em>This proposal was generated using AI assistance. Please review and customize according to your specific requirements and ${data.fundingAgency} guidelines.</em></p>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="proposal-header">
+                        <h3>${data.projectTitle}</h3>
+                        <p><strong>Funding Agency:</strong> ${data.fundingAgency}</p>
+                        <p><strong>Research Area:</strong> ${data.researchArea}</p>
+                        <p><strong>Requested Amount:</strong> ${getBudgetText(data.budgetRange)}</p>
+                        <p><strong>Duration:</strong> ${data.duration}</p>
+                    </div>
+                    <div class="proposal-content">
+                        ${content.replace(/\n/g, '<br>')}
+                    </div>
+                    <div class="proposal-footer">
+                        <p><em>This proposal was generated using AI assistance. Please review and customize according to your specific requirements and funding agency guidelines.</em></p>
+                    </div>
+                `;
+            }
+        }
+
+        function getBudgetText(budgetRange) {
+            const budgetMap = {
+                'under-10k': 'Under $10,000',
+                '10k-50k': '$10,000 - $50,000',
+                '50k-100k': '$50,000 - $100,000',
+                '100k-500k': '$100,000 - $500,000',
+                '500k-1m': '$500,000 - $1,000,000',
+                'over-1m': 'Over $1,000,000'
+            };
+            return budgetMap[budgetRange] || budgetRange;
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notice ${type}`;
+            notification.innerHTML = message;
+            
+            const outputSection = document.getElementById('outputSection');
+            if (outputSection.style.display !== 'none') {
+                outputSection.insertBefore(notification, outputSection.firstChild);
+            } else {
+                document.querySelector('.form-section').appendChild(notification);
+            }
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

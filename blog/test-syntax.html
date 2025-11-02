@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语法测试页面</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            color: white;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+        
+        .test-button {
+            background: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 1rem;
+            font-size: 1rem;
+        }
+        
+        .test-button:hover {
+            background: #45a049;
+        }
+        
+        #output {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 JavaScript 语法测试</h1>
+        <p>这个页面用于测试JavaScript语法是否正确。</p>
+        
+        <button class="test-button" onclick="testBasicFunction()">测试基本函数</button>
+        <button class="test-button" onclick="testTemplateString()">测试模板字符串</button>
+        <button class="test-button" onclick="testLocalStorage()">测试本地存储</button>
+        
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function log(message) {
+            const output = document.getElementById('output');
+            output.innerHTML += '<div>' + new Date().toLocaleTimeString() + ': ' + message + '</div>';
+        }
+        
+        function testBasicFunction() {
+            log('✅ 基本函数测试通过');
+        }
+        
+        function testTemplateString() {
+            const title = "测试标题";
+            const content = "测试内容";
+            const template = `
+                <div>
+                    <h2>${title}</h2>
+                    <p>${content}</p>
+                </div>
+            `;
+            log('✅ 模板字符串测试通过: ' + template.length + ' 字符');
+        }
+        
+        function testLocalStorage() {
+            try {
+                const testData = {
+                    id: 'test-123',
+                    title: '测试文章',
+                    content: '这是测试内容'
+                };
+                
+                localStorage.setItem('test-article', JSON.stringify(testData));
+                const retrieved = JSON.parse(localStorage.getItem('test-article'));
+                
+                if (retrieved && retrieved.title === testData.title) {
+                    log('✅ 本地存储测试通过');
+                } else {
+                    log('❌ 本地存储测试失败');
+                }
+            } catch (error) {
+                log('❌ 本地存储错误: ' + error.message);
+            }
+        }
+        
+        // 页面加载完成后自动运行测试
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🚀 页面加载完成，JavaScript 语法正常');
+        });
+    </script>
+</body>
+</html>

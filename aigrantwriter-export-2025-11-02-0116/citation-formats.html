@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Academic Citation Formats - APA, MLA, Chicago Style Guide</title>
+    <meta name="description" content="Complete guide to US academic citation formats including APA 7th, MLA 9th, and Chicago 17th editions with examples and templates.">
+    <link rel="stylesheet" href="styles.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            z-index: 1000;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: #5855eb;
+            transform: translateY(-2px);
+        }
+        
+        .format-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 120px;
+        }
+        
+        .format-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .format-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+        
+        .tab-btn {
+            padding: 1rem 2rem;
+            border: none;
+            background: #f3f4f6;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            background: #6366f1;
+            color: white;
+        }
+        
+        .format-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .format-content.active {
+            display: block;
+        }
+        
+        .example-box {
+            background: #f8fafc;
+            border-left: 4px solid #6366f1;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .copy-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        Back to Home
+    </a>
+
+    <div class="format-container">
+        <div class="format-header">
+            <h1>🎓 US Academic Citation Formats</h1>
+            <p>Master the three most important citation styles for American universities</p>
+        </div>
+
+        <div class="format-tabs">
+            <button class="tab-btn active" onclick="showFormat('apa')">APA 7th Edition</button>
+            <button class="tab-btn" onclick="showFormat('mla')">MLA 9th Edition</button>
+            <button class="tab-btn" onclick="showFormat('chicago')">Chicago 17th Edition</button>
+        </div>
+
+        <!-- APA Format -->
+        <div id="apa" class="format-content active">
+            <h2>📚 APA 7th Edition (2019)</h2>
+            <p><strong>Most used in:</strong> Psychology, Education, Social Sciences, Business</p>
+            
+            <h3>In-Text Citations</h3>
+            <div class="example-box">
+                <strong>Single Author:</strong><br>
+                (Smith, 2023, p. 15)<br>
+                According to Smith (2023), "quote here" (p. 15).
+                <button class="copy-btn" onclick="copyText('(Smith, 2023, p. 15)')">Copy</button>
+            </div>
+            
+            <div class="example-box">
+                <strong>Two Authors:</strong><br>
+                (Johnson & Williams, 2023)<br>
+                Johnson and Williams (2023) found that...
+                <button class="copy-btn" onclick="copyText('(Johnson & Williams, 2023)')">Copy</button>
+            </div>
+
+            <h3>Reference List Examples</h3>
+            <div class="example-box">
+                <strong>Journal Article:</strong><br>
+                Smith, J. A. (2023). Title of article. <em>Journal Name</em>, <em>45</em>(2), 123-145. https://doi.org/10.1000/xyz
+                <button class="copy-btn" onclick="copyText('Smith, J. A. (2023). Title of article. Journal Name, 45(2), 123-145. https://doi.org/10.1000/xyz')">Copy</button>
+            </div>
+            
+            <div class="example-box">
+                <strong>Book:</strong><br>
+                Johnson, M. B. (2023). <em>Title of book</em>. Publisher Name.
+                <button class="copy-btn" onclick="copyText('Johnson, M. B. (2023). Title of book. Publisher Name.')">Copy</button>
+            </div>
+        </div>
+
+        <!-- MLA Format -->
+        <div id="mla" class="format-content">
+            <h2>📖 MLA 9th Edition (2021)</h2>
+            <p><strong>Most used in:</strong> English, Literature, Humanities, Liberal Arts</p>
+            
+            <h3>In-Text Citations</h3>
+            <div class="example-box">
+                <strong>Single Author:</strong><br>
+                (Smith 15)<br>
+                According to Smith, "quote here" (15).
+                <button class="copy-btn" onclick="copyText('(Smith 15)')">Copy</button>
+            </div>
+            
+            <div class="example-box">
+                <strong>Two Authors:</strong><br>
+                (Johnson and Williams 25)<br>
+                Johnson and Williams argue that... (25).
+                <button class="copy-btn" onclick="copyText('(Johnson and Williams 25)')">Copy</button>
+            </div>
+
+            <h3>Works Cited Examples</h3>
+            <div class="example-box">
+                <strong>Journal Article:</strong><br>
+                Smith, John A. "Title of Article." <em>Journal Name</em>, vol. 45, no. 2, 2023, pp. 123-145.
+                <button class="copy-btn" onclick="copyText('Smith, John A. \"Title of Article.\" Journal Name, vol. 45, no. 2, 2023, pp. 123-145.')">Copy</button>
+            </div>
+            
+            <div class="example-box">
+                <strong>Book:</strong><br>
+                Johnson, Mary B. <em>Title of Book</em>. Publisher Name, 2023.
+                <button class="copy-btn" onclick="copyText('Johnson, Mary B. Title of Book. Publisher Name, 2023.')">Copy</button>
+            </div>
+        </div>
+
+        <!-- Chicago Format -->
+        <div id="chicago" class="format-content">
+            <h2>📝 Chicago 17th Edition (2017)</h2>
+            <p><strong>Most used in:</strong> History, Art, Music, Philosophy</p>
+            
+            <h3>Footnotes (Notes-Bibliography Style)</h3>
+            <div class="example-box">
+                <strong>First Citation:</strong><br>
+                ¹ John A. Smith, "Title of Article," <em>Journal Name</em> 45, no. 2 (2023): 123.
+                <button class="copy-btn" onclick="copyText('John A. Smith, \"Title of Article,\" Journal Name 45, no. 2 (2023): 123.')">Copy</button>
+            </div>
+            
+            <div class="example-box">
+                <strong>Subsequent Citations:</strong><br>
+                ² Smith, "Title of Article," 125.
+                <button class="copy-btn" onclick="copyText('Smith, \"Title of Article,\" 125.')">Copy</button>
+            </div>
+
+            <h3>Bibliography Examples</h3>
+            <div class="example-box">
+                <strong>Journal Article:</strong><br>
+                Smith, John A. "Title of Article." <em>Journal Name</em> 45, no. 2 (2023): 123-145.
+                <button class="copy-btn" onclick="copyText('Smith, John A. \"Title of Article.\" Journal Name 45, no. 2 (2023): 123-145.')">Copy</button>
+            </div>
+            
+            <div class="example-box">
+                <strong>Book:</strong><br>
+                Johnson, Mary B. <em>Title of Book</em>. City: Publisher Name, 2023.
+                <button class="copy-btn" onclick="copyText('Johnson, Mary B. Title of Book. City: Publisher Name, 2023.')">Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showFormat(format) {
+            // Hide all content
+            document.querySelectorAll('.format-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active from all tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected content and activate tab
+            document.getElementById(format).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Citation format copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>

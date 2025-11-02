@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Research Methodology Designer - Academic Research Assistant</title>
+    <link rel="stylesheet" href="styles.min.css">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+        }
+        
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .output-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .notice {
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .notice.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .notice.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .method-content {
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        
+        .method-content h1,
+        .method-content h2,
+        .method-content h3 {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .method-summary {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .tips-section {
+            background: #e8f0fe;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .tips-section h3 {
+            color: #1565c0;
+            margin-top: 0;
+        }
+        
+        .methodology-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .methodology-card h4 {
+            color: #495057;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI Research Methodology Designer</h1>
+            <p>Design robust research methodologies following US academic standards</p>
+            <p><em>Quantitative, Qualitative, and Mixed Methods approaches</em></p>
+        </div>
+
+        <div class="tips-section">
+            <h3>🎯 Research Design Best Practices</h3>
+            <ul>
+                <li><strong>Alignment:</strong> Ensure methodology aligns with research questions</li>
+                <li><strong>Validity:</strong> Consider internal, external, construct, and statistical validity</li>
+                <li><strong>Ethics:</strong> Address ethical considerations and IRB requirements</li>
+                <li><strong>Feasibility:</strong> Consider time, resources, and access constraints</li>
+                <li><strong>Rigor:</strong> Follow established methodological standards</li>
+                <li><strong>Transparency:</strong> Provide detailed procedures for replication</li>
+            </ul>
+        </div>
+
+        <div class="form-section">
+            <h2>🔍 Research Design Parameters</h2>
+            <form id="methodForm">
+                <div class="form-group">
+                    <label for="researchTitle">Research Title/Topic *</label>
+                    <input type="text" id="researchTitle" name="researchTitle" required 
+                           placeholder="e.g., The Effect of Online Learning on Student Engagement">
+                </div>
+
+                <div class="form-group">
+                    <label for="researchQuestions">Research Questions *</label>
+                    <textarea id="researchQuestions" name="researchQuestions" rows="4" required
+                              placeholder="List your main research questions (one per line)..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="discipline">Academic Discipline *</label>
+                    <select id="discipline" name="discipline" required>
+                        <option value="">Select your discipline</option>
+                        <option value="Psychology">Psychology</option>
+                        <option value="Education">Education</option>
+                        <option value="Sociology">Sociology</option>
+                        <option value="Business">Business</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Health Sciences">Health Sciences</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Natural Sciences">Natural Sciences</option>
+                        <option value="Social Work">Social Work</option>
+                        <option value="Communication">Communication</option>
+                        <option value="Political Science">Political Science</option>
+                        <option value="Economics">Economics</option>
+                        <option value="Anthropology">Anthropology</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="researchApproach">Research Approach *</label>
+                    <select id="researchApproach" name="researchApproach" required>
+                        <option value="">Select research approach</option>
+                        <option value="Quantitative">Quantitative Research</option>
+                        <option value="Qualitative">Qualitative Research</option>
+                        <option value="Mixed Methods">Mixed Methods Research</option>
+                        <option value="Action Research">Action Research</option>
+                        <option value="Case Study">Case Study</option>
+                        <option value="Experimental">Experimental Design</option>
+                        <option value="Survey">Survey Research</option>
+                        <option value="Ethnographic">Ethnographic Study</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="studyType">Study Type *</label>
+                    <select id="studyType" name="studyType" required>
+                        <option value="">Select study type</option>
+                        <option value="Exploratory">Exploratory Study</option>
+                        <option value="Descriptive">Descriptive Study</option>
+                        <option value="Explanatory">Explanatory Study</option>
+                        <option value="Correlational">Correlational Study</option>
+                        <option value="Causal-Comparative">Causal-Comparative Study</option>
+                        <option value="Experimental">True Experimental</option>
+                        <option value="Quasi-Experimental">Quasi-Experimental</option>
+                        <option value="Longitudinal">Longitudinal Study</option>
+                        <option value="Cross-Sectional">Cross-Sectional Study</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="population">Target Population *</label>
+                    <input type="text" id="population" name="population" required 
+                           placeholder="e.g., College students aged 18-25 in the United States">
+                </div>
+
+                <div class="form-group">
+                    <label for="sampleSize">Expected Sample Size</label>
+                    <input type="number" id="sampleSize" name="sampleSize" 
+                           placeholder="e.g., 200" min="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="samplingMethod">Sampling Method *</label>
+                    <select id="samplingMethod" name="samplingMethod" required>
+                        <option value="">Select sampling method</option>
+                        <option value="Random">Simple Random Sampling</option>
+                        <option value="Stratified">Stratified Random Sampling</option>
+                        <option value="Cluster">Cluster Sampling</option>
+                        <option value="Systematic">Systematic Sampling</option>
+                        <option value="Convenience">Convenience Sampling</option>
+                        <option value="Purposive">Purposive Sampling</option>
+                        <option value="Snowball">Snowball Sampling</option>
+                        <option value="Quota">Quota Sampling</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Data Collection Methods *</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="surveys" name="dataCollection" value="Surveys/Questionnaires">
+                            <label for="surveys">Surveys/Questionnaires</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="interviews" name="dataCollection" value="Interviews">
+                            <label for="interviews">Interviews</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="focus-groups" name="dataCollection" value="Focus Groups">
+                            <label for="focus-groups">Focus Groups</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="observations" name="dataCollection" value="Observations">
+                            <label for="observations">Observations</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="experiments" name="dataCollection" value="Experiments">
+                            <label for="experiments">Experiments</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="secondary-data" name="dataCollection" value="Secondary Data Analysis">
+                            <label for="secondary-data">Secondary Data</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="content-analysis" name="dataCollection" value="Content Analysis">
+                            <label for="content-analysis">Content Analysis</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="archival" name="dataCollection" value="Archival Research">
+                            <label for="archival">Archival Research</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="timeline">Research Timeline</label>
+                    <select id="timeline" name="timeline">
+                        <option value="">Select timeline</option>
+                        <option value="1-3 months">1-3 months</option>
+                        <option value="3-6 months">3-6 months</option>
+                        <option value="6-12 months">6-12 months</option>
+                        <option value="1-2 years">1-2 years</option>
+                        <option value="2+ years">2+ years</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="constraints">Research Constraints/Limitations</label>
+                    <textarea id="constraints" name="constraints" rows="3"
+                              placeholder="Describe any budget, time, access, or other constraints..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="ethicalConsiderations">Ethical Considerations</label>
+                    <textarea id="ethicalConsiderations" name="ethicalConsiderations" rows="3"
+                              placeholder="Describe any ethical issues, IRB requirements, consent procedures..."></textarea>
+                </div>
+
+                <button type="submit" class="generate-btn">
+                    🔬 Generate Research Methodology
+                </button>
+            </form>
+        </div>
+
+        <div id="outputSection" class="output-section" style="display: none;">
+            <h2>📋 Generated Research Methodology</h2>
+            <div id="outputContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_CONFIGS = [
+            {
+                name: 'WenWen AI',
+                baseURL: 'https://breakout.wenwen-ai.com/v1/chat/completions',
+                apiKey: 'sk-6ogS4COJPVLfLclruLQ6h59IxyvcN61nGuvgpr71VNL3ARsN',
+                model: 'gpt-3.5-turbo'
+            },
+            {
+                name: 'Local Fallback',
+                baseURL: 'local',
+                apiKey: 'local',
+                model: 'local'
+            }
+        ];
+
+        document.getElementById('methodForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Handle checkbox data
+            const dataCollectionMethods = [];
+            document.querySelectorAll('input[name="dataCollection"]:checked').forEach(checkbox => {
+                dataCollectionMethods.push(checkbox.value);
+            });
+            data.dataCollection = dataCollectionMethods;
+            
+            // Validate required fields
+            const requiredFields = ['researchTitle', 'researchQuestions', 'discipline', 'researchApproach', 'studyType', 'population', 'samplingMethod'];
+            for (let field of requiredFields) {
+                if (!data[field]) {
+                    showNotification(`Please fill in the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`, 'error');
+                    return;
+                }
+            }
+            
+            if (dataCollectionMethods.length === 0) {
+                showNotification('Please select at least one data collection method', 'error');
+                return;
+            }
+            
+            const outputSection = document.getElementById('outputSection');
+            const outputContent = document.getElementById('outputContent');
+            
+            outputSection.style.display = 'block';
+            outputContent.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>🔬 AI is designing your research methodology...</p>
+                    <p><em>Creating comprehensive research design and procedures...</em></p>
+                </div>
+            `;
+            
+            try {
+                const methodology = await generateAIMethodology(data);
+                outputContent.innerHTML = methodology;
+                showNotification('✅ Research methodology generated successfully!', 'success');
+            } catch (error) {
+                console.error('AI generation failed:', error);
+                
+                showNotification('⚠️ AI service temporarily unavailable. Generated template methodology for you to customize.', 'error');
+                
+                const fallbackMethodology = generateLocalMethodology(data);
+                outputContent.innerHTML = formatMethodologyContent(fallbackMethodology, data);
+            }
+        });
+
+        async function generateAIMethodology(data) {
+            const prompt = `Generate a comprehensive research methodology section for a US academic paper with the following specifications:
+
+Research Title: ${data.researchTitle}
+Research Questions: ${data.researchQuestions}
+Academic Discipline: ${data.discipline}
+Research Approach: ${data.researchApproach}
+Study Type: ${data.studyType}
+Target Population: ${data.population}
+Sample Size: ${data.sampleSize || 'To be determined'}
+Sampling Method: ${data.samplingMethod}
+Data Collection Methods: ${data.dataCollection.join(', ')}
+Timeline: ${data.timeline || 'Not specified'}
+Constraints: ${data.constraints || 'None specified'}
+Ethical Considerations: ${data.ethicalConsiderations || 'Standard ethical protocols'}
+
+Please create a professional research methodology section that follows US academic standards and includes:
+
+1. **Research Design Overview**
+   - Rationale for chosen approach
+   - Alignment with research questions
+   - Theoretical framework
+
+2. **Population and Sampling**
+   - Target population description
+   - Sampling strategy and justification
+   - Sample size calculation/justification
+   - Inclusion and exclusion criteria
+
+3. **Data Collection Procedures**
+   - Detailed procedures for each method
+   - Instrumentation and materials
+   - Data collection timeline
+   - Quality assurance measures
+
+4. **Data Analysis Plan**
+   - Analytical approach appropriate to data type
+   - Statistical methods (if quantitative)
+   - Coding procedures (if qualitative)
+   - Software tools to be used
+
+5. **Validity and Reliability**
+   - Threats to validity and mitigation strategies
+   - Reliability measures
+   - Triangulation methods (if applicable)
+
+6. **Ethical Considerations**
+   - IRB approval process
+   - Informed consent procedures
+   - Confidentiality and anonymity
+   - Risk mitigation
+
+7. **Limitations and Constraints**
+   - Acknowledged limitations
+   - Potential biases
+   - Generalizability considerations
+
+8. **Timeline and Resources**
+   - Project phases and milestones
+   - Resource requirements
+   - Risk management
+
+Requirements:
+- Follow US academic writing conventions
+- Use discipline-appropriate terminology
+- Provide specific, actionable procedures
+- Include methodological justifications
+- Address validity and reliability concerns
+- Consider ethical implications
+- Be detailed enough for replication
+
+Format the response in clean HTML with proper headings and clear organization.`;
+
+            for (let config of API_CONFIGS) {
+                if (config.baseURL === 'local') {
+                    return generateLocalMethodology(data);
+                }
+                
+                try {
+                    const response = await fetch(config.baseURL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${config.apiKey}`
+                        },
+                        body: JSON.stringify({
+                            model: config.model,
+                            messages: [
+                                {
+                                    role: 'user',
+                                    content: prompt
+                                }
+                            ],
+                            max_tokens: 4000,
+                            temperature: 0.7
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    if (result.choices && result.choices[0] && result.choices[0].message) {
+                        return formatMethodologyContent(result.choices[0].message.content, data);
+                    }
+                } catch (error) {
+                    console.error(`${config.name} Error:`, error);
+                    continue;
+                }
+            }
+            
+            throw new Error('All AI services are temporarily unavailable');
+        }
+
+        function generateLocalMethodology(data) {
+            return `# Research Methodology: ${data.researchTitle}
+
+## Research Design Overview
+
+### Methodological Approach
+This study employs a **${data.researchApproach.toLowerCase()}** approach using a **${data.studyType.toLowerCase()}** design. This methodology is well-suited to address the research questions and aligns with established practices in ${data.discipline.toLowerCase()}.
+
+### Research Questions
+${data.researchQuestions.split('\n').map(q => `- ${q.trim()}`).join('\n')}
+
+### Theoretical Framework
+The study is grounded in relevant theoretical frameworks from ${data.discipline.toLowerCase()}, providing a solid foundation for understanding the research problem and interpreting findings.
+
+## Population and Sampling
+
+### Target Population
+**Population:** ${data.population}
+
+### Sampling Strategy
+**Method:** ${data.samplingMethod}
+${data.sampleSize ? `**Sample Size:** ${data.sampleSize} participants` : '**Sample Size:** To be determined based on power analysis'}
+
+### Sampling Justification
+${getSamplingJustification(data.samplingMethod)} This approach is appropriate for the research objectives and ensures adequate representation of the target population.
+
+### Inclusion Criteria
+- Participants must meet the population characteristics
+- Voluntary participation with informed consent
+- Ability to complete data collection procedures
+
+### Exclusion Criteria
+- Participants who do not meet population criteria
+- Those unable to provide informed consent
+- Incomplete data submissions
+
+## Data Collection Procedures
+
+### Data Collection Methods
+${data.dataCollection.map(method => `
+**${method}:**
+${getMethodDescription(method)}`).join('\n')}
+
+### Data Collection Timeline
+${data.timeline ? `**Duration:** ${data.timeline}` : '**Duration:** To be determined based on sample size and method complexity'}
+
+**Phases:**
+1. **Preparation Phase:** Instrument development and pilot testing
+2. **Recruitment Phase:** Participant identification and consent
+3. **Data Collection Phase:** Implementation of data collection procedures
+4. **Follow-up Phase:** Data verification and participant debriefing
+
+### Quality Assurance
+- Standardized protocols for all data collection procedures
+- Training for research assistants
+- Regular monitoring and supervision
+- Data quality checks throughout collection process
+
+## Data Analysis Plan
+
+### Analytical Approach
+${getAnalysisApproach(data.researchApproach, data.studyType)}
+
+### Analysis Procedures
+${getAnalysisProcedures(data.researchApproach)}
+
+### Software Tools
+- Statistical analysis: SPSS, R, or SAS
+- Qualitative analysis: NVivo, Atlas.ti, or similar
+- Data management: REDCap or similar secure platform
+
+## Validity and Reliability
+
+### Internal Validity
+- Control for confounding variables
+- Standardized procedures
+- Appropriate research design
+
+### External Validity
+- Representative sampling
+- Appropriate generalization claims
+- Consideration of population characteristics
+
+### Reliability Measures
+- Inter-rater reliability (where applicable)
+- Test-retest reliability
+- Internal consistency measures
+
+### Triangulation
+${data.dataCollection.length > 1 ? 'Multiple data collection methods provide triangulation to enhance validity and reliability.' : 'Single method approach with emphasis on methodological rigor.'}
+
+## Ethical Considerations
+
+### IRB Approval
+- Institutional Review Board approval will be obtained prior to data collection
+- All procedures will comply with institutional ethical guidelines
+- Regular reporting to IRB as required
+
+### Informed Consent
+- Written informed consent from all participants
+- Clear explanation of study purpose, procedures, and risks
+- Right to withdraw without penalty
+
+### Confidentiality and Privacy
+- De-identification of all data
+- Secure data storage with restricted access
+- Confidentiality agreements for research team
+
+### Risk Mitigation
+${data.ethicalConsiderations || 'Standard protocols for minimizing participant risk and ensuring ethical conduct throughout the study.'}
+
+## Limitations and Constraints
+
+### Methodological Limitations
+- Sampling limitations and generalizability
+- Measurement constraints
+- Design-specific limitations
+
+### Practical Constraints
+${data.constraints || 'Standard resource and time constraints typical of academic research.'}
+
+### Potential Biases
+- Selection bias considerations
+- Response bias mitigation
+- Researcher bias awareness
+
+## Timeline and Resources
+
+### Project Phases
+1. **Phase 1 (Months 1-2):** Literature review and methodology refinement
+2. **Phase 2 (Months 2-3):** IRB approval and instrument development
+3. **Phase 3 (Months 3-${getTimelineMonths(data.timeline)}):** Data collection
+4. **Phase 4 (Final months):** Data analysis and reporting
+
+### Resource Requirements
+- Personnel: Principal investigator and research assistants
+- Technology: Data collection and analysis software
+- Materials: Instruments, incentives, and administrative supplies
+- Facilities: Appropriate spaces for data collection
+
+### Risk Management
+- Contingency plans for recruitment challenges
+- Alternative data collection methods if needed
+- Timeline flexibility for unexpected delays
+
+---
+
+*This methodology provides a comprehensive framework for conducting rigorous research. Specific details should be customized based on your exact research context and institutional requirements.*`;
+        }
+
+        function getSamplingJustification(method) {
+            const justifications = {
+                'Random': 'Simple random sampling ensures each member of the population has an equal chance of selection, maximizing representativeness.',
+                'Stratified': 'Stratified sampling ensures representation across important subgroups, improving precision and reducing sampling error.',
+                'Cluster': 'Cluster sampling is practical and cost-effective when the population is geographically dispersed.',
+                'Systematic': 'Systematic sampling provides a good balance between randomness and practicality.',
+                'Convenience': 'Convenience sampling is practical given resource constraints, though generalizability may be limited.',
+                'Purposive': 'Purposive sampling allows for selection of information-rich cases relevant to the research questions.',
+                'Snowball': 'Snowball sampling is appropriate for hard-to-reach populations where traditional methods are not feasible.',
+                'Quota': 'Quota sampling ensures representation of key demographic characteristics while maintaining practical feasibility.'
+            };
+            return justifications[method] || 'This sampling method is appropriate for the research objectives.';
+        }
+
+        function getMethodDescription(method) {
+            const descriptions = {
+                'Surveys/Questionnaires': 'Structured questionnaires will be administered to collect standardized data from participants. Instruments will be validated and pilot-tested prior to implementation.',
+                'Interviews': 'Semi-structured interviews will be conducted to gather in-depth qualitative data. Interview guides will be developed and interviews will be audio-recorded with consent.',
+                'Focus Groups': 'Focus group discussions will be facilitated to explore group perspectives and interactions. Sessions will be moderated and recorded for analysis.',
+                'Observations': 'Systematic observations will be conducted using structured observation protocols. Field notes and observational data will be recorded systematically.',
+                'Experiments': 'Controlled experimental procedures will be implemented with appropriate controls and randomization. Experimental protocols will be standardized.',
+                'Secondary Data Analysis': 'Existing datasets will be analyzed following appropriate data use agreements and ethical protocols.',
+                'Content Analysis': 'Systematic content analysis will be conducted on relevant documents or media using established coding frameworks.',
+                'Archival Research': 'Historical records and archival materials will be systematically reviewed and analyzed.'
+            };
+            return descriptions[method] || 'Detailed procedures will be developed for this data collection method.';
+        }
+
+        function getAnalysisApproach(approach, studyType) {
+            if (approach === 'Quantitative') {
+                return 'Quantitative data will be analyzed using appropriate statistical methods based on data type and research questions. Descriptive and inferential statistics will be employed.';
+            } else if (approach === 'Qualitative') {
+                return 'Qualitative data will be analyzed using thematic analysis or other appropriate qualitative methods. Coding will be conducted systematically with attention to reliability.';
+            } else if (approach === 'Mixed Methods') {
+                return 'Mixed methods analysis will integrate quantitative and qualitative findings. Sequential or concurrent analysis strategies will be employed based on the research design.';
+            } else {
+                return 'Analysis procedures will be tailored to the specific research approach and data types collected.';
+            }
+        }
+
+        function getAnalysisProcedures(approach) {
+            if (approach === 'Quantitative') {
+                return `**Descriptive Analysis:**
+- Measures of central tendency and variability
+- Frequency distributions and cross-tabulations
+- Data visualization and graphical representation
+
+**Inferential Analysis:**
+- Hypothesis testing using appropriate statistical tests
+- Confidence intervals and effect size calculations
+- Regression analysis or other multivariate techniques as appropriate`;
+            } else if (approach === 'Qualitative') {
+                return `**Coding Process:**
+- Initial open coding of data
+- Development of coding framework
+- Systematic coding with inter-rater reliability checks
+
+**Thematic Analysis:**
+- Identification of patterns and themes
+- Constant comparative analysis
+- Member checking and validation procedures`;
+            } else {
+                return `**Integrated Analysis:**
+- Sequential or concurrent analysis of quantitative and qualitative data
+- Data transformation and comparison procedures
+- Joint displays and meta-inferences`;
+            }
+        }
+
+        function getTimelineMonths(timeline) {
+            const timelineMap = {
+                '1-3 months': '3',
+                '3-6 months': '5',
+                '6-12 months': '10',
+                '1-2 years': '20',
+                '2+ years': '30'
+            };
+            return timelineMap[timeline] || '12';
+        }
+
+        function formatMethodologyContent(content, data) {
+            // Convert markdown to HTML
+            if (content.includes('#') || content.includes('**') || content.includes('- ')) {
+                let htmlContent = content
+                    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+                    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                    .replace(/^#### (.*$)/gm, '<h4>$1</h4>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/^\- (.*$)/gm, '<li>$1</li>')
+                    .replace(/^(\d+)\. (.*$)/gm, '<li>$1. $2</li>')
+                    .replace(/\n\n/g, '</p><p>')
+                    .replace(/\n/g, '<br>');
+                
+                // Wrap list items
+                htmlContent = htmlContent.replace(/(<li>.*?<\/li>)/gs, '<ul>$1</ul>');
+                htmlContent = htmlContent.replace(/<\/ul>\s*<ul>/g, '');
+                
+                // Wrap paragraphs
+                if (!htmlContent.startsWith('<h1>') && !htmlContent.startsWith('<p>')) {
+                    htmlContent = '<p>' + htmlContent + '</p>';
+                }
+                
+                return `
+                    <div class="method-summary">
+                        <h4>📊 Research Design Summary</h4>
+                        <p><strong>Approach:</strong> ${data.researchApproach} | <strong>Type:</strong> ${data.studyType} | <strong>Discipline:</strong> ${data.discipline}</p>
+                        <p><strong>Population:</strong> ${data.population}</p>
+                        <p><strong>Methods:</strong> ${data.dataCollection.join(', ')}</p>
+                    </div>
+                    <div class="method-content">
+                        ${htmlContent}
+                    </div>
+                    <div class="notice" style="background: #fff3cd; border: 1px solid #ffeaa7; margin-top: 20px;">
+                        <p><strong>Important:</strong> This is a template methodology. Please customize all sections according to your specific research context, institutional requirements, and disciplinary standards. Ensure IRB approval before beginning data collection.</p>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="method-summary">
+                        <h4>📊 Research Design Summary</h4>
+                        <p><strong>Approach:</strong> ${data.researchApproach} | <strong>Type:</strong> ${data.studyType} | <strong>Discipline:</strong> ${data.discipline}</p>
+                        <p><strong>Population:</strong> ${data.population}</p>
+                        <p><strong>Methods:</strong> ${data.dataCollection.join(', ')}</p>
+                    </div>
+                    <div class="method-content">
+                        ${content.replace(/\n/g, '<br>')}
+                    </div>
+                `;
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notice ${type}`;
+            notification.innerHTML = message;
+            
+            const outputSection = document.getElementById('outputSection');
+            if (outputSection.style.display !== 'none') {
+                outputSection.insertBefore(notification, outputSection.firstChild);
+            } else {
+                document.querySelector('.form-section').appendChild(notification);
+            }
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
